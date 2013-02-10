@@ -11,7 +11,8 @@ module fix_parser_out_module (
 	output			tag_status_o,
 	output			body_status_o,
 	output 			tag_valid_o,
-	output			body_valid_o
+	output			body_valid_o,
+	output[1:0]		data_type
 );
 
 logic[31:0]			tag;
@@ -27,10 +28,10 @@ always_comb begin
 	padding 	= 	'0;
 	
 	if ((soh_i != 3'b111) && (sep_i != 3'b111)) begin	
-//		data_type = 2'b00;	
+		data_type = 2'b00;	
 		case({soh_i, sep_i})
 				6'b011001:	begin 
-									tag  = data_i[23:16]; 
+								tag  = data_i[23:16]; 
 									tag_valid = '1;
 									tag_status = '0;
 									body = '0;
@@ -87,29 +88,30 @@ always_comb begin
 									tag_status = '0;
 								end	
 		endcase		
-	end else if ((soh_i != 3'b111) && (sep_i == 3'b111)) begin	
+	end else if ((soh_i != 3'b111) && (sep_i == 3'b111)) begin
+		data_type = 2'b01;	
 				case (soh_i)
 					3'b000: begin
-									body =  data_i[31:8]; //data_i[31:8];  
+									body =  data_i[31:8];   
 									body_valid = '1; 
 									tag = '0;
 									tag_valid = '0;  
-									tag_status = '1; 		//tag started with SOH 
+									tag_status = '1; 		 
 									body_status = '0;
 							  end
 					3'b001: begin 
-									body = data_i[31:16];			//data_i[31:16]; 
+									body = data_i[31:16];			 
 									body_valid = '1; 
 									body_status = '0;
-									tag  =  data_i[7:0];		//data_i[7:0];
+									tag  =  data_i[7:0];		
 									tag_valid = '1;
 									tag_status = '1;
 							  end
 					3'b010: begin 
-									body = data_i[31:24];		//data_i[31:24]; 
+									body = data_i[31:24];		 
 									body_valid = '1; 
 									body_status = '0;
-									tag  = data_i[15:0];		//data_i[16:0];
+									tag  = data_i[15:0];		
 									tag_valid = '1;		
 									tag_status = '1;
 							  end
@@ -117,7 +119,7 @@ always_comb begin
 									body = '0;				
 									body_valid = '0; 
 									body_status = '0;
-									tag = data_i[23:0];		//data_i[23:0];
+									tag = data_i[23:0];		
 									tag_valid = '1;
 								   tag_status = '1;
 							  end
@@ -129,14 +131,15 @@ always_comb begin
 										body_status = '0;
 								end
 				endcase
-	end else if ((soh_i == 3'b111) && (sep_i != 3'b111)) begin	
+	end else if ((soh_i == 3'b111) && (sep_i != 3'b111)) begin
+		data_type = 2'b10;	
 				case (sep_i)
 							3'b000: begin 	
 											tag = data_i[31:8]; 					//data_i[31:8];  
 											tag_valid = '1; 
 											body = '0;
 											body_valid = '0;
-											tag_status = '0;										//tag started with SOH 
+											tag_status = '0; 
 											body_status = '1;
 									  end
 							3'b001: begin 
@@ -172,7 +175,9 @@ always_comb begin
 											body_status = '0;
 									  end
 				endcase
-	end else if ((soh_i == 3'b111) && (sep_i == 3'b111)) begin							
+	end else if ((soh_i == 3'b111) && (sep_i == 3'b111)) begin	
+						
+		data_type = 2'b11;	
 							if (tag_status_i == '1)	begin
 											body = '0;
 											body_valid = '0;
