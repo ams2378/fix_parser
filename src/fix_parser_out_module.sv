@@ -16,16 +16,13 @@ module fix_parser_out_module (
 	input			value_status_i,
 	
 	output[31:0]		out_o,
-//	output[31:0]		value_o,
 	output			tag_status_o,
 	output			value_status_o,
 	output[3:0]		tag_valid_o,
 	output[3:0]		value_valid_o
-//	output[1:0]		data_type
 );
 
 logic[31:0]			out;
-//logic[31:0]			body;
 logic				tag_status;
 logic				body_status;
 logic [3:0]			tag_valid;
@@ -34,22 +31,18 @@ logic [3:0]			body_valid;
 always_comb begin
 
 	if ((soh_i != 3'b111) && (sep_i != 3'b111)) begin	
-	//	data_type = 2'b00;	
 		case({soh_i, sep_i})
 				6'b011001:	begin 
 								out[7:0]  =  data_i[23:16]; 
 									     tag_valid = 4'b0010;
 									     body_valid = 4'b0000;
 									tag_status = '0;
-								//	body = '0;
-								//	body_valid = '0;
 									body_status = '1;
 								end								
 				6'b011000:	begin
 								out[15:0]   = data_i[23:08];
 									tag_valid = 4'b011;
 									tag_status = '0;
-								//	body = '0;
 									body_valid = '0;
 									body_status = '1;
 								end															
@@ -57,7 +50,6 @@ always_comb begin
 								out[15:0] = data_i[23:08];
 									body_valid = 4'b0110;
 									body_status = '0;
-								//	tag = '0;
 									tag_valid = '0;
 									tag_status = '0;
 								end																
@@ -65,7 +57,6 @@ always_comb begin
 								out[7:0] = data_i[23:16];
 									body_valid = 4'b0100;
 									body_status = '0;
-								//	tag = '0;
 									tag_valid = '0;
 									tag_status = '0;
 								end															
@@ -74,7 +65,6 @@ always_comb begin
 								out[7:0] = data_i[15:08];
 									tag_valid = 4'b0010;
 									tag_status = '0;
-								//	body = '0;
 									body_valid = '0;
 									body_status = '1;
 								end																										
@@ -90,18 +80,15 @@ always_comb begin
 									out = '0;
 									body_valid = '0;
 									body_status = '0;
-								//	tag = '0;
 									tag_valid = '0;
 									tag_status = '0;
 								end	
 		endcase		
 	end else if ((soh_i != 3'b111) && (sep_i == 3'b111)) begin
-//		data_type = 2'b01;	
 				case (soh_i)
 					3'b000: begin
 								out[31:8]	 =  data_i[31:8];   
 									body_valid = 4'b1110; 
-								//	tag = '0;
 									tag_valid = '0;  
 									tag_status = '1; 		 
 									body_status = '0;
@@ -123,14 +110,13 @@ always_comb begin
 									tag_status = '1;
 							  end
 					3'b011: begin 
-								//	body = '0;				
 									body_valid = '0; 
 									body_status = '0;
 									out[23:0] = data_i[23:0];		
 									tag_valid = 4'b0111;
 								   tag_status = '1;
 							  end
-					default: begin 		//	body = '0;				
+					default: begin 						
 									body_valid = '0; 
 									out = '0;
 									tag_valid = '0;
@@ -139,12 +125,10 @@ always_comb begin
 						  	   end
 				endcase
 	end else if ((soh_i == 3'b111) && (sep_i != 3'b111)) begin
-//		data_type = 2'b10;	
 				case (sep_i)
 							3'b000: begin 	
 									out[23:0] = data_i[31:8]; 					  
 										tag_valid = 4'b0111; 
-									//	body = '0;
 										body_valid = '0;
 										tag_status = '0; 
 										body_status = '1;
@@ -166,7 +150,6 @@ always_comb begin
 									        body_status = '1;	
 								end
 							3'b011: begin 
-									//	tag = '0;				
 										tag_valid = '0; 
 										tag_status = '0;
 									out[23:0]  = data_i[23:0];	
@@ -176,7 +159,6 @@ always_comb begin
 							default: begin 
 									out	 = '0;				
 										body_valid = '0; 
-									//	tag = '0;
 										tag_valid = '0;
 										tag_status = '0;
 										body_status = '0;
@@ -184,9 +166,7 @@ always_comb begin
 				endcase
 	end else if ((soh_i == 3'b111) && (sep_i == 3'b111)) begin	
 						
-	//	data_type = 2'b11;	
 							if (tag_status_i == '1)	begin
-								//		body = '0;
 										body_valid = '0;
 										body_status = '0;											
 									out	 = data_i[31:0];
@@ -198,23 +178,19 @@ always_comb begin
 									out	 = data_i[31:0];
 										body_valid = 4'b1111;
 										body_status = '1;											
-									//	tag = '0;
 										tag_valid = '0;
 										tag_status = '0;																					
 							end else begin
 									out	 = '0;
 										body_valid = '0;
 										body_status = '0;											
-								//		tag = '0;
 										tag_valid = '0;
 										tag_status = '0;	
 							end
 	end else begin
 										out = '0;
-									//	body = '0;
 										body_valid = '0;
 										body_status = '0;											
-									//	tag = '0;
 										tag_valid = '0;
 										tag_status = '0;		
 										
@@ -222,40 +198,9 @@ always_comb begin
 end
 
 
-
-/*
-
-ff #(.WIDTH(32)) mem (
-
-
-
-);
-
-ff #(.WIDTH(2)) mem_var(
-
-
-
-);
-
-
-always @(posedge clk) begin
-
-if (body_status == 0 && tag_status == 1 && )
-
-
-
-
-
-end
-
-*/
-
-//assign tag_o = tag;
-
 assign out_o = out; 
 assign tag_status_o = tag_status;
 assign tag_valid_o = tag_valid;
-//assign value_o = body;
 assign value_status_o = body_status;
 assign value_valid_o = body_valid;
 
