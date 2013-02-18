@@ -47,7 +47,7 @@ always_comb begin
 								end								
 				6'b011000:	begin
 								out[15:0]   = data_i[23:08];
-									tag_valid = 4'b0110;
+									tag_valid = 4'b011;
 									tag_status = '0;
 								//	body = '0;
 									body_valid = '0;
