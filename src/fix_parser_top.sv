@@ -52,7 +52,7 @@ fix_parser_out_module module_2(
 		.soh_i(soh_t),
 		.sep_i(sep_t),
 		.tag_status_i(tag_status_t_2),
-		.body_status_i(body_status_t_2),
+		.value_status_i(body_status_t_2),
 		
 		.tag_o,
 		.value_o,
