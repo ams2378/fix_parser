@@ -82,15 +82,15 @@ always_comb begin
 								out [7:0] = data_i[15:08];
 									body_valid = 4'b0010;
 									body_status = '0;
-									tag = '0;
-								//	tag_valid = '0;
+									//tag = '0;
+									tag_valid = '0;
 									tag_status = '0;
 								end	
 				default:		begin
 									out = '0;
 									body_valid = '0;
 									body_status = '0;
-									tag = '0;
+								//	tag = '0;
 									tag_valid = '0;
 									tag_status = '0;
 								end	
