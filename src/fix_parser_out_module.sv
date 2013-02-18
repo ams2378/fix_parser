@@ -1,3 +1,12 @@
+/**
+ * @filename		fix_parser_out_module.sv 
+ *
+ * @brief     	        detects TAG and VALUE from 32 bit received data. 	
+ *
+ * @author		Adil Sadik <sadik.adil@gmail.com> 
+ */
+
+
 module fix_parser_out_module (
 
 	input[31:0]		data_i,
@@ -19,14 +28,11 @@ logic[31:0]			tag;
 logic[31:0]			body;
 logic				tag_status;
 logic				body_status;
-logic[7:0]			padding;
 logic				tag_valid;
 logic				body_valid;
 
 always_comb begin
 
-	padding 	= 	'0;
-	
 	if ((soh_i != 3'b111) && (sep_i != 3'b111)) begin	
 	//	data_type = 2'b00;	
 		case({soh_i, sep_i})
@@ -124,6 +130,50 @@ always_comb begin
 								   tag_status = '1;
 							  end
 					default: begin body = '0;				
+									body_valid = '0; 
+									tag = '0;
+									tag_valid = '0;
+									tag_status = '0;
+									body_status = '0;
+						  	   end
+				endcase
+	end else if ((soh_i == 3'b111) && (sep_i != 3'b111)) begin
+//		data_type = 2'b10;	
+				case (sep_i)
+							3'b000: begin 	
+										tag = data_i[31:8]; 					  
+										tag_valid = '1; 
+										body = '0;
+										body_valid = '0;
+										tag_status = '0; 
+										body_status = '1;
+							 	end
+							3'b001: begin 
+										tag = data_i[31:16];			 
+										tag_valid = '1; 
+										tag_status = '0;
+										body  = data_i[7:0];		
+										body_valid = '1;
+										body_status = '1;
+								end
+							3'b010: begin 
+										tag = data_i[31:24];		 
+										tag_valid = '1; 
+										tag_status = '0;											
+										body  = data_i[15:0];		
+										body_valid = '1;	
+									        body_status = '1;	
+								end
+							3'b011: begin 
+										tag = '0;				
+										tag_valid = '0; 
+										tag_status = '0;
+										body = data_i[23:0];	
+										body_valid = '1;
+										body_status = '1;
+								end
+							default: begin 
+										body = '0;				
 										body_valid = '0; 
 										tag = '0;
 										tag_valid = '0;
@@ -131,86 +181,46 @@ always_comb begin
 										body_status = '0;
 								end
 				endcase
-	end else if ((soh_i == 3'b111) && (sep_i != 3'b111)) begin
-//		data_type = 2'b10;	
-				case (sep_i)
-							3'b000: begin 	
-											tag = data_i[31:8]; 					  
-											tag_valid = '1; 
-											body = '0;
-											body_valid = '0;
-											tag_status = '0; 
-											body_status = '1;
-									  end
-							3'b001: begin 
-											tag = data_i[31:16];			 
-											tag_valid = '1; 
-											tag_status = '0;
-											body  = data_i[7:0];		
-											body_valid = '1;
-											body_status = '1;
-									  end
-							3'b010: begin 
-											tag = data_i[31:24];		 
-											tag_valid = '1; 
-											tag_status = '0;											
-											body  = data_i[15:0];		
-											body_valid = '1;	
-										        body_status = '1;	
-									  end
-							3'b011: begin 
-											tag = '0;				
-											tag_valid = '0; 
-											tag_status = '0;
-											body = data_i[23:0];	
-											body_valid = '1;
-											body_status = '1;
-									  end
-							default: begin 
-											body = '0;				
-											body_valid = '0; 
-											tag = '0;
-											tag_valid = '0;
-											tag_status = '0;
-											body_status = '0;
-									  end
-				endcase
 	end else if ((soh_i == 3'b111) && (sep_i == 3'b111)) begin	
 						
 	//	data_type = 2'b11;	
 							if (tag_status_i == '1)	begin
-											body = '0;
-											body_valid = '0;
-											body_status = '0;											
-											tag = data_i[31:0];
-											tag_valid = '1;
-											tag_status = '1;	
-							end else if (body_status_i == '1) begin											
-											body = data_i[31:0];
-											body_valid = '1;
-											body_status = '1;											
-											tag = '0;
-											tag_valid = '0;
-											tag_status = '0;																					
+										body = '0;
+										body_valid = '0;
+										body_status = '0;											
+										tag = data_i[31:0];
+										tag_valid = '1;
+										tag_status = '1;
+	
+							end else if (body_status_i == '1) begin	
+										
+										body = data_i[31:0];
+										body_valid = '1;
+										body_status = '1;											
+										tag = '0;
+										tag_valid = '0;
+										tag_status = '0;																					
 							end else begin
-											body = '0;
-											body_valid = '0;
-											body_status = '0;											
-											tag = '0;
-											tag_valid = '0;
-											tag_status = '0;	
+										body = '0;
+										body_valid = '0;
+										body_status = '0;											
+										tag = '0;
+										tag_valid = '0;
+										tag_status = '0;	
 							end
 	end else begin
 	
-											body = '0;
-											body_valid = '0;
-											body_status = '0;											
-											tag = '0;
-											tag_valid = '0;
-											tag_status = '0;		
-											
+										body = '0;
+										body_valid = '0;
+										body_status = '0;											
+										tag = '0;
+										tag_valid = '0;
+										tag_status = '0;		
+										
 	end
 end
+
+
 
 /*
 

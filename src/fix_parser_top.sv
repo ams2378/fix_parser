@@ -1,25 +1,34 @@
+/**
+ * @filename		fix_parser_top.sv 
+ *
+ * @brief     	        Top level: instantiation of other modules. 	
+ *
+ * @author		Adil Sadik <sadik.adil@gmail.com> 
+ */
+
+
 module fix_parser_top (
 
 
-	input					clk,
-	input					rst,
-	input[31:0]			data_i,
+	input			clk,
+	input			rst,
+	input[31:0]		data_i,
 	
 	
 	output[31:0]		tag_o,
 	output[31:0]		body_o,
-	output 				tag_valid_o,
-	output 				body_valid_o
+	output 			tag_valid_o,
+	output 			body_valid_o
 
 );
 
 
 wire[2:0]	soh_t;
 wire[2:0]	sep_t;
-wire 			tag_status_t_1;
-wire			body_status_t_1;
-wire 			tag_status_t_2;
-wire			body_status_t_2;
+wire 		tag_status_t_1;
+wire		body_status_t_1;
+wire 		tag_status_t_2;
+wire		body_status_t_2;
 
 
 fix_parser module_1(
