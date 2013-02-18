@@ -21,7 +21,7 @@ module fix_parser_out_module (
 	output			body_status_o,
 	output 			tag_valid_o,
 	output			body_valid_o,
-	output[1:0]		data_type
+//	output[1:0]		data_type
 );
 
 logic[31:0]			tag;
