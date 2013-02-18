@@ -6,7 +6,6 @@
  * @author		Adil Sadik <sadik.adil@gmail.com> 
  */
 
-
 module fix_parser(
 
 	input 				clk,

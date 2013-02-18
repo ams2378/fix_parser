@@ -6,7 +6,6 @@
  * @author		Adil Sadik <sadik.adil@gmail.com> 
  */
 
-
 module fix_parser_top (
 
 
@@ -19,7 +18,6 @@ module fix_parser_top (
 	output[3:0] 		value_valid_o
 
 );
-
 
 wire[2:0]	soh_t;
 wire[2:0]	sep_t;
@@ -42,7 +40,6 @@ fix_parser module_1(
 		.tag_status_o(tag_status_t_2),
 		.body_status_o(body_status_t_2)
 );
-
 
 fix_parser_out_module module_2(
 
