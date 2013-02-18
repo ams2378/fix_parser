@@ -15,12 +15,12 @@ reg 		rst;
 reg[31:0] 	data_i;
 reg[31:0] 	tag_o;
 reg[31:0] 	value_o;
-reg 		tag_valid_o;
-reg 		value_valid_o;
+reg[3:0] 	tag_valid_o;
+reg[3:0] 	value_valid_o;
 
 bit error;
 
-fix_parser_top dut(.clk, .rst, .data_i, .tag_o, .value_o, .tag_valid_o, .value_valid_o);
+fix_parser_top dut(.clk, .rst, .data_i, .out_o, .tag_valid_o, .value_valid_o);
 
 initial begin
 
