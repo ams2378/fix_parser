@@ -192,7 +192,7 @@ always_comb begin
 										tag_valid = '1;
 										tag_status = '1;
 	
-							end else if (body_status_i == '1) begin	
+							end else if (value_status_i == '1) begin	
 										
 										body = data_i[31:0];
 										body_valid = '1;
