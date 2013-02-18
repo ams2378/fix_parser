@@ -38,8 +38,8 @@ always_comb begin
 		case({soh_i, sep_i})
 				6'b011001:	begin 
 								out[7:0]  =  data_i[23:16]; 
-									     tag_valid = '0010;
-									     body_valid = '0000;
+									     tag_valid = 4'b0010;
+									     body_valid = 4'b0000;
 									tag_status = '0;
 								//	body = '0;
 								//	body_valid = '0;
