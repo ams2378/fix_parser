@@ -47,7 +47,7 @@ always_comb begin
 								end								
 				6'b011000:	begin
 								out[15:0]   = data_i[23:08];
-									tag_valid = '0110;
+									tag_valid = 4'b0110;
 									tag_status = '0;
 								//	body = '0;
 									body_valid = '0000;
@@ -55,32 +55,32 @@ always_comb begin
 								end															
 				6'b000011:	begin
 								out[15:0] = data_i[23:08];
-									body_valid = '0110;
+									body_valid = 4'b0110;
 									body_status = '0;
 								//	tag = '0;
-									tag_valid = '0000;
+									tag_valid = '0;
 									tag_status = '0;
 								end																
 				6'b001011:	begin
 								out[7:0] = data_i[23:16];
-									body_valid = '0100;
+									body_valid = 4'b0100;
 									body_status = '0;
 								//	tag = '0;
-									tag_valid = '0000;
+									tag_valid = '0;
 									tag_status = '0;
 								end															
 									
 				6'b010000:  begin
 								out[7:0] = data_i[15:08];
-									tag_valid = '0010;
+									tag_valid = 4'b0010;
 									tag_status = '0;
 								//	body = '0;
-									body_valid = '0000;
+									body_valid = '0;
 									body_status = '1;
 								end																										
 				6'b000010:  begin
 								out [7:0] = data_i[15:08];
-									body_valid = '0010;
+									body_valid = 4'b0010;
 									body_status = '0;
 									tag = '0;
 								//	tag_valid = '0;
@@ -100,7 +100,7 @@ always_comb begin
 				case (soh_i)
 					3'b000: begin
 								out[31:8]	 =  data_i[31:8];   
-									body_valid = '1110; 
+									body_valid = 4'b1110; 
 								//	tag = '0;
 									tag_valid = '0;  
 									tag_status = '1; 		 
@@ -108,18 +108,18 @@ always_comb begin
 							  end
 					3'b001: begin 
 								out[23:8]  = data_i[31:16];			 
-									body_valid = '0110; 
+									body_valid = 4'b0110; 
 									body_status = '0;
 								out[7:0]  =  data_i[7:0];		
-									tag_valid = '001;
+									tag_valid = 4'b0001;
 									tag_status = '1;
 							  end
 					3'b010: begin 
 								out[23:16]  = data_i[31:24];		 
-									body_valid = '0100; 
+									body_valid = 4'b0100; 
 									body_status = '0;
 								out[15:0]  = data_i[15:0];		
-									tag_valid = '0011;		
+									tag_valid = 4'b0011;		
 									tag_status = '1;
 							  end
 					3'b011: begin 
@@ -127,7 +127,7 @@ always_comb begin
 									body_valid = '0; 
 									body_status = '0;
 									out[23:0] = data_i[23:0];		
-									tag_valid = '0111;
+									tag_valid = 4'b0111;
 								   tag_status = '1;
 							  end
 					default: begin body = '0;				
@@ -143,7 +143,7 @@ always_comb begin
 				case (sep_i)
 							3'b000: begin 	
 									out[23:0] = data_i[31:8]; 					  
-										tag_valid = '0111; 
+										tag_valid = 4'b0111; 
 									//	body = '0;
 										body_valid = '0;
 										tag_status = '0; 
@@ -151,18 +151,18 @@ always_comb begin
 							 	end
 							3'b001: begin 
 									out[23:8] = data_i[31:16];			 
-										tag_valid = '0110; 
+										tag_valid = 4'b0110; 
 										tag_status = '0;
 									out[7:0]  = data_i[7:0];		
-										body_valid = '0001;
+										body_valid = 4'b0001;
 										body_status = '1;
 								end
 							3'b010: begin 
 									out[23:16] = data_i[31:24];		 
-										tag_valid = '0100; 
+										tag_valid = 4'b0100; 
 										tag_status = '0;											
 									out[15:0]  = data_i[15:0];		
-										body_valid = '0011;	
+										body_valid = 4'b0011;	
 									        body_status = '1;	
 								end
 							3'b011: begin 
@@ -170,7 +170,7 @@ always_comb begin
 										tag_valid = '0; 
 										tag_status = '0;
 									out[23:0]  = data_i[23:0];	
-										body_valid = '0111;
+										body_valid = 4'b0111;
 										body_status = '1;
 								end
 							default: begin 
@@ -190,13 +190,13 @@ always_comb begin
 										body_valid = '0;
 										body_status = '0;											
 									out	 = data_i[31:0];
-										tag_valid = '1111;
+										tag_valid = 4'b1111;
 										tag_status = '1;
 	
 							end else if (value_status_i == '1) begin	
 										
 									out	 = data_i[31:0];
-										body_valid = '1111;
+										body_valid = 4'b1111;
 										body_status = '1;											
 									//	tag = '0;
 										tag_valid = '0;
