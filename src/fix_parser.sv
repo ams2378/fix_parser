@@ -1,3 +1,13 @@
+
+/**
+ * @filename		fix_parser.sv 
+ *
+ * @brief     	        detectes SOH characters 	
+ *
+ * @author		Adil Sadik <sadik.adil@gmail.com> 
+ */
+
+
 module fix_parser(
 
 	input 				clk,

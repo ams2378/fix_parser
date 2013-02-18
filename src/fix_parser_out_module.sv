@@ -1,3 +1,12 @@
+/**
+ * @filename		fix_parser_out_module.sv 
+ *
+ * @brief     	        detects TAG and VALUE from 32 bit received data. 	
+ *
+ * @author		Adil Sadik <sadik.adil@gmail.com> 
+ */
+
+
 module fix_parser_out_module (
 
 	input[31:0]		data_i,

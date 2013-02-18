@@ -1,3 +1,13 @@
+
+/**
+ * @filename		fix_parser_top.sv 
+ *
+ * @brief     	        Top level: instantiation of other modules. 	
+ *
+ * @author		Adil Sadik <sadik.adil@gmail.com> 
+ */
+
+
 module fix_parser_top (
 
 

@@ -1,3 +1,13 @@
+/**
+ * @filename		dut.sv 
+ *
+ * @brief     	        A simple testbench. 	
+ *
+ * @author		Adil Sadik <sadik.adil@gmail.com> 
+ */
+
+
+
 module parser_test();
 
 reg 		clk;
