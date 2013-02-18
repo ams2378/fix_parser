@@ -13,8 +13,7 @@ module parser_test();
 reg 		clk;
 reg 		rst;
 reg[31:0] 	data_i;
-reg[31:0] 	tag_o;
-reg[31:0] 	value_o;
+reg[31:0] 	out_o;
 reg[3:0] 	tag_valid_o;
 reg[3:0] 	value_valid_o;
 
