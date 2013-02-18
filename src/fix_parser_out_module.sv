@@ -34,167 +34,164 @@ always_comb begin
 		case({soh_i, sep_i})
 				6'b011001:	begin 
 								out[7:0]  =  data_i[23:16]; 
-									     tag_valid = 4'b0010;
-									     body_valid = 4'b0000;
-									tag_status = '0;
-									body_status = '1;
-								end								
+							     	tag_valid = 4'b0010;
+							    	body_valid = 4'b0000;
+								tag_status = '0;
+								body_status = '1;
+						end								
 				6'b011000:	begin
 								out[15:0]   = data_i[23:08];
-									tag_valid = 4'b011;
-									tag_status = '0;
-									body_valid = '0;
-									body_status = '1;
-								end															
+								tag_valid = 4'b011;
+								tag_status = '0;
+								body_valid = '0;
+								body_status = '1;
+						end															
 				6'b000011:	begin
 								out[15:0] = data_i[23:08];
-									body_valid = 4'b0110;
-									body_status = '0;
-									tag_valid = '0;
-									tag_status = '0;
-								end																
+								body_valid = 4'b0110;
+								body_status = '0;
+								tag_valid = '0;
+								tag_status = '0;
+						end																
 				6'b001011:	begin
 								out[7:0] = data_i[23:16];
-									body_valid = 4'b0100;
-									body_status = '0;
-									tag_valid = '0;
-									tag_status = '0;
-								end															
-									
-				6'b010000:  begin
+								body_valid = 4'b0100;
+								body_status = '0;
+								tag_valid = '0;
+								tag_status = '0;
+						end																	
+				6'b010000:  	begin
 								out[7:0] = data_i[15:08];
-									tag_valid = 4'b0010;
-									tag_status = '0;
-									body_valid = '0;
-									body_status = '1;
-								end																										
-				6'b000010:  begin
+								tag_valid = 4'b0010;
+								tag_status = '0;
+								body_valid = '0;
+								body_status = '1;
+						end																										
+				6'b000010:  	begin
 								out [7:0] = data_i[15:08];
-									body_valid = 4'b0010;
-									body_status = '0;
-									//tag = '0;
-									tag_valid = '0;
-									tag_status = '0;
-								end	
-				default:		begin
-									out = '0;
-									body_valid = '0;
-									body_status = '0;
-									tag_valid = '0;
-									tag_status = '0;
-								end	
+								body_valid = 4'b0010;
+								body_status = '0;
+								tag_valid = '0;
+								tag_status = '0;
+						end	
+				default:	begin
+								out = '0;
+								body_valid = '0;
+								body_status = '0;
+								tag_valid = '0;
+								tag_status = '0;
+						end	
 		endcase		
 	end else if ((soh_i != 3'b111) && (sep_i == 3'b111)) begin
 				case (soh_i)
 					3'b000: begin
-								out[31:8]	 =  data_i[31:8];   
-									body_valid = 4'b1110; 
-									tag_valid = '0;  
-									tag_status = '1; 		 
-									body_status = '0;
-							  end
+								out[31:8] =  data_i[31:8];   
+								body_valid = 4'b1110; 
+								tag_valid = '0;  
+								tag_status = '1; 		 
+								body_status = '0;
+						end
 					3'b001: begin 
 								out[23:8]  = data_i[31:16];			 
-									body_valid = 4'b0110; 
-									body_status = '0;
+								body_valid = 4'b0110; 
+								body_status = '0;
 								out[7:0]  =  data_i[7:0];		
-									tag_valid = 4'b0001;
-									tag_status = '1;
-							  end
+								tag_valid = 4'b0001;
+								tag_status = '1;
+						end
 					3'b010: begin 
 								out[23:16]  = data_i[31:24];		 
-									body_valid = 4'b0100; 
-									body_status = '0;
+								body_valid = 4'b0100; 
+								body_status = '0;
 								out[15:0]  = data_i[15:0];		
-									tag_valid = 4'b0011;		
-									tag_status = '1;
-							  end
+								tag_valid = 4'b0011;		
+								tag_status = '1;
+						end
 					3'b011: begin 
-									body_valid = '0; 
-									body_status = '0;
-									out[23:0] = data_i[23:0];		
-									tag_valid = 4'b0111;
-								   tag_status = '1;
-							  end
+								body_valid = '0; 
+								body_status = '0;
+								out[23:0] = data_i[23:0];		
+								tag_valid = 4'b0111;
+								tag_status = '1;
+						end
 					default: begin 						
-									body_valid = '0; 
-									out = '0;
-									tag_valid = '0;
-									tag_status = '0;
-									body_status = '0;
-						  	   end
+								body_valid = '0; 
+								out = '0;
+								tag_valid = '0;
+								tag_status = '0;
+								body_status = '0;
+					  	end
 				endcase
 	end else if ((soh_i == 3'b111) && (sep_i != 3'b111)) begin
 				case (sep_i)
-							3'b000: begin 	
-									out[23:0] = data_i[31:8]; 					  
-										tag_valid = 4'b0111; 
-										body_valid = '0;
-										tag_status = '0; 
-										body_status = '1;
-							 	end
-							3'b001: begin 
-									out[23:8] = data_i[31:16];			 
-										tag_valid = 4'b0110; 
-										tag_status = '0;
-									out[7:0]  = data_i[7:0];		
-										body_valid = 4'b0001;
-										body_status = '1;
-								end
-							3'b010: begin 
-									out[23:16] = data_i[31:24];		 
-										tag_valid = 4'b0100; 
-										tag_status = '0;											
-									out[15:0]  = data_i[15:0];		
-										body_valid = 4'b0011;	
-									        body_status = '1;	
-								end
-							3'b011: begin 
-										tag_valid = '0; 
-										tag_status = '0;
-									out[23:0]  = data_i[23:0];	
-										body_valid = 4'b0111;
-										body_status = '1;
-								end
-							default: begin 
-									out	 = '0;				
-										body_valid = '0; 
-										tag_valid = '0;
-										tag_status = '0;
-										body_status = '0;
-								end
+					3'b000: begin 	
+								out[23:0] = data_i[31:8]; 					  
+								tag_valid = 4'b0111; 
+								body_valid = '0;
+								tag_status = '0; 
+								body_status = '1;
+						end
+					3'b001: begin 
+								out[23:8] = data_i[31:16];			 
+								tag_valid = 4'b0110; 
+								tag_status = '0;
+								out[7:0]  = data_i[7:0];		
+								body_valid = 4'b0001;
+								body_status = '1;
+						end
+					3'b010: begin 
+								out[23:16] = data_i[31:24];		 
+								tag_valid = 4'b0100; 
+								tag_status = '0;											
+								out[15:0]  = data_i[15:0];		
+								body_valid = 4'b0011;	
+							        body_status = '1;	
+						end
+					3'b011: begin 
+								tag_valid = '0; 
+								tag_status = '0;
+								out[23:0]  = data_i[23:0];	
+								body_valid = 4'b0111;
+								body_status = '1;
+						end
+					default: begin 
+								out	 = '0;				
+								body_valid = '0; 
+								tag_valid = '0;
+								tag_status = '0;
+								body_status = '0;
+						end
 				endcase
 	end else if ((soh_i == 3'b111) && (sep_i == 3'b111)) begin	
 						
-							if (tag_status_i == '1)	begin
-										body_valid = '0;
-										body_status = '0;											
-									out	 = data_i[31:0];
-										tag_valid = 4'b1111;
-										tag_status = '1;
+				if (tag_status_i == '1)	begin
+								body_valid = '0;
+								body_status = '0;																				 out = data_i[31:0];
+								tag_valid = 4'b1111;
+								tag_status = '1;
 	
-							end else if (value_status_i == '1) begin	
+				end else if (value_status_i == '1) begin	
 										
-									out	 = data_i[31:0];
-										body_valid = 4'b1111;
-										body_status = '1;											
-										tag_valid = '0;
-										tag_status = '0;																					
+								out = data_i[31:0];
+								body_valid = 4'b1111;
+								body_status = '1;											
+								tag_valid = '0;
+								tag_status = '0;																					
 							end else begin
-									out	 = '0;
-										body_valid = '0;
-										body_status = '0;											
-										tag_valid = '0;
-										tag_status = '0;	
+								out= '0;
+								body_valid = '0;
+								body_status = '0;											
+								tag_valid = '0;
+								tag_status = '0;	
 							end
 	end else begin
-										out = '0;
-										body_valid = '0;
-										body_status = '0;											
-										tag_valid = '0;
-										tag_status = '0;		
+						 		out = '0; 
+								body_valid = '0;
+								body_status = '0;											
+								tag_valid = '0;
+								tag_status = '0;		
 										
-	end
+		end
 end
 
 
