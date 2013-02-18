@@ -16,9 +16,9 @@ module fix_parser_top (
 	
 	
 	output[31:0]		tag_o,
-	output[31:0]		body_o,
+	output[31:0]		value_o,
 	output 			tag_valid_o,
-	output 			body_valid_o
+	output 			value_valid_o
 
 );
 
@@ -55,11 +55,11 @@ fix_parser_out_module module_2(
 		.body_status_i(body_status_t_2),
 		
 		.tag_o,
-		.body_o,
+		.value_o,
 		.tag_valid_o,
-		.body_valid_o,
+		.value_valid_o,
 		.tag_status_o(tag_status_t_1),
-		.body_status_o(body_status_t_1)
+		.value_status_o(body_status_t_1)
 );
 
 endmodule
