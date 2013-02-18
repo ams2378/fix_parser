@@ -13,14 +13,14 @@ module fix_parser_out_module (
 	input[2:0] 		soh_i,
 	input[2:0]		sep_i,
 	input			tag_status_i,
-	input			body_status_i,
+	input			value_status_i,
 	
 	output[31:0]		tag_o,
-	output[31:0]		body_o,
+	output[31:0]		value_o,
 	output			tag_status_o,
-	output			body_status_o,
+	output			value_status_o,
 	output 			tag_valid_o,
-	output			body_valid_o
+	output			value_valid_o
 //	output[1:0]		data_type
 );
 
@@ -252,9 +252,9 @@ end
 assign tag_o = tag;
 assign tag_status_o = tag_status;
 assign tag_valid_o = tag_valid;
-assign body_o = body;
-assign body_status_o = body_status;
-assign body_valid_o = body_valid;
+assign value_o = body;
+assign value_status_o = body_status;
+assign value_valid_o = body_valid;
 
 endmodule
 
