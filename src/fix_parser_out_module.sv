@@ -130,7 +130,7 @@ always_comb begin
 									tag_valid = 4'b0111;
 								   tag_status = '1;
 							  end
-					default: begin body = '0;				
+					default: begin 		//	body = '0;				
 									body_valid = '0; 
 									out = '0;
 									tag_valid = '0;
