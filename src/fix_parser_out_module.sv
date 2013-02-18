@@ -50,7 +50,7 @@ always_comb begin
 									tag_valid = 4'b0110;
 									tag_status = '0;
 								//	body = '0;
-									body_valid = '0000;
+									body_valid = '0;
 									body_status = '1;
 								end															
 				6'b000011:	begin
