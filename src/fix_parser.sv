@@ -26,8 +26,8 @@ logic[2:0] 	sep;
 logic 	  	tag_status;
 logic		body_status;
 
-logic [7:0] 	soh_c = 7'h01;		// ASCII for "="
-logic [7:0] 	sep_c = 7'h3d;		// ASCII for "^"
+logic [7:0] 	soh_c = 7'h01;		// ASCII for "^"
+logic [7:0] 	sep_c = 7'h3d;		// ASCII for "="
 
 
 //always @(posedge clk) begin

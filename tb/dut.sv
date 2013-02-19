@@ -47,6 +47,7 @@ data_i = 31'h39323336;
 #1 clk = 0;
 
 data_i = 31'h333d4d49;
+//	     tt=bb	
 
 #1 clk = 1;
 #1 clk = 0;
