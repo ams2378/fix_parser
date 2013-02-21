@@ -108,8 +108,8 @@ end
 
 
 always_ff @( posedge clk ) begin
-	if (incr_i == 1)		i = i + 1;
-	else				i = 1;
+	if (incr_i == 1)		i <= i + 1;
+	else				i <= 1;
 end
 
 assign tag_o = tag;
