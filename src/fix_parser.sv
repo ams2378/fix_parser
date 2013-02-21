@@ -52,13 +52,13 @@ always @(posedge data_i) begin
 					tag_s = '1;
 					tag_e = '0;
 					value_s = '0;
-					value-e = '0;
+					value_e = '0;
 					next_state = tag;
 				end else if (data_i == sep_c) begin
 					tag_s = '0;
 					tag_e = '1;
 					value_s = '0;
-					value-e = '0;
+					value_e = '0;
 					next_state = value;
 				end
 		end
@@ -75,7 +75,7 @@ always @(posedge data_i) begin
 					tag_s = '0;
 					tag_e = '0;
 					value_s = '0;
-					value-e = '1;
+					value_e = '1;
 					next_state = tag;
 				end	
 		end
