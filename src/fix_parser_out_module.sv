@@ -38,6 +38,7 @@ logic [7:0] 			first_tag = 8'h38;		// ASCII for "8"
 logic [15:0] 			last_tag = 16'h3130;		// ASCII for "10"
 
 int 	i = 1;
+int	j=1;
 bit	last_tag_valid;
 
 always_ff @(posedge clk) begin
@@ -86,10 +87,11 @@ always_ff @(state or start_tag_i or start_value_i) begin
 		end
 		state3: begin
 				if (start_value_i == 1) begin
-					value[i*8 +: 8] = data_i;
-					i = i + 1;	
+					value[i*j +: 8] = data_i;
+					j = j + 1;	
 					next_state = state3;
-				end else begin 
+				end else begin
+					j = 1; 
 			 		if (end_of_body == 1) 		next_state = state0;
 					else 				next_state = state1;
 				end
