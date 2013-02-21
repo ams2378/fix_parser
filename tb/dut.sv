@@ -31,7 +31,7 @@ initial begin
 
 reg [1183:0] data ;
 int temp;
-int i;
+int i = 1;
 
 temp = 148;
 
@@ -61,7 +61,7 @@ while (temp >=0) begin
 #1 clk = 1;
 
 rst= '0;
-data_i [7+i :0] = 8'h33;
+data_i [8*i +: 8] = 8'h33;
 i = i+ 8;
 temp++;
 
