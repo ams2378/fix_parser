@@ -22,10 +22,10 @@ module fix_parser(
 );
 
 
-parameter 			initial_s = 0;
-parameter			tag = 1;
-parameter			value = 2;
-logic [1:0]				state, next_state;
+parameter 			initial_s = 2'b00;
+parameter			tag = 2'01;
+parameter			value = 2'10;
+logic [1:0]			state, next_state;
 logic[7:0]			data;
 logic				tag_s;
 logic   			tag_e;
@@ -41,9 +41,9 @@ always @(posedge data_i or state) begin
 
 		initial_s: begin
 				if (data_i == soh_c) 
-					next_state = tag;
+					next_state <= tag;
 						
-				else	next_state = initial_s;
+				else	next_state <= initial_s;
 		end
 		
 		tag:	begin
@@ -53,13 +53,13 @@ always @(posedge data_i or state) begin
 					tag_e = '0;
 					value_s = '0;
 					value_e = '0;
-					next_state = tag;
+					next_state <= tag;
 				end else if (data_i == sep_c) begin
 					tag_s = '0;
 					tag_e = '1;
 					value_s = '0;
 					value_e = '0;
-					next_state = value;
+					next_state <= value;
 				end
 		end
 
@@ -70,13 +70,13 @@ always @(posedge data_i or state) begin
 					tag_e = '0;
 					value_s = '1;
 					value_e = '0;
-					next_state = value;
+					next_state <= value;
 				end else if (data_i == soh_c) begin
 					tag_s = '0;
 					tag_e = '0;
 					value_s = '0;
 					value_e = '1;
-					next_state = tag;
+					next_state <= tag;
 				end	
 		end
 
