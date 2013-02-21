@@ -34,7 +34,7 @@ logic   			tag_e;
 logic				value_s;
 logic				value_e;
 
-logic [7:0] 			soh_c = 7'h01;		// ASCII for "^"
+logic [7:0] 			soh_c = 7'h7c;		// ASCII for "^"
 logic [7:0] 			sep_c = 7'h3d;		// ASCII for "="
 
 always_ff @(posedge clk) begin
