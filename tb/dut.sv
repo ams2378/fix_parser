@@ -29,7 +29,7 @@ fix_parser dut(.clk, .rst, .ctrl, .data_i, .data_o, .tag_s_o, .tag_e_o, .value_s
 initial begin
 
 
-reg [1183:0] data ;
+reg [0:1183] data ;
 int temp;
 int i = 0;
 
@@ -61,7 +61,7 @@ while (temp >=0) begin
 	#1 clk = 1;
 
 	rst= '0;
-	data_i = data [8*temp -: 8];
+	data_i = data [8*i +: 8];
 	i = i++;
 	temp--;
 
