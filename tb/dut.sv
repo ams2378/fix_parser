@@ -61,7 +61,7 @@ while (temp >=0) begin
 #1 clk = 1;
 
 rst= '0;
-data_i [8*i +: 8] = 8'h33;
+data_i = data [8*i +: 8];
 i = i+ 8;
 temp++;
 
