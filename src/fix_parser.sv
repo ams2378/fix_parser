@@ -42,17 +42,15 @@ always_ff @(posedge clk) begin
 	else			state <= next_state;
 end
 
-
-
-always_ff @(posedge data_i or state) begin
+always_ff @( data_i or state) begin
 
 	case(state) 
 
 		initial_s: 
 				if (data_i == soh_c) 
-					next_state <= tag;
+					next_state = tag;
 						
-				else	next_state <= initial_s;
+				else	next_state = initial_s;
 		
 		
 		tag:	
@@ -62,13 +60,13 @@ always_ff @(posedge data_i or state) begin
 					tag_e = '0;
 					value_s = '0;
 					value_e = '0;
-					next_state <= tag;
+					next_state = tag;
 				end else if (data_i == sep_c) begin
 					tag_s = '0;
 					tag_e = '1;
 					value_s = '0;
 					value_e = '0;
-					next_state <= value;
+					next_state = value;
 				end
 		
 
@@ -79,13 +77,13 @@ always_ff @(posedge data_i or state) begin
 					tag_e = '0;
 					value_s = '1;
 					value_e = '0;
-					next_state <= value;
+					next_state = value;
 				end else if (data_i == soh_c) begin
 					tag_s = '0;
 					tag_e = '0;
 					value_s = '0;
 					value_e = '1;
-					next_state <= tag;
+					next_state = tag;
 				end	
 
 	endcase
