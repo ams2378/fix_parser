@@ -69,7 +69,7 @@ always @(posedge data_i) begin
 					tag_s = '0;
 					tag_e = '0;
 					value_s = '1;
-					value-e = '0;
+					value_e = '0;
 					next_state = value;
 				end else if (data_i == soh_c) begin
 					tag_s = '0;
