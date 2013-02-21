@@ -28,10 +28,19 @@ initial begin
 
 $vcdpluson;
 
-rst = 0;
-
 clk = 0;
-rst = 0;
+
+#1 clk = 1;
+#1 clk = 0;
+
+rst = '1;
+data_i = 8'h01;
+
+#1 clk = 1;
+#1 clk = 0;
+
+rst= '1;
+data_i = 8'h33;
 
 #1 clk = 1;
 #1 clk = 0;
