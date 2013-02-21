@@ -50,18 +50,8 @@ always_ff @(state or data_i) begin
 		2'b00: begin 
 				if (data_i == soh_c) begin
 					next_state = tag;
-					data = '0;
-					tag_s = '0;
-					tag_e = '0;
-					value_s = '0;
-					value_e = '0;
 				end else begin
 					next_state = initial_s;
-					data = '0;
-					tag_s = '0;
-					tag_e = '0;
-					value_s = '0;
-					value_e = '0;
 				end
 		end
 		2'b01: begin
