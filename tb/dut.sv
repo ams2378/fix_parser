@@ -57,13 +57,13 @@ data_i = 8'h33;
 
 while (temp >=0) begin
 
-#1 clk = 0;
-#1 clk = 1;
+	#1 clk = 0;
+	#1 clk = 1;
 
-rst= '0;
-data_i = data [8*i +: 8];
-i = i+ 8;
-temp++;
+	rst= '0;
+	data_i = data [8*i +: 8];
+	i = i+ 8;
+	temp--;
 
 end
 
