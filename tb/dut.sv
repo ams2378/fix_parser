@@ -33,7 +33,7 @@ reg [1183:0] data ;
 int temp;
 int i = 0;
 
-temp = 148;
+temp = 147;
 
 data = 1184'h7c383d4649582e342e32207c20393d313738207c2033353d38207c2034393d50484c58207c2035363d50455253207c2035323d32303037313132332d30353a33303a30302e303030207c;
 
@@ -61,7 +61,7 @@ while (temp >=0) begin
 	#1 clk = 1;
 
 	rst= '0;
-	data_i = data [8*i +: 8];
+	data_i = data [8*temp -: 8];
 	i = i++;
 	temp--;
 
