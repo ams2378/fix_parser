@@ -22,7 +22,9 @@ module fix_parser(
 );
 
 
-parameter 			initial, tag, value;
+parameter 			initial_s;
+parameter			tag;
+parameter			value;
 logic				state, next_state;
 output				data;
 output				tag_s;
@@ -37,7 +39,7 @@ always @(posedge data_i) begin
 
 	case(state) begin
 
-		initial: begin
+		initial_s: begin
 				if (data_i == soh_c) 
 					next_state = tag;
 						
