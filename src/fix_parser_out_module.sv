@@ -42,7 +42,7 @@ bit	last_tag_valid;
 
 always_ff @(posedge clk) begin
 
-	if (rst)		state <= initial_s;
+	if (rst)		state <= state0;
 	else			state <= next_state;
 end
 
