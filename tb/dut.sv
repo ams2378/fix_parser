@@ -24,7 +24,7 @@ module parser_test();
 
 bit error;
 
-fix_parser dut(.clk, .rst, .ctrl, .data_i, .data_o, .tag_s_o, .tag_e_o, .value_s_o, value_e_o);
+fix_parser dut(.clk, .rst, .ctrl, .data_i, .data_o, .tag_s_o, .tag_e_o, .value_s_o, .value_e_o);
 
 initial begin
 
