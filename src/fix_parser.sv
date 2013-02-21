@@ -26,11 +26,11 @@ parameter 			initial_s = 0;
 parameter			tag = 1;
 parameter			value = 2;
 logic				state, next_state;
-output				data;
-output				tag_s;
-output   			tag_e;
-output				value_s;
-output				value_e;
+logic[7:0]			data;
+logic				tag_s;
+logic   			tag_e;
+logic				value_s;
+logic				value_e;
 
 logic [7:0] 	soh_c = 7'h01;		// ASCII for "^"
 logic [7:0] 	sep_c = 7'h3d;		// ASCII for "="
