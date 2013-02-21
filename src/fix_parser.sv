@@ -37,29 +37,28 @@ logic				value_e;
 logic [7:0] 			soh_c = 7'h01;		// ASCII for "^"
 logic [7:0] 			sep_c = 7'h3d;		// ASCII for "="
 
-/*
+state = initial_s;
+
 always_ff @(posedge clk) begin
 
 	if (rst)		state <= initial_s;
 	else			state <= next_state;
 end
 
-*/
-
-always_ff @(clk) begin
+always_ff @(state or data_i) begin
 		
-	case(next_state) 
+	case(state) 
 		
 		2'b00: begin 
 				if (data_i == soh_c) begin
-					next_state <= tag;
+					next_state = tag;
 					data = '0;
 					tag_s = '0;
 					tag_e = '0;
 					value_s = '0;
 					value_e = '0;
 				end else begin
-					next_state <= initial_s;
+					next_state = initial_s;
 					data = '0;
 					tag_s = '0;
 					tag_e = '0;
@@ -74,13 +73,13 @@ always_ff @(clk) begin
 					tag_e = '0;
 					value_s = '0;
 					value_e = '0;
-					next_state <= tag;
+					next_state = tag;
 				end else if (data_i == sep_c) begin
 					tag_s = '0;
 					tag_e = '1;
 					value_s = '0;
 					value_e = '0;
-					next_state <= value;
+					next_state = value;
 				end
 		end
 		2'b10: begin	
@@ -90,13 +89,13 @@ always_ff @(clk) begin
 					tag_e = '0;
 					value_s = '1;
 					value_e = '0;
-					next_state <= value;
+					next_state = value;
 				end else if (data_i == soh_c) begin
 					tag_s = '0;
 					tag_e = '0;
 					value_s = '0;
 					value_e = '1;
-					next_state <= tag;
+					next_state = tag;
 				end	
 		end
 	endcase
