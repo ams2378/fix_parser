@@ -63,14 +63,14 @@ always_ff @(state or start_tag_i or start_value_i) begin
 		end
 		state1: begin
 				if (start_tag_i == 1) begin
-					tag[i*8 +: 8] = data_i;
+					tag[8*i +: 8] = data_i;
 					incr_i = 1;
 				//	i = i + 1;	
 					next_state = state1;
 				end else if (start_tag_i == 0) begin
 					if (tag == first_tag) begin
 						incr_i = 0;
-				//		i = 1;
+						i = 1;
 						start_of_header = '1;
 						next_state = state2;
 					end else if (tag == last_tag) begin
@@ -106,11 +106,13 @@ always_ff @(state or start_tag_i or start_value_i) begin
 	endcase
 end
 
-
+/*
 always_ff @( posedge clk ) begin
 	if (incr_i == 1)		i <= i + 1;
 	else				i <= 1;
 end
+*/
+
 
 assign tag_o = tag;
 assign value_o = value;
