@@ -6,7 +6,6 @@
  * @author		Adil Sadik <sadik.adil@gmail.com> 
  */
 
-
 module fix_parser_out_module (
 
 	input[31:0]		data_i,
@@ -177,13 +176,13 @@ always_comb begin
 								body_status = '1;											
 								tag_valid = '0;
 								tag_status = '0;																					
-							end else begin
+				end else begin
 								out= '0;
 								body_valid = '0;
 								body_status = '0;											
 								tag_valid = '0;
 								tag_status = '0;	
-							end
+				end
 	end else begin
 						 		out = '0; 
 								body_valid = '0;
@@ -191,7 +190,7 @@ always_comb begin
 								tag_valid = '0;
 								tag_status = '0;		
 										
-		end
+	end
 end
 
 

@@ -29,7 +29,6 @@ logic		body_status;
 logic [7:0] 	soh_c = 7'h01;		// ASCII for "^"
 logic [7:0] 	sep_c = 7'h3d;		// ASCII for "="
 
-
 //always @(posedge clk) begin
 
 always_comb begin
@@ -37,7 +36,6 @@ always_comb begin
 	tag_status = tag_status_i;
 	body_status = body_status_i;
 	
-			
 			/* index soh */			
 	
 			if (data_i[7:0] == soh_c) 
