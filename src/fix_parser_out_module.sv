@@ -63,7 +63,8 @@ always_ff @(state or start_tag_i or start_value_i) begin
 		state1: begin
 				if (start_tag_i == 1) begin
 					tag[i*8 +: 8] = data_i;
-					i = i + 1;	
+					i++;
+				//	i = i + 1;	
 					next_state = state1;
 				end else if (start_tag_i == 0) begin
 					if (tag == first_tag) begin
@@ -88,7 +89,8 @@ always_ff @(state or start_tag_i or start_value_i) begin
 		state3: begin
 				if (start_value_i == 1) begin
 					value[8*j +: 8] = data_i;
-					j = j + 1;	
+					j++;
+				//	j = j + 1;	
 					next_state = state3;
 				end else begin
 					j = 1; 
