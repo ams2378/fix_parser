@@ -103,7 +103,8 @@ always_ff @(state or start_tag_i or start_value_i) begin
 end
 
 
-always_ff @(posedge clk and incr_i ) begin
+always_ff @( posedge clk ) begin
+	if (incr_i == 1)
 		i = i + 1;
 end
 
