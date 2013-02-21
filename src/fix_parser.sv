@@ -35,7 +35,7 @@ logic				value_e;
 logic [7:0] 	soh_c = 7'h01;		// ASCII for "^"
 logic [7:0] 	sep_c = 7'h3d;		// ASCII for "="
 
-always @(posedge data_i or state) begin
+always_ff @(posedge data_i or state) begin
 
 	case(state) 
 
@@ -83,7 +83,7 @@ always @(posedge data_i or state) begin
 	endcase
 end
 
-always @(posedge clk) begin
+always_ff @(posedge clk) begin
 
 //	if (rst)		state <= initial_s;
 //	else			state <= next_state;
