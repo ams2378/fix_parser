@@ -25,7 +25,7 @@ module fix_parser(
 parameter 			initial_s = 0;
 parameter			tag = 1;
 parameter			value = 2;
-logic				state, next_state;
+logic [1:0]				state, next_state;
 logic[7:0]			data;
 logic				tag_s;
 logic   			tag_e;
@@ -85,9 +85,9 @@ end
 
 always @(posedge clk) begin
 
-	if (rst)		state <= initial_s;
-	else			state <= next_state;
-//				state <= next_state;
+//	if (rst)		state <= initial_s;
+//	else			state <= next_state;
+				state <= next_state;
 end
 
 
