@@ -10,16 +10,22 @@
 
 module parser_test();
 
-reg 		clk;
-reg 		rst;
-reg[31:0] 	data_i;
-reg[31:0] 	out_o;
-reg[3:0] 	tag_valid_o;
-reg[3:0] 	value_valid_o;
+
+	reg 				clk,
+	reg				rst,
+	reg				ctrl;
+
+	reg[7:0]			data_i,
+	
+	reg[7:0]			data_o,
+	reg				tag_s_o,
+	reg   				tag_e_o,
+	reg				value_s_o,
+	reg				value_e_o,
 
 bit error;
 
-fix_parser_top dut(.clk, .rst, .data_i, .out_o, .tag_valid_o, .value_valid_o);
+fix_parser dut(.clk, .rst, .ctrl, .data_i, .data_o, .tag_s_o, .tag_e_o, .value_s_o, value_e_o);
 
 initial begin
 
@@ -31,26 +37,43 @@ rst = 0;
 #1 clk = 1;
 #1 clk = 0;
 
-data_i = 31'h0132323d;
+data_i = 8'h01;
 
 #1 clk = 1;
 #1 clk = 0;
 
-data_i = 31'h33330132;
+data_i = 8'h33;
 
 #1 clk = 1;
 #1 clk = 0;
 
-data_i = 31'h39323336;
+data_i = 8'h39;
 
 #1 clk = 1;
 #1 clk = 0;
 
-data_i = 31'h333d4d49;
-//	     tt=bb	
+data_i = 8'h3d;
 
 #1 clk = 1;
 #1 clk = 0;
+
+data_i = 8'h43;
+
+#1 clk = 1;
+#1 clk = 0;
+
+data_i = 8'h49;
+
+#1 clk = 1;
+#1 clk = 0;
+
+data_i = 8'h43;
+
+#1 clk = 1;
+#1 clk = 0;
+
+data_i = 8'h01;
+
 
 end
 
