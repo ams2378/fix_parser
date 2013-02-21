@@ -24,13 +24,16 @@ module parser_test();
 
 fix_parser dut(.clk, .rst, .ctrl, .data_i, .data_o, .tag_s_o, .tag_e_o, .value_s_o, .value_e_o);
 
-rag data [1183:0];
-int temp;
-int i;
+
 
 initial begin
 
 temp = 148;
+
+rag [1183:0] data ;
+int temp;
+int i;
+
 
 data = 1184'h7c383d4649582e342e32207c20393d313738207c2033353d38207c2034393d50484c58207c2035363d50455253207c2035323d32303037313132332d30353a33303a30302e303030207c;
 
