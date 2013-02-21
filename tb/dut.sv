@@ -11,12 +11,11 @@
 module parser_test();
 
 
-	reg 				clk,
+	reg 				clk;
 	reg				rst;
 	reg				ctrl;
 
 	reg[7:0]			data_i;
-	
 	reg[7:0]			data_o;
 	reg				tag_s_o;
 	reg   				tag_e_o;
