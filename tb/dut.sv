@@ -29,7 +29,7 @@ fix_parser dut(.clk, .rst, .ctrl, .data_i, .data_o, .tag_s_o, .tag_e_o, .value_s
 initial begin
 
 
-reg [0:1183] data ;
+reg [1183:0] data ;
 int temp;
 int i = 0;
 
