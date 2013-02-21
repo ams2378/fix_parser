@@ -43,7 +43,7 @@ always @(posedge data_i) begin
 				if (data_i == soh_c) 
 					next_state = tag;
 						
-				else	next_state = initial;
+				else	next_state = initial_s;
 		end
 		
 		tag:	begin
@@ -85,7 +85,7 @@ end
 
 always @(posedge clk) begin
 
-	if (rst)		state <= initial;
+	if (rst)		state <= initial_s;
 	else			state <= next_state;
 end
 
