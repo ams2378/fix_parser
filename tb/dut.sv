@@ -12,16 +12,16 @@ module parser_test();
 
 
 	reg 				clk,
-	reg				rst,
+	reg				rst;
 	reg				ctrl;
 
-	reg[7:0]			data_i,
+	reg[7:0]			data_i;
 	
-	reg[7:0]			data_o,
-	reg				tag_s_o,
-	reg   				tag_e_o,
-	reg				value_s_o,
-	reg				value_e_o,
+	reg[7:0]			data_o;
+	reg				tag_s_o;
+	reg   				tag_e_o;
+	reg				value_s_o;
+	reg				value_e_o;
 
 bit error;
 
