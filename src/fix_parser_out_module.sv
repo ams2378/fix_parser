@@ -63,7 +63,7 @@ always_ff @(state or start_tag_i or start_value_i) begin
 		end
 		state1: begin
 				if (start_tag_i == 1) begin
-					tag << 8;
+					tag [31:0] << 8;
 					tag[7:0] = data_i;
 				//	i = i + 1;	
 					next_state = state1;
