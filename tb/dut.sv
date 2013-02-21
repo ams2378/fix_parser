@@ -31,7 +31,7 @@ initial begin
 
 reg [1183:0] data ;
 int temp;
-int i = 1;
+int i = 0;
 
 temp = 148;
 
