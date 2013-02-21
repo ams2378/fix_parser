@@ -38,8 +38,9 @@ logic [7:0] 			first_tag = 8'h38;		// ASCII for "8"
 logic [15:0] 			last_tag = 16'h3130;		// ASCII for "10"
 
 int 	i = 1;
-int	j = 1;
 bit	last_tag_valid;
+
+logic	incr_i;
 
 always_ff @(posedge clk) begin
 
@@ -63,6 +64,7 @@ always_ff @(state or start_tag_i or start_value_i) begin
 		state1: begin
 				if (start_tag_i == 1) begin
 					tag[i*8 +: 8] = data_i;
+					incr_i = 1;
 				//	i = i + 1;	
 					next_state = state1;
 				end else if (start_tag_i == 0) begin
@@ -87,17 +89,22 @@ always_ff @(state or start_tag_i or start_value_i) begin
 		end
 		state3: begin
 				if (start_value_i == 1) begin
-					value[8*j +: 8] = data_i;
-					j = j + 1;	
+					value[8*i +: 8] = data_i;
+				//	i = i + 1;	
 					next_state = state3;
 				end else begin
-				//	j = 1; 
+				//	i = 1; 
 			 		if (end_of_body == 1) 		next_state = state0;
 					else 				next_state = state1;
 				end
 
 		end
 	endcase
+end
+
+
+always_ff @(posedge clk and incr_i ) begin
+		i = i + 1;
 end
 
 assign tag_o = tag;
