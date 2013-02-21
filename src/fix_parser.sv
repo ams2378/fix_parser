@@ -22,9 +22,9 @@ module fix_parser(
 );
 
 
-parameter 			initial_s;
-parameter			tag;
-parameter			value;
+parameter 			initial_s = 0;
+parameter			tag = 1;
+parameter			value = 2;
 logic				state, next_state;
 output				data;
 output				tag_s;
