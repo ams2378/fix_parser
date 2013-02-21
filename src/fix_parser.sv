@@ -18,7 +18,7 @@ module fix_parser(
 	output				tag_s_o,
 	output   			tag_e_o,
 	output				value_s_o,
-	output				value_e_o,
+	output				value_e_o
 );
 
 
