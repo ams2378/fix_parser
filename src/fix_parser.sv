@@ -42,18 +42,18 @@ always_ff @(posedge clk) begin
 	else			state <= next_state;
 end
 
-always_ff @( data_i or state) begin
-
+always_ff @(data_i or state) begin
+		
 	case(state) 
-
-		initial_s: 
+		
+		2'b00: 
 				if (data_i == soh_c) 
 					next_state = tag;
 						
 				else	next_state = initial_s;
 		
 		
-		tag:	
+		2'b01:	
 				if (data_i != sep_c) begin
 					data = data_i;
 					tag_s = '1;
@@ -70,7 +70,7 @@ always_ff @( data_i or state) begin
 				end
 		
 
-		value:	
+		2'b10:	
 				if (data_i != soh_c) begin
 					data = data_i;
 					tag_s = '0;
