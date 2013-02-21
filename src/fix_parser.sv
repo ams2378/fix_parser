@@ -1,4 +1,3 @@
-
 /**
  * @filename		fix_parser.sv 
  *
@@ -6,7 +5,6 @@
  *
  * @author		Adil Sadik <sadik.adil@gmail.com> 
  */
-
 
 module fix_parser(
 
@@ -23,14 +21,13 @@ module fix_parser(
 	output   			body_status_o	
 );
 
-logic[2:0] soh;
-logic[2:0] sep;
-logic 	  tag_status;
-logic		  body_status;
+logic[2:0] 	soh;
+logic[2:0] 	sep;
+logic 	  	tag_status;
+logic		body_status;
 
-logic [7:0] soh_c = 7'h01;
-logic [7:0] sep_c = 7'h3d;
-
+logic [7:0] 	soh_c = 7'h01;		// ASCII for "^"
+logic [7:0] 	sep_c = 7'h3d;		// ASCII for "="
 
 //always @(posedge clk) begin
 
@@ -39,8 +36,7 @@ always_comb begin
 	tag_status = tag_status_i;
 	body_status = body_status_i;
 	
-			
-/* index soh */			
+			/* index soh */			
 	
 			if (data_i[7:0] == soh_c) 
 					soh = 3'b000;						
@@ -53,7 +49,7 @@ always_comb begin
 			else
 					soh = 3'b111;
 
-/* index sep */					
+			/* index sep */					
 					
 			if (data_i[7:0] == sep_c) 
 					sep = 3'b000;						
