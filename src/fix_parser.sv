@@ -26,8 +26,9 @@ parameter 			initial_s = 2'b00;
 parameter			tag = 2'b01;
 parameter			value = 2'b10;
 
-logic [1:0]			state, next_state;
-logic[7:0]			data;
+logic [1:0]			state;
+logic [1:0]			next_state;
+logic [7:0]			data;
 logic				tag_s;
 logic   			tag_e;
 logic				value_s;
@@ -46,14 +47,24 @@ always_ff @(data_i or state) begin
 		
 	case(state) 
 		
-		2'b00: 
-				if (data_i == soh_c) 
+		2'b00: begin 
+				if (data_i == soh_c) begin
 					next_state = tag;
-						
-				else	next_state = initial_s;
-		
-		
-		2'b01:	
+					data = '0;
+					tag_s = '0;
+					tag_e = '0;
+					value_s = '0;
+					value_e = '0;
+				end else begin
+					next_state = initial_s;
+					data = '0;
+					tag_s = '0;
+					tag_e = '0;
+					value_s = '0;
+					value_e = '0;
+				end
+		end
+		2'b01: begin
 				if (data_i != sep_c) begin
 					data = data_i;
 					tag_s = '1;
@@ -68,9 +79,8 @@ always_ff @(data_i or state) begin
 					value_e = '0;
 					next_state = value;
 				end
-		
-
-		2'b10:	
+		end
+		2'b10: begin	
 				if (data_i != soh_c) begin
 					data = data_i;
 					tag_s = '0;
@@ -85,7 +95,7 @@ always_ff @(data_i or state) begin
 					value_e = '1;
 					next_state = tag;
 				end	
-
+		end
 	endcase
 end
 

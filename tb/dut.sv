@@ -22,8 +22,6 @@ module parser_test();
 	reg				value_s_o;
 	reg				value_e_o;
 
-bit error;
-
 fix_parser dut(.clk, .rst, .ctrl, .data_i, .data_o, .tag_s_o, .tag_e_o, .value_s_o, .value_e_o);
 
 initial begin
