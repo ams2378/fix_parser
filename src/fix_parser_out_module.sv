@@ -65,15 +65,12 @@ always_ff @(state or start_tag_i or start_value_i) begin
 				if (start_tag_i == 1) begin
 					tag  <<= 8;
 					tag[7:0] = data_i;
-				//	i = i + 1;	
 					next_state = state1;
 				end else if (start_tag_i == 0) begin
 					if (tag == first_tag) begin
-				//		i = 1;
 						start_of_header = '1;
 						next_state = state2;
 					end else if (tag == last_tag) begin
-				//		i = 1;
 						end_of_body = 1;
 						next_state = state2;
 					end else 
@@ -89,15 +86,10 @@ always_ff @(state or start_tag_i or start_value_i) begin
 		end
 		state3: begin
 				if (start_value_i == 1) begin
-					value << 8;
+					value <<= 8;
 					value [7:0] = data_i;
-				//	value[8*i +: 8] = data_i;
-					incr_i = 1;
-				//	i = i + 1;	
 					next_state = state3;
 				end else begin
-					incr_i = 0;
-				//	i = 1; 
 			 		if (end_of_body == 1) 		next_state = state0;
 					else 				next_state = state1;
 				end
