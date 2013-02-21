@@ -83,7 +83,6 @@ always_ff @(state or start_tag_i or start_value_i) begin
 					next_state = state3;
 				end else 
 					next_state = state2;
-				end	
 		end
 		state3: begin
 				if (start_value_i == 1) begin
