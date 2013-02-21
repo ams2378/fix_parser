@@ -10,7 +10,7 @@ module fix_parser(
 
 	input 				clk,
 	input				rst,
-	input				ctrl;
+	input				ctrl,
 
 	input[7:0]			data_i,
 	
