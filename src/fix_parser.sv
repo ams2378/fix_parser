@@ -37,7 +37,7 @@ logic [7:0] 	sep_c = 7'h3d;		// ASCII for "="
 
 always @(posedge data_i) begin
 
-	case(state) begin
+	case(state) 
 
 		initial_s: begin
 				if (data_i == soh_c) 
