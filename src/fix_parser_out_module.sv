@@ -1,204 +1,108 @@
 /**
  * @filename		fix_parser_out_module.sv 
  *
- * @brief     	        detects TAG and VALUE from 32 bit received data. 	
+ * @brief     	        strip out tag and value from the message 	
  *
  * @author		Adil Sadik <sadik.adil@gmail.com> 
  */
 
-module fix_parser_out_module (
+module fix_parser_out_module(
 
-	input[31:0]		data_i,
-	input[2:0] 		soh_i,
-	input[2:0]		sep_i,
-	input			tag_status_i,
-	input			value_status_i,
+	input 				clk,
+	input				rst,
+	input[7:0]			data_i,
+	input				start_tag_i,
+	input				start_value_i,
 	
-	output[31:0]		out_o,
-	output			tag_status_o,
-	output			value_status_o,
-	output[3:0]		tag_valid_o,
-	output[3:0]		value_valid_o
+	output[31:0]			tag_o,
+	output[255:0]			value_o,
+	output				end_of_body_o,
+	output				start_of_header_o
 );
 
-logic[31:0]			out;
-logic				tag_status;
-logic				body_status;
-logic [3:0]			tag_valid;
-logic [3:0]			body_valid;
+parameter 			state0 = 3'b000;
+parameter			state1 = 3'b001;
+parameter			state2 = 3'b010;
+parameter 			state3 = 3'b011;
+//parameter			state4 = 3'b101;
 
-always_comb begin
+logic [2:0]			state;
+logic [2:0]			next_state;
 
-	if ((soh_i != 3'b111) && (sep_i != 3'b111)) begin	
-		case({soh_i, sep_i})
-				6'b011001:	begin 
-								out[7:0]  =  data_i[23:16]; 
-							     	tag_valid = 4'b0010;
-							    	body_valid = 4'b0000;
-								tag_status = '0;
-								body_status = '1;
-						end								
-				6'b011000:	begin
-								out[15:0]   = data_i[23:08];
-								tag_valid = 4'b011;
-								tag_status = '0;
-								body_valid = '0;
-								body_status = '1;
-						end															
-				6'b000011:	begin
-								out[15:0] = data_i[23:08];
-								body_valid = 4'b0110;
-								body_status = '0;
-								tag_valid = '0;
-								tag_status = '0;
-						end																
-				6'b001011:	begin
-								out[7:0] = data_i[23:16];
-								body_valid = 4'b0100;
-								body_status = '0;
-								tag_valid = '0;
-								tag_status = '0;
-						end																	
-				6'b010000:  	begin
-								out[7:0] = data_i[15:08];
-								tag_valid = 4'b0010;
-								tag_status = '0;
-								body_valid = '0;
-								body_status = '1;
-						end																										
-				6'b000010:  	begin
-								out [7:0] = data_i[15:08];
-								body_valid = 4'b0010;
-								body_status = '0;
-								tag_valid = '0;
-								tag_status = '0;
-						end	
-				default:	begin
-								out = '0;
-								body_valid = '0;
-								body_status = '0;
-								tag_valid = '0;
-								tag_status = '0;
-						end	
-		endcase		
-	end else if ((soh_i != 3'b111) && (sep_i == 3'b111)) begin
-				case (soh_i)
-					3'b000: begin
-								out[31:8] =  data_i[31:8];   
-								body_valid = 4'b1110; 
-								tag_valid = '0;  
-								tag_status = '1; 		 
-								body_status = '0;
-						end
-					3'b001: begin 
-								out[23:8]  = data_i[31:16];			 
-								body_valid = 4'b0110; 
-								body_status = '0;
-								out[7:0]  =  data_i[7:0];		
-								tag_valid = 4'b0001;
-								tag_status = '1;
-						end
-					3'b010: begin 
-								out[23:16]  = data_i[31:24];		 
-								body_valid = 4'b0100; 
-								body_status = '0;
-								out[15:0]  = data_i[15:0];		
-								tag_valid = 4'b0011;		
-								tag_status = '1;
-						end
-					3'b011: begin 
-								body_valid = '0; 
-								body_status = '0;
-								out[23:0] = data_i[23:0];		
-								tag_valid = 4'b0111;
-								tag_status = '1;
-						end
-					default: begin 						
-								body_valid = '0; 
-								out = '0;
-								tag_valid = '0;
-								tag_status = '0;
-								body_status = '0;
-					  	end
-				endcase
-	end else if ((soh_i == 3'b111) && (sep_i != 3'b111)) begin
-				case (sep_i)
-					3'b000: begin 	
-								out[23:0] = data_i[31:8]; 					  
-								tag_valid = 4'b0111; 
-								body_valid = '0;
-								tag_status = '0; 
-								body_status = '1;
-						end
-					3'b001: begin 
-								out[23:8] = data_i[31:16];			 
-								tag_valid = 4'b0110; 
-								tag_status = '0;
-								out[7:0]  = data_i[7:0];		
-								body_valid = 4'b0001;
-								body_status = '1;
-						end
-					3'b010: begin 
-								out[23:16] = data_i[31:24];		 
-								tag_valid = 4'b0100; 
-								tag_status = '0;											
-								out[15:0]  = data_i[15:0];		
-								body_valid = 4'b0011;	
-							        body_status = '1;	
-						end
-					3'b011: begin 
-								tag_valid = '0; 
-								tag_status = '0;
-								out[23:0]  = data_i[23:0];	
-								body_valid = 4'b0111;
-								body_status = '1;
-						end
-					default: begin 
-								out	 = '0;				
-								body_valid = '0; 
-								tag_valid = '0;
-								tag_status = '0;
-								body_status = '0;
-						end
-				endcase
-	end else if ((soh_i == 3'b111) && (sep_i == 3'b111)) begin	
-						
-				if (tag_status_i == '1)	begin
-								body_valid = '0;
-								body_status = '0;																				 out = data_i[31:0];
-								tag_valid = 4'b1111;
-								tag_status = '1;
-	
-				end else if (value_status_i == '1) begin	
-										
-								out = data_i[31:0];
-								body_valid = 4'b1111;
-								body_status = '1;											
-								tag_valid = '0;
-								tag_status = '0;																					
-				end else begin
-								out= '0;
-								body_valid = '0;
-								body_status = '0;											
-								tag_valid = '0;
-								tag_status = '0;	
-				end
-	end else begin
-						 		out = '0; 
-								body_valid = '0;
-								body_status = '0;											
-								tag_valid = '0;
-								tag_status = '0;		
-										
-	end
+logic[31:0]			tag;
+logic[255:0]			value;
+logic				end_of_body;
+logic				start_of_header;
+
+logic [7:0] 			first_tag = 8'h38;		// ASCII for "8"
+logic [15:0] 			last_tag = 16'h3130;		// ASCII for "10"
+
+int 	i = 1;
+bit	last_tag_valid;
+
+always_ff @(posedge clk) begin
+
+	if (rst)		state <= initial_s;
+	else			state <= next_state;
 end
 
+always_ff @(state or start_tag_i or start_value_i) begin
+		
+	case(state) 
+		state0: begin 
+				if (start_tag_i == 1) begin
+					tag [7:0] = data_i;
+					next_state = state1;
+				end else begin
+					start_of_header = '0;
+					end_of_body = '0;
+					next_state = state0;
+				end
+		end
+		state1: begin
+				if (start_tag_i == 1) begin
+					tag[i*8 +: 8] = data_i;
+					i = i + 1;	
+					next_state = state1;
+				end else if (start_tag_i == 0) begin
+					if (tag == first_tag) begin
+						i = 1;
+						start_of_header = '1;
+						next_state = state2;
+					end else if (tag == last_tag) begin
+						i = 1;
+						end_of_body = 1;
+						next_state = state2;
+					end else 
+						next_state = state2;
+				end
+		end
+		state2: begin	
+				if (start_value_i == 1) begin
+					value[7:0] = data_i;
+					next_state = state3;
+				end else 
+					next_state = state2;
+				end	
+		end
+		state3: begin
+				if (start_value_i == 1) begin
+					value[i*8 +: 8] = data_i;
+					i = i + 1;	
+					next_state = state3;
+				end else begin 
+			 		if (end_of_body == 1) 		next_state = state0;
+					else 				next_state = state1;
+				end
 
-assign out_o = out; 
-assign tag_status_o = tag_status;
-assign tag_valid_o = tag_valid;
-assign value_status_o = body_status;
-assign value_valid_o = body_valid;
+		end
+	endcase
+end
+
+assign tag_o = tag;
+assign value_o = value;
+assign start_of_header_o = start_of_header;
+assign end_of_body_o = end_of_body;
 
 endmodule
 

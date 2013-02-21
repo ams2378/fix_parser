@@ -1,4 +1,4 @@
-FILES=../src/fix_parser.sv 
+FILES=../src/fix_parser.sv ../src/fix_parser_out_module.sv 
 TEST= dut
 BENCH=../sim/testbench.exe
 

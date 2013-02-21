@@ -21,7 +21,6 @@ module fix_parser(
 	output				value_e_o
 );
 
-
 parameter 			initial_s = 2'b00;
 parameter			tag = 2'b01;
 parameter			value = 2'b10;
@@ -34,8 +33,8 @@ logic   			tag_e;
 logic				value_s;
 logic				value_e;
 
-logic [7:0] 			soh_c = 7'h7c;		// ASCII for "^"
-logic [7:0] 			sep_c = 7'h3d;		// ASCII for "="
+logic [7:0] 			soh_c = 8'h7c;		// ASCII for "^"
+logic [7:0] 			sep_c = 8'h3d;		// ASCII for "="
 
 always_ff @(posedge clk) begin
 
@@ -91,7 +90,7 @@ end
 
 assign data_o = data;
 assign value_s_o = value_s;
-assign valus_e_o = value_e;
+assign value_e_o = value_e;
 assign tag_s_o = tag_s;
 assign tag_e_o = tag_e;
 
