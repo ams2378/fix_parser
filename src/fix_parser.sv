@@ -23,8 +23,8 @@ module fix_parser(
 
 
 parameter 			initial_s = 2'b00;
-parameter			tag = 2'01;
-parameter			value = 2'10;
+parameter			tag = 2'b01;
+parameter			value = 2'b10;
 logic [1:0]			state, next_state;
 logic[7:0]			data;
 logic				tag_s;
