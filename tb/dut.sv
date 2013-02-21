@@ -30,6 +30,8 @@ initial begin
 
 $vcdpluson;
 
+rst = 0;
+
 clk = 0;
 rst = 0;
 
