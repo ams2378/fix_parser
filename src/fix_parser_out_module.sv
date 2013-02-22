@@ -26,9 +26,6 @@ module fix_parser_out_module(
 	output				end_of_body_o,
 	output				start_of_header_o,
 
-	output[31:0]			data,
-	output				empty,
-	output				full
 );
 
 /* state variable */
@@ -198,27 +195,6 @@ assign t_wr_en_o = t_wr_en;
 assign t_wr_cs_o = t_wr_cs;
 assign v_wr_en_o = v_wr_en;
 assign v_wr_cs_o = v_wr_cs;
-
-
-fifo_top #(.DATA_WIDTH (32), .ADDR_WIDTH (8)) tag_fifo (
-	
-		.clk (clk)     		, 		
-		.rst (rst)     		, 		
-		.wr_cs_i (t_wr_cs)    	, 		
-		.rd_cs_i (1'b0)    	,	 		
-		.data_i  (tag)  	, 	// input tag		
-		.rd_en_i (1'b0)    	, 		
-		.wr_en_i (t_wr_en)   	, 		
-
-//		.data_o	(data)     	,	 		
-		.empty_o (empty) 	, 		
-		.full_o  (full)     		
-); 
-
-
-
-
-
 
 
 endmodule
