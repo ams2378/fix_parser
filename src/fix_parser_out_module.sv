@@ -15,16 +15,20 @@ module fix_parser_out_module(
 	input				start_value_i,
 
 	/* control signals for FIFO */	
-	output				t_wr_cs_o, 		   
-	output				t_wr_en_o, 		   
- 	output				v_wr_cs_o, 		   
-	output				v_wr_en_o, 		   
+//	output				t_wr_cs_o, 		   
+//	output				t_wr_en_o, 		   
+//	output				v_wr_cs_o, 		   
+//	output				v_wr_en_o, 		   
 
 	/* final tag and value- to be pushed in FIFO*/
 	output[31:0]			tag_o,
 	output[255:0]			value_o,
 	output				end_of_body_o,
-	output				start_of_header_o
+	output				start_of_header_o,
+
+	output[31:0]			data,
+	output				empty,
+	output				full
 );
 
 /* state variable */
@@ -42,7 +46,8 @@ logic [2:0]			next_state;
 logic				t_wr_cs;		   
 logic				t_wr_en;		   
 logic				v_wr_cs;		   
-logic				v_wr_en; 		   
+logic				v_wr_en; 
+		   
 logic[31:0]			tag;
 logic[255:0]			value;
 logic				end_of_body;
@@ -184,14 +189,37 @@ always_ff @(state or start_tag_i or start_value_i) begin
 	endcase
 end
 
+
 assign tag_o = tag;
 assign value_o = value;
 assign start_of_header_o = start_of_header;
 assign end_of_body_o = end_of_body;
-assign t_wr_en_o = t_wr_en;
-assign t_wr_cs_o = t_wr_cs;
-assign v_wr_en_o = v_wr_en;
-assign v_wr_cs_o = v_wr_cs;
+//assign t_wr_en_o = t_wr_en;
+//assign t_wr_cs_o = t_wr_cs;
+//assign v_wr_en_o = v_wr_en;
+//assign v_wr_cs_o = v_wr_cs;
+
+
+fifo_top #(parameter DATA_WIDTH = 32, ADDR_WIDTH = 8) tag_fifo (
+	
+		.clk (clk)     		, 		
+		.rst (rst)     		, 		
+		.wr_cs_i (t_wr_cs)    	, 		
+		.rd_cs_i (1'b0)    	,	 		
+		.data_i  (tag)  	, 		
+		.rd_en_i (1'b0)    	, 		
+		.wr_en_i (t_wr_en)   	, 		
+
+		.data_o	(data)     	,	 		
+		.empty_o (empty) 	, 		
+		.full_o  (full)     		
+); 
+
+
+
+
+
+
 
 endmodule
 

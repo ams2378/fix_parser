@@ -7,7 +7,7 @@
  */
 
 
-module fifo #(parameter DATA_WIDTH = 32, ADDR_WIDTH = 8) (
+module fifo_top #(parameter DATA_WIDTH = 32, ADDR_WIDTH = 8) (
 	input				clk      , 		
 	input				rst      , 		
 	input				wr_cs_i    , 		
@@ -15,7 +15,6 @@ module fifo #(parameter DATA_WIDTH = 32, ADDR_WIDTH = 8) (
 	input[DATA_WIDTH-1:0]		data_i  , 		
 	input				rd_en_i    , 		
 	input				wr_en_i    , 		
-	input[DATA_WIDTH-1:0] 		data_ram_i , 
 
 	output[DATA_WIDTH-1:0]		data_o   , 		
 	output				empty_o  , 		
