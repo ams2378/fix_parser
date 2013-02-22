@@ -21,6 +21,10 @@ module fifo_top #(parameter DATA_WIDTH = 32, ADDR_WIDTH = 8) (
 	output				full_o       		
 ); 
 
+
+parameter RAM_DEPTH = (1 << ADDR_WIDTH);
+
+
 logic [ADDR_WIDTH-1:0] 			address_0_ram;
 logic [ADDR_WIDTH-1:0] 			address_1_ram;
 logic [DATA_WIDTH-1:0] 			data_ram_t;
