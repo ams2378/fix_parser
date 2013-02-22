@@ -42,7 +42,7 @@ always_ff @ (posedge clk) begin
   end  
 end 
 
-assign data_0 = (cs_0 && oe_0 && !we_0) ? data_0_out : 8'bz; 
+//assign data_0 = (cs_0 && oe_0 && !we_0) ? data_0_out : 8'bz; 
 
 /* PORT # 2	*/
 
