@@ -23,7 +23,7 @@ module fix_parser_top (
 	output			end_of_body_o,
 	output			start_of_header_o,
 
-	output[31:0]		data,
+//	output[31:0]		data,
 	output			empty,
 	output			full
 
@@ -72,7 +72,7 @@ fix_parser_out_module out_module(
 		.end_of_body_o,
 		.start_of_header_o,
 	
-		.data,
+//		.data,
 		.empty,
 		.full
 );

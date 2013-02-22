@@ -210,7 +210,7 @@ fifo_top #(.DATA_WIDTH (32), .ADDR_WIDTH (8)) tag_fifo (
 		.rd_en_i (1'b0)    	, 		
 		.wr_en_i (t_wr_en)   	, 		
 
-		.data_o	(data)     	,	 		
+//		.data_o	(data)     	,	 		
 		.empty_o (empty) 	, 		
 		.full_o  (full)     		
 ); 
