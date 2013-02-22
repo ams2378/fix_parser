@@ -83,7 +83,7 @@ fix_parser_out_module out_module(
 );
 
 
-fifo_top #(.DATA_WIDTH (32), .ADDR_WIDTH (8)) tag_fifo (
+tag_fifo_top #(.DATA_WIDTH (32), .ADDR_WIDTH (8)) tag_fifo (
 	
 		.clk (clk)     		, 		
 		.rst (rst)     		, 		
@@ -97,7 +97,7 @@ fifo_top #(.DATA_WIDTH (32), .ADDR_WIDTH (8)) tag_fifo (
 		.full_o       		
 ); 
 
-fifo_top #(.DATA_WIDTH (256), .ADDR_WIDTH (8)) value_fifo (
+value_fifo_top #(.DATA_WIDTH (256), .ADDR_WIDTH (8)) value_fifo (
 	
 		.clk (clk)     		, 		
 		.rst (rst)     		, 		

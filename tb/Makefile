@@ -1,4 +1,4 @@
-FILES=../src/fix_parser.sv ../src/fix_parser_out_module.sv ../src/fix_parser_top.sv ../src/ram.sv ../src/fifo.sv ../src/fifo_top.sv 
+FILES=../src/fix_parser.sv ../src/fix_parser_out_module.sv ../src/fix_parser_top.sv ../src/ram.sv ../src/fifo.sv ../src/tag_fifo_top.sv ../src/value_fifo_top.sv
 TEST= dut
 BENCH=../sim/testbench.exe
 
