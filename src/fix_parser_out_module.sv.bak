@@ -24,7 +24,7 @@ parameter 			state0 = 3'b000;
 parameter			state1 = 3'b001;
 parameter			state2 = 3'b010;
 parameter 			state3 = 3'b011;
-//parameter			state4 = 3'b101;
+parameter 			state4 = 3'b100;
 
 logic [2:0]			state;
 logic [2:0]			next_state;
@@ -37,25 +37,34 @@ logic				start_of_header;
 logic [7:0] 			first_tag = 8'h38;		// ASCII for "8"
 logic [15:0] 			last_tag = 16'h3130;		// ASCII for "10"
 
-int 	i = 1;
 bit	last_tag_valid;
 
 logic	incr_i;
  
 always_ff @(posedge clk) begin
-
 	if (rst)		state <= state0;
 	else			state <= next_state;
 end
 
 always_ff @(state or start_tag_i or start_value_i) begin
-		
+	
+	if (rst) begin
+		tag = '0;
+		value = '0;
+		end_of_body = '0;
+		start_of_header = '0;	
+	end
+	
 	case(state) 
-		state0: begin 
+	
+		state0: begin 				
 				if (start_tag_i == 1) begin
+					start_of_header = '0;
+					end_of_body = '0;
 					tag [7:0] = data_i;
 					next_state = state1;
 				end else begin
+					value = '0;
 					start_of_header = '0;
 					end_of_body = '0;
 					next_state = state0;
@@ -63,19 +72,14 @@ always_ff @(state or start_tag_i or start_value_i) begin
 		end
 		state1: begin
 				if (start_tag_i == 1) begin
-					tag[8*i +: 8] = data_i;
-					incr_i = 1;
-				//	i = i + 1;	
+					tag  <<= 8;
+					tag[7:0] = data_i;
 					next_state = state1;
 				end else if (start_tag_i == 0) begin
-					if (tag == first_tag) begin
-						incr_i = 0;
-						i = 1;
+					if (tag [7:0] == first_tag) begin
 						start_of_header = '1;
 						next_state = state2;
-					end else if (tag == last_tag) begin
-						incr_i = 0;
-				//		i = 1;
+					end else if (tag [15:0] == last_tag) begin
 						end_of_body = 1;
 						next_state = state2;
 					end else 
@@ -89,15 +93,23 @@ always_ff @(state or start_tag_i or start_value_i) begin
 				end else 
 					next_state = state2;
 		end
-		state3: begin
+		state3:	begin
 				if (start_value_i == 1) begin
-					value[8*i +: 8] = data_i;
-					incr_i = 1;
-				//	i = i + 1;	
+					value <<= 8;
+					value [7:0] = data_i;
+					next_state = state4;
+				end else begin
+			 		if (end_of_body == 1) 		next_state = state0;
+					else 				next_state = state1;
+				end
+			end	
+
+		state4: begin
+				if (start_value_i == 1) begin
+					value <<= 8;
+					value [7:0] = data_i;
 					next_state = state3;
 				end else begin
-					incr_i = 0;
-				//	i = 1; 
 			 		if (end_of_body == 1) 		next_state = state0;
 					else 				next_state = state1;
 				end
@@ -105,14 +117,6 @@ always_ff @(state or start_tag_i or start_value_i) begin
 		end
 	endcase
 end
-
-/*
-always_ff @( posedge clk ) begin
-	if (incr_i == 1)		i <= i + 1;
-	else				i <= 1;
-end
-*/
-
 
 assign tag_o = tag;
 assign value_o = value;

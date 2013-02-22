@@ -16,9 +16,9 @@ module ram # (parameter ADDR_WIDTH = 8, DATA_0_WIDTH = 32 ) (
 
 parameter RAM_DEPTH = 1 << ADDR_WIDTH;
 
-logic [data_0_WIDTH-1:0] 		data_0_out ; 
-logic [data_0_WIDTH-1:0] 		data_1_out ;
-logic [data_0_WIDTH-1:0] 		mem [0:RAM_DEPTH-1];
+logic [DATA_0_WIDTH-1:0] 		data_0_out ; 
+logic [DATA_0_WIDTH-1:0] 		data_1_out ;
+logic [DATA_0_WIDTH-1:0] 		mem [0:RAM_DEPTH-1];
 
 
 /* PORT # 1	*/

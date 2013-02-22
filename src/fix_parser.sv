@@ -10,9 +10,8 @@ module fix_parser(
 
 	input 				clk,
 	input				rst,
-	input				ctrl,
-
 	input[7:0]			data_i,
+//	input				end_of_body_i,
 	
 	output[7:0]			data_o,
 	output				tag_s_o,
@@ -43,7 +42,13 @@ always_ff @(posedge clk) begin
 end
 
 always_ff @(state or data_i) begin
-		
+
+	if (rst) begin
+		data = '0;	
+		tag_s = '0;
+		value_s = '0;
+	end
+
 	case(state) 
 		
 		2'b00: begin 

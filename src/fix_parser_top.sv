@@ -12,13 +12,24 @@ module fix_parser_top (
 
 	input			clk,
 	input			rst,
-	input[31:0]		data_i,
-	
-	output[31:0]		out_o,
-	output[3:0] 		tag_valid_o,
-	output[3:0] 		value_valid_o
+	input[7:0]		data_i,
+
+	output			t_wr_cs_o, 		   
+	output			t_wr_en_o, 		   
+ 	output			v_wr_cs_o, 		   
+	output			v_wr_en_o, 
+	output[31:0]		tag_o,
+	output[255:0]		value_o,
+	output			end_of_body_o,
+	output			start_of_header_o
 
 );
+
+
+wire[7:0]	data;
+wire		tag_s;
+wire		value_s;
+
 
 wire[2:0]	soh_t;
 wire[2:0]	sep_t;
@@ -28,34 +39,34 @@ wire 		tag_status_t_2;
 wire		body_status_t_2;
 
 
-fix_parser module_1(
+fix_parser parser(
 
 		.clk,
 		.rst,
 		.data_i,
-		.tag_status_i(tag_status_t_1),
-		.body_status_i(body_status_t_1),
 		
-		.soh_o(soh_t),
-		.sep_o(sep_t),
-		.tag_status_o(tag_status_t_2),
-		.body_status_o(body_status_t_2)
+		.data_o(data),
+		.tag_s_o(tag_s),
+		.value_s_o(value_s)
 );
 
-fix_parser_out_module module_2(
+fix_parser_out_module out_module(
 
-		.data_i,
-		.soh_i(soh_t),
-		.sep_i(sep_t),
-		.tag_status_i(tag_status_t_2),
-		.value_status_i(body_status_t_2),
+
+		.clk,
+		.rst,
+		.data_i(data),
+		.start_tag_i(tag_s),
+		.start_value_i(value_s),
 		
-		.out_o,
-		.tag_status_o(tag_status_t_1),
-		.value_status_o(body_status_t_1),
-		.tag_valid_o,
-		.value_valid_o
-
+		.t_wr_cs_o,
+		.t_wr_en_o,
+		.v_wr_cs_o,
+		.v_wr_en_o,
+		.tag_o,
+		.value_o,
+		.end_of_body_o,
+		.start_of_header_o
 );
 
 endmodule
