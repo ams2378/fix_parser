@@ -1,5 +1,5 @@
 
-module value_ram # (parameter ADDR_WIDTH = 1, DATA_0_WIDTH = 1 ) (
+module value_ram # (parameter ADDR_WIDTH = 8, DATA_0_WIDTH = 256 ) (
 	input 				clk       , 		// Clock Input
 	input[ADDR_WIDTH-1 : 0]		address_0 , 		// address_0 Input
 	inout[DATA_0_WIDTH-1:0]		data_0    , 		// data_0 bi-directional

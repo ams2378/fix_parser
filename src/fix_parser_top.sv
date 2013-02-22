@@ -64,7 +64,6 @@ fix_parser parser(
 
 fix_parser_out_module out_module(
 
-
 		.clk,
 		.rst,
 		.data_i(data),
@@ -74,7 +73,7 @@ fix_parser_out_module out_module(
 		.t_wr_cs_o (t_wr_cs),
 		.t_wr_en_o (t_wr_en),
 		.v_wr_cs_o (v_wr_cs),
-		.v_wr_en_o (v_wr_cs),
+		.v_wr_en_o (v_wr_en),
 		.tag_o 	   (tag),
 		.value_o   (value),
 
