@@ -26,8 +26,8 @@ parameter RAM_DEPTH = (1 << ADDR_WIDTH);
 
 
 logic [ADDR_WIDTH-1:0] 			address_0_ram;
-net [ADDR_WIDTH-1:0] 			address_1_ram;
-net [DATA_WIDTH-1:0] 			data_ram_t;
+wire [ADDR_WIDTH-1:0] 			address_1_ram;
+wire [DATA_WIDTH-1:0] 			data_ram_t;
 logic					empty, full;
 logic [ADDR_WIDTH-1:0] 			status_cnt;
 
