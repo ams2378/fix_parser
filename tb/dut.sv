@@ -23,8 +23,11 @@ module parser_test();
 	reg				t_wr_en_o;		   
  	reg				v_wr_cs_o;		   
 	reg				v_wr_en_o; 
+	reg[31:0]			data,
+	reg				empty,
+	reg				full
 
-fix_parser_top dut(.clk, .rst, .data_i, .tag_o, .value_o, .end_of_body_o, .start_of_header_o, .t_wr_cs_o, .t_wr_en_o, .v_wr_cs_o, .v_wr_en_o);
+fix_parser_top dut(.clk, .rst, .data_i, .tag_o, .value_o, .end_of_body_o, .start_of_header_o, .t_wr_cs_o, .t_wr_en_o, .v_wr_cs_o, .v_wr_en_o, .data, .empty, .full);
 
 
 
