@@ -32,7 +32,7 @@ wire [DATA_WIDTH-1:0] 			data_ram_t;
 wire [ADDR_WIDTH-1:0] 			status_cnt;
 wire					empty, full;
 
-ram #( .ADDR_WIDTH(8), .DATA_WIDTH(256)) value_fifo_ram (
+value_ram #( .ADDR_WIDTH(8), .DATA_WIDTH(256)) value_fifo_ram (
 	.address_0 (address_0_ram) ,  
 	.data_0    (data_i)    , 
 	.cs_0      (wr_cs_i)      , 
