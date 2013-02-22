@@ -79,7 +79,7 @@ fix_parser_out_module out_module(
 		.value_o   (value),
 
 		.end_of_body_o,
-		.start_of_header_o,
+		.start_of_header_o
 );
 
 
