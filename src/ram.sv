@@ -42,7 +42,7 @@ always_ff @ (posedge clk) begin
   end  
 end 
 
-if ( cs_0 && !we_0 && oe_0)	data_0 = data_0_out;
+if ( cs_0 && !we_0 && oe_0)	assign	data_0 = data_0_out;
 
 //assign data_0 = (cs_0 && oe_0 && !we_0) ? data_0_out : 8'bz; 
 
