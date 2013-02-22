@@ -44,7 +44,7 @@ ram #( .ADDR_WIDTH(8), .DATA_WIDTH(32)) FIFO_RAM (
 	.oe_1      (rd_en_i)        
 );   
 
-fifo #( .DATA_WIDTH(32), .ADDR_WIDTH(8)) FIFO_RAM (
+fifo #( .DATA_WIDTH(32), .ADDR_WIDTH(8)) ram_fifo (
 
 		.clk,
 		.rst,
