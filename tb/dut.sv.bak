@@ -13,18 +13,16 @@ module parser_test();
 
 	reg 				clk;
 	reg				rst;
+	reg				ctrl;
+
 	reg[7:0]			data_i;
+	reg[7:0]			data_o;
+	reg				tag_s_o;
+	reg   				tag_e_o;
+	reg				value_s_o;
+	reg				value_e_o;
 
-	reg[31:0]			tag_o;
-	reg[255:0]			value_o;
-	reg				end_of_body_o;
-	reg				start_of_header_o;
-	reg				t_wr_cs_o;		   
-	reg				t_wr_en_o;		   
- 	reg				v_wr_cs_o;		   
-	reg				v_wr_en_o; 
-
-fix_parser_top dut(.clk, .rst, .data_i, .tag_o, .value_o, .end_of_body_o, .start_of_header_o, .t_wr_cs_o, .t_wr_en_o, .v_wr_cs_o, .v_wr_en_o);
+fix_parser dut(.clk, .rst, .ctrl, .data_i, .data_o, .tag_s_o, .tag_e_o, .value_s_o, .value_e_o);
 
 
 
