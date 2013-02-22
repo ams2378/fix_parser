@@ -24,7 +24,7 @@ module fix_parser_out_module(
 	output[31:0]			tag_o,
 	output[255:0]			value_o,
 	output				end_of_body_o,
-	output				start_of_header_o,
+	output				start_of_header_o
 
 );
 
