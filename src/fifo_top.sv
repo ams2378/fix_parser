@@ -49,12 +49,12 @@ fifo #( .DATA_WIDTH(32), .ADDR_WIDTH(8)) FIFO_RAM (
 		.data_i,
 		.rd_en_i,
 		.wr_en_i,
-		.data_ram_i(.data_ram_t),
+		.data_ram_i(data_ram_t),
 
-		.wr_pointer_o(.address_0_ram),
-		.rd_pointer_o(.address_1_ram),
-		.status_cnt_o(.status_cnt),
-		.data_out_o(.data_o)
+		.wr_pointer_o(address_0_ram),
+		.rd_pointer_o(address_1_ram),
+		.status_cnt_o(status_cnt),
+		.data_out_o(data_o)
 );   
 
 assign full_o = (status_cnt == (RAM_DEPTH-1));
