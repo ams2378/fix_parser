@@ -21,7 +21,11 @@ module fix_parser_top (
 	output[31:0]		tag_o,
 	output[255:0]		value_o,
 	output			end_of_body_o,
-	output			start_of_header_o
+	output			start_of_header_o,
+
+	output			data,
+	output			empty,
+	output			full
 
 );
 
@@ -66,7 +70,11 @@ fix_parser_out_module out_module(
 		.tag_o,
 		.value_o,
 		.end_of_body_o,
-		.start_of_header_o
+		.start_of_header_o,
+	
+		.data,
+		.empty,
+		.full
 );
 
 endmodule
