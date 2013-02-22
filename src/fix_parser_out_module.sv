@@ -200,7 +200,7 @@ assign end_of_body_o = end_of_body;
 //assign v_wr_cs_o = v_wr_cs;
 
 
-fifo_top #(parameter DATA_WIDTH = 32, ADDR_WIDTH = 8) tag_fifo (
+fifo_top #(.DATA_WIDTH (32), .ADDR_WIDTH (8)) tag_fifo (
 	
 		.clk (clk)     		, 		
 		.rst (rst)     		, 		
