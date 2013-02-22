@@ -31,7 +31,7 @@ wire [DATA_WIDTH-1:0] 			data_ram_t;
 wire [ADDR_WIDTH-1:0] 			status_cnt;
 wire					empty, full;
 
-ram #( .ADDR_WIDTH(8), .DATA_WIDTH(32)) FIFO_RAM (
+ram #( .ADDR_WIDTH(8), .DATA_WIDTH(32)) tag_fifo_ram (
 	.address_0 (address_0_ram) ,  
 	.data_0    (data_i)    , 
 	.cs_0      (wr_cs_i)      , 
@@ -44,7 +44,7 @@ ram #( .ADDR_WIDTH(8), .DATA_WIDTH(32)) FIFO_RAM (
 	.oe_1      (rd_en_i)        
 );   
 
-fifo #( .DATA_WIDTH(32), .ADDR_WIDTH(8)) fifo_1 (
+fifo #( .DATA_WIDTH(32), .ADDR_WIDTH(8)) tag_fifo_1 (
 
 		.clk,
 		.rst,
