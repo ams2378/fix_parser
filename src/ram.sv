@@ -2,12 +2,12 @@
 module ram # (parameter ADDR_WIDTH = 8, DATA_0_WIDTH = 32 ) (
 	input 				clk       , 		// Clock Input
 	input[ADDR_WIDTH-1 : 0]		address_0 , 		// address_0 Input
-	input[DATA_0_WIDTH-1:0]		data_0    , 		// data_0 bi-directional
+	inout[DATA_0_WIDTH-1:0]		data_0    , 		// data_0 bi-directional
 	input				cs_0      , 		// Chip Select
 	input				we_0      , 		// Write Enable/Read Enable
 	input				oe_0      , 		// Output Enable
 
-	inout[ADDR_WIDTH-1:0]		address_1 , 		// address_1 Input
+	input[ADDR_WIDTH-1:0]		address_1 , 		// address_1 Input
 	inout[DATA_0_WIDTH-1:0]		data_1    , 		// data_1 bi-directional
 	input				cs_1      , 		// Chip Select
 	input				we_1      , 		// Write Enable/Read Enable
@@ -36,13 +36,13 @@ end
 
 always_ff @ (posedge clk) begin
   if (cs_0 && !we_0 && oe_0) begin
-    data_0 <= mem[address_0]; 
+    data_0_out <= mem[address_0]; 
   end else begin
-    data_0 <= 0; 
+    data_0_out <= 0; 
   end  
 end 
 
-//assign data_0 = (cs_0 && oe_0 && !we_0) ? data_0_out : 8'bz; 
+assign data_0 = (cs_0 && oe_0 && !we_0) ? data_0_out : 8'bz; 
 
 /* PORT # 2	*/
 
