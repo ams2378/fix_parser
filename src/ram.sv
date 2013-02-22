@@ -36,13 +36,11 @@ end
 
 always_ff @ (posedge clk) begin
   if (cs_0 && !we_0 && oe_0) begin
-    data_0_out <= mem[address_0]; 
+    data_0 <= mem[address_0]; 
   end else begin
-    data_0_out <= 0; 
+    data_0 <= 0; 
   end  
 end 
-
-if ( cs_0 && !we_0 && oe_0) begin	assign	data_0 = data_0_out; end
 
 //assign data_0 = (cs_0 && oe_0 && !we_0) ? data_0_out : 8'bz; 
 
