@@ -15,10 +15,10 @@ module fix_parser_out_module(
 	input				start_value_i,
 
 	/* control signals for FIFO */	
-//	output				t_wr_cs_o, 		   
-//	output				t_wr_en_o, 		   
-//	output				v_wr_cs_o, 		   
-//	output				v_wr_en_o, 		   
+	output				t_wr_cs_o, 		   
+	output				t_wr_en_o, 		   
+	output				v_wr_cs_o, 		   
+	output				v_wr_en_o, 		   
 
 	/* final tag and value- to be pushed in FIFO*/
 	output[31:0]			tag_o,
@@ -194,10 +194,10 @@ assign tag_o = tag;
 assign value_o = value;
 assign start_of_header_o = start_of_header;
 assign end_of_body_o = end_of_body;
-//assign t_wr_en_o = t_wr_en;
-//assign t_wr_cs_o = t_wr_cs;
-//assign v_wr_en_o = v_wr_en;
-//assign v_wr_cs_o = v_wr_cs;
+assign t_wr_en_o = t_wr_en;
+assign t_wr_cs_o = t_wr_cs;
+assign v_wr_en_o = v_wr_en;
+assign v_wr_cs_o = v_wr_cs;
 
 
 fifo_top #(.DATA_WIDTH (32), .ADDR_WIDTH (8)) tag_fifo (
