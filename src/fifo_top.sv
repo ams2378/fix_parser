@@ -25,11 +25,11 @@ module fifo_top #(parameter DATA_WIDTH = 32, ADDR_WIDTH = 8) (
 parameter RAM_DEPTH = (1 << ADDR_WIDTH);
 
 
-logic [ADDR_WIDTH-1:0] 			address_0_ram;
+wire [ADDR_WIDTH-1:0] 			address_0_ram;
 wire [ADDR_WIDTH-1:0] 			address_1_ram;
 wire [DATA_WIDTH-1:0] 			data_ram_t;
-logic					empty, full;
-logic [ADDR_WIDTH-1:0] 			status_cnt;
+wire [ADDR_WIDTH-1:0] 			status_cnt;
+wire					empty, full;
 
 ram #( .ADDR_WIDTH(8), .DATA_WIDTH(32)) FIFO_RAM (
 	.address_0 (address_0_ram) ,  

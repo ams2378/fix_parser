@@ -32,9 +32,9 @@ module fix_parser_top (
 );
 
 
-wire[7:0]	data;
-wire		tag_s;
-wire		value_s;
+wire[7:0]		data;
+wire			tag_s;
+wire			value_s;
 
 wire			t_wr_cs; 		   
 wire			t_wr_en; 		   
@@ -43,12 +43,12 @@ wire			v_wr_en;
 wire[31:0]		tag;
 wire[255:0]		value;
 
-wire[2:0]	soh_t;
-wire[2:0]	sep_t;
-wire 		tag_status_t_1;
-wire		body_status_t_1;
-wire 		tag_status_t_2;
-wire		body_status_t_2;
+wire[2:0]		soh_t;
+wire[2:0]		sep_t;
+wire 			tag_status_t_1;
+wire			body_status_t_1;
+wire 			tag_status_t_2;
+wire			body_status_t_2;
 
 
 fix_parser parser(
