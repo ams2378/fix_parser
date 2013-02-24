@@ -1,6 +1,6 @@
 
 /**
- * @filename		fifo_top.sv 
+ * @filename		value_fifo_top.sv 
  *
  * @brief     	        Top level file for FIFO. RAM and unit FIFO module is instantiated.	
  *

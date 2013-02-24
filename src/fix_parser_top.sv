@@ -9,28 +9,15 @@
 
 module fix_parser_top (
 
-
 	input			clk,
 	input			rst,
 	input[7:0]		data_i,
 
-/*
-	output			t_wr_cs_o, 		   
-	output			t_wr_en_o, 		   
- 	output			v_wr_cs_o, 		   
-	output			v_wr_en_o, 
-	output[31:0]		tag_o,
-	output[255:0]		value_o,
-*/
-
 	output			end_of_body_o,
 	output			start_of_header_o,
-
 	output			empty_o,
 	output			full_o
-
 );
-
 
 wire[7:0]		data;
 wire			tag_s;
@@ -81,7 +68,6 @@ fix_parser_out_module out_module(
 		.start_of_header_o
 );
 
-
 tag_fifo_top #(.DATA_WIDTH (32), .ADDR_WIDTH (8)) tag_fifo (
 	
 		.clk (clk)     		, 		
@@ -102,7 +88,7 @@ value_fifo_top #(.DATA_WIDTH (256), .ADDR_WIDTH (8)) value_fifo (
 		.rst (rst)     		, 		
 		.wr_cs_i (v_wr_cs)    	, 		
 		.rd_cs_i (1'b0)    	,	 		
-		.data_i  (value)  	, 	// input tag		
+		.data_i  (value)  	, 	// input value		
 		.rd_en_i (1'b0)    	, 		
 		.wr_en_i (v_wr_en)   	, 		
 
