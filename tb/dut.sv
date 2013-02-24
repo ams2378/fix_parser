@@ -56,15 +56,16 @@ clk = 0;
 #1 clk = 1;
 
 rst = '1;
-data_i = 8'h01;
 
 #1 clk = 0;
 #1 clk = 1;
 
 rst= '1;
-data_i = 8'h33;
 
+#1 clk = 0;
+#1 clk = 1;
 
+rst= '0;
 
 while (temp > 0) begin
 
@@ -82,42 +83,34 @@ end
 #1 clk = 0;
 #1 clk = 1;
 
-data_i = 8'h01;
 
 #1 clk = 0;
 #1 clk = 1;
 
-data_i = 8'h33;
 
 #1 clk = 0;
 #1 clk = 1;
 
-data_i = 8'h39;
 
 #1 clk = 0;
 #1 clk = 1;
 
-data_i = 8'h3d;
 
 #1 clk = 0;
 #1 clk = 1;
 
-data_i = 8'h43;
 
 #1 clk = 0;
 #1 clk = 1;
 
-data_i = 8'h49;
 
 #1 clk = 0;
 #1 clk = 1;
 
-data_i = 8'h43;
 
 #1 clk = 0;
 #1 clk = 1;
 
-data_i = 8'h01;
 
 
 end
