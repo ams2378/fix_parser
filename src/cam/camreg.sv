@@ -4,7 +4,7 @@ File Name   : camreg.v
 Function    : Instantiate FF to construct memory module
 *///-----------------------------------------------------
 
-module camreg #(parameter ADDR_WIDTH = 5, DATA_WIDTH = 32, CAM_DEPTH = 32) (
+module camreg #(parameter ADDR_WIDTH = 5, DATA_WIDTH = 32) (
 	input clk,
 	input rst,
 
@@ -14,8 +14,10 @@ module camreg #(parameter ADDR_WIDTH = 5, DATA_WIDTH = 32, CAM_DEPTH = 32) (
 
 	input search_i,
 	input [DATA_WIDTH-1:0] search_data_i,
-	output [CAM_DEPTH-1:0] match_o
+	output [(1 << ADDR_WIDTH) -1:0] match_o
 	);
+
+parameter CAM_DEPTH = (1 << ADDR_WIDTH);
 
 generate
 	for (genvar iter = 0; iter < CAM_DEPTH ; iter++) begin

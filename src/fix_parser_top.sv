@@ -68,6 +68,18 @@ fix_parser_out_module out_module(
 		.start_of_header_o
 );
 
+cam_cntrl #(.DATA_WIDTH (32), .ADDR_WIDTH (8)) tag_cam (
+
+		.clk,
+		.rst,
+			
+		.wr_cs_i (t_wr_cs),
+		.data_i(tag),
+		.wr_en_i(t_wr_en)
+		);
+
+
+/*
 tag_fifo_top #(.DATA_WIDTH (32), .ADDR_WIDTH (8)) tag_fifo (
 	
 		.clk (clk)     		, 		
@@ -81,6 +93,8 @@ tag_fifo_top #(.DATA_WIDTH (32), .ADDR_WIDTH (8)) tag_fifo (
 		.empty_o  		, 		
 		.full_o       		
 ); 
+*/
+
 
 value_fifo_top #(.DATA_WIDTH (256), .ADDR_WIDTH (8)) value_fifo (
 	

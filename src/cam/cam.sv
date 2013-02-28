@@ -4,7 +4,7 @@ File Name   : cam.sv
 Function    : Top level file which instantiate every other modules and represents overall microarchitecture
 *///-----------------------------------------------------
 
-module cam #(parameter DATA_WIDTH = 32, CAM_DEPTH = 32, ADDR_WIDTH = 5 ) (
+module cam #(parameter DATA_WIDTH = 32, ADDR_WIDTH = 5 ) (
 	input clk,
 	input rst,
 
@@ -25,6 +25,10 @@ module cam #(parameter DATA_WIDTH = 32, CAM_DEPTH = 32, ADDR_WIDTH = 5 ) (
 wire [ADDR_WIDTH-1:0] write_addr;
 wire [ADDR_WIDTH-1:0] match_addr;
 
+
+parameter CAM_DEPTH = (1 << ADDR_WIDTH);
+
+
 /*
  * instantiate the write decoder
  */
@@ -36,7 +40,7 @@ decoder write_decoder (
 /*
  * instantiate the memory arrays
  */
-camreg #(.ADDR_WIDTH(ADDR_WIDTH), .DATA_WIDTH(DATA_WIDTH), .CAM_DEPTH(CAM_DEPTH) ) mem_array (
+camreg #(.ADDR_WIDTH(ADDR_WIDTH), .DATA_WIDTH(DATA_WIDTH)) mem_array (
 	.clk,
 	.rst,
 
@@ -53,7 +57,7 @@ camreg #(.ADDR_WIDTH(ADDR_WIDTH), .DATA_WIDTH(DATA_WIDTH), .CAM_DEPTH(CAM_DEPTH)
 /*
  * instantiate the priority encoder
  */
-priorityencoder #(.MEM_DEPTH(CAM_DEPTH), .INDEX_WIDTH(ADDR_WIDTH)) match_encode (
+priorityencoder #(.INDEX_WIDTH(ADDR_WIDTH)) match_encode (
 	.inp_i (match_addr),
 	.start_i,
 	.end_i,

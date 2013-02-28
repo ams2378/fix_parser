@@ -1,6 +1,6 @@
 
-module priorityencoder # (parameter MEM_DEPTH = 32, INDEX_WIDTH = 5)(
-	input [MEM_DEPTH-1:0]	 		inp_i,
+module priorityencoder # (parameter INDEX_WIDTH = 5)(
+	input [(1 << INDEX_WIDTH) -1:0]	 		inp_i,
 	input [INDEX_WIDTH-1:0] 		start_i,
 	input [INDEX_WIDTH-1:0] 		end_i,
 	output[INDEX_WIDTH-1:0] 		out_o,
@@ -9,6 +9,9 @@ module priorityencoder # (parameter MEM_DEPTH = 32, INDEX_WIDTH = 5)(
 
 logic valid;
 logic out;
+
+parameter MEM_DEPTH = (1 << INDEX_WIDTH);
+
 
 always_comb begin
 	for (int i = start_i; i<=end_i; i++) begin

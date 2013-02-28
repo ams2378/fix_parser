@@ -154,7 +154,7 @@ fHsimNewEvcd                       	1
 fHsimNewEvcdTest                   	0
 fHsimDumpElabData                  	1
 fHsimNoDeposit                     	0
-fHsimDumpOffsetData                	0
+fHsimDumpOffsetData                	1
 fNoOfsOpt                          	0
 fHsimDynamicElab                   	1
 fHsimDynamicElabDiag               	0
