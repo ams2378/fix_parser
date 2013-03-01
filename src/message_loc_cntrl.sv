@@ -77,7 +77,7 @@ always_ff @(state or end_message_i or start_message_i) begin
 				end
 		end
 		state2: begin	
-				store_end = '0
+				store_end = '0;
 				count = count + 1;
 				next_state = state0;	
 		end
