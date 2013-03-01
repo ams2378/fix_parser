@@ -31,7 +31,7 @@ wire [DATA_WIDTH*CAM_DEPTH-1:0] read_out;
 /*
  * instantiate the read decoder
  */
-decoder2 read_decoder (
+decoder2 #(.ADDR_WIDTH(ADDR_WIDTH)) read_decoder (
         .decoder_i (read_index_i),  
         .decoder_o (read_addr)
         );
@@ -39,7 +39,7 @@ decoder2 read_decoder (
 /*
  * instantiate the write decoder
  */
-decoder2 write_decoder (
+decoder2 #(.ADDR_WIDTH(ADDR_WIDTH)) write_decoder (
 	.decoder_i (write_index_i),
 	.decoder_o (write_addr)
 	);
@@ -47,7 +47,7 @@ decoder2 write_decoder (
 /*
  * instantiate the memory arrays
  */
-ramreg mem_array2 (
+ramreg  #(.ADDR_WIDTH(ADDR_WIDTH), .DATA_WIDTH(DATA_WIDTH)) mem_array2 (
 	.clk,
 	.rst,
 
@@ -66,7 +66,7 @@ ramreg mem_array2 (
 /*
  * instantiate the mux
  */
-multiplexer mux (
+multiplexer  #(.ADDR_WIDTH(ADDR_WIDTH), .DATA_WIDTH(DATA_WIDTH)) mux (
 	.data_i (read_out),
 	.read_address_i (read_index_i),
 	.data_o (read_value_o)
