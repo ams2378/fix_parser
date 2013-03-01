@@ -27,11 +27,11 @@ module parser_test();
 	reg				empty_o;
 	reg				full_o;
 
-	reg[31:0]			find_tag_i,
-	reg[8 :0] 			message_num_i,
-	reg				read_message_i,
+	reg[31:0]			find_tag_i;
+	reg[8 :0] 			message_num_i;
+	reg				read_message_i;
 
-	reg[255:0]			output_value_o,
+	reg[255:0]			output_value_o;
 /*
 fix_parser_top dut(.clk, .rst, .data_i, .tag_o, .value_o, .end_of_body_o, .start_of_header_o, 
 		   .t_wr_cs_o, .t_wr_en_o, .v_wr_cs_o, .v_wr_en_o,  .empty, .full);
