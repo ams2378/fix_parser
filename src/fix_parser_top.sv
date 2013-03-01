@@ -14,9 +14,9 @@ module fix_parser_top (
 	input			rst,
 	input[7:0]		data_i,
 
-	output			end_of_body_o,
+//	output			end_of_body_o,
 	output			start_of_header_o,
-	output			start_message_o,
+//	output			start_message_o,
 	output			empty_o,
 	output			full_o
 );
@@ -38,6 +38,15 @@ wire 			tag_status_t_1;
 wire			body_status_t_1;
 wire 			tag_status_t_2;
 wire			body_status_t_2;
+
+wire[5-1:0] 		start_addr;
+wire[5-1:0] 		end_addr;
+wire			store_start;
+wire			store_end;
+wire			full;
+
+wire			start_message;
+wire			end_message;
 
 fix_parser parser(
 		.clk,
@@ -64,9 +73,9 @@ fix_parser_out_module out_module(
 		.tag_o 	   (tag),
 		.value_o   (value),
 
-		.end_of_body_o,
+		.end_of_body_o (end_message),
 		.start_of_header_o,
-		.start_message_o
+		.start_message_o (start_message)
 );
 
 cam_cntrl #(.DATA_WIDTH (32), .ADDR_WIDTH (5)) tag_cam (
@@ -76,8 +85,31 @@ cam_cntrl #(.DATA_WIDTH (32), .ADDR_WIDTH (5)) tag_cam (
 			
 		.wr_cs_i (t_wr_cs),
 		.data_i(tag),
-		.wr_en_i(t_wr_en)
+		.wr_en_i(t_wr_en),
+
+		.start_message_i(end_message),	
+		.end_message_i(start_message),	
+
+		.start_address_o(start_addr),
+		.end_address_o(end_addr),
+		.store_start_o(store_start),
+		.store_end_o(store_end),
+		.full_o(full)
 		);
+
+
+message_loc_ctrl #(.NUM_MESSAGE(10), .DATA_WIDTH(5)) (
+
+		.clk,
+		.rst,
+
+		.end_message_i (end_message),
+		.start_message_i(start_message),
+
+		.start_addr_i(start_addr),
+		.end_addr_i(end_addr)
+);
+
 
 value_fifo_top #(.DATA_WIDTH (256), .ADDR_WIDTH (8)) value_fifo (
 	
