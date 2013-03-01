@@ -107,7 +107,7 @@ message_loc_ctrl #(.NUM_MESSAGE(10), .DATA_WIDTH(5)) (
 		.start_message_i(start_message),
 
 		.start_addr_i(start_addr),
-		.end_addr_i(end_addr)
+		.end_addr_i(end)
 );
 
 
