@@ -69,7 +69,7 @@ always_ff @(state or end_message_i or start_message_i) begin
 				if (end_message_i == 0) begin
 					store_start = '0;
 					next_state = state1;
-				end else 
+				end else begin 
 					store_end = '1;
 					address = count;
 					end_addr = end_addr_i;
