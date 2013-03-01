@@ -5,7 +5,7 @@ Function    : decoder to decode read and write address
 *///-----------------------------------------------------
 module decoder #(parameter ADDR_WIDTH = 5) ( 
 
-	input [ADDR_WIDTH:0] decoder_i,
+	input [ADDR_WIDTH-1:0] decoder_i,
 	output [(1 << ADDR_WIDTH)-1:0] decoder_o
 	);
 

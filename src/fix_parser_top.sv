@@ -20,7 +20,7 @@ module fix_parser_top # (parameter NUM_MESSAGE = 10, ADDR_WIDTH = 5) (
 	input				read_message_i,
 
 
-	output[256:0]			output_value_o,
+	output[255:0]			output_value_o,
 
 
 //	output				end_of_body_o,
@@ -141,7 +141,7 @@ message_loc_cntrl #(.NUM_MESSAGE(10), .DATA_WIDTH(5)) (
 		.read_end_i (read_end_addr_loc),
 	
 		.start_o (read_start_index_loc),
-		.end_o(read_end_index_o)
+		.end_o(read_end_index_loc)
 
 );
 

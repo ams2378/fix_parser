@@ -23,12 +23,11 @@ module cam #(parameter DATA_WIDTH = 32, ADDR_WIDTH = 5 ) (
 	output [ADDR_WIDTH-1:0] search_index_o
 	);
 
-wire [ADDR_WIDTH-1:0] write_addr;
-wire [ADDR_WIDTH-1:0] match_addr;
-
 
 parameter CAM_DEPTH = (1 << ADDR_WIDTH);
 
+wire [CAM_DEPTH-1:0] write_addr;
+wire [CAM_DEPTH-1:0] match_addr;
 
 /*
  * instantiate the write decoder
