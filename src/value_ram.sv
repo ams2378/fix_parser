@@ -35,6 +35,7 @@ ram #(.DATA_WIDTH(256), .ADDR_WIDTH(5)) (
 	.read_index_i(address_rd_i),
 	.write_i(we_i),
 	.write_index_i(wr_pointer),
+	.write_data_i(data_i),
 	.read_value_o(data_o)
 );
 
