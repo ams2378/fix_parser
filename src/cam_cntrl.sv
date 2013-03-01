@@ -28,7 +28,7 @@ logic					full;
 
 /* write pointer */
 
-always_ff @ (posedge clk or posedge rst) begin
+always_ff @ (posedge clk or posedge rst or start_message_i or end_message_i) begin
   if (rst) begin
     wr_pointer <= 0;
     start_address = 0;
@@ -51,7 +51,6 @@ always_ff @ (posedge clk or posedge rst) begin
   if (wr_pointer == CAM_DEPTH-1)
 		full = '1;
 end
-
 
 assign start_address_o 	= 	start_address;
 assign end_address_o 	= 	end_address;
