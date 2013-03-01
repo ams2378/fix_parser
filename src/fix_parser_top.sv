@@ -87,8 +87,8 @@ cam_cntrl #(.DATA_WIDTH (32), .ADDR_WIDTH (5)) tag_cam (
 		.data_i(tag),
 		.wr_en_i(t_wr_en),
 
-		.start_message_i(end_message),	
-		.end_message_i(start_message),	
+		.start_message_i(start_message),	
+		.end_message_i(end_message),	
 
 		.start_addr_o(start_addr),
 		.end_addr_o(end_addr),
