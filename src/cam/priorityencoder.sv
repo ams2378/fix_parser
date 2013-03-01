@@ -8,7 +8,10 @@ module priorityencoder # (parameter INDEX_WIDTH = 5)(
 	);
 
 logic valid;
-logic [INDEX_WIDTH-1:0] 		out,
+logic [INDEX_WIDTH-1:0] 		out;
+
+parameter MEM_DEPTH = (1 << INDEX_WIDTH);
+
 
 always_comb begin
 	for (int i = start_i; i<=end_i; i++) begin
