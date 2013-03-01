@@ -62,7 +62,7 @@ always_ff @(state or end_message_i or start_message_i) begin
 	case(state) 
 		
 		state0: begin 
-				if ( start_message_i == 0) begin
+				if ( start_message_i == 0 or start_message_i == x) begin
 					next_state = state0;
 				end else begin
 					store_start = '1;
