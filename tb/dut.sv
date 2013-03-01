@@ -44,6 +44,7 @@ initial begin
 
 
 reg [1183:0] data ;
+reg [1183:0] data2 ;
 int temp;
 int i = 0;
 
@@ -56,6 +57,10 @@ data = 1184'h7c383d4649582e342e32207c20393d313738207c2033353d38207c2034393d50484
 /* sample FIX:|8=FIX.4.2|9=178|35=8|49=PHLX|52=20071123-05:30:00.000|11=ATOMNOCCC9990900|10=128|   */
 
 data = 656'h7c383d4649582e342e327c393d3137387c33353d387c34393d50484c587c35323d32303037313132332d30353a33303a30302e3030307c31313d41544f4d4e4f434343393939303930307c31303d3132387c; 
+
+
+data2 = 656'h7c383d4649582e342e327c393d3137387c33353d387c34393d50484c587c35323d32303037313132332d30353a33303a30302e3030307c31313d41544f4d4e4f434343393939303930307c31303d8765457c; 
+
 
 $vcdpluson;
 
@@ -92,22 +97,43 @@ while (temp > 0) begin
 
 end
 
-temp = 164;
-i = 0;
-
-#1 clk = 0;
-#1 clk = 1;
-
-
-#1 clk = 0;
-#1 clk = 1;
-
-#1 clk = 0;
-#1 clk = 1;
+int temp2 = 164;
+int i2 = 0;
 
 message_num_i = '0;
 read_message_i = '1;
 find_tag_i = 16'h3130;
+
+#1 clk = 0;
+#1 clk = 1;
+
+read_message_i = '0;
+
+#1 clk = 0;
+#1 clk = 1;
+
+while (temp2 > 0) begin
+
+	#1 clk = 0;
+	#1 clk = 1;
+
+	rst= '0;
+	data_i = data2 [8*temp2-1 -: 8];
+	i2 = i2++;
+	temp2--;
+end
+
+
+message_num_i = '0;
+read_message_i = '1;
+find_tag_i = 16'h3130;
+
+
+
+#1 clk = 0;
+#1 clk = 1;
+
+
 
 #1 clk = 0;
 #1 clk = 1;
