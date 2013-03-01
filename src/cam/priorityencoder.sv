@@ -16,7 +16,6 @@ always_comb begin
 	for (int i = start_i; i<=end_i; i++) begin
 			if (inp_i[i] == '1)
 				out = i;
-
 	end
 end
 
