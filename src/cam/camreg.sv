@@ -9,7 +9,7 @@ module camreg #(parameter ADDR_WIDTH = 5, DATA_WIDTH = 32) (
 	input rst,
 
 	input write_i,
-	input [ADDR_WIDTH-1:0] write_addr_i,
+	input [(1 << ADDR_WIDTH)-1:0] write_addr_i,
 	input [DATA_WIDTH-1:0] write_data_i,
 
 	input search_i,
