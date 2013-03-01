@@ -18,8 +18,6 @@ module message_loc_cntrl # (parameter NUM_MESSAGE =10, DATA_WIDTH = 5 ) (
 	output [DATA_WIDTH-1:0]		start_o,
 	output [DATA_WIDTH-1:0]		end_o,
 
-
-
 	output [NUM_MESSAGE-1 :0]	address_o,
 	output [DATA_WIDTH-1:0]		start_addr_o,
 	output [DATA_WIDTH-1:0]		end_addr_o,

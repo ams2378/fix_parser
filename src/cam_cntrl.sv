@@ -62,10 +62,8 @@ always_ff @ (posedge clk or posedge rst or start_message_i or end_message_i) beg
 		full = '1;
 end
 
-
-
-assign start_address_o 	= 	start_address;
-assign end_address_o 	= 	end_address;
+assign start_addr_o 	= 	start_address;
+assign end_addr_o 	= 	end_address;
 assign store_start_o 	= 	store_start;
 assign store_end_o 	= 	store_end;
 assign full_o		=	full;
