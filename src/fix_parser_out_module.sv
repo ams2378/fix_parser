@@ -150,7 +150,8 @@ always_ff @(state or start_tag_i or start_value_i) begin
 				t_wr_en = '0;
 				v_wr_cs = '0;	
 				v_wr_en = '0;
-				start_message = '0;	
+				start_message = '0;
+				end_of_body = '0;	
 				if (start_value_i == 1) begin
 					value[7:0] = data_i;
 					next_state = state4;
