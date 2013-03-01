@@ -122,7 +122,7 @@ while (temp > 0) begin
 end
 
 
-message_num_i = '0;
+message_num_i = 10'b0000000001;
 read_message_i = '1;
 find_tag_i = 16'h3130;
 
