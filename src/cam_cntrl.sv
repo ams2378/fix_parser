@@ -5,7 +5,7 @@ module cam_cntrl #(parameter DATA_WIDTH = 32, ADDR_WIDTH = 5) (
 
 	input				wr_cs_i    , 		// Write chip select
 	input[DATA_WIDTH-1:0]		data_i  , 		// Data input
-	input				wr_en_i     		// Write Enable
+	input				wr_en_i ,    		// Write Enable
 	input				start_message_i,
 	input				end_message_i,
 	
