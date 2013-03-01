@@ -26,7 +26,7 @@ logic [DATA_WIDTH-1 : 0]		start;
 logic [DATA_WIDTH-1 : 0]		endd;
 
 /* Memory Write Block */
- 
+/* 
 always_ff @ (posedge clk) begin
   if ( store_start_i ) begin
      mem_start[addr_i] <= start_i;
@@ -48,7 +48,40 @@ always_ff @ (posedge clk) begin
   end  
 end 
 
+
+*/
+
+ram #(.DATA_WIDTH(256), .ADDR_WIDTH(5)) start_locator_ram (
+
+	.clk,
+	.rst,
+
+	.read_i(read_start_i & re_i),
+	.read_index_i(addr_i),
+	.write_i(store_start_i),
+	.write_index_i(addr_i),
+	.write_data_i(start_i),
+//	.read_valid_o(data_out_valid),
+	.read_value_o(start)
+);
+
+ram #(.DATA_WIDTH(256), .ADDR_WIDTH(5)) end_locator_ram (
+
+	.clk,
+	.rst,
+
+	.read_i(store_end_i & re_i),
+	.read_index_i(addr_i),
+	.write_i(store_end_i),
+	.write_index_i(addr_i),
+	.write_data_i(end_i),
+//	.read_valid_o(data_out_valid),
+	.read_value_o(endd)
+);
+
 assign start_o = start;
 assign end_o = endd;
+
+
 
 endmodule

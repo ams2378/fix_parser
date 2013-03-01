@@ -27,7 +27,7 @@ always_ff @ (posedge clk or posedge rst) begin
 end
 
 
-ram #(.DATA_WIDTH(256), .ADDR_WIDTH(5)) (
+ram #(.DATA_WIDTH(256), .ADDR_WIDTH(5)) value_stored_ram (
 
 	.clk,
 	.rst,
