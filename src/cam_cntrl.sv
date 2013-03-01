@@ -21,6 +21,8 @@ parameter CAM_DEPTH = (1 << ADDR_WIDTH);
 logic [ADDR_WIDTH-1:0] 			wr_pointer;
 logic [ADDR_WIDTH-1:0] 			start_address;
 logic [ADDR_WIDTH-1:0] 			end_address;
+logic					store_start;
+logic					store_end;
 
 /* write pointer */
 
