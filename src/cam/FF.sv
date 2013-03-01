@@ -23,7 +23,7 @@ reg match;
 /*
  * the write block
  */
-always_comb begin
+always_ff @ (posedge clk) begin
 	if (rst)
 		data <= '0;
 	else if (writeEn_i )
@@ -35,7 +35,7 @@ end
 /*
  * equality checking block
  */
-always_comb begin
+always_ff @ (posedge clk) begin
 	if (search_i) begin
 		if (data == searchn_i)
 			match <= '1;
