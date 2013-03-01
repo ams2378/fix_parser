@@ -9,7 +9,7 @@ module message_loc #(parameter DATA_WIDTH = 32, NUM_MESSAGE = 10) (
 	input [NUM_MESSAGE-1 : 0]		addr_i,
 	input					re_i,
 	input					read_start_i,
-	input					read_end_i
+	input					read_end_i,
 
 	output [DATA_WIDTH-1 : 0]		start_o,
 	output [DATA_WIDTH-1 : 0]		end_o
