@@ -33,8 +33,9 @@ ram #(.DATA_WIDTH(DATA_WIDTH), .ADDR_WIDTH(NUM_MESSAGE)) start_locator_ram (
 	.clk,
 	.rst,
 
-	.read_i(read_start_i & re_i),
+	.read_i(read_start_i ),
 	.read_index_i,
+
 	.write_i(store_start_i),
 	.write_index_i(addr_i),
 	.write_data_i(start_i),
@@ -47,8 +48,9 @@ ram #(.DATA_WIDTH(DATA_WIDTH), .ADDR_WIDTH(NUM_MESSAGE)) end_locator_ram (
 	.clk,
 	.rst,
 
-	.read_i(store_end_i & re_i),
+	.read_i(store_end_i ),
 	.read_index_i,
+
 	.write_i(store_end_i),
 	.write_index_i(addr_i),
 	.write_data_i(end_i),
