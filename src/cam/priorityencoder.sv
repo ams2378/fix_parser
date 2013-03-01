@@ -8,7 +8,7 @@ module priorityencoder # (parameter INDEX_WIDTH = 5)(
 	);
 
 logic valid;
-logic out;
+logic [INDEX_WIDTH-1:0] 		out,
 
 parameter MEM_DEPTH = (1 << INDEX_WIDTH);
 
