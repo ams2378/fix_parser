@@ -106,7 +106,7 @@ i = 0;
 
 message_num_i = '0;
 read_message_i = '1;
-find_tag_i = 8'h38;
+find_tag_i = 16'h3130;
 
 #1 clk = 0;
 #1 clk = 1;
