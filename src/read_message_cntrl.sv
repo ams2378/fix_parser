@@ -4,7 +4,7 @@ module read_message_cntrl #(parameter TAG_WIDTH = 32, NUM_MESSAGE = 10) (
 	input				clk,
 	input				rst,
 
-	input				read_message_i
+	input				read_message_i,
 
 	output				search_tag_o,
 	output				read_message_loc_o,
