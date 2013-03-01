@@ -14,8 +14,8 @@ module read_message_cntrl #(parameter TAG_WIDTH = 32, NUM_MESSAGE = 10) (
 
 logic				search_tag;
 logic				read_message_loc;
-logic				read_start_loc;
-logic				read_end_loc;	
+logic				read_start_addr_loc;
+logic				read_end_addr_loc;	
 
 always_ff @ (posedge clk or posedge rst or read_message_i) begin
 
