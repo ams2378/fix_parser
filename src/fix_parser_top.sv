@@ -69,7 +69,7 @@ fix_parser_out_module out_module(
 		.start_message_o
 );
 
-cam_cntrl #(.DATA_WIDTH (32), .ADDR_WIDTH (8)) tag_cam (
+cam_cntrl #(.DATA_WIDTH (32), .ADDR_WIDTH (5)) tag_cam (
 
 		.clk,
 		.rst,
@@ -78,6 +78,20 @@ cam_cntrl #(.DATA_WIDTH (32), .ADDR_WIDTH (8)) tag_cam (
 		.data_i(tag),
 		.wr_en_i(t_wr_en)
 		);
+
+value_fifo_top #(.DATA_WIDTH (256), .ADDR_WIDTH (8)) value_fifo (
+	
+		.clk (clk)     		, 		
+		.rst (rst)     		, 		
+		.wr_cs_i (v_wr_cs)    	, 		
+		.rd_cs_i (1'b0)    	,	 		
+		.data_i  (value)  	, 	// input value		
+		.rd_en_i (1'b0)    	, 		
+		.wr_en_i (v_wr_en)   	, 		
+
+		.empty_o  		, 		
+		.full_o       		
+); 
 
 
 /*
@@ -96,19 +110,5 @@ tag_fifo_top #(.DATA_WIDTH (32), .ADDR_WIDTH (8)) tag_fifo (
 ); 
 */
 
-
-value_fifo_top #(.DATA_WIDTH (256), .ADDR_WIDTH (8)) value_fifo (
-	
-		.clk (clk)     		, 		
-		.rst (rst)     		, 		
-		.wr_cs_i (v_wr_cs)    	, 		
-		.rd_cs_i (1'b0)    	,	 		
-		.data_i  (value)  	, 	// input value		
-		.rd_en_i (1'b0)    	, 		
-		.wr_en_i (v_wr_en)   	, 		
-
-		.empty_o  		, 		
-		.full_o       		
-); 
 
 endmodule

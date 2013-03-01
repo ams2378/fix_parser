@@ -11,6 +11,13 @@ module message_loc_cntrl # (parameter NUM_MESSAGE =5, DATA_WIDTH = 5 ) (
 	input [DATA_WIDTH-1 :0]		end_addr_i,
 	input				full,
 
+	input				read_start_i,
+	input				read_end_i,
+
+	output [DATA_WIDTH-1:0]		start_o,
+	output [DATA_WIDTH-1:0]		end_o,
+
+
 
 	output [NUM_MESSAGE-1 :0]	address_o,
 	output [DATA_WIDTH-1:0]		start_addr_o,
@@ -89,6 +96,27 @@ assign  start_addr_o	=	start_addr;
 assign 	end_addr_o	=	end_addr;
 assign 	store_start_o	=	store_start;
 assign 	store_end_o	=	store_end;
+
+
+
+message_loc #(.DATA_WIDTH(5), .NUM_MESSAGE(10)) message_mem (
+
+		.clk,
+		.rst,
+
+		.start_i(store_start_o),
+		.end_i(store_end_o),
+		.store_start_i(store_start_o),
+		.store_end_i(store_end_o),
+		.addr_i(address_o),
+		.re_i,
+		.read_start_i,
+		.read_end_i,
+
+		.start_o,
+		.end_o
+
+);  
 
 
 endmodule

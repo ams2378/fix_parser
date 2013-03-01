@@ -12,7 +12,8 @@ module cam_cntrl #(parameter DATA_WIDTH = 32, ADDR_WIDTH = 5) (
 	output[ADDR_WIDTH-1:0] 		start_addr_o,
 	output[ADDR_WIDTH-1:0] 		end_addr_o,
 	output				store_start_o,
-	output				store_end_o
+	output				store_end_o,
+	output				full_o
 
 );    
  
@@ -23,6 +24,7 @@ logic [ADDR_WIDTH-1:0] 			start_address;
 logic [ADDR_WIDTH-1:0] 			end_address;
 logic					store_start;
 logic					store_end;
+logic					full;
 
 /* write pointer */
 
@@ -40,6 +42,9 @@ always_ff @ (posedge clk or posedge rst) begin
 	end_address = wr_pointer;
 	store_end = '1;
   end
+
+  if (wr_pointer == CAM_DEPTH-1)
+		full = '1;
 end
 
 
@@ -47,9 +52,10 @@ assign start_address_o 	= 	start_address;
 assign end_address_o 	= 	end_address;
 assign store_start_o 	= 	store_start;
 assign store_end_o 	= 	store_end;
+assign full_o		=	full;
 
 
-cam #(.DATA_WIDTH(DATA_WIDTH), .ADDR_WIDTH(ADDR_WIDTH)) (
+cam #(.DATA_WIDTH(DATA_WIDTH), .ADDR_WIDTH(ADDR_WIDTH)) cam_tag (
 		.clk,
 		.rst,
 
