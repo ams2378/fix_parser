@@ -33,7 +33,7 @@ end
 
 always_ff @ (posedge clk) begin
   if (!we_i && oe_i) begin
-    data_out <= mem[address_rd_i + 1]; 
+    data_out <= mem[address_rd_i]; 
   end else begin
     data_out <= 0; 
   end  
