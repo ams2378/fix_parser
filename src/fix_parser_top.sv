@@ -3,9 +3,10 @@
  *
  * @brief     	        Top level: instantiation of other modules. 	
  *
- * @author		Adil Sadik <sadik.adil@gmail.com> 
+ * @author		Adil Sadik <sadik.adil@gmail.com>
+ *
+ * @dependencies	
  */
-
 
 module fix_parser_top (
 
@@ -15,6 +16,7 @@ module fix_parser_top (
 
 	output			end_of_body_o,
 	output			start_of_header_o,
+	output			start_message_o,
 	output			empty_o,
 	output			full_o
 );
@@ -37,9 +39,7 @@ wire			body_status_t_1;
 wire 			tag_status_t_2;
 wire			body_status_t_2;
 
-
 fix_parser parser(
-
 		.clk,
 		.rst,
 		.data_i,
@@ -65,7 +65,8 @@ fix_parser_out_module out_module(
 		.value_o   (value),
 
 		.end_of_body_o,
-		.start_of_header_o
+		.start_of_header_o,
+		.start_message_o
 );
 
 cam_cntrl #(.DATA_WIDTH (32), .ADDR_WIDTH (8)) tag_cam (

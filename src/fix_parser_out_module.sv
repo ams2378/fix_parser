@@ -6,7 +6,7 @@
  * @author		Adil Sadik <sadik.adil@gmail.com> 
  */
 
-module fix_parser_out_module(
+module fix_parser_out_module (
 
 	input 				clk,
 	input				rst,
@@ -24,8 +24,9 @@ module fix_parser_out_module(
 	output[31:0]			tag_o,
 	output[255:0]			value_o,
 	output				end_of_body_o,
-	output				start_of_header_o
 
+	output				start_message_o,
+	output				start_of_header_o
 );
 
 /* state variable */
@@ -49,13 +50,14 @@ logic[31:0]			tag;
 logic[255:0]			value;
 logic				end_of_body;
 logic				start_of_header;
+logic				start_message;
+logic				end_message;
 
 logic [7:0] 			first_tag = 8'h38;		// ASCII for "8" - indicates start of a new FIX message
 logic [15:0] 			last_tag = 16'h3130;		// ASCII for "10" - indicates the last TAG
 
-bit	last_tag_valid;
-
-logic	incr_i;
+bit				last_tag_valid;
+logic				incr_i;
  
 always_ff @(posedge clk) begin
 	if (rst)		state <= state0;
@@ -85,7 +87,9 @@ always_ff @(state or start_tag_i or start_value_i) begin
 					v_wr_cs = '0;	
 					v_wr_en = '0;
 					t_wr_cs = '0;
-					t_wr_en = '0;	
+					t_wr_en = '0;
+					start_message = '0;
+					start_count = '0;
 					next_state = state1;
 				end else begin
 					v_wr_cs = '0;	
@@ -111,6 +115,7 @@ always_ff @(state or start_tag_i or start_value_i) begin
 					t_wr_en = '1;
 					if (tag [7:0] == first_tag) begin
 						start_of_header = '1;
+						start_message = '1;
 						next_state = state3;
 					end else if (tag [15:0] == last_tag) begin
 						end_of_body = 1;
@@ -132,6 +137,7 @@ always_ff @(state or start_tag_i or start_value_i) begin
 					t_wr_en = '1;
 					if (tag [7:0] == first_tag) begin
 						start_of_header = '1;
+						start_message = '1;
 						next_state = state3;
 					end else if (tag [15:0] == last_tag) begin
 						end_of_body = 1;
@@ -144,7 +150,8 @@ always_ff @(state or start_tag_i or start_value_i) begin
 				t_wr_cs = '0;	
 				t_wr_en = '0;
 				v_wr_cs = '0;	
-				v_wr_en = '0;	
+				v_wr_en = '0;
+				start_message = '0;	
 				if (start_value_i == 1) begin
 					value[7:0] = data_i;
 					next_state = state4;
@@ -155,6 +162,7 @@ always_ff @(state or start_tag_i or start_value_i) begin
 				tag = '0;
 				t_wr_cs = '0;	
 				t_wr_en = '0;
+				start_message = '0;	
 				if (start_value_i == 1) begin
 					value <<= 8;
 					value [7:0] = data_i;
@@ -171,6 +179,7 @@ always_ff @(state or start_tag_i or start_value_i) begin
 				tag = '0;
 				t_wr_cs = '0;	
 				t_wr_en = '0;
+				start_message = '0;	
 				if (start_value_i == 1) begin
 					value <<= 8;
 					value [7:0] = data_i;
@@ -186,16 +195,15 @@ always_ff @(state or start_tag_i or start_value_i) begin
 	endcase
 end
 
-
-assign tag_o = tag;
-assign value_o = value;
-assign start_of_header_o = start_of_header;
-assign end_of_body_o = end_of_body;
-assign t_wr_en_o = t_wr_en;
-assign t_wr_cs_o = t_wr_cs;
-assign v_wr_en_o = v_wr_en;
-assign v_wr_cs_o = v_wr_cs;
-
+assign 	tag_o 			= 	tag;
+assign 	value_o 		= 	value;
+assign 	start_of_header_o 	= 	start_of_header;
+assign 	end_of_body_o 		= 	end_of_body;
+assign 	start_message_o 	= 	start_message;
+assign 	t_wr_en_o 		= 	t_wr_en;
+assign 	t_wr_cs_o 		= 	t_wr_cs;
+assign 	v_wr_en_o 		= 	v_wr_en;
+assign 	v_wr_cs_o 		= 	v_wr_cs;
 
 endmodule
 
