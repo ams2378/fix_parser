@@ -167,7 +167,7 @@ value_ram #(.DATA_WIDTH (256), .ADDR_WIDTH (5)) value_ram (
 		.address_rd_i(matched_index),
 		.data_i (value),
 		.cs_i (v_wr_cs),
-		.we_i (v_wr_en)	
+		.we_i (v_wr_en),	
 		.oe_i (search_tag),
 		
 		.data_o (output_value_o)
