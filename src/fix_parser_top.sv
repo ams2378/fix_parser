@@ -90,8 +90,8 @@ cam_cntrl #(.DATA_WIDTH (32), .ADDR_WIDTH (5)) tag_cam (
 		.start_message_i(end_message),	
 		.end_message_i(start_message),	
 
-		.start_address_o(start_addr),
-		.end_address_o(end_addr),
+		.start_addr_o(start_addr),
+		.end_addr_o(end_addr),
 		.store_start_o(store_start),
 		.store_end_o(store_end),
 		.full_o(full)
