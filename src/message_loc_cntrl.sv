@@ -1,6 +1,6 @@
 
 
-module message_loc_cntrl # (parameter NUM_MESSAGE =10, DATA_WIDTH = 5, NUM_MESSAGE = 10 ) (
+module message_loc_cntrl # (parameter NUM_MESSAGE =10, DATA_WIDTH = 5 ) (
 
 	input 				clk,
 	input				rst,
