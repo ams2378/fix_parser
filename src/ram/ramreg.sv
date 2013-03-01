@@ -29,7 +29,7 @@ wire [CAM_DEPTH - 1:0] read_valids;
 
 generate
 	for (genvar iter = 0; iter < CAM_DEPTH ; iter++) begin
-		FF #(.WIDTH(DATA_WIDTH)) array
+		FF2 #(.WIDTH(DATA_WIDTH)) array
 			(.clk,
 			 .rst,
 

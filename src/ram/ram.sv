@@ -31,7 +31,7 @@ wire [DATA_WIDTH*CAM_DEPTH-1:0] read_out;
 /*
  * instantiate the read decoder
  */
-decoder_5_32 read_decoder (
+decoder2 read_decoder (
         .decoder_i (read_index_i),  
         .decoder_o (read_addr)
         );
@@ -39,7 +39,7 @@ decoder_5_32 read_decoder (
 /*
  * instantiate the write decoder
  */
-decoder_5_32 write_decoder (
+decoder2 write_decoder (
 	.decoder_i (write_index_i),
 	.decoder_o (write_addr)
 	);
@@ -47,7 +47,7 @@ decoder_5_32 write_decoder (
 /*
  * instantiate the memory arrays
  */
-camreg mem_array (
+ramreg mem_array2 (
 	.clk,
 	.rst,
 
