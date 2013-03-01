@@ -19,7 +19,6 @@ module message_loc_cntrl # (parameter NUM_MESSAGE =10, DATA_WIDTH = 5 ) (
 	output [DATA_WIDTH-1:0]		end_o
 );
 
-
 parameter 			state0 = 2'b00;
 parameter			state1 = 2'b01;
 parameter			state2 = 2'b10;
@@ -108,6 +107,5 @@ message_loc #(.DATA_WIDTH(5), .NUM_MESSAGE(10)) message_mem (
 		.end_o
 
 );  
-
 
 endmodule

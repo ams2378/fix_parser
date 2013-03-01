@@ -134,7 +134,7 @@ message_loc_cntrl #(.NUM_MESSAGE(10), .DATA_WIDTH(5)) (
 		.start_addr_i(start_addr),
 		.end_addr_i(end_addr),
 
-	//	.full_i
+		.full_i(full),
 
 		.re_i (read_message_loc),
 		.read_start_i(read_start_addr_loc),
