@@ -8,7 +8,7 @@
  * @dependencies	
  */
 
-module fix_parser_top # (parameter NUM_MESSAGE = 10) (
+module fix_parser_top # (parameter NUM_MESSAGE = 10, ADDR_WIDTH = 5) (
 
 	input				clk,
 	input				rst,
@@ -132,7 +132,7 @@ message_loc_cntrl #(.NUM_MESSAGE(10), .DATA_WIDTH(5)) (
 		.start_message_i(start_message),
 
 		.start_addr_i(start_addr),
-		.end_addr_i(end_addr)
+		.end_addr_i(end_addr),
 
 	//	.full_i
 
