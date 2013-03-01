@@ -39,9 +39,9 @@ end
 
 
 assign 	search_tag_o 			= 	search_tag;
-assign	read_message_loc		=	read_message_loc;
-assign	read_start_addr_loc		=	read_start_loc;
-assign	read_end_addr_loc		=	read_end_loc;
+assign	read_message_loc_o		=	read_message_loc;
+assign	read_start_addr_loc_o		=	read_start_loc;
+assign	read_end_addr_loc_o		=	read_end_loc;
 
 
 endmodule
