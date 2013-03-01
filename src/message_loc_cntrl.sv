@@ -90,11 +90,11 @@ always_ff @(state or end_message_i or start_message_i) begin
 	endcase
 end
 
-assign	address_o	= 	address;
-assign  start_addr_o	=	start_addr;
-assign 	end_addr_o	=	end_addr;
-assign 	store_start_o	=	store_start;
-assign 	store_end_o	=	store_end;
+//assign	address_o	= 	address;
+//assign  start_addr_o	=	start_addr;
+//assign 	end_addr_o	=	end_addr;
+//assign 	store_start_o	=	store_start;
+//assign 	store_end_o	=	store_end;
 
 
 
@@ -103,11 +103,11 @@ message_loc #(.DATA_WIDTH(5), .NUM_MESSAGE(10)) message_mem (
 		.clk,
 		.rst,
 
-		.start_i(store_start_o),
-		.end_i(store_end_o),
-		.store_start_i(store_start_o),
-		.store_end_i(store_end_o),
-		.addr_i(address_o),
+		.start_i(start_addr_i),
+		.end_i(end_addr_i),
+		.store_start_i(store_start),
+		.store_end_i(store_end),
+		.addr_i(address),
 		.re_i,
 		.read_start_i,
 		.read_end_i,

@@ -8,17 +8,26 @@
  * @dependencies	
  */
 
-module fix_parser_top (
+module fix_parser_top # (parameter NUM_MESSAGE = 10) (
 
-	input			clk,
-	input			rst,
-	input[7:0]		data_i,
+	input				clk,
+	input				rst,
 
-//	output			end_of_body_o,
-	output			start_of_header_o,
-//	output			start_message_o,
-	output			empty_o,
-	output			full_o
+	input[7:0]			data_i,
+
+	input[31:0]			find_tag_i,
+	input[NUM_MESSAGE-1 :0] 	message_num_i,
+	input				read_message_i,
+
+
+	output[256:0]			output_value_o,
+
+
+//	output				end_of_body_o,
+	output				start_of_header_o,
+//	output				start_message_o,
+	output				empty_o,
+	output				full_o
 );
 
 wire[7:0]		data;
@@ -47,6 +56,17 @@ wire			full;
 
 wire			start_message;
 wire			end_message;
+
+wire			search_tag;
+wire			read_message_loc;
+wire			read_start_addr_loc;
+wire			read_end_addr_loc;	
+wire			tag_match;
+wire[ADDR_WIDTH-1:0]	matched_index;
+
+wire[ADDR_WIDTH-1:0]	read_start_index_loc;
+wire[ADDR_WIDTH-1:0]	read_end_index_loc;
+
 
 fix_parser parser(
 		.clk,
@@ -86,17 +106,22 @@ cam_cntrl #(.DATA_WIDTH (32), .ADDR_WIDTH (5)) tag_cam (
 		.wr_cs_i (t_wr_cs),
 		.data_i(tag),
 		.wr_en_i(t_wr_en),
-
 		.start_message_i(start_message),	
 		.end_message_i(end_message),	
+
+		.find_tag_i,
+		.search_tag_i (search_tag),
+		.start_index_i(read_start_index_loc),
+		.end_index_i(read_end_index_loc),
 
 		.start_addr_o(start_addr),
 		.end_addr_o(end_addr),
 		.store_start_o(store_start),
 		.store_end_o(store_end),
+		.tag_match_o (tag_match),
+		.index_value_o(matched_index),
 		.full_o(full)
 		);
-
 
 message_loc_cntrl #(.NUM_MESSAGE(10), .DATA_WIDTH(5)) (
 
@@ -108,54 +133,48 @@ message_loc_cntrl #(.NUM_MESSAGE(10), .DATA_WIDTH(5)) (
 
 		.start_addr_i(start_addr),
 		.end_addr_i(end_addr)
+
+	//	.full_i
+
+		.re_i (read_message_loc),
+		.read_start_i(read_start_addr_loc),
+		.read_end_i (read_end_addr_loc),
+	
+		.start_o (read_start_index_loc),
+		.end_o(read_end_index_o)
+
+);
+
+read_message #(.TAG_WIDTH(32), .NUM_MESSAGE(10)) read_received_msg (
+
+		.clk,
+		.rst,
+
+		.read_message_i,
+
+		.search_tag_o(search_tag),
+		.read_message_loc_o(read_message_loc),
+		.read_start_addr_loc_o (read_start_addr_loc),
+		.read_end_addr_loc_o (read_end_addr_loc)
+
 );
 
 value_ram #(.DATA_WIDTH (256), .ADDR_WIDTH (5)) value_ram (
 	
-		.clk (clk)     		, 		
-		.rst (rst)     		, 
+		.clk (clk), 		
+		.rst (rst), 
 		
-	//	.address_rd_i ()	,
-		.data_i (value)		,
-		.cs_i (v_wr_cs)		,
-		.we_i (v_wr_en)		
-	//	.oe_i ()		,
+		.address_rd_i(matched_index),
+		.data_i (value),
+		.cs_i (v_wr_cs),
+		.we_i (v_wr_en)	
+		.oe_i (search_tag),
 		
-	//	.data_o ()
+		.data_o (output_value_o)
 		
     		
 ); 
-/*
-value_fifo_top #(.DATA_WIDTH (256), .ADDR_WIDTH (8)) value_fifo (
-	
-		.clk (clk)     		, 		
-		.rst (rst)     		, 		
-		.wr_cs_i (v_wr_cs)    	, 		
-		.rd_cs_i (1'b0)    	,	 		
-		.data_i  (value)  	, 	// input value		
-		.rd_en_i (1'b0)    	, 		
-		.wr_en_i (v_wr_en)   	, 		
 
-		.empty_o  		, 		
-		.full_o       		
-); 
-*/
-
-/*
-tag_fifo_top #(.DATA_WIDTH (32), .ADDR_WIDTH (8)) tag_fifo (
-	
-		.clk (clk)     		, 		
-		.rst (rst)     		, 		
-		.wr_cs_i (t_wr_cs)    	, 		
-		.rd_cs_i (1'b0)    	,	 		
-		.data_i  (tag)  	, 	// input tag		
-		.rd_en_i (1'b0)    	, 		
-		.wr_en_i (t_wr_en)   	, 		
-
-		.empty_o  		, 		
-		.full_o       		
-); 
-*/
 
 
 endmodule

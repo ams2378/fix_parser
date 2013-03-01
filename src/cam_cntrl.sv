@@ -8,11 +8,19 @@ module cam_cntrl #(parameter DATA_WIDTH = 32, ADDR_WIDTH = 5) (
 	input				wr_en_i ,    		// Write Enable
 	input				start_message_i,
 	input				end_message_i,
+
+	input [DATA_WIDTH-1:0]		find_tag_i,
+	input				search_tag_i,
+	input [ADDR_WIDTH-1:0]		start_index_i,
+	input [ADDR_WIDTH-1:0]		end_index_i,
 	
+		
 	output[ADDR_WIDTH-1:0] 		start_addr_o,
 	output[ADDR_WIDTH-1:0] 		end_addr_o,
 	output				store_start_o,
 	output				store_end_o,
+	output				tag_match_o,
+	output[ADDR_WIDTH-1:0]		index_value_o,
 	output				full_o
 
 );    
@@ -73,18 +81,18 @@ cam #(.DATA_WIDTH(DATA_WIDTH), .ADDR_WIDTH(ADDR_WIDTH)) cam_tag (
 		.clk,
 		.rst,
 
-		.start_i(0),
-		.end_i(5'b11111),
+		.start_i(start_index_i),
+		.end_i(end_index_i),
 
 		.write_i(wr_en_i),
 		.write_index_i(wr_pointer),
 		.write_data_i(data_i),
 
-		.search_i(0),
-		.search_data_i('0)
+		.search_i(search_tag_i),
+		.search_data_i(find_tag_i),
 
-//		.search_valid_o()
-//		.search_index_o
+		.search_valid_o(tag_match_o),
+		.search_index_o (index_value_o)
 		);
 
 
