@@ -62,13 +62,13 @@ always_ff @(state or end_message_i or start_message_i) begin
 	case(state) 
 		
 		state0: begin 
-				if ( start_message_i == 0 or start_message_i == x) begin
-					next_state = state0;
-				end else begin
+				if ( start_message_i == 1) begin
 					store_start = '1;
 					address = count;
 					start_addr = start_addr_i;
 					next_state = state1;
+				end else begin
+					next_state = state0;
 				end
 		end
 		state1: begin
