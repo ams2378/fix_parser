@@ -51,7 +51,7 @@ end
 
 */
 
-ram #(.DATA_WIDTH(256), .ADDR_WIDTH(5)) start_locator_ram (
+ram #(.DATA_WIDTH(DATA_WIDTH), .ADDR_WIDTH(NUM_MESSAGE)) start_locator_ram (
 
 	.clk,
 	.rst,
@@ -65,7 +65,7 @@ ram #(.DATA_WIDTH(256), .ADDR_WIDTH(5)) start_locator_ram (
 	.read_value_o(start)
 );
 
-ram #(.DATA_WIDTH(256), .ADDR_WIDTH(5)) end_locator_ram (
+ram #(.DATA_WIDTH(DATA_WIDTH), .ADDR_WIDTH(NUM_MESSAGE)) end_locator_ram (
 
 	.clk,
 	.rst,
