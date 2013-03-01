@@ -15,7 +15,10 @@ parameter MEM_DEPTH = (1 << INDEX_WIDTH);
 
 always_comb begin
 	for (int i = start_i; i<=end_i; i++) begin
-			out[i] = inp_i[i] & '1;
+		//	out[i] = inp_i[i] & '1;
+			if (inp_i[i] == '1)
+				out = i;
+
 	end
 end
 
