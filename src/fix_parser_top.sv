@@ -123,7 +123,7 @@ cam_cntrl #(.DATA_WIDTH (32), .ADDR_WIDTH (5)) tag_cam (
 		.full_o(full)
 		);
 
-message_loc_cntrl #(.NUM_MESSAGE(10), .DATA_WIDTH(5)) (
+message_loc_cntrl #(.NUM_MESSAGE(10), .DATA_WIDTH(5)) message_locator_controller (
 
 		.clk,
 		.rst,
