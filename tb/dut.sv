@@ -81,6 +81,8 @@ while (temp > 0) begin
 
 end
 
+temp = 164;
+i = 0;
 
 #1 clk = 0;
 #1 clk = 1;
@@ -89,7 +91,17 @@ end
 #1 clk = 0;
 #1 clk = 1;
 
+while (temp > 0) begin
 
+	#1 clk = 0;
+	#1 clk = 1;
+
+	rst= '0;
+	data_i = data [8*temp-1 -: 8];
+	i = i++;
+	temp--;
+
+end
 #1 clk = 0;
 #1 clk = 1;
 
