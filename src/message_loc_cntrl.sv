@@ -11,6 +11,7 @@ module message_loc_cntrl # (parameter NUM_MESSAGE =5, DATA_WIDTH = 5 ) (
 	input [DATA_WIDTH-1 :0]		end_addr_i,
 	input				full,
 
+	input				re_i,
 	input				read_start_i,
 	input				read_end_i,
 
