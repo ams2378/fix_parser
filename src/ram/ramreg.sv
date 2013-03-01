@@ -4,7 +4,7 @@ File Name   : camreg.v
 Function    : Instantiate FF to construct memory module
 *///-----------------------------------------------------
 
-module ramreg #(parameter ADDR_WIDTH = 5, DATA_WIDTH = 32) (
+module ramreg #(parameter ADDR_WIDTH = 5, DATA_WIDTH = 256) (
 	input clk,
 	input rst,
 

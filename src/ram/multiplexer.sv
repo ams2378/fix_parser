@@ -5,9 +5,9 @@ Function    : multiplexer to route correct data output from CAM
 *///-----------------------------------------------------
 module multiplexer # (parameter DATA_WIDTH = 256, ADDR_WIDTH = 5) ( 
 
-	input[DATA_WIDTH*(1<<ADDR_WIDTH)-1 : 0] data_i, 
-	input[ADDR_WIDTH-1:0] read_address_i, 
-	output [DATA_WIDTH:0] data_o 
+	input	[DATA_WIDTH*(1<<ADDR_WIDTH)-1 : 0] 	data_i, 
+	input	[ADDR_WIDTH-1:0] 				read_address_i, 
+	output 	[DATA_WIDTH-1:0] 			data_o 
 	);
 
 logic [31:0] data_out;

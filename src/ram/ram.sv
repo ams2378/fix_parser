@@ -13,7 +13,7 @@ module ram   #(parameter DATA_WIDTH = 256, ADDR_WIDTH = 5 ) (
 
 	input write_i,
 	input [ADDR_WIDTH-1:0] write_index_i,
-	input [DATA_WIDTH:0] write_data_i,
+	input [DATA_WIDTH-1:0] write_data_i,
 
 	output read_valid_o,
 	output [DATA_WIDTH-1:0] read_value_o
