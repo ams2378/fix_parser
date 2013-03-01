@@ -25,20 +25,18 @@ always_ff @ (posedge clk or posedge rst) begin
   end
 end
 
-always_ff @ (posedge clk ) begin
-  if ( we_i ) begin
-     mem[wr_pointer] <= data_i;
-  end 
-end
 
-always_ff @ (posedge clk ) begin
-  if (!we_i && oe_i) begin
-    data_out <= mem[address_rd_i]; 
-  end else begin
-    data_out <= 0; 
-  end  
-end 
+ram #(.DATA_WIDTH(256), .ADDR_WIDTH(5)) (
 
-assign data_o 	=	data_out;
+	.clk,
+	.rst,
+
+	.read_i(oe_i),
+	.read_index_i(address_rd_i),
+	.write_i(we_i),
+	.write_index_i(wr_pointer),
+	.read_value_o(data_o)
+);
+
 
 endmodule 
