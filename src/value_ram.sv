@@ -25,13 +25,13 @@ always_ff @ (posedge clk or posedge rst) begin
   end
 end
 
-always_ff @ (posedge clk) begin
+always_ff @ (posedge clk or we_i) begin
   if ( we_i ) begin
      mem[wr_pointer] <= data_i;
   end 
 end
 
-always_ff @ (posedge clk) begin
+always_ff @ (posedge clk or oe_i or we_i) begin
   if (!we_i && oe_i) begin
     data_out <= mem[address_rd_i]; 
   end else begin
