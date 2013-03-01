@@ -3,12 +3,12 @@ module value_ram # (parameter ADDR_WIDTH = 5, DATA_WIDTH = 256 ) (
 	input 				clk       	, 		// Clock Input
 	input				rst		,
 	input[ADDR_WIDTH-1 : 0]		address_rd_i 	, 		// address_0 Input
-	input[DATA_0_WIDTH-1:0]		data_i    	, 		// data_0 bi-directional
+	input[DATA_WIDTH-1:0]		data_i    	, 		// data_0 bi-directional
 	input				cs_i      	, 		// Chip Select
 	input				we_i      	, 		// Write Enable/Read Enable
 	input				oe_i      	, 		// Output Enable
 
-	output [DATA_0_WIDTH-1 : 0]     data_o
+	output [DATA_WIDTH-1 : 0]     data_o
 ); 
 
 parameter RAM_DEPTH = 1 << ADDR_WIDTH;
