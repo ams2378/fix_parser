@@ -174,7 +174,6 @@ always_ff @(state or start_tag_i or start_value_i) begin
 					else 				next_state = state1;
 				end
 			end	
-
 		state5: begin
 				tag = '0;
 				t_wr_cs = '0;	

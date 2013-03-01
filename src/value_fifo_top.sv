@@ -8,7 +8,7 @@
  */
 
 
-module value_fifo_top #(parameter DATA_WIDTH = 256, ADDR_WIDTH = 8) (
+module value_fifo_top #(parameter DATA_WIDTH = 256, ADDR_WIDTH = 5) (
 	input				clk      , 		
 	input				rst      , 		
 	input				wr_cs_i    , 		
