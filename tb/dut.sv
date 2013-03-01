@@ -119,7 +119,7 @@ while (temp > 0) begin
 
 	rst= '0;
 	data_i = data2 [8*temp-1 -: 8];
-	i = i2++;
+	i = i++;
 	temp--;
 end
 
