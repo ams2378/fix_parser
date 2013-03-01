@@ -33,7 +33,7 @@ ram #(.DATA_WIDTH(DATA_WIDTH), .ADDR_WIDTH(NUM_MESSAGE)) start_locator_ram (
 	.clk,
 	.rst,
 
-	.read_i(read_start_i ),
+	.read_i(read_index_i ),
 	.read_index_i,
 
 	.write_i(store_start_i),
@@ -48,7 +48,7 @@ ram #(.DATA_WIDTH(DATA_WIDTH), .ADDR_WIDTH(NUM_MESSAGE)) end_locator_ram (
 	.clk,
 	.rst,
 
-	.read_i(store_end_i ),
+	.read_i(read_index_i ),
 	.read_index_i,
 
 	.write_i(store_end_i),
@@ -66,26 +66,3 @@ assign end_o = endd;
 endmodule
 
 
-/* 
-always_ff @ (posedge clk) begin
-  if ( store_start_i ) begin
-     mem_start[addr_i] <= start_i;
-  end else if ( store_end_i) begin 
-     mem_end[addr_i] <= end_i;
-  end
-end
-
-
-always_ff @ (posedge clk) begin
-  if (re_i && read_start_i && !read_end_i) begin
-    start <= mem_start[addr_i]; 
-  end else if (re_i && read_end_i && !read_start_i) begin
-    endd <= mem_end[addr_i]; 
-  end  else if (re_i && read_end_i && read_start_i) begin
-     endd <= mem_end[addr_i];    
-     start <= mem_start[addr_i]; 
-  end  
-end 
-
-
-*/
