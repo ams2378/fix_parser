@@ -20,7 +20,7 @@ logic [ADDR_WIDTH-1:0] 		wr_pointer;
 always_ff @ (posedge clk or posedge rst) begin
   if (rst) begin
     wr_pointer <= 0;
-  end else if (cs_i && en_i ) begin
+  end else if (cs_i && we_i ) begin
     wr_pointer <= wr_pointer + 1;
   end
 end
