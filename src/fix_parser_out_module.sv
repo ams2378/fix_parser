@@ -89,7 +89,6 @@ always_ff @(state or start_tag_i or start_value_i) begin
 					t_wr_cs = '0;
 					t_wr_en = '0;
 					start_message = '0;
-					start_count = '0;
 					next_state = state1;
 				end else begin
 					v_wr_cs = '0;	
