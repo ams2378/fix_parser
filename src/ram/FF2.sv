@@ -32,7 +32,7 @@ end
 /*
  * the read block
  */
-always_ff @(negedge clk) begin
+always_ff @(negedge clk or readEn_i) begin
 	if (readEn_i) begin
 		read <= data;
 		read_valid <= 1;
