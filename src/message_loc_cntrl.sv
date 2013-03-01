@@ -1,6 +1,6 @@
 
 
-module message_loc_cntrl # (parameter NUM_MESSAGE =10, DATA_WIDTH = 5 ) (
+module message_loc_cntrl # (parameter NUM_MESSAGE =10, DATA_WIDTH = 5, NUM_MESSAGE = 10 ) (
 
 	input 				clk,
 	input				rst,
@@ -14,6 +14,8 @@ module message_loc_cntrl # (parameter NUM_MESSAGE =10, DATA_WIDTH = 5 ) (
 	input				re_i,
 	input				read_start_i,
 	input				read_end_i,
+
+	input [NUM_MESSAGE-1 : 0]	read_index_i,
 
 	output [DATA_WIDTH-1:0]		start_o,
 	output [DATA_WIDTH-1:0]		end_o
@@ -102,6 +104,8 @@ message_loc #(.DATA_WIDTH(5), .NUM_MESSAGE(10)) message_mem (
 		.re_i,
 		.read_start_i,
 		.read_end_i,
+
+		.read_index_i,		
 
 		.start_o,
 		.end_o

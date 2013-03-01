@@ -14,9 +14,11 @@ module message_loc #(parameter DATA_WIDTH = 5, NUM_MESSAGE = 10) (
 	input					read_start_i,
 	input					read_end_i,
 
+	input [NUM_MESSAGE-1 : 0]		read_index_i,
+
+
 	output [DATA_WIDTH-1 : 0]		start_o,
 	output [DATA_WIDTH-1 : 0]		end_o
-
 );
 
 logic [  DATA_WIDTH -1:0] 		mem_start [0:NUM_MESSAGE-1];
@@ -32,7 +34,7 @@ ram #(.DATA_WIDTH(DATA_WIDTH), .ADDR_WIDTH(NUM_MESSAGE)) start_locator_ram (
 	.rst,
 
 	.read_i(read_start_i & re_i),
-	.read_index_i(addr_i),
+	.read_index_i,
 	.write_i(store_start_i),
 	.write_index_i(addr_i),
 	.write_data_i(start_i),
@@ -46,7 +48,7 @@ ram #(.DATA_WIDTH(DATA_WIDTH), .ADDR_WIDTH(NUM_MESSAGE)) end_locator_ram (
 	.rst,
 
 	.read_i(store_end_i & re_i),
-	.read_index_i(addr_i),
+	.read_index_i,
 	.write_i(store_end_i),
 	.write_index_i(addr_i),
 	.write_data_i(end_i),
