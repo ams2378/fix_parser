@@ -20,7 +20,7 @@ logic [  DATA_WIDTH -1:0] 		mem_start [0:NUM_MESSAGE-1];
 logic [  DATA_WIDTH -1:0] 		mem_end [0:NUM_MESSAGE-1];
 
 logic [DATA_WIDTH-1 : 0]		start;
-logic [DATA_WIDTH-1 : 0]		end;
+logic [DATA_WIDTH-1 : 0]		endd;
 
 /* Memory Write Block */
  
@@ -38,14 +38,14 @@ always_ff @ (posedge clk) begin
   if (re_i && read_start_i && !read_end_i) begin
     start <= mem_start[addr_i]; 
   end else if (re_i && read_end_i && !read_start_i) begin
-    end <= mem_end[addr_i]; 
+    endd <= mem_end[addr_i]; 
   end  else if (re_i && read_end_i && read_start_i) begin
-     end <= mem_end[addr_i];    
+     endd <= mem_end[addr_i];    
      start <= mem_start[addr_i]; 
   end  
 end 
 
 assign start_o = start;
-assign end_o = end;
+assign end_o = endd;
 
 endmodule
