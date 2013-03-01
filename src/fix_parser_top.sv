@@ -98,7 +98,7 @@ cam_cntrl #(.DATA_WIDTH (32), .ADDR_WIDTH (5)) tag_cam (
 		);
 
 
-message_loc_ctrl #(.NUM_MESSAGE(10), .DATA_WIDTH(5)) (
+message_loc_cntrl #(.NUM_MESSAGE(10), .DATA_WIDTH(5)) (
 
 		.clk,
 		.rst,
