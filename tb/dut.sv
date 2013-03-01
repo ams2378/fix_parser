@@ -28,7 +28,7 @@ module parser_test();
 	reg				full_o;
 
 	reg[31:0]			find_tag_i,
-	reg[9-1 :0] 			message_num_i,
+	reg[8 :0] 			message_num_i,
 	reg				read_message_i,
 
 	reg[255:0]			output_value_o,
