@@ -97,8 +97,8 @@ while (temp > 0) begin
 
 end
 
-int temp2 = 164;
-int i2 = 0;
+temp = 164;
+i = 0;
 
 message_num_i = '0;
 read_message_i = '1;
@@ -112,15 +112,15 @@ read_message_i = '0;
 #1 clk = 0;
 #1 clk = 1;
 
-while (temp2 > 0) begin
+while (temp > 0) begin
 
 	#1 clk = 0;
 	#1 clk = 1;
 
 	rst= '0;
-	data_i = data2 [8*temp2-1 -: 8];
-	i2 = i2++;
-	temp2--;
+	data_i = data2 [8*temp-1 -: 8];
+	i = i2++;
+	temp--;
 end
 
 
