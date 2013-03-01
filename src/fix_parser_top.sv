@@ -140,7 +140,7 @@ message_loc_cntrl #(.NUM_MESSAGE(10), .DATA_WIDTH(5)) message_locator_controller
 		.read_start_i(read_start_addr_loc),
 		.read_end_i (read_end_addr_loc),
 
-		.read_index_i ( read_message_i ),
+		.read_index_i ( message_num_i ),
 	
 		.start_o (read_start_index_loc),
 		.end_o(read_end_index_loc)
