@@ -84,13 +84,6 @@ end
 temp = 164;
 i = 0;
 
-#1 clk = 0;
-#1 clk = 1;
-
-
-#1 clk = 0;
-#1 clk = 1;
-
 while (temp > 0) begin
 
 	#1 clk = 0;
