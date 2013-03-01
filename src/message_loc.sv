@@ -25,31 +25,6 @@ logic [  DATA_WIDTH -1:0] 		mem_end [0:NUM_MESSAGE-1];
 logic [DATA_WIDTH-1 : 0]		start;
 logic [DATA_WIDTH-1 : 0]		endd;
 
-/* Memory Write Block */
-/* 
-always_ff @ (posedge clk) begin
-  if ( store_start_i ) begin
-     mem_start[addr_i] <= start_i;
-  end else if ( store_end_i) begin 
-     mem_end[addr_i] <= end_i;
-  end
-end
-
-/* Memory Read Block  */
-
-always_ff @ (posedge clk) begin
-  if (re_i && read_start_i && !read_end_i) begin
-    start <= mem_start[addr_i]; 
-  end else if (re_i && read_end_i && !read_start_i) begin
-    endd <= mem_end[addr_i]; 
-  end  else if (re_i && read_end_i && read_start_i) begin
-     endd <= mem_end[addr_i];    
-     start <= mem_start[addr_i]; 
-  end  
-end 
-
-
-*/
 
 ram #(.DATA_WIDTH(DATA_WIDTH), .ADDR_WIDTH(NUM_MESSAGE)) start_locator_ram (
 
@@ -85,3 +60,28 @@ assign end_o = endd;
 
 
 endmodule
+
+
+/* 
+always_ff @ (posedge clk) begin
+  if ( store_start_i ) begin
+     mem_start[addr_i] <= start_i;
+  end else if ( store_end_i) begin 
+     mem_end[addr_i] <= end_i;
+  end
+end
+
+
+always_ff @ (posedge clk) begin
+  if (re_i && read_start_i && !read_end_i) begin
+    start <= mem_start[addr_i]; 
+  end else if (re_i && read_end_i && !read_start_i) begin
+    endd <= mem_end[addr_i]; 
+  end  else if (re_i && read_end_i && read_start_i) begin
+     endd <= mem_end[addr_i];    
+     start <= mem_start[addr_i]; 
+  end  
+end 
+
+
+*/
