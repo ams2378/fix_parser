@@ -1,5 +1,5 @@
 #FILES=../src/fix_parser.sv ../src/fix_parser_out_module.sv ../src/fix_parser_top.sv ../src/tag_ram.sv ../src/value_ram.sv ../src/fifo.sv ../src/tag_fifo_top.sv ../src/value_fifo_top.sv
-FILES=../src/fix_parser.sv ../src/fix_parser_out_module.sv ../src/fix_parser_top.sv ../src/cam/FF.sv ../src/cam/decoder.sv ../src/cam/priorityencoder.sv ../src/cam/camreg.sv ../src/cam/cam.sv ../src/cam_cntrl.sv ../src/value_ram.sv ../src/fifo.sv ../src/value_fifo_top.sv ../src/message_loc.sv ../src/message_loc_ctrl.sv
+FILES=../src/fix_parser.sv ../src/fix_parser_out_module.sv ../src/fix_parser_top.sv ../src/cam/FF.sv ../src/cam/decoder.sv ../src/cam/priorityencoder.sv ../src/cam/camreg.sv ../src/cam/cam.sv ../src/cam_cntrl.sv ../src/value_ram.sv ../src/fifo.sv ../src/value_fifo_top.sv ../src/message_loc.sv ../src/message_loc_cntrl.sv
 TEST= dut
 BENCH=../sim/testbench.exe
 

@@ -2,6 +2,9 @@
 
 module message_loc #(parameter DATA_WIDTH = 32, NUM_MESSAGE = 10) (
 
+	input					clk,
+	input					rst,
+
 	input [DATA_WIDTH-1 : 0]		start_i,
 	input [DATA_WIDTH-1 : 0]		end_i,
 	input					store_start_i,
