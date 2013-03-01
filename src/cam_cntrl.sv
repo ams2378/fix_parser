@@ -19,18 +19,23 @@ module cam_cntrl #(parameter DATA_WIDTH = 32, ADDR_WIDTH = 5) (
  
 parameter CAM_DEPTH = (1 << ADDR_WIDTH);
 
-logic [ADDR_WIDTH-1:0] 			wr_pointer = '0;
-logic [ADDR_WIDTH-1:0] 			start_address = '0;
-logic [ADDR_WIDTH-1:0] 			end_address = '0;
-logic					store_start = '0;
-logic					store_end = '0;
-logic					full = '0;
+logic [ADDR_WIDTH-1:0] 			wr_pointer;
+logic [ADDR_WIDTH-1:0] 			start_address;
+logic [ADDR_WIDTH-1:0] 			end_address;
+logic					store_start;
+logic					store_end;
+logic					full;
 
 /* write pointer */
 
 always_ff @ (posedge clk or posedge rst) begin
   if (rst) begin
     wr_pointer <= 0;
+    start_address = 0;
+    end_address = 0;
+    store_start = 0;
+    store_end = 0;
+    full = 0;
   end else if (wr_cs_i && wr_en_i ) begin
     wr_pointer <= wr_pointer + 1;
   end
