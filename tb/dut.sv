@@ -59,6 +59,10 @@ data = 656'h7c383d4649582e342e327c393d3137387c33353d387c34393d50484c587c35323d32
 $vcdpluson;
 
 clk = 0;
+read_message_i = '0;
+message_num_i = '0;
+find_tag_i = '0;
+
 
 #1 clk = 0;
 #1 clk = 1;
