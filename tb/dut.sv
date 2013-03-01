@@ -6,8 +6,6 @@
  * @author		Adil Sadik <sadik.adil@gmail.com> 
  */
 
-
-
 module parser_test();
 
 

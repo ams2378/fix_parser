@@ -23,7 +23,7 @@ module ram   #(parameter DATA_WIDTH = 256, ADDR_WIDTH = 5 ) (
 
 parameter CAM_DEPTH = (1 << ADDR_WIDTH);
 
-wire [ CAM_DEPTH -1 :0] read_addr;
+wire [CAM_DEPTH -1 :0] read_addr;
 wire [CAM_DEPTH -1 :0] write_addr;
 
 wire [DATA_WIDTH*CAM_DEPTH-1:0] read_out;

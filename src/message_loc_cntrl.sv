@@ -62,6 +62,12 @@ always_ff @(state or end_message_i or start_message_i) begin
 					start_addr = start_addr_i;
 					next_state = state1;
 				end else begin
+					address	 	= 	'0;
+					start_addr 	= 	'0;	
+					end_addr 	= 	'0;
+					store_start 	= 	'0;
+					store_end 	= 	'0;
+					count 		= 	'0;
 					next_state = state0;
 				end
 		end
