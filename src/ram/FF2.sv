@@ -20,7 +20,7 @@ reg read_valid;
 /*
  * the write block
  */
-always_ff @(posedge clk) begin
+always_ff @(posedge clk or writeEn_i) begin
 	if (rst)
 		data <= '0;
 	else if (writeEn_i)
