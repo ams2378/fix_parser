@@ -21,13 +21,12 @@ module fix_parser_top # (parameter NUM_MESSAGE = 10, ADDR_WIDTH = 5) (
 
 
 	output[255:0]			output_value_o,
-
+	output				start_of_header_o,
+	output				full_o
+	output				empty_o
 
 //	output				end_of_body_o,
-	output				start_of_header_o,
 //	output				start_message_o,
-	output				empty_o,
-	output				full_o
 );
 
 wire[7:0]		data;

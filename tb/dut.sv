@@ -26,12 +26,18 @@ module parser_test();
 	reg[31:0]			data;
 	reg				empty_o;
 	reg				full_o;
+
+	reg[31:0]			find_tag_i,
+	reg[9-1 :0] 			message_num_i,
+	reg				read_message_i,
+
+	reg[255:0]			output_value_o,
 /*
 fix_parser_top dut(.clk, .rst, .data_i, .tag_o, .value_o, .end_of_body_o, .start_of_header_o, 
 		   .t_wr_cs_o, .t_wr_en_o, .v_wr_cs_o, .v_wr_en_o,  .empty, .full);
 */
 
-fix_parser_top dut(.clk, .rst, .data_i, .start_of_header_o, .empty_o, .full_o);
+fix_parser_top dut(.clk, .rst, .data_i, .find_tag_i, .message_num_i, .read_message_i, .output_value_o, .start_of_header_o, .empty_o, .full_o);
 
 initial begin
 
@@ -91,17 +97,34 @@ i = 0;
 #1 clk = 0;
 #1 clk = 1;
 
-while (temp > 0) begin
+#1 clk = 0;
+#1 clk = 1;
 
-	#1 clk = 0;
-	#1 clk = 1;
+message_num_i = '0;
+read_message_i = '1;
+find_tag_i = 8'h38;
 
-	rst= '0;
-	data_i = data [8*temp-1 -: 8];
-	i = i++;
-	temp--;
+#1 clk = 0;
+#1 clk = 1;
 
-end
+
+read_message_i = '0;
+
+#1 clk = 0;
+#1 clk = 1;
+
+
+#1 clk = 0;
+#1 clk = 1;
+
+
+#1 clk = 0;
+#1 clk = 1;
+
+
+#1 clk = 0;
+#1 clk = 1;
+
 #1 clk = 0;
 #1 clk = 1;
 
@@ -120,12 +143,6 @@ end
 
 #1 clk = 0;
 #1 clk = 1;
-
-
-#1 clk = 0;
-#1 clk = 1;
-
-
 
 end
 
