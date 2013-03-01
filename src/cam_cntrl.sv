@@ -19,12 +19,12 @@ module cam_cntrl #(parameter DATA_WIDTH = 32, ADDR_WIDTH = 5) (
  
 parameter CAM_DEPTH = (1 << ADDR_WIDTH);
 
-logic [ADDR_WIDTH-1:0] 			wr_pointer;
-logic [ADDR_WIDTH-1:0] 			start_address;
-logic [ADDR_WIDTH-1:0] 			end_address;
-logic					store_start;
-logic					store_end;
-logic					full;
+logic [ADDR_WIDTH-1:0] 			wr_pointer = '0;
+logic [ADDR_WIDTH-1:0] 			start_address = '0;
+logic [ADDR_WIDTH-1:0] 			end_address = '0;
+logic					store_start = '0;
+logic					store_end = '0;
+logic					full = '0;
 
 /* write pointer */
 
