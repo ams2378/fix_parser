@@ -145,7 +145,7 @@ message_loc_cntrl #(.NUM_MESSAGE(10), .DATA_WIDTH(5)) (
 
 );
 
-read_message #(.TAG_WIDTH(32), .NUM_MESSAGE(10)) read_received_msg (
+read_message_cntrl #(.TAG_WIDTH(32), .NUM_MESSAGE(10)) read_received_msg (
 
 		.clk,
 		.rst,
