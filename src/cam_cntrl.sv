@@ -45,12 +45,17 @@ always_ff @ (posedge clk or posedge rst or start_message_i or end_message_i) beg
     store_start = 0;
     store_end = 0;
     full = 0;
-  end else if (start_message_i) begin 
+  end else if (start_message_i) begin
+	store_end = '0; 
 	start_address = wr_pointer;
 	store_start = '1;
   end else if (end_message_i) begin
+	store_start = '0;
 	end_address = wr_pointer;
 	store_end = '1;
+  end else begin
+	store_start = '0;
+	store_end = '0;	
   end
 
   if (wr_pointer == CAM_DEPTH-1)
