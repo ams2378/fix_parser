@@ -8,7 +8,8 @@ module value_ram # (parameter ADDR_WIDTH = 5, DATA_WIDTH = 256 ) (
 	input				we_i      	, 		// Write Enable/Read Enable
 	input				oe_i      	, 		// Output Enable
 
-	output [DATA_WIDTH-1 : 0]     	data_o
+	output [DATA_WIDTH-1 : 0]     	data_o		,
+	output				data_out_valid
 ); 
 
 parameter RAM_DEPTH = 1 << ADDR_WIDTH;
@@ -36,6 +37,7 @@ ram #(.DATA_WIDTH(256), .ADDR_WIDTH(5)) (
 	.write_i(we_i),
 	.write_index_i(wr_pointer),
 	.write_data_i(data_i),
+	.read_valid_o(data_out_valid),
 	.read_value_o(data_o)
 );
 

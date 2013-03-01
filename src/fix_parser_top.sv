@@ -21,6 +21,7 @@ module fix_parser_top # (parameter NUM_MESSAGE = 10, ADDR_WIDTH = 5) (
 
 
 	output[255:0]			output_value_o,
+	output				output_value_valid_o,
 	output				start_of_header_o,
 	output				full_o,
 	output				empty_o
@@ -169,9 +170,8 @@ value_ram #(.DATA_WIDTH (256), .ADDR_WIDTH (5)) value_ram (
 		.we_i (v_wr_en),	
 		.oe_i (search_tag),
 		
+		.data_out_valid(output_value_valid_o),
 		.data_o (output_value_o)
-		
-    		
 ); 
 
 
