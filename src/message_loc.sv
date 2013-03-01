@@ -1,6 +1,6 @@
 
 
-module message_loc #(parameter DATA_WIDTH, NUM_MESSAGE = 10) (
+module message_loc #(parameter DATA_WIDTH = 32, NUM_MESSAGE = 10) (
 
 	input [DATA_WIDTH-1 : 0]		start_i,
 	input [DATA_WIDTH-1 : 0]		end_i,
