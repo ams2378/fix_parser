@@ -110,7 +110,22 @@ message_loc_cntrl #(.NUM_MESSAGE(10), .DATA_WIDTH(5)) (
 		.end_addr_i(end_addr)
 );
 
-
+value_ram #(.DATA_WIDTH (256), .ADDR_WIDTH (5)) value_ram (
+	
+		.clk (clk)     		, 		
+		.rst (rst)     		, 
+		
+	//	.address_rd_i ()	,
+		.data_i (value)		,
+		.cs_i (v_wr_cs)		,
+		.we_i (v_wr_en)		
+	//	.oe_i ()		,
+		
+	//	.data_o ()
+		
+    		
+); 
+/*
 value_fifo_top #(.DATA_WIDTH (256), .ADDR_WIDTH (8)) value_fifo (
 	
 		.clk (clk)     		, 		
@@ -124,7 +139,7 @@ value_fifo_top #(.DATA_WIDTH (256), .ADDR_WIDTH (8)) value_fifo (
 		.empty_o  		, 		
 		.full_o       		
 ); 
-
+*/
 
 /*
 tag_fifo_top #(.DATA_WIDTH (32), .ADDR_WIDTH (8)) tag_fifo (

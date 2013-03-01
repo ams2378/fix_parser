@@ -9,8 +9,9 @@ module cam #(parameter DATA_WIDTH = 32, ADDR_WIDTH = 5 ) (
 	input rst,
 
 
-	input [ADDR_WIDTH-1:0] start_i,
-	input [ADDR_WIDTH-1:0] end_i,
+	input [ADDR_WIDTH-1:0] start_i,			// for priority encoder
+	input [ADDR_WIDTH-1:0] end_i,			// for priority encoder
+
 	input write_i,
 	input [ADDR_WIDTH-1:0] write_index_i,
 	input [DATA_WIDTH-1:0] write_data_i,
