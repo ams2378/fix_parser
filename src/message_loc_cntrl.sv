@@ -16,13 +16,7 @@ module message_loc_cntrl # (parameter NUM_MESSAGE =10, DATA_WIDTH = 5 ) (
 	input				read_end_i,
 
 	output [DATA_WIDTH-1:0]		start_o,
-	output [DATA_WIDTH-1:0]		end_o,
-
-	output [NUM_MESSAGE-1 :0]	address_o,
-	output [DATA_WIDTH-1:0]		start_addr_o,
-	output [DATA_WIDTH-1:0]		end_addr_o,
-	output				store_start_o,
-	output				store_end_o
+	output [DATA_WIDTH-1:0]		end_o
 );
 
 
@@ -89,14 +83,6 @@ always_ff @(state or end_message_i or start_message_i) begin
 		end
 	endcase
 end
-
-//assign	address_o	= 	address;
-//assign  start_addr_o	=	start_addr;
-//assign 	end_addr_o	=	end_addr;
-//assign 	store_start_o	=	store_start;
-//assign 	store_end_o	=	store_end;
-
-
 
 message_loc #(.DATA_WIDTH(5), .NUM_MESSAGE(10)) message_mem (
 
