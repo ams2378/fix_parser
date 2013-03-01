@@ -1,3 +1,12 @@
+/**
+ * @filename		value_ram.sv 
+ *
+ * @brief     	        a simple ram to store values for each tag 
+ *
+ * @author		Adil Sadik <sadik.adil@gmail.com> 
+ *
+ * @dependencies	ram/FF2.sv ram/decoder2.sv ram/ramreg.sv	
+ */
 
 module value_ram # (parameter ADDR_WIDTH = 5, DATA_WIDTH = 256 ) (
 	input 				clk       	, 		// Clock Input

@@ -1,3 +1,12 @@
+/**
+ * @filename		cam_cntrl.sv 
+ *
+ * @brief     	        CAM controller
+ *
+ * @author		Adil Sadik <sadik.adil@gmail.com> 
+ *
+ * @dependencies	cam/FF.sv cam/decoder.sv cam/priorityencoder.sv cam/camreg.sv	
+ */
 
 module cam_cntrl #(parameter DATA_WIDTH = 32, ADDR_WIDTH = 5, TOTAL_MEG = 5) (
 	input				clk      , 		// Clock input

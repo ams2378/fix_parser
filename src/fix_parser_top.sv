@@ -5,7 +5,7 @@
  *
  * @author		Adil Sadik <sadik.adil@gmail.com>
  *
- * @dependencies	
+ * @dependencies	fix_parser_out_module.sv fix, cam_cntrl.sv, message_loc_cntrl.sv, read_message_cntrl.sv
  */
 
 module fix_parser_top # (parameter NUM_MESSAGE = 10, ADDR_WIDTH = 5) (

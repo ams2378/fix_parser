@@ -1,10 +1,13 @@
 /**
  * @filename		fix_parser.sv 
  *
- * @brief     	        detectes SOH characters 	
+ * @brief     	        detects tag and value for each 8 bit input data  	
  *
  * @author		Adil Sadik <sadik.adil@gmail.com> 
+ *
+ * @dependencies	n/a	
  */
+
 
 module fix_parser(
 

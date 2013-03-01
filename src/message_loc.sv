@@ -1,4 +1,12 @@
-
+/**
+ * @filename		message_loc.sv 
+ *
+ * @brief     	        memory modules to store start and end index of each tag in the tag_cam 
+ *
+ * @author		Adil Sadik <sadik.adil@gmail.com> 
+ *
+ * @dependencies	ram/FF2.sv ram/decoder2.sv ram/ramreg.sv	
+ */
 
 module message_loc #(parameter DATA_WIDTH = 5, NUM_MESSAGE = 10) (
 

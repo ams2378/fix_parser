@@ -1,3 +1,12 @@
+/**
+ * @filename		message_loc_cntrl.sv 
+ *
+ * @brief     	        detects tag and value for each 8 bit input data  	
+ *
+ * @author		Adil Sadik <sadik.adil@gmail.com> 
+ *
+ * @dependencies	ram/FF2.sv ram/decoder2.sv ram/ramreg.sv	
+ */
 
 
 module message_loc_cntrl # (parameter NUM_MESSAGE =10, DATA_WIDTH = 5 ) (

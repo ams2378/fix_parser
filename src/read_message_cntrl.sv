@@ -1,3 +1,12 @@
+/**
+ * @filename		read_message_cntrl.sv 
+ *
+ * @brief     	        generate control signals to initiate fetching of stored value in the memory for each FIX message	
+ *
+ * @author		Adil Sadik <sadik.adil@gmail.com> 
+ *
+ * @dependencies	n/a	
+ */
 
 module read_message_cntrl #(parameter TAG_WIDTH = 32, NUM_MESSAGE = 10) (
 
