@@ -1,8 +1,14 @@
-/*-----------------------------------------------------
-Design Name : CAM
-File Name   : camreg.v
-Function    : Instantiate FF to construct memory module
-*///-----------------------------------------------------
+/**
+ * @filename		camreg.sv 
+ *
+ * @brief     	        generate memory array from flip flops.  
+ *
+ * @author		Adil Sadik <sadik.adil@gmail.com> 
+ *
+ * @dependencies	FF.sv  
+ *
+ */
+
 
 module camreg #(parameter ADDR_WIDTH = 5, DATA_WIDTH = 32) (
 	input clk,

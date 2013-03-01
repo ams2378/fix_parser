@@ -1,3 +1,13 @@
+/**
+ * @filename		FF2.sv 
+ *
+ * @brief     	        flip flops for RAM 
+ *
+ * @author		Adil Sadik <sadik.adil@gmail.com> 
+ *
+ * @dependencies	n/a	
+ */
+
 
 module FF2 #(parameter WIDTH = 1) (
 	input clk,

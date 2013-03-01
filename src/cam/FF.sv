@@ -1,8 +1,13 @@
-/*-----------------------------------------------------
-Design Name : CAM
-File Name   : FF.sv
-Function    : Flip flop- modified from basic definition to support matching functionality
-*///-----------------------------------------------------
+/**
+ * @filename		FF.sv 
+ *
+ * @brief     	        custom flip flop module 
+ *
+ * @author		Adil Sadik <sadik.adil@gmail.com> 
+ *
+ * @dependencies	n/a	
+ */
+
 
 module FF #(parameter WIDTH = 1) (
 	input clk,

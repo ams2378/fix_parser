@@ -1,8 +1,13 @@
-/*-----------------------------------------------------
-Design Name : CAM
-File Name   : camreg.v
-Function    : Instantiate FF to construct memory module
-*///-----------------------------------------------------
+/**
+ * @filename		ramreg.sv 
+ *
+ * @brief     	        RAM memory array generated from FF2 
+ *
+ * @author		Adil Sadik <sadik.adil@gmail.com> 
+ *
+ * @dependencies	FF2.sv 	
+ */
+
 
 module ramreg #(parameter ADDR_WIDTH = 5, DATA_WIDTH = 256) (
 	input clk,

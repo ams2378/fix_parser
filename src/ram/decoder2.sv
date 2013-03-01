@@ -1,8 +1,13 @@
-/*-----------------------------------------------------
-Design Name : CAM
-File Name   : decoder_5_32.sv
-Function    : decoder to decode read and write address
-*///-----------------------------------------------------
+/**
+ * @filename		decoder.sv 
+ *
+ * @brief     	        decoder for address select 
+ *
+ * @author		Adil Sadik <sadik.adil@gmail.com> 
+ *
+ * @dependencies	n/a 	
+ */
+
 module decoder2 #(parameter ADDR_WIDTH = 5) ( 
 
 	input [ADDR_WIDTH-1:0] decoder_i,

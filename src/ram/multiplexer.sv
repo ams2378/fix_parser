@@ -1,8 +1,13 @@
-/*-----------------------------------------------------
-Design Name : CAM
-File Name   : multiplexer.sv
-Function    : multiplexer to route correct data output from CAM
-*///-----------------------------------------------------
+/**
+ * @filename		multiplexer.sv 
+ *
+ * @brief     	        multiplexer for final read output 
+ *
+ * @author		Adil Sadik <sadik.adil@gmail.com> 
+ *
+ * @dependencies	n/a 	
+ */
+
 module multiplexer # (parameter DATA_WIDTH = 256, ADDR_WIDTH = 5) ( 
 
 	input	[DATA_WIDTH*(1<<ADDR_WIDTH)-1 : 0] 	data_i, 

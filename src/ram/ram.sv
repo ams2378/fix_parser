@@ -1,8 +1,13 @@
-/*-----------------------------------------------------
-Design Name : CAM
-File Name   : cam.sv
-Function    : Top level file which instantiate every other modules and represents overall microarchitecture
-*///-----------------------------------------------------
+/**
+ * @filename		ram.sv 
+ *
+ * @brief     	        top level module of RAM 
+ *
+ * @author		Adil Sadik <sadik.adil@gmail.com> 
+ *
+ * @dependencies	FF2.sv decoder2.sv multiplexer.sv ramreg.sv	
+ */
+
 
 module ram   #(parameter DATA_WIDTH = 256, ADDR_WIDTH = 5 ) (
 	input clk,

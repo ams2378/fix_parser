@@ -1,3 +1,12 @@
+/**
+ * @filename		priorityencoder.sv 
+ *
+ * @brief     	        priority encoder module for CAM output. Selects first matched output. 
+ *
+ * @author		Adil Sadik <sadik.adil@gmail.com> 
+ *
+ * @dependencies	n/a	
+ */
 
 module priorityencoder # (parameter INDEX_WIDTH = 5)(
 	input [(1 << INDEX_WIDTH) -1:0]	 	inp_i,

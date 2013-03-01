@@ -1,8 +1,13 @@
-/*-----------------------------------------------------
-Design Name : CAM
-File Name   : cam.sv
-Function    : Top level file which instantiate every other modules and represents overall microarchitecture
-*///-----------------------------------------------------
+/**
+ * @filename		cam.sv 
+ *
+ * @brief     	        top level cam module 
+ *
+ * @author		Adil Sadik <sadik.adil@gmail.com> 
+ *
+ * @dependencies	FF.sv priorityencoder.sv decoder.sv camreg.sv 
+ */
+
 
 module cam #(parameter DATA_WIDTH = 32, ADDR_WIDTH = 5 ) (
 	input clk,
