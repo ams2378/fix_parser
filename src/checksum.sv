@@ -1,7 +1,7 @@
 /**
  * @filename		checksum.sv 
  *
- * @brief     	        compute checksum on the received message  	
+ * @brief     	        computes checksum of the received message  	
  *
  * @author		Adil Sadik <sadik.adil@gmail.com> 
  *
@@ -17,7 +17,7 @@ module checksum(
 	input			start_i,
 	input			end_i,
 
-	output[8:0]		checksum_o
+	output[7:0]		checksum_o
 
 );
 
@@ -28,8 +28,8 @@ parameter			state3 = 2'b11;
 
 logic [1:0]			state;
 logic [1:0]			next_state;
-logic [8:0]			checksum;
-logic [15:0]			temp;
+logic [7:0]			checksum;
+logic [8:0]			temp;
 logic [7:0]			soh = 8'h01;
 logic [7:0]			head = 8'h38;
 
@@ -64,7 +64,6 @@ always_ff @(state or start_i or end_i) begin
 					end
 					next_state = state2;
 				end else begin
-				//	temp = temp - 8'd97;	
 					next_state = state3;
 				end
 		end
@@ -76,7 +75,6 @@ always_ff @(state or start_i or end_i) begin
 					end
 					next_state = state1;
 				end else begin
-			//		temp = temp - 8'd97;	
 					next_state = state3;
 				end
 		end
@@ -86,7 +84,7 @@ always_ff @(state or start_i or end_i) begin
 					temp = temp - 9'd256;
 				end
 				temp = temp % 9'd256;
-				checksum = temp[8:0];
+				checksum = temp[7:0];
 				next_state = state0;
 		end
 	endcase
