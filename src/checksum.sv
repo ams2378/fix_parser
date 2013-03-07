@@ -57,7 +57,7 @@ always_ff @(state or data_i) begin
 				if (state_i != 1) begin
 					temp = temp + data_i;
 					next_state = state1;
-				end else if (data_i == sep_c) begin
+				end else begin
 					temp = temp - 8'h31 - 8'h30 - 8'h01;	
 					next_state = value;
 				end
