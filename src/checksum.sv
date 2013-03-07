@@ -48,11 +48,11 @@ always_ff @(state or data_i) begin
 	case(state) 
 		
 		state0: begin 
-				if (start_i == 0) begin
-					next_state = state0;
-				end else begin
+				if (start_i == 1) begin
 					temp = soh + head + data_i; 
 					next_state = state1;
+				end else begin
+					next_state = state0;
 				end
 		end
 		state1: begin
