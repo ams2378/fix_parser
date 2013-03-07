@@ -39,7 +39,8 @@ always_ff @(posedge clk) begin
 	else			state <= next_state;
 end
 
-always_ff @(state or start_i or end_i or data_i) begin
+//always_ff @(clk or state or start_i or end_i or data_i) begin
+always_ff @(clk or state or start_i or end_i or data_i) begin
 
 	if (rst) begin
 		checksum = '0;
