@@ -24,7 +24,9 @@ module fix_parser_top # (parameter NUM_MESSAGE = 10, ADDR_WIDTH = 5) (
 	output				output_value_valid_o,
 	output				start_of_header_o,
 	output				full_o,
-	output				empty_o
+	output				empty_o,
+
+	output[9:0]			checksum_o
 
 //	output				end_of_body_o,
 //	output				start_message_o,
@@ -176,6 +178,18 @@ value_ram #(.DATA_WIDTH (256), .ADDR_WIDTH (5)) value_ram (
 		.data_o (output_value_o)
 ); 
 
+
+checksum  checksum_calc (
+	
+		.clk (clk), 		
+		.rst (rst), 
+	
+		.data_i,
+		.start_i (start_message),
+		.end_i(end_message),
+		.checksum_o	
+
+); 
 
 
 endmodule

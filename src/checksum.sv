@@ -17,7 +17,7 @@ module checksum(
 	input			start_i,
 	input			end_i,
 
-	output[7:0]		checksum_o
+	output[8:0]		checksum_o
 
 );
 
