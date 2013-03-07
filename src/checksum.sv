@@ -54,7 +54,7 @@ always_ff @(state or data_i) begin
 				end
 		end
 		state1: begin
-				if (state_i != 1) begin
+				if (start_i != 1) begin
 					temp = temp + data_i;
 					next_state = state1;
 				end else begin
