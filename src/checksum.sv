@@ -10,7 +10,9 @@
 
 
 module checksum(
-	
+
+	input			clk,
+	input			rst,	
 	input[7:0]		data_i,
 	input			start_i,
 	input			end_i,
