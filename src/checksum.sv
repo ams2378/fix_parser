@@ -58,6 +58,9 @@ always_ff @(state or start_i or end_i or data_i) begin
 		state1: begin
 				if (end_i != 1) begin
 					temp = 8'd118 + data_i;
+					if (temp > 9d'256) begin
+						temp = temp % 9d'256;
+					end
 					next_state = state1;
 				end else begin
 					temp = temp - 8'h31 - 8'h30 - 8'h01;	
@@ -65,7 +68,7 @@ always_ff @(state or start_i or end_i or data_i) begin
 				end
 		end
 		state2: begin	
-				temp = temp % 9'b100000000;
+				temp = temp % 9'd256;
 				checksum = temp;
 				next_state = state0;
 		end
