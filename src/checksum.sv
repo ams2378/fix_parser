@@ -63,9 +63,8 @@ always_ff @(state or data_i) begin
 				end
 		end
 		state2: begin	
-				checksum = checksum % 8'h100;
+				checksum = checksum % 9'b100000000;
 				next_state = state0;
-				end	
 		end
 	endcase
 end
