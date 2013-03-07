@@ -63,7 +63,7 @@ always_ff @(state or start_i or end_i or data_i) begin
 					end
 					next_state = state1;
 				end else begin
-					temp = temp - 8'h31 - 8'h30 - 8'h01;	
+					temp = temp - 8'h31 - 8'h30;	
 					next_state = state2;
 				end
 		end
