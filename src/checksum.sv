@@ -35,7 +35,7 @@ logic [7:0]			head = 8'h38;
 
 always_ff @(posedge clk) begin
 
-	if (rst)		state <= initial_s;
+	if (rst)		state <= state0;
 	else			state <= next_state;
 end
 
@@ -61,7 +61,7 @@ always_ff @(state or data_i) begin
 					next_state = state1;
 				end else begin
 					temp = temp - 8'h31 - 8'h30 - 8'h01;	
-					next_state = value;
+					next_state = state2;
 				end
 		end
 		state2: begin	
