@@ -49,7 +49,7 @@ always_ff @(state or start_i or end_i or data_i) begin
 		
 		state0: begin 
 				if (start_i == 1) begin
-					temp = soh + head + data_i; 
+					temp = 8'd118;	//soh + head + data_i; 
 					next_state = state1;
 				end else begin
 					next_state = state0;
@@ -57,7 +57,7 @@ always_ff @(state or start_i or end_i or data_i) begin
 		end
 		state1: begin
 				if (end_i != 1) begin
-					temp = temp + data_i;
+					temp = 8'd118 + data_i;
 					next_state = state1;
 				end else begin
 					temp = temp - 8'h31 - 8'h30 - 8'h01;	
