@@ -57,7 +57,7 @@ always_ff @(state or start_i or end_i or data_i) begin
 		end
 		state1: begin
 				if (end_i != 1) begin
-					temp = tmep + data_i;
+					temp = temp + data_i;
 				//	if (temp > 9'd256) begin
 				//		temp = temp - 9'd256;
 				//	end
