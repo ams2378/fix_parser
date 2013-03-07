@@ -40,7 +40,7 @@ always_ff @(posedge clk) begin
 end
 
 //always_ff @(clk or state or start_i or end_i or data_i) begin
-always_ff @(posedge clk or state or start_i or end_i or data_i) begin
+always_ff @(posedge clk) begin
 
 	if (rst) begin
 		checksum = '0;
