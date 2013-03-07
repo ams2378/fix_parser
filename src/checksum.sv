@@ -24,6 +24,7 @@ module checksum(
 parameter 			state0 = 2'b00;
 parameter			state1 = 2'b01;
 parameter			state2 = 2'b10;
+parameter			state3 = 2'b11;
 
 logic [1:0]			state;
 logic [1:0]			next_state;
@@ -39,8 +40,7 @@ always_ff @(posedge clk) begin
 	else			state <= next_state;
 end
 
-//always_ff @(clk or state or start_i or end_i or data_i) begin
-always_ff @(state or start_i or end_i or data_i) begin
+always_ff @(clk or state or start_i or end_i or data_i) begin
 
 	if (rst) begin
 		checksum = '0;
@@ -62,13 +62,25 @@ always_ff @(state or start_i or end_i or data_i) begin
 				//	if (temp > 9'd256) begin
 				//		temp = temp - 9'd256;
 				//	end
-					next_state = state1;
+					next_state = state2;
 				end else begin
 					temp = temp - 8'h31 - 8'h30;	
-					next_state = state2;
+					next_state = state3;
 				end
 		end
 		state2: begin
+				if (end_i != 1) begin
+					temp = temp + data_i;
+				//	if (temp > 9'd256) begin
+				//		temp = temp - 9'd256;
+				//	end
+					next_state = state1;
+				end else begin
+					temp = temp - 8'h31 - 8'h30;	
+					next_state = state3;
+				end
+		end
+		state3: begin
 		//		if (temp >= 9'd256) begin	
 		//			temp = temp - 9'd256;
 		//		end
