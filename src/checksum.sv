@@ -28,7 +28,7 @@ parameter			state2 = 2'b10;
 logic [1:0]			state;
 logic [1:0]			next_state;
 logic [8:0]			checksum;
-logic [8:0]			temp;
+logic [15:0]			temp;
 logic [7:0]			soh = 8'h01;
 logic [7:0]			head = 8'h38;
 
@@ -72,7 +72,7 @@ always_ff @(state or start_i or end_i or data_i) begin
 		//			temp = temp - 9'd256;
 		//		end
 				temp = temp % 9'd256;
-				checksum = temp;
+				checksum = temp[8:0];
 				next_state = state0;
 		end
 	endcase
