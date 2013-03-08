@@ -5,7 +5,7 @@
  *
  * @author		Adil Sadik <sadik.adil@gmail.com> 
  *
- * @dependencies	n/a	
+ * @dependencies	ascii2int.sv	
  */
 
 
@@ -117,7 +117,5 @@ ascii2int ascii2binary (
 		.done_o(ready2cmp_i),
 		.result_o(rcv_checksum)
 );
-
-
 
 endmodule

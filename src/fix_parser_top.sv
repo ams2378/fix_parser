@@ -26,7 +26,7 @@ module fix_parser_top # (parameter NUM_MESSAGE = 10, ADDR_WIDTH = 5) (
 	output				full_o,
 	output				empty_o,
 
-	output[7:0]			checksum_o
+	output				checksum_valid_o
 
 );
 
@@ -185,7 +185,7 @@ checksum  checksum_calc (
 		.data_i,
 		.start_i (start_message),
 		.end_i(end_message),
-		.checksum_o	
+		.valid_o(checksum_valid_o)	
 
 ); 
 
