@@ -50,6 +50,7 @@ always_ff @(state or end_i) begin
 		d2 = '0;
 		d1 = '0;
 		d0 = '0;
+		done = '0;
 	end
 
 	case(state) 
