@@ -31,14 +31,14 @@ module parser_test();
 
 	reg[255:0]			output_value_o;
 	reg				output_value_valid_o;
-	reg[7:0]			checksum_o;
+	reg				checksum_valid_o;
 /*
 fix_parser_top dut(.clk, .rst, .data_i, .tag_o, .value_o, .end_of_body_o, .start_of_header_o, 
 		   .t_wr_cs_o, .t_wr_en_o, .v_wr_cs_o, .v_wr_en_o,  .empty, .full);
 */
 
 fix_parser_top dut(.clk, .rst, .data_i, .find_tag_i, .message_num_i, .read_message_i, .output_value_o, 
-		   .output_value_valid_o , .start_of_header_o, .empty_o, .full_o, .checksum_o);
+		   .output_value_valid_o , .start_of_header_o, .empty_o, .full_o, .checksum_valid_o);
 
 initial begin
 
