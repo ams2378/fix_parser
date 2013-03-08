@@ -17,7 +17,7 @@ module checksum(
 	input			start_i,
 	input			end_i,
 
-	output[7:0]		checksum_o,
+//	output[7:0]		checksum_o,
 	output			valid_o
 );
 
@@ -104,7 +104,6 @@ always_ff @(state or start_i or end_i or ready2cmp_i ) begin
 	endcase
 end
 
-assign checksum_o = checksum; 
 assign valid_o = valid; 
 
 

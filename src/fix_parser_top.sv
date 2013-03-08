@@ -28,8 +28,6 @@ module fix_parser_top # (parameter NUM_MESSAGE = 10, ADDR_WIDTH = 5) (
 
 	output[7:0]			checksum_o
 
-//	output				end_of_body_o,
-//	output				start_message_o,
 );
 
 wire[7:0]		data;
@@ -191,17 +189,4 @@ checksum  checksum_calc (
 
 ); 
 
-/*
-
-ascii2int ascii2binary (
-
-		.clk (clk),
-		.rst (rst),
-		
-		.data_i,
-		.end_i(end_message)
-	//	.result_o(chksm_value)
-);
-
-*/
 endmodule
