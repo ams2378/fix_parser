@@ -45,6 +45,9 @@ always_ff @(state or end_i) begin
 
 	if (rst) begin
 		result = '0;
+		d2 = '0;
+		d1 = '0;
+		d0 = '0;
 	end
 
 	case(state) 
