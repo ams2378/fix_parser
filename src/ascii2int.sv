@@ -30,7 +30,7 @@ parameter			state4 = 3'b100;
 logic [2:0]			state;
 logic [2:0]			next_state;
 logic [7:0]			result;
-logic [7:0]			done;
+logic 				done;
 
 logic [7:0]			d2;
 logic [7:0]			d1;
