@@ -49,7 +49,7 @@ always_ff @(state or start_i or end_i) begin
 		
 		state0: begin 
 				if (start_i == 1) begin
-					temp = 8'd118;	//soh + head + data_i; 
+					temp = 8'd117;	// head + data_i; 
 					next_state = state1;
 				end else begin
 					next_state = state0;
