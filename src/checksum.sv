@@ -49,7 +49,6 @@ always_ff @(state or start_i or end_i or ready2cmp_i ) begin
 
 	if (rst) begin
 		checksum = '0;
-		rcv_checksum = '0;
 	end
 
 	case(state) 
