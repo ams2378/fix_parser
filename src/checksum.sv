@@ -18,7 +18,6 @@ module checksum(
 	input			end_i,
 
 	output[7:0]		checksum_o
-
 );
 
 parameter 			state0 = 2'b00;

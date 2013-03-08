@@ -192,4 +192,15 @@ checksum  checksum_calc (
 ); 
 
 
+ascii2int ascii2binary (
+
+		.clk (clk),
+		.rst (rst),
+		
+		.data_i,
+		.end_i(end_message)
+	//	.result_o(chksm_value)
+);
+
+
 endmodule
