@@ -20,11 +20,11 @@ module ascii2int(
    );
 
 
-parameter 			state0 = 2'b000;
-parameter			state1 = 2'b001;
-parameter			state2 = 2'b010;
-parameter			state3 = 2'b011;
-parameter			state4 = 2'b100;
+parameter 			state0 = 3'b000;
+parameter			state1 = 3'b001;
+parameter			state2 = 3'b010;
+parameter			state3 = 3'b011;
+parameter			state4 = 3'b100;
 
 logic [2:0]			state;
 logic [2:0]			next_state;
