@@ -17,7 +17,8 @@ module checksum(
 	input			start_i,
 	input			end_i,
 
-	output[7:0]		checksum_o
+	output[7:0]		checksum_o,
+	output			valid_o
 );
 
 parameter 			state0 = 3'b000;
@@ -33,7 +34,9 @@ logic [8:0]			temp;
 logic [7:0]			soh = 8'h01;
 logic [7:0]			head = 8'h38;
 
-logic [7:0]			chksm_value;
+logic [7:0]		 	rcv_checksum;
+logic				ready2cmp_i;
+
 
 always_ff @(posedge clk) begin
 
@@ -41,7 +44,7 @@ always_ff @(posedge clk) begin
 	else			state <= next_state;
 end
 
-always_ff @(state or start_i or end_i) begin
+always_ff @(state or start_i or end_i or ready2cmp_i ) begin
 
 	if (rst) begin
 		checksum = '0;
@@ -87,7 +90,14 @@ always_ff @(state or start_i or end_i) begin
 				end
 				temp = temp % 9'd256;
 				checksum = temp[7:0];
-				next_state = state0;
+				next_state = state4;
+		end
+		state4: begin
+				if (ready2cmp_i == 1) begin
+					valid = (checksum == rcv_checksum); 
+					next_state = state0;
+				end else
+					next_state = state4;
 		end
 	endcase
 end
@@ -102,7 +112,8 @@ ascii2int ascii2binary (
 		
 		.data_i,
 		.end_i,
-		.result_o(chksm_value)
+		.done_o(ready2cmp_i),
+		.result_o(rcv_checksum)
 );
 
 

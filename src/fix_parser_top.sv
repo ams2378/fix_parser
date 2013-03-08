@@ -191,6 +191,7 @@ checksum  checksum_calc (
 
 ); 
 
+/*
 
 ascii2int ascii2binary (
 
@@ -202,5 +203,5 @@ ascii2int ascii2binary (
 	//	.result_o(chksm_value)
 );
 
-
+*/
 endmodule

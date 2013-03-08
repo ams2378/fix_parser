@@ -16,7 +16,8 @@ module ascii2int(
    	input [7:0]      	data_i,
 	input			end_i, 
    
-   	output[7:0] 		result_o   
+   	output[7:0] 		result_o,
+	output			done_o 
    );
 
 
@@ -29,6 +30,7 @@ parameter			state4 = 3'b100;
 logic [2:0]			state;
 logic [2:0]			next_state;
 logic [7:0]			result;
+logic [7:0]			done;
 
 logic [7:0]			d2;
 logic [7:0]			d1;
@@ -74,13 +76,15 @@ always_ff @(state or end_i) begin
 				next_state = state4;
 		end
 		state4: begin
-				result = d2 + d1 + d0;	
+				result = d2 + d1 + d0;
+				done = '1;	
 				next_state = state0;
 		end
 	endcase
 end
 
 assign result_o = result; 
+assign done_o = done; 
 
 endmodule
 
