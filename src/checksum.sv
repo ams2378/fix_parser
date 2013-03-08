@@ -59,6 +59,7 @@ always_ff @(state or start_i or end_i or ready2cmp_i ) begin
 					temp = 8'd117;	// head + data_i; 
 					next_state = state1;
 				end else begin
+					valid = '0;
 					next_state = state0;
 				end
 		end
