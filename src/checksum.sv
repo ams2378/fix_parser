@@ -36,6 +36,7 @@ logic [7:0]			head = 8'h38;
 
 logic [7:0]		 	rcv_checksum;
 logic				ready2cmp_i;
+logic				valid;
 
 
 always_ff @(posedge clk) begin
@@ -103,6 +104,7 @@ always_ff @(state or start_i or end_i or ready2cmp_i ) begin
 end
 
 assign checksum_o = checksum; 
+assign valid_o = valid; 
 
 
 ascii2int ascii2binary (
