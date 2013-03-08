@@ -59,6 +59,7 @@ always_ff @(state or end_i) begin
 				if (end_i == 1) begin
 					next_state = state1;
 				end else begin
+					done = '0;
 					next_state = state0;
 				end
 		end
