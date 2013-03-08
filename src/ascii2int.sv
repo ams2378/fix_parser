@@ -64,12 +64,12 @@ always_ff @(state or end_i) begin
 				next_state = state2;
 		end
 		state2: begin
-				d2 = d2 * 8'd100;
+				d2 = d2 * 100;
 				d1 = data_i - 8'd48;	
 				next_state = state3;
 		end
 		state3: begin
-				d1 = d1 * 8'd10;
+				d1 = d1 * 10;
 				d0 = data_i - 8'd48;	
 				next_state = state4;
 		end
