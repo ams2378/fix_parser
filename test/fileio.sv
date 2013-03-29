@@ -5,9 +5,9 @@ reg clk;
 
 reg  enable;
 wire valid;
-reg [31:0] din;
-reg [31:0] exp;
-wire [31:0] dout;
+reg [7:0] din;
+reg [7:0] exp;
+wire [7:0] dout;
 integer statusI,statusO;
 
 dut dut (clk,enable,din,dout,valid);
@@ -17,8 +17,8 @@ initial begin
   enable  = 0;
   din = 0;
   exp = 0;
-  in  = $fopen("input.txt","r");
-  out = $fopen("output.txt","r");
+  in  = $fopen("inmsg.txt","r");
+  out = $fopen("outmsg.txt","r");
   mon = $fopen("monitor.txt","w");
 end
 
@@ -30,7 +30,7 @@ initial begin
     while (!$feof(in)) begin
       @ (negedge clk);
       enable = 1;
-      statusI = $fscanf(in,"%h %h\n",din[31:16],din[15:0]);
+      statusI = $fscanf(in,"%h\n",din[7:0]);
       @ (negedge clk);
       enable = 0;
     end
@@ -44,33 +44,22 @@ end
 // DUT output monitor and compare logic
 always @ (posedge clk)
  if (valid) begin
-   $fwrite(mon,"%h %h\n",dout[31:16],dout[15:0]);
-   statusO = $fscanf(out,"%h %h\n",exp[31:16],exp[15:0]);
-   if (dout !== exp) begin
-     $display("%0dns Error : input and output does not match",$time);
+   $fwrite(mon,"%h\n",dout[7:0]);
+   statusO = $fscanf(out,"%h\n",exp[7:0]);
+
      $display("       Got  %h",dout);
      $display("       Exp  %h",exp);
-   end else begin
-     $display("%0dns Match : input and output match",$time);
-     $display("       Got  %h",dout);
-     $display("       Exp  %h",exp);
-   end
+
+
+//   if (dout !== exp) begin
+//     $display("%0dns Error : input and output does not match",$time);
+//   end else begin
+//     $display("%0dns Match : input and output match",$time);
+//     $display("       Got  %h",dout);
+//     $display("       Exp  %h",exp);
+//   end
  end
 
 endmodule
 
-// DUT model
-module dut(
-  input wire clk,enable,
-  input wire [31:0] din,
-  output reg [31:0] dout,
-  output reg       valid
-);
 
-always @ (posedge clk)
-  begin
-    dout  <= din + 1;
-    valid  <= enable;
-  end
-
-endmodule
