@@ -6,7 +6,7 @@ all:
 	make clean
 	make test
 	make run
-#	make gtkwave
+	make gtkwave
 test:
 	vcs -full64 -PP -sverilog +define+SV +define+VPD $(MODULES) -o $(BENCH)
 #	./$(BENCH)
