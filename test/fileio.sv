@@ -36,7 +36,7 @@ initial begin
       @ (negedge clk);
       enable = 0;
 	if (din == 8'h3b) begin
-		repeat(5) @ (posedge clk);
+		repeat(100) @ (posedge clk);
 	end
     end
     repeat (10) @ (posedge clk);
