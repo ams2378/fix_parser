@@ -54,15 +54,6 @@ always @ (posedge clk)
 
      $display("       Got  %h",dout);
      $display("       Exp  %h",exp);
-
-
-//   if (dout !== exp) begin
-//     $display("%0dns Error : input and output does not match",$time);
-//   end else begin
-//     $display("%0dns Match : input and output match",$time);
-//     $display("       Got  %h",dout);
-//     $display("       Exp  %h",exp);
-//   end
  end
 
 endmodule
