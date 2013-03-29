@@ -12,6 +12,8 @@ integer statusI,statusO;
 
 dut dut (clk,enable,din,dout,valid);
 
+initial $vcdpluson;
+
 initial begin
   clk = 0;
   enable  = 0;
