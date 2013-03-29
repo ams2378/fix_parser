@@ -35,6 +35,9 @@ initial begin
       statusI = $fscanf(in,"%h\n",din[7:0]);
       @ (negedge clk);
       enable = 0;
+	if (din == 3b) begin
+		repeat(5) @ (posedge clk);
+	end
     end
     repeat (10) @ (posedge clk);
     $fclose(in);
