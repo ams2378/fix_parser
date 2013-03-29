@@ -1322,18 +1322,31 @@ extern void CallMhdlCoercedPort(void*, UP);
 #ifdef __cplusplus
 extern "C" {
 #endif
-void  hsF_0_0_0_(UB  * I652, vec32  * I653, U  I671);
-void  hsF_0_0_6_(UB  * I652, scalar  val, U  I804);
-void  hsF_0_0_7_(UB  * I652, vec32  * I792, U  I804, U  I805);
-void  hsF_0_0_9_(UB  * I652, vec32  * I653);
-void  hsF_0_1_0_(UB  * I652, scalar  val);
-void  hsF_0_2_0_(UB  * I652, vec32  * I653, U  I671);
-void  hsF_0_3_0_(UB  * I652, scalar  val);
-void  hsC_0_4_0_(UB  * I652, scalar  val);
-void  hsF_0_5_0_(UB  * I652, scalar  val);
+void  hsF_0_0_0_(UB  * I652, scalar  val);
+void  hsF_0_1_0_(UB  * I652, vec32  * I653, U  I671);
+void  hsF_0_1_6_(UB  * I652, scalar  val, U  I804);
+void  hsF_0_1_7_(UB  * I652, vec32  * I792, U  I804, U  I805);
+void  hsF_0_1_9_(UB  * I652, vec32  * I653);
+void  hsF_0_2_0_(UB  * I652, scalar  val);
+void  hsF_0_3_0_(UB  * I652, vec32  * I653, U  I671);
+void  hsF_0_4_0_(UB  * I652, scalar  val);
+void  hsF_0_5_0_(UB  * I652, vec32  * I653, U  I671);
+void  hsF_0_5_6_(UB  * I652, scalar  val, U  I804);
+void  hsF_0_5_7_(UB  * I652, vec32  * I792, U  I804, U  I805);
+void  hsF_0_5_9_(UB  * I652, vec32  * I653);
 void  hsF_0_6_0_(UB  * I652, scalar  val);
-void  hsF_0_6_5_(UB  * I652, UB  val);
-void  hsF_0_7_0_(UB  * I652, scalar  val);
+void  hsF_0_7_0_(UB  * I652, vec32  * I653, U  I671);
+void  hsF_0_7_6_(UB  * I652, scalar  val, U  I804);
+void  hsF_0_7_7_(UB  * I652, vec32  * I792, U  I804, U  I805);
+void  hsF_0_7_9_(UB  * I652, vec32  * I653);
+void  hsF_0_8_0_(UB  * I652, vec32  * I653, U  I671);
+void  hsF_0_9_0_(UB  * I652, vec32  * I653, U  I671);
+void  hsF_0_10_0_(UB  * I652, vec32  * I653, U  I671);
+void  hsC_0_11_0_(UB  * I652, scalar  val);
+void  hsF_0_12_0_(UB  * I652, vec32  * I653, U  I671);
+void  hsF_0_13_0_(UB  * I652, vec32  * I653, U  I671);
+void  hsF_0_14_0_(UB  * I652, vec32  * I653, U  I671);
+void  hsF_0_15_0_(UB  * I652, scalar  val);
 void  schedNewEvent(struct dummyq_struct * I734, EBLK  * I735, U  I553);
 #ifdef __cplusplus
 }
