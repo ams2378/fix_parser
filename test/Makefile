@@ -1,4 +1,4 @@
-MODULES= fileio.sv
+MODULES= dut.sv fileio.sv
 TEST=dut.sv 
 BENCH=testbench.exe
 
