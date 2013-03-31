@@ -1,2 +1,2 @@
-vsim -do "runsim.do"
+vsim -do "runsim.do" 
 
