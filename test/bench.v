@@ -50,6 +50,7 @@ event configure_done;
 event start_initiator;
 event start_acceptor;
 event error;
+event initiation_trigger_sent;
 
 // clock generator
 always # 1 clk = ~clk;
@@ -69,7 +70,7 @@ initial begin
   enable = 0;
   din = 0;
   exp = 0;
-  cfg = $fopen("cfg.txt","r");
+//  cfg = $fopen("cfg.txt","r");
   in  = $fopen("init_in.txt","r");
   out = $fopen("init_out.txt","r");
   mon = $fopen("monitor.txt","w");
@@ -119,7 +120,7 @@ initial
 forever begin
 	@ (configure_enable);
 	@ (negedge clk)
-	$display ("configuring DUT")
+	$display ("configuring DUT");
 	configure = 1;
 /*	$fgets(cfg, connectType);
 	$fgets(cfg, reconnectInt);
@@ -133,7 +134,7 @@ forever begin
 	$fgets(cfg, heartBeatInt);		*/
 	@ (negedge clk)
 	configure = 0;
-	#2 --> configure_done;			// 2 cycles to do configuration
+	#2 -> configure_done;			// 2 cycles to do configuration
 end  
 
 // initiate initiator  
@@ -145,13 +146,13 @@ forever begin
 	start = 1;
 	@ (negedge clk)
 	start = 0;
-	--> initiation_trigger_sent;
+	-> initiation_trigger_sent;
 end
 
 initial
 forever begin
 	@(initiation_trigger_sent)
-   while (!$(feof(in))) begin
+   while (!($feof(in))) begin
 	@ (negedge clk)
 	$display ("DUT receiving inputs from acceptor");
 	enable = 1;
@@ -159,7 +160,7 @@ forever begin
 	@ (negedge clk)
 	enable = 0;
 	if (din == 8'h3b) begin			// end of one FIX message
-		#10				// wait for heartbeat
+		#10;				// wait for heartbeat
 	end
   end
 end
@@ -172,7 +173,7 @@ always @ (posedge clk)
    statusO = $fscanf(out,"%h\n",exp[7:0]);
    if (dout !== exp) begin
 	dut_error = 1;
-	--> error;
+	-> error;
    end else begin
 	dut_error = 0;
      $display("%0dns Match : input and output match",$time);

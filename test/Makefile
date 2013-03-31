@@ -1,5 +1,6 @@
-MODULES= dut.sv fileio.sv
-TEST=dut.sv 
+#MODULES= dut.v fileio.v
+MODULES= dut.v bench.v
+TEST=dut.v 
 BENCH=testbench.exe
 
 all: 
