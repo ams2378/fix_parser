@@ -1,0 +1,43 @@
+m255
+K3
+13
+cModel Technology
+Z0 d/home/adilsadik/Documents/fix_parser/test/example
+vcounter
+Z1 INNS@3?JlUbTAf@eeFW[Je0
+Z2 V_h2D[I@S]9Y`PKhO>?lJ:2
+Z3 d/home/adilsadik/Documents/fix_parser/test/example
+Z4 w1364751750
+Z5 8counter.v
+Z6 Fcounter.v
+L0 7
+Z7 OV;L;10.1b;51
+r1
+31
+o-O0
+!i10b 1
+Z8 !s100 flEn34<0>dnR3`V02@REZ1
+!s85 0
+Z9 !s108 1364751804.316624
+Z10 !s107 counter.v|
+Z11 !s90 -reportprogress|300|counter.v|
+!s101 -O0
+vcounter_tb
+!i10b 1
+!s100 FY@bc<gH;_DQIDKELa6C12
+I_ch:d^F7V2VChYhec<1B=1
+VN6X[[7nWg]oz4[ZCKXDXe0
+R3
+w1364750495
+8counter_tb.v
+Fcounter_tb.v
+L0 16
+R7
+r1
+!s85 0
+31
+!s108 1364751804.506196
+!s107 counter_tb.v|
+!s90 -reportprogress|300|-incr|counter_tb.v|
+!s101 -O0
+o-O0
