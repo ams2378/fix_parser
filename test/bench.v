@@ -1,4 +1,5 @@
 // MODULE               :                                    
+//
 // TOP MODULE           : --                                            
 //                                                                       
 // PURPOSE              :                     
@@ -97,6 +98,8 @@ initial
  end
  else begin
    $display ("Simulation Result : FAILED");
+     $display("       Got  %h",dout);
+     $display("       Exp  %h",exp);
  end
  $display ("###################################################");
  #1 $finish;
