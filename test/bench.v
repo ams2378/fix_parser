@@ -71,7 +71,7 @@ end
 initial begin
   $display ("\n");
   $display ("################################################### \n");
-  $display (" STARTING SIMULATION ");
+  $display ("STARTING SIMULATION\n");
   clk = 0;
   enable = 0;
   din = 0;
@@ -97,7 +97,7 @@ end
 // exiting simulation
 initial
 @ (exit_sim)  begin
- $display ("Terminating simulation");
+ $display ("Terminating simulation @ %0dns ", $time);
  if (dut_error == 0) begin
    $display ("Simulation Result : PASSED");
  end
@@ -115,11 +115,11 @@ initial
 forever begin
  @ (reset_enable);
  @ (negedge clk)
- $display ("Applying reset");
+ $display ("Applying reset @ %0dns", $time);
    reset = 1;
  @ (negedge clk)
    reset = 0;
- $display ("Came out of Reset");
+ $display ("Came out of Reset @ %0dns", $time);
  -> reset_done;
 end
 
@@ -128,7 +128,7 @@ initial
 forever begin
 	@ (configure_enable);
 	@ (negedge clk)
-	$display ("configuring DUT");
+	$display ("configuring DUT @ %0dns", $time);
 	configure = 1;
 /*	$fgets(cfg, connectType);
 	$fgets(cfg, reconnectInt);
@@ -150,7 +150,7 @@ initial
 forever begin 
 	@ (start_initiator);
 	@ (negedge clk)
-	$display ("Initiating a new connection");
+	$display ("Initiating a new connection @ %0dns", $time);
 	start = 1;
 	@ (negedge clk)
 	start = 0;
@@ -162,7 +162,7 @@ forever begin
 	@(initiation_trigger_sent)
    while (!($feof(in))) begin
 	@ (negedge clk)
-	$display ("DUT receiving inputs from acceptor");
+	$display ("DUT receiving inputs from acceptor @ %0dns", $time);
 	enable = 1;
 	statusI = $fscanf(in,"%h\n",din[7:0]);
 	@ (negedge clk)
@@ -184,7 +184,7 @@ always @ (posedge clk)
 	-> error;
    end else begin
 	dut_error = 0;
-     $display("%0dns Match : input and output match",$time);
+     $display("Match : input and output match @ %0dns  ",$time);
      $display("       Got  %h",dout);
      $display("       Exp  %h",exp);
    end
