@@ -69,6 +69,9 @@ end
 
 // initialization
 initial begin
+  $display ("\n");
+  $display ("################################################### \n");
+  $display (" STARTING SIMULATION ");
   clk = 0;
   enable = 0;
   din = 0;
@@ -103,7 +106,7 @@ initial
      $display("       Got  %h",dout);
      $display("       Exp  %h",exp);
  end
- $display ("###################################################");
+ $display ("################################################### \n");
  #1 $finish;
 end
 
