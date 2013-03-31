@@ -9,6 +9,8 @@
 // Revision History                                                      
 //                                                                       
 
+‘timescale 1 ns / 100 ps
+
 module bench;
 
 // decleare dut in/out ports

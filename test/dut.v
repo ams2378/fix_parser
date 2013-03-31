@@ -1,3 +1,6 @@
+
+‘timescale 1 ns / 100 ps
+
 module dut (
   input wire clk,enable,
   input wire  reset,
