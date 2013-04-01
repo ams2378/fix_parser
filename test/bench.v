@@ -86,7 +86,7 @@ begin
 end
 
 //enable if compiling with VCS
-//initial $vcdpluson;		 
+initial $vcdpluson;		 
 
 // initialization
 initial begin
