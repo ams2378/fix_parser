@@ -1,1 +1,1816 @@
-Reading /home/adilsadik/altera/12.1/modelsim_ase/tcl/vsim/pref.tcl 
+Chronologic VCS simulator copyright 1991-2011
+Contains Synopsys proprietary information.
+Compiler version F-2011.12_Full64; Runtime version F-2011.12_Full64;  Mar 31 22:51 2013
+VCD+ Writer F-2011.12_Full64 Copyright (c) 1991-2011 by Synopsys Inc.
+
+
+################################################### 
+
+STARTING SIMULATION
+
+Applying reset @ 12ns
+Came out of Reset @ 14ns
+configuring DUT @ 16ns
+Initiating a new connection @ 32ns
+DUT receiving inputs from acceptor @ 36ns
+Match : input and output match @ 39ns  
+       Got  38
+       Exp  38
+DUT receiving inputs from acceptor @ 40ns
+Match : input and output match @ 43ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 44ns
+Match : input and output match @ 47ns  
+       Got  46
+       Exp  46
+DUT receiving inputs from acceptor @ 48ns
+Match : input and output match @ 51ns  
+       Got  49
+       Exp  49
+DUT receiving inputs from acceptor @ 52ns
+Match : input and output match @ 55ns  
+       Got  58
+       Exp  58
+DUT receiving inputs from acceptor @ 56ns
+Match : input and output match @ 59ns  
+       Got  54
+       Exp  54
+DUT receiving inputs from acceptor @ 60ns
+Match : input and output match @ 63ns  
+       Got  2e
+       Exp  2e
+DUT receiving inputs from acceptor @ 64ns
+Match : input and output match @ 67ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 68ns
+Match : input and output match @ 71ns  
+       Got  2e
+       Exp  2e
+DUT receiving inputs from acceptor @ 72ns
+Match : input and output match @ 75ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 76ns
+Match : input and output match @ 79ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 80ns
+Match : input and output match @ 83ns  
+       Got  39
+       Exp  39
+DUT receiving inputs from acceptor @ 84ns
+Match : input and output match @ 87ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 88ns
+Match : input and output match @ 91ns  
+       Got  38
+       Exp  38
+DUT receiving inputs from acceptor @ 92ns
+Match : input and output match @ 95ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 96ns
+Match : input and output match @ 99ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 100ns
+Match : input and output match @ 103ns  
+       Got  33
+       Exp  33
+DUT receiving inputs from acceptor @ 104ns
+Match : input and output match @ 107ns  
+       Got  35
+       Exp  35
+DUT receiving inputs from acceptor @ 108ns
+Match : input and output match @ 111ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 112ns
+Match : input and output match @ 115ns  
+       Got  41
+       Exp  41
+DUT receiving inputs from acceptor @ 116ns
+Match : input and output match @ 119ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 120ns
+Match : input and output match @ 123ns  
+       Got  33
+       Exp  33
+DUT receiving inputs from acceptor @ 124ns
+Match : input and output match @ 127ns  
+       Got  34
+       Exp  34
+DUT receiving inputs from acceptor @ 128ns
+Match : input and output match @ 131ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 132ns
+Match : input and output match @ 135ns  
+       Got  32
+       Exp  32
+DUT receiving inputs from acceptor @ 136ns
+Match : input and output match @ 139ns  
+       Got  37
+       Exp  37
+DUT receiving inputs from acceptor @ 140ns
+Match : input and output match @ 143ns  
+       Got  37
+       Exp  37
+DUT receiving inputs from acceptor @ 144ns
+Match : input and output match @ 147ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 148ns
+Match : input and output match @ 151ns  
+       Got  34
+       Exp  34
+DUT receiving inputs from acceptor @ 152ns
+Match : input and output match @ 155ns  
+       Got  39
+       Exp  39
+DUT receiving inputs from acceptor @ 156ns
+Match : input and output match @ 159ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 160ns
+Match : input and output match @ 163ns  
+       Got  4f
+       Exp  4f
+DUT receiving inputs from acceptor @ 164ns
+Match : input and output match @ 167ns  
+       Got  52
+       Exp  52
+DUT receiving inputs from acceptor @ 168ns
+Match : input and output match @ 171ns  
+       Got  44
+       Exp  44
+DUT receiving inputs from acceptor @ 172ns
+Match : input and output match @ 175ns  
+       Got  45
+       Exp  45
+DUT receiving inputs from acceptor @ 176ns
+Match : input and output match @ 179ns  
+       Got  52
+       Exp  52
+DUT receiving inputs from acceptor @ 180ns
+Match : input and output match @ 183ns  
+       Got  4d
+       Exp  4d
+DUT receiving inputs from acceptor @ 184ns
+Match : input and output match @ 187ns  
+       Got  41
+       Exp  41
+DUT receiving inputs from acceptor @ 188ns
+Match : input and output match @ 191ns  
+       Got  54
+       Exp  54
+DUT receiving inputs from acceptor @ 192ns
+Match : input and output match @ 195ns  
+       Got  43
+       Exp  43
+DUT receiving inputs from acceptor @ 196ns
+Match : input and output match @ 199ns  
+       Got  48
+       Exp  48
+DUT receiving inputs from acceptor @ 200ns
+Match : input and output match @ 203ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 204ns
+Match : input and output match @ 207ns  
+       Got  35
+       Exp  35
+DUT receiving inputs from acceptor @ 208ns
+Match : input and output match @ 211ns  
+       Got  32
+       Exp  32
+DUT receiving inputs from acceptor @ 212ns
+Match : input and output match @ 215ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 216ns
+Match : input and output match @ 219ns  
+       Got  32
+       Exp  32
+DUT receiving inputs from acceptor @ 220ns
+Match : input and output match @ 223ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 224ns
+Match : input and output match @ 227ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 228ns
+Match : input and output match @ 231ns  
+       Got  33
+       Exp  33
+DUT receiving inputs from acceptor @ 232ns
+Match : input and output match @ 235ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 236ns
+Match : input and output match @ 239ns  
+       Got  33
+       Exp  33
+DUT receiving inputs from acceptor @ 240ns
+Match : input and output match @ 243ns  
+       Got  33
+       Exp  33
+DUT receiving inputs from acceptor @ 244ns
+Match : input and output match @ 247ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 248ns
+Match : input and output match @ 251ns  
+       Got  2d
+       Exp  2d
+DUT receiving inputs from acceptor @ 252ns
+Match : input and output match @ 255ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 256ns
+Match : input and output match @ 259ns  
+       Got  37
+       Exp  37
+DUT receiving inputs from acceptor @ 260ns
+Match : input and output match @ 263ns  
+       Got  3a
+       Exp  3a
+DUT receiving inputs from acceptor @ 264ns
+Match : input and output match @ 267ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 268ns
+Match : input and output match @ 271ns  
+       Got  35
+       Exp  35
+DUT receiving inputs from acceptor @ 272ns
+Match : input and output match @ 275ns  
+       Got  3a
+       Exp  3a
+DUT receiving inputs from acceptor @ 276ns
+Match : input and output match @ 279ns  
+       Got  33
+       Exp  33
+DUT receiving inputs from acceptor @ 280ns
+Match : input and output match @ 283ns  
+       Got  32
+       Exp  32
+DUT receiving inputs from acceptor @ 284ns
+Match : input and output match @ 287ns  
+       Got  2e
+       Exp  2e
+DUT receiving inputs from acceptor @ 288ns
+Match : input and output match @ 291ns  
+       Got  33
+       Exp  33
+DUT receiving inputs from acceptor @ 292ns
+Match : input and output match @ 295ns  
+       Got  34
+       Exp  34
+DUT receiving inputs from acceptor @ 296ns
+Match : input and output match @ 299ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 300ns
+Match : input and output match @ 303ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 304ns
+Match : input and output match @ 307ns  
+       Got  35
+       Exp  35
+DUT receiving inputs from acceptor @ 308ns
+Match : input and output match @ 311ns  
+       Got  36
+       Exp  36
+DUT receiving inputs from acceptor @ 312ns
+Match : input and output match @ 315ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 316ns
+Match : input and output match @ 319ns  
+       Got  43
+       Exp  43
+DUT receiving inputs from acceptor @ 320ns
+Match : input and output match @ 323ns  
+       Got  4c
+       Exp  4c
+DUT receiving inputs from acceptor @ 324ns
+Match : input and output match @ 327ns  
+       Got  49
+       Exp  49
+DUT receiving inputs from acceptor @ 328ns
+Match : input and output match @ 331ns  
+       Got  45
+       Exp  45
+DUT receiving inputs from acceptor @ 332ns
+Match : input and output match @ 335ns  
+       Got  4e
+       Exp  4e
+DUT receiving inputs from acceptor @ 336ns
+Match : input and output match @ 339ns  
+       Got  54
+       Exp  54
+DUT receiving inputs from acceptor @ 340ns
+Match : input and output match @ 343ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 344ns
+Match : input and output match @ 347ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 348ns
+Match : input and output match @ 351ns  
+       Got  39
+       Exp  39
+DUT receiving inputs from acceptor @ 352ns
+Match : input and output match @ 355ns  
+       Got  38
+       Exp  38
+DUT receiving inputs from acceptor @ 356ns
+Match : input and output match @ 359ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 360ns
+Match : input and output match @ 363ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 364ns
+Match : input and output match @ 367ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 368ns
+Match : input and output match @ 371ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 372ns
+Match : input and output match @ 375ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 376ns
+Match : input and output match @ 379ns  
+       Got  38
+       Exp  38
+DUT receiving inputs from acceptor @ 380ns
+Match : input and output match @ 383ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 384ns
+Match : input and output match @ 387ns  
+       Got  35
+       Exp  35
+DUT receiving inputs from acceptor @ 388ns
+Match : input and output match @ 391ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 392ns
+Match : input and output match @ 395ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 396ns
+Match : input and output match @ 399ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 400ns
+Match : input and output match @ 403ns  
+       Got  33
+       Exp  33
+DUT receiving inputs from acceptor @ 404ns
+Match : input and output match @ 407ns  
+       Got  37
+       Exp  37
+DUT receiving inputs from acceptor @ 408ns
+Match : input and output match @ 411ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 412ns
+Match : input and output match @ 415ns  
+       Got  37
+       Exp  37
+DUT receiving inputs from acceptor @ 416ns
+Match : input and output match @ 419ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 420ns
+Match : input and output match @ 423ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 424ns
+Match : input and output match @ 427ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 428ns
+Match : input and output match @ 431ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 432ns
+Match : input and output match @ 435ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 436ns
+Match : input and output match @ 439ns  
+       Got  35
+       Exp  35
+DUT receiving inputs from acceptor @ 440ns
+Match : input and output match @ 443ns  
+       Got  37
+       Exp  37
+DUT receiving inputs from acceptor @ 444ns
+Match : input and output match @ 447ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 448ns
+Match : input and output match @ 451ns  
+       Got  3b
+       Exp  3b
+DUT receiving inputs from acceptor @ 460ns
+Match : input and output match @ 463ns  
+       Got  38
+       Exp  38
+DUT receiving inputs from acceptor @ 464ns
+Match : input and output match @ 467ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 468ns
+Match : input and output match @ 471ns  
+       Got  46
+       Exp  46
+DUT receiving inputs from acceptor @ 472ns
+Match : input and output match @ 475ns  
+       Got  49
+       Exp  49
+DUT receiving inputs from acceptor @ 476ns
+Match : input and output match @ 479ns  
+       Got  58
+       Exp  58
+DUT receiving inputs from acceptor @ 480ns
+Match : input and output match @ 483ns  
+       Got  54
+       Exp  54
+DUT receiving inputs from acceptor @ 484ns
+Match : input and output match @ 487ns  
+       Got  2e
+       Exp  2e
+DUT receiving inputs from acceptor @ 488ns
+Match : input and output match @ 491ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 492ns
+Match : input and output match @ 495ns  
+       Got  2e
+       Exp  2e
+DUT receiving inputs from acceptor @ 496ns
+Match : input and output match @ 499ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 500ns
+Match : input and output match @ 503ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 504ns
+Match : input and output match @ 507ns  
+       Got  39
+       Exp  39
+DUT receiving inputs from acceptor @ 508ns
+Match : input and output match @ 511ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 512ns
+Match : input and output match @ 515ns  
+       Got  36
+       Exp  36
+DUT receiving inputs from acceptor @ 516ns
+Match : input and output match @ 519ns  
+       Got  32
+       Exp  32
+DUT receiving inputs from acceptor @ 520ns
+Match : input and output match @ 523ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 524ns
+Match : input and output match @ 527ns  
+       Got  33
+       Exp  33
+DUT receiving inputs from acceptor @ 528ns
+Match : input and output match @ 531ns  
+       Got  35
+       Exp  35
+DUT receiving inputs from acceptor @ 532ns
+Match : input and output match @ 535ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 536ns
+Match : input and output match @ 539ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 540ns
+Match : input and output match @ 543ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 544ns
+Match : input and output match @ 547ns  
+       Got  33
+       Exp  33
+DUT receiving inputs from acceptor @ 548ns
+Match : input and output match @ 551ns  
+       Got  34
+       Exp  34
+DUT receiving inputs from acceptor @ 552ns
+Match : input and output match @ 555ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 556ns
+Match : input and output match @ 559ns  
+       Got  32
+       Exp  32
+DUT receiving inputs from acceptor @ 560ns
+Match : input and output match @ 563ns  
+       Got  37
+       Exp  37
+DUT receiving inputs from acceptor @ 564ns
+Match : input and output match @ 567ns  
+       Got  38
+       Exp  38
+DUT receiving inputs from acceptor @ 568ns
+Match : input and output match @ 571ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 572ns
+Match : input and output match @ 575ns  
+       Got  34
+       Exp  34
+DUT receiving inputs from acceptor @ 576ns
+Match : input and output match @ 579ns  
+       Got  39
+       Exp  39
+DUT receiving inputs from acceptor @ 580ns
+Match : input and output match @ 583ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 584ns
+Match : input and output match @ 587ns  
+       Got  4f
+       Exp  4f
+DUT receiving inputs from acceptor @ 588ns
+Match : input and output match @ 591ns  
+       Got  52
+       Exp  52
+DUT receiving inputs from acceptor @ 592ns
+Match : input and output match @ 595ns  
+       Got  44
+       Exp  44
+DUT receiving inputs from acceptor @ 596ns
+Match : input and output match @ 599ns  
+       Got  45
+       Exp  45
+DUT receiving inputs from acceptor @ 600ns
+Match : input and output match @ 603ns  
+       Got  52
+       Exp  52
+DUT receiving inputs from acceptor @ 604ns
+Match : input and output match @ 607ns  
+       Got  4d
+       Exp  4d
+DUT receiving inputs from acceptor @ 608ns
+Match : input and output match @ 611ns  
+       Got  41
+       Exp  41
+DUT receiving inputs from acceptor @ 612ns
+Match : input and output match @ 615ns  
+       Got  54
+       Exp  54
+DUT receiving inputs from acceptor @ 616ns
+Match : input and output match @ 619ns  
+       Got  43
+       Exp  43
+DUT receiving inputs from acceptor @ 620ns
+Match : input and output match @ 623ns  
+       Got  48
+       Exp  48
+DUT receiving inputs from acceptor @ 624ns
+Match : input and output match @ 627ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 628ns
+Match : input and output match @ 631ns  
+       Got  35
+       Exp  35
+DUT receiving inputs from acceptor @ 632ns
+Match : input and output match @ 635ns  
+       Got  32
+       Exp  32
+DUT receiving inputs from acceptor @ 636ns
+Match : input and output match @ 639ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 640ns
+Match : input and output match @ 643ns  
+       Got  32
+       Exp  32
+DUT receiving inputs from acceptor @ 644ns
+Match : input and output match @ 647ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 648ns
+Match : input and output match @ 651ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 652ns
+Match : input and output match @ 655ns  
+       Got  33
+       Exp  33
+DUT receiving inputs from acceptor @ 656ns
+Match : input and output match @ 659ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 660ns
+Match : input and output match @ 663ns  
+       Got  33
+       Exp  33
+DUT receiving inputs from acceptor @ 664ns
+Match : input and output match @ 667ns  
+       Got  33
+       Exp  33
+DUT receiving inputs from acceptor @ 668ns
+Match : input and output match @ 671ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 672ns
+Match : input and output match @ 675ns  
+       Got  2d
+       Exp  2d
+DUT receiving inputs from acceptor @ 676ns
+Match : input and output match @ 679ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 680ns
+Match : input and output match @ 683ns  
+       Got  37
+       Exp  37
+DUT receiving inputs from acceptor @ 684ns
+Match : input and output match @ 687ns  
+       Got  3a
+       Exp  3a
+DUT receiving inputs from acceptor @ 688ns
+Match : input and output match @ 691ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 692ns
+Match : input and output match @ 695ns  
+       Got  35
+       Exp  35
+DUT receiving inputs from acceptor @ 696ns
+Match : input and output match @ 699ns  
+       Got  3a
+       Exp  3a
+DUT receiving inputs from acceptor @ 700ns
+Match : input and output match @ 703ns  
+       Got  33
+       Exp  33
+DUT receiving inputs from acceptor @ 704ns
+Match : input and output match @ 707ns  
+       Got  37
+       Exp  37
+DUT receiving inputs from acceptor @ 708ns
+Match : input and output match @ 711ns  
+       Got  2e
+       Exp  2e
+DUT receiving inputs from acceptor @ 712ns
+Match : input and output match @ 715ns  
+       Got  33
+       Exp  33
+DUT receiving inputs from acceptor @ 716ns
+Match : input and output match @ 719ns  
+       Got  34
+       Exp  34
+DUT receiving inputs from acceptor @ 720ns
+Match : input and output match @ 723ns  
+       Got  39
+       Exp  39
+DUT receiving inputs from acceptor @ 724ns
+Match : input and output match @ 727ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 728ns
+Match : input and output match @ 731ns  
+       Got  35
+       Exp  35
+DUT receiving inputs from acceptor @ 732ns
+Match : input and output match @ 735ns  
+       Got  36
+       Exp  36
+DUT receiving inputs from acceptor @ 736ns
+Match : input and output match @ 739ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 740ns
+Match : input and output match @ 743ns  
+       Got  43
+       Exp  43
+DUT receiving inputs from acceptor @ 744ns
+Match : input and output match @ 747ns  
+       Got  4c
+       Exp  4c
+DUT receiving inputs from acceptor @ 748ns
+Match : input and output match @ 751ns  
+       Got  49
+       Exp  49
+DUT receiving inputs from acceptor @ 752ns
+Match : input and output match @ 755ns  
+       Got  45
+       Exp  45
+DUT receiving inputs from acceptor @ 756ns
+Match : input and output match @ 759ns  
+       Got  4e
+       Exp  4e
+DUT receiving inputs from acceptor @ 760ns
+Match : input and output match @ 763ns  
+       Got  54
+       Exp  54
+DUT receiving inputs from acceptor @ 764ns
+Match : input and output match @ 767ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 768ns
+Match : input and output match @ 771ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 772ns
+Match : input and output match @ 775ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 776ns
+Match : input and output match @ 779ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 780ns
+Match : input and output match @ 783ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 784ns
+Match : input and output match @ 787ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 788ns
+Match : input and output match @ 791ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 792ns
+Match : input and output match @ 795ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 796ns
+Match : input and output match @ 799ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 800ns
+Match : input and output match @ 803ns  
+       Got  3b
+       Exp  3b
+DUT receiving inputs from acceptor @ 812ns
+Match : input and output match @ 815ns  
+       Got  38
+       Exp  38
+DUT receiving inputs from acceptor @ 816ns
+Match : input and output match @ 819ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 820ns
+Match : input and output match @ 823ns  
+       Got  46
+       Exp  46
+DUT receiving inputs from acceptor @ 824ns
+Match : input and output match @ 827ns  
+       Got  49
+       Exp  49
+DUT receiving inputs from acceptor @ 828ns
+Match : input and output match @ 831ns  
+       Got  58
+       Exp  58
+DUT receiving inputs from acceptor @ 832ns
+Match : input and output match @ 835ns  
+       Got  54
+       Exp  54
+DUT receiving inputs from acceptor @ 836ns
+Match : input and output match @ 839ns  
+       Got  2e
+       Exp  2e
+DUT receiving inputs from acceptor @ 840ns
+Match : input and output match @ 843ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 844ns
+Match : input and output match @ 847ns  
+       Got  2e
+       Exp  2e
+DUT receiving inputs from acceptor @ 848ns
+Match : input and output match @ 851ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 852ns
+Match : input and output match @ 855ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 856ns
+Match : input and output match @ 859ns  
+       Got  39
+       Exp  39
+DUT receiving inputs from acceptor @ 860ns
+Match : input and output match @ 863ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 864ns
+Match : input and output match @ 867ns  
+       Got  36
+       Exp  36
+DUT receiving inputs from acceptor @ 868ns
+Match : input and output match @ 871ns  
+       Got  32
+       Exp  32
+DUT receiving inputs from acceptor @ 872ns
+Match : input and output match @ 875ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 876ns
+Match : input and output match @ 879ns  
+       Got  33
+       Exp  33
+DUT receiving inputs from acceptor @ 880ns
+Match : input and output match @ 883ns  
+       Got  35
+       Exp  35
+DUT receiving inputs from acceptor @ 884ns
+Match : input and output match @ 887ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 888ns
+Match : input and output match @ 891ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 892ns
+Match : input and output match @ 895ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 896ns
+Match : input and output match @ 899ns  
+       Got  33
+       Exp  33
+DUT receiving inputs from acceptor @ 900ns
+Match : input and output match @ 903ns  
+       Got  34
+       Exp  34
+DUT receiving inputs from acceptor @ 904ns
+Match : input and output match @ 907ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 908ns
+Match : input and output match @ 911ns  
+       Got  32
+       Exp  32
+DUT receiving inputs from acceptor @ 912ns
+Match : input and output match @ 915ns  
+       Got  37
+       Exp  37
+DUT receiving inputs from acceptor @ 916ns
+Match : input and output match @ 919ns  
+       Got  39
+       Exp  39
+DUT receiving inputs from acceptor @ 920ns
+Match : input and output match @ 923ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 924ns
+Match : input and output match @ 927ns  
+       Got  34
+       Exp  34
+DUT receiving inputs from acceptor @ 928ns
+Match : input and output match @ 931ns  
+       Got  39
+       Exp  39
+DUT receiving inputs from acceptor @ 932ns
+Match : input and output match @ 935ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 936ns
+Match : input and output match @ 939ns  
+       Got  4f
+       Exp  4f
+DUT receiving inputs from acceptor @ 940ns
+Match : input and output match @ 943ns  
+       Got  52
+       Exp  52
+DUT receiving inputs from acceptor @ 944ns
+Match : input and output match @ 947ns  
+       Got  44
+       Exp  44
+DUT receiving inputs from acceptor @ 948ns
+Match : input and output match @ 951ns  
+       Got  45
+       Exp  45
+DUT receiving inputs from acceptor @ 952ns
+Match : input and output match @ 955ns  
+       Got  52
+       Exp  52
+DUT receiving inputs from acceptor @ 956ns
+Match : input and output match @ 959ns  
+       Got  4d
+       Exp  4d
+DUT receiving inputs from acceptor @ 960ns
+Match : input and output match @ 963ns  
+       Got  41
+       Exp  41
+DUT receiving inputs from acceptor @ 964ns
+Match : input and output match @ 967ns  
+       Got  54
+       Exp  54
+DUT receiving inputs from acceptor @ 968ns
+Match : input and output match @ 971ns  
+       Got  43
+       Exp  43
+DUT receiving inputs from acceptor @ 972ns
+Match : input and output match @ 975ns  
+       Got  48
+       Exp  48
+DUT receiving inputs from acceptor @ 976ns
+Match : input and output match @ 979ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 980ns
+Match : input and output match @ 983ns  
+       Got  35
+       Exp  35
+DUT receiving inputs from acceptor @ 984ns
+Match : input and output match @ 987ns  
+       Got  32
+       Exp  32
+DUT receiving inputs from acceptor @ 988ns
+Match : input and output match @ 991ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 992ns
+Match : input and output match @ 995ns  
+       Got  32
+       Exp  32
+DUT receiving inputs from acceptor @ 996ns
+Match : input and output match @ 999ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 1000ns
+Match : input and output match @ 1003ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 1004ns
+Match : input and output match @ 1007ns  
+       Got  33
+       Exp  33
+DUT receiving inputs from acceptor @ 1008ns
+Match : input and output match @ 1011ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 1012ns
+Match : input and output match @ 1015ns  
+       Got  33
+       Exp  33
+DUT receiving inputs from acceptor @ 1016ns
+Match : input and output match @ 1019ns  
+       Got  33
+       Exp  33
+DUT receiving inputs from acceptor @ 1020ns
+Match : input and output match @ 1023ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 1024ns
+Match : input and output match @ 1027ns  
+       Got  2d
+       Exp  2d
+DUT receiving inputs from acceptor @ 1028ns
+Match : input and output match @ 1031ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 1032ns
+Match : input and output match @ 1035ns  
+       Got  37
+       Exp  37
+DUT receiving inputs from acceptor @ 1036ns
+Match : input and output match @ 1039ns  
+       Got  3a
+       Exp  3a
+DUT receiving inputs from acceptor @ 1040ns
+Match : input and output match @ 1043ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 1044ns
+Match : input and output match @ 1047ns  
+       Got  35
+       Exp  35
+DUT receiving inputs from acceptor @ 1048ns
+Match : input and output match @ 1051ns  
+       Got  3a
+       Exp  3a
+DUT receiving inputs from acceptor @ 1052ns
+Match : input and output match @ 1055ns  
+       Got  34
+       Exp  34
+DUT receiving inputs from acceptor @ 1056ns
+Match : input and output match @ 1059ns  
+       Got  32
+       Exp  32
+DUT receiving inputs from acceptor @ 1060ns
+Match : input and output match @ 1063ns  
+       Got  2e
+       Exp  2e
+DUT receiving inputs from acceptor @ 1064ns
+Match : input and output match @ 1067ns  
+       Got  33
+       Exp  33
+DUT receiving inputs from acceptor @ 1068ns
+Match : input and output match @ 1071ns  
+       Got  35
+       Exp  35
+DUT receiving inputs from acceptor @ 1072ns
+Match : input and output match @ 1075ns  
+       Got  35
+       Exp  35
+DUT receiving inputs from acceptor @ 1076ns
+Match : input and output match @ 1079ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 1080ns
+Match : input and output match @ 1083ns  
+       Got  35
+       Exp  35
+DUT receiving inputs from acceptor @ 1084ns
+Match : input and output match @ 1087ns  
+       Got  36
+       Exp  36
+DUT receiving inputs from acceptor @ 1088ns
+Match : input and output match @ 1091ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 1092ns
+Match : input and output match @ 1095ns  
+       Got  43
+       Exp  43
+DUT receiving inputs from acceptor @ 1096ns
+Match : input and output match @ 1099ns  
+       Got  4c
+       Exp  4c
+DUT receiving inputs from acceptor @ 1100ns
+Match : input and output match @ 1103ns  
+       Got  49
+       Exp  49
+DUT receiving inputs from acceptor @ 1104ns
+Match : input and output match @ 1107ns  
+       Got  45
+       Exp  45
+DUT receiving inputs from acceptor @ 1108ns
+Match : input and output match @ 1111ns  
+       Got  4e
+       Exp  4e
+DUT receiving inputs from acceptor @ 1112ns
+Match : input and output match @ 1115ns  
+       Got  54
+       Exp  54
+DUT receiving inputs from acceptor @ 1116ns
+Match : input and output match @ 1119ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 1120ns
+Match : input and output match @ 1123ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 1124ns
+Match : input and output match @ 1127ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 1128ns
+Match : input and output match @ 1131ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 1132ns
+Match : input and output match @ 1135ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 1136ns
+Match : input and output match @ 1139ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 1140ns
+Match : input and output match @ 1143ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 1144ns
+Match : input and output match @ 1147ns  
+       Got  34
+       Exp  34
+DUT receiving inputs from acceptor @ 1148ns
+Match : input and output match @ 1151ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 1152ns
+Match : input and output match @ 1155ns  
+       Got  3b
+       Exp  3b
+DUT receiving inputs from acceptor @ 1164ns
+Match : input and output match @ 1167ns  
+       Got  38
+       Exp  38
+DUT receiving inputs from acceptor @ 1168ns
+Match : input and output match @ 1171ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 1172ns
+Match : input and output match @ 1175ns  
+       Got  46
+       Exp  46
+DUT receiving inputs from acceptor @ 1176ns
+Match : input and output match @ 1179ns  
+       Got  49
+       Exp  49
+DUT receiving inputs from acceptor @ 1180ns
+Match : input and output match @ 1183ns  
+       Got  58
+       Exp  58
+DUT receiving inputs from acceptor @ 1184ns
+Match : input and output match @ 1187ns  
+       Got  54
+       Exp  54
+DUT receiving inputs from acceptor @ 1188ns
+Match : input and output match @ 1191ns  
+       Got  2e
+       Exp  2e
+DUT receiving inputs from acceptor @ 1192ns
+Match : input and output match @ 1195ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 1196ns
+Match : input and output match @ 1199ns  
+       Got  2e
+       Exp  2e
+DUT receiving inputs from acceptor @ 1200ns
+Match : input and output match @ 1203ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 1204ns
+Match : input and output match @ 1207ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 1208ns
+Match : input and output match @ 1211ns  
+       Got  39
+       Exp  39
+DUT receiving inputs from acceptor @ 1212ns
+Match : input and output match @ 1215ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 1216ns
+Match : input and output match @ 1219ns  
+       Got  36
+       Exp  36
+DUT receiving inputs from acceptor @ 1220ns
+Match : input and output match @ 1223ns  
+       Got  32
+       Exp  32
+DUT receiving inputs from acceptor @ 1224ns
+Match : input and output match @ 1227ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 1228ns
+Match : input and output match @ 1231ns  
+       Got  33
+       Exp  33
+DUT receiving inputs from acceptor @ 1232ns
+Match : input and output match @ 1235ns  
+       Got  35
+       Exp  35
+DUT receiving inputs from acceptor @ 1236ns
+Match : input and output match @ 1239ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 1240ns
+Match : input and output match @ 1243ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 1244ns
+Match : input and output match @ 1247ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 1248ns
+Match : input and output match @ 1251ns  
+       Got  33
+       Exp  33
+DUT receiving inputs from acceptor @ 1252ns
+Match : input and output match @ 1255ns  
+       Got  34
+       Exp  34
+DUT receiving inputs from acceptor @ 1256ns
+Match : input and output match @ 1259ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 1260ns
+Match : input and output match @ 1263ns  
+       Got  32
+       Exp  32
+DUT receiving inputs from acceptor @ 1264ns
+Match : input and output match @ 1267ns  
+       Got  38
+       Exp  38
+DUT receiving inputs from acceptor @ 1268ns
+Match : input and output match @ 1271ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 1272ns
+Match : input and output match @ 1275ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 1276ns
+Match : input and output match @ 1279ns  
+       Got  34
+       Exp  34
+DUT receiving inputs from acceptor @ 1280ns
+Match : input and output match @ 1283ns  
+       Got  39
+       Exp  39
+DUT receiving inputs from acceptor @ 1284ns
+Match : input and output match @ 1287ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 1288ns
+Match : input and output match @ 1291ns  
+       Got  4f
+       Exp  4f
+DUT receiving inputs from acceptor @ 1292ns
+Match : input and output match @ 1295ns  
+       Got  52
+       Exp  52
+DUT receiving inputs from acceptor @ 1296ns
+Match : input and output match @ 1299ns  
+       Got  44
+       Exp  44
+DUT receiving inputs from acceptor @ 1300ns
+Match : input and output match @ 1303ns  
+       Got  45
+       Exp  45
+DUT receiving inputs from acceptor @ 1304ns
+Match : input and output match @ 1307ns  
+       Got  52
+       Exp  52
+DUT receiving inputs from acceptor @ 1308ns
+Match : input and output match @ 1311ns  
+       Got  4d
+       Exp  4d
+DUT receiving inputs from acceptor @ 1312ns
+Match : input and output match @ 1315ns  
+       Got  41
+       Exp  41
+DUT receiving inputs from acceptor @ 1316ns
+Match : input and output match @ 1319ns  
+       Got  54
+       Exp  54
+DUT receiving inputs from acceptor @ 1320ns
+Match : input and output match @ 1323ns  
+       Got  43
+       Exp  43
+DUT receiving inputs from acceptor @ 1324ns
+Match : input and output match @ 1327ns  
+       Got  48
+       Exp  48
+DUT receiving inputs from acceptor @ 1328ns
+Match : input and output match @ 1331ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 1332ns
+Match : input and output match @ 1335ns  
+       Got  35
+       Exp  35
+DUT receiving inputs from acceptor @ 1336ns
+Match : input and output match @ 1339ns  
+       Got  32
+       Exp  32
+DUT receiving inputs from acceptor @ 1340ns
+Match : input and output match @ 1343ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 1344ns
+Match : input and output match @ 1347ns  
+       Got  32
+       Exp  32
+DUT receiving inputs from acceptor @ 1348ns
+Match : input and output match @ 1351ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 1352ns
+Match : input and output match @ 1355ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 1356ns
+Match : input and output match @ 1359ns  
+       Got  33
+       Exp  33
+DUT receiving inputs from acceptor @ 1360ns
+Match : input and output match @ 1363ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 1364ns
+Match : input and output match @ 1367ns  
+       Got  33
+       Exp  33
+DUT receiving inputs from acceptor @ 1368ns
+Match : input and output match @ 1371ns  
+       Got  33
+       Exp  33
+DUT receiving inputs from acceptor @ 1372ns
+Match : input and output match @ 1375ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 1376ns
+Match : input and output match @ 1379ns  
+       Got  2d
+       Exp  2d
+DUT receiving inputs from acceptor @ 1380ns
+Match : input and output match @ 1383ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 1384ns
+Match : input and output match @ 1387ns  
+       Got  37
+       Exp  37
+DUT receiving inputs from acceptor @ 1388ns
+Match : input and output match @ 1391ns  
+       Got  3a
+       Exp  3a
+DUT receiving inputs from acceptor @ 1392ns
+Match : input and output match @ 1395ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 1396ns
+Match : input and output match @ 1399ns  
+       Got  35
+       Exp  35
+DUT receiving inputs from acceptor @ 1400ns
+Match : input and output match @ 1403ns  
+       Got  3a
+       Exp  3a
+DUT receiving inputs from acceptor @ 1404ns
+Match : input and output match @ 1407ns  
+       Got  34
+       Exp  34
+DUT receiving inputs from acceptor @ 1408ns
+Match : input and output match @ 1411ns  
+       Got  37
+       Exp  37
+DUT receiving inputs from acceptor @ 1412ns
+Match : input and output match @ 1415ns  
+       Got  2e
+       Exp  2e
+DUT receiving inputs from acceptor @ 1416ns
+Match : input and output match @ 1419ns  
+       Got  33
+       Exp  33
+DUT receiving inputs from acceptor @ 1420ns
+Match : input and output match @ 1423ns  
+       Got  36
+       Exp  36
+DUT receiving inputs from acceptor @ 1424ns
+Match : input and output match @ 1427ns  
+       Got  33
+       Exp  33
+DUT receiving inputs from acceptor @ 1428ns
+Match : input and output match @ 1431ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 1432ns
+Match : input and output match @ 1435ns  
+       Got  35
+       Exp  35
+DUT receiving inputs from acceptor @ 1436ns
+Match : input and output match @ 1439ns  
+       Got  36
+       Exp  36
+DUT receiving inputs from acceptor @ 1440ns
+Match : input and output match @ 1443ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 1444ns
+Match : input and output match @ 1447ns  
+       Got  43
+       Exp  43
+DUT receiving inputs from acceptor @ 1448ns
+Match : input and output match @ 1451ns  
+       Got  4c
+       Exp  4c
+DUT receiving inputs from acceptor @ 1452ns
+Match : input and output match @ 1455ns  
+       Got  49
+       Exp  49
+DUT receiving inputs from acceptor @ 1456ns
+Match : input and output match @ 1459ns  
+       Got  45
+       Exp  45
+DUT receiving inputs from acceptor @ 1460ns
+Match : input and output match @ 1463ns  
+       Got  4e
+       Exp  4e
+DUT receiving inputs from acceptor @ 1464ns
+Match : input and output match @ 1467ns  
+       Got  54
+       Exp  54
+DUT receiving inputs from acceptor @ 1468ns
+Match : input and output match @ 1471ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 1472ns
+Match : input and output match @ 1475ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 1476ns
+Match : input and output match @ 1479ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 1480ns
+Match : input and output match @ 1483ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 1484ns
+Match : input and output match @ 1487ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 1488ns
+Match : input and output match @ 1491ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 1492ns
+Match : input and output match @ 1495ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 1496ns
+Match : input and output match @ 1499ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 1500ns
+Match : input and output match @ 1503ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 1504ns
+Match : input and output match @ 1507ns  
+       Got  3b
+       Exp  3b
+DUT receiving inputs from acceptor @ 1516ns
+Match : input and output match @ 1519ns  
+       Got  38
+       Exp  38
+DUT receiving inputs from acceptor @ 1520ns
+Match : input and output match @ 1523ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 1524ns
+Match : input and output match @ 1527ns  
+       Got  46
+       Exp  46
+DUT receiving inputs from acceptor @ 1528ns
+Match : input and output match @ 1531ns  
+       Got  49
+       Exp  49
+DUT receiving inputs from acceptor @ 1532ns
+Match : input and output match @ 1535ns  
+       Got  58
+       Exp  58
+DUT receiving inputs from acceptor @ 1536ns
+Match : input and output match @ 1539ns  
+       Got  54
+       Exp  54
+DUT receiving inputs from acceptor @ 1540ns
+Match : input and output match @ 1543ns  
+       Got  2e
+       Exp  2e
+DUT receiving inputs from acceptor @ 1544ns
+Match : input and output match @ 1547ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 1548ns
+Match : input and output match @ 1551ns  
+       Got  2e
+       Exp  2e
+DUT receiving inputs from acceptor @ 1552ns
+Match : input and output match @ 1555ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 1556ns
+Match : input and output match @ 1559ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 1560ns
+Match : input and output match @ 1563ns  
+       Got  39
+       Exp  39
+DUT receiving inputs from acceptor @ 1564ns
+Match : input and output match @ 1567ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 1568ns
+Match : input and output match @ 1571ns  
+       Got  36
+       Exp  36
+DUT receiving inputs from acceptor @ 1572ns
+Match : input and output match @ 1575ns  
+       Got  32
+       Exp  32
+DUT receiving inputs from acceptor @ 1576ns
+Match : input and output match @ 1579ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 1580ns
+Match : input and output match @ 1583ns  
+       Got  33
+       Exp  33
+DUT receiving inputs from acceptor @ 1584ns
+Match : input and output match @ 1587ns  
+       Got  35
+       Exp  35
+DUT receiving inputs from acceptor @ 1588ns
+Match : input and output match @ 1591ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 1592ns
+Match : input and output match @ 1595ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 1596ns
+Match : input and output match @ 1599ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 1600ns
+Match : input and output match @ 1603ns  
+       Got  33
+       Exp  33
+DUT receiving inputs from acceptor @ 1604ns
+Match : input and output match @ 1607ns  
+       Got  34
+       Exp  34
+DUT receiving inputs from acceptor @ 1608ns
+Match : input and output match @ 1611ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 1612ns
+Match : input and output match @ 1615ns  
+       Got  32
+       Exp  32
+DUT receiving inputs from acceptor @ 1616ns
+Match : input and output match @ 1619ns  
+       Got  38
+       Exp  38
+DUT receiving inputs from acceptor @ 1620ns
+Match : input and output match @ 1623ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 1624ns
+Match : input and output match @ 1627ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 1628ns
+Match : input and output match @ 1631ns  
+       Got  34
+       Exp  34
+DUT receiving inputs from acceptor @ 1632ns
+Match : input and output match @ 1635ns  
+       Got  39
+       Exp  39
+DUT receiving inputs from acceptor @ 1636ns
+Match : input and output match @ 1639ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 1640ns
+Match : input and output match @ 1643ns  
+       Got  4f
+       Exp  4f
+DUT receiving inputs from acceptor @ 1644ns
+Match : input and output match @ 1647ns  
+       Got  52
+       Exp  52
+DUT receiving inputs from acceptor @ 1648ns
+Match : input and output match @ 1651ns  
+       Got  44
+       Exp  44
+DUT receiving inputs from acceptor @ 1652ns
+Match : input and output match @ 1655ns  
+       Got  45
+       Exp  45
+DUT receiving inputs from acceptor @ 1656ns
+Match : input and output match @ 1659ns  
+       Got  52
+       Exp  52
+DUT receiving inputs from acceptor @ 1660ns
+Match : input and output match @ 1663ns  
+       Got  4d
+       Exp  4d
+DUT receiving inputs from acceptor @ 1664ns
+Match : input and output match @ 1667ns  
+       Got  41
+       Exp  41
+DUT receiving inputs from acceptor @ 1668ns
+Match : input and output match @ 1671ns  
+       Got  54
+       Exp  54
+DUT receiving inputs from acceptor @ 1672ns
+Match : input and output match @ 1675ns  
+       Got  43
+       Exp  43
+DUT receiving inputs from acceptor @ 1676ns
+Match : input and output match @ 1679ns  
+       Got  48
+       Exp  48
+DUT receiving inputs from acceptor @ 1680ns
+Match : input and output match @ 1683ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 1684ns
+Match : input and output match @ 1687ns  
+       Got  35
+       Exp  35
+DUT receiving inputs from acceptor @ 1688ns
+Match : input and output match @ 1691ns  
+       Got  32
+       Exp  32
+DUT receiving inputs from acceptor @ 1692ns
+Match : input and output match @ 1695ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 1696ns
+Match : input and output match @ 1699ns  
+       Got  32
+       Exp  32
+DUT receiving inputs from acceptor @ 1700ns
+Match : input and output match @ 1703ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 1704ns
+Match : input and output match @ 1707ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 1708ns
+Match : input and output match @ 1711ns  
+       Got  33
+       Exp  33
+DUT receiving inputs from acceptor @ 1712ns
+Match : input and output match @ 1715ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 1716ns
+Match : input and output match @ 1719ns  
+       Got  33
+       Exp  33
+DUT receiving inputs from acceptor @ 1720ns
+Match : input and output match @ 1723ns  
+       Got  33
+       Exp  33
+DUT receiving inputs from acceptor @ 1724ns
+Match : input and output match @ 1727ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 1728ns
+Match : input and output match @ 1731ns  
+       Got  2d
+       Exp  2d
+DUT receiving inputs from acceptor @ 1732ns
+Match : input and output match @ 1735ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 1736ns
+Match : input and output match @ 1739ns  
+       Got  37
+       Exp  37
+DUT receiving inputs from acceptor @ 1740ns
+Match : input and output match @ 1743ns  
+       Got  3a
+       Exp  3a
+DUT receiving inputs from acceptor @ 1744ns
+Match : input and output match @ 1747ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 1748ns
+Match : input and output match @ 1751ns  
+       Got  35
+       Exp  35
+DUT receiving inputs from acceptor @ 1752ns
+Match : input and output match @ 1755ns  
+       Got  3a
+       Exp  3a
+DUT receiving inputs from acceptor @ 1756ns
+Match : input and output match @ 1759ns  
+       Got  35
+       Exp  35
+DUT receiving inputs from acceptor @ 1760ns
+Match : input and output match @ 1763ns  
+       Got  32
+       Exp  32
+DUT receiving inputs from acceptor @ 1764ns
+Match : input and output match @ 1767ns  
+       Got  2e
+       Exp  2e
+DUT receiving inputs from acceptor @ 1768ns
+Match : input and output match @ 1771ns  
+       Got  33
+       Exp  33
+DUT receiving inputs from acceptor @ 1772ns
+Match : input and output match @ 1775ns  
+       Got  37
+       Exp  37
+DUT receiving inputs from acceptor @ 1776ns
+Match : input and output match @ 1779ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 1780ns
+Match : input and output match @ 1783ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 1784ns
+Match : input and output match @ 1787ns  
+       Got  35
+       Exp  35
+DUT receiving inputs from acceptor @ 1788ns
+Match : input and output match @ 1791ns  
+       Got  36
+       Exp  36
+DUT receiving inputs from acceptor @ 1792ns
+Match : input and output match @ 1795ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 1796ns
+Match : input and output match @ 1799ns  
+       Got  43
+       Exp  43
+DUT receiving inputs from acceptor @ 1800ns
+Match : input and output match @ 1803ns  
+       Got  4c
+       Exp  4c
+DUT receiving inputs from acceptor @ 1804ns
+Match : input and output match @ 1807ns  
+       Got  49
+       Exp  49
+DUT receiving inputs from acceptor @ 1808ns
+Match : input and output match @ 1811ns  
+       Got  45
+       Exp  45
+DUT receiving inputs from acceptor @ 1812ns
+Match : input and output match @ 1815ns  
+       Got  4e
+       Exp  4e
+DUT receiving inputs from acceptor @ 1816ns
+Match : input and output match @ 1819ns  
+       Got  54
+       Exp  54
+DUT receiving inputs from acceptor @ 1820ns
+Match : input and output match @ 1823ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 1824ns
+Match : input and output match @ 1827ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 1828ns
+Match : input and output match @ 1831ns  
+       Got  31
+       Exp  31
+DUT receiving inputs from acceptor @ 1832ns
+Match : input and output match @ 1835ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 1836ns
+Match : input and output match @ 1839ns  
+       Got  3d
+       Exp  3d
+DUT receiving inputs from acceptor @ 1840ns
+Match : input and output match @ 1843ns  
+       Got  30
+       Exp  30
+DUT receiving inputs from acceptor @ 1844ns
+Match : input and output match @ 1847ns  
+       Got  39
+       Exp  39
+DUT receiving inputs from acceptor @ 1848ns
+Match : input and output match @ 1851ns  
+       Got  35
+       Exp  35
+DUT receiving inputs from acceptor @ 1852ns
+Match : input and output match @ 1855ns  
+       Got  01
+       Exp  01
+DUT receiving inputs from acceptor @ 1856ns
+Match : input and output match @ 1859ns  
+       Got  3b
+       Exp  3b
+Terminating simulation @ 1878ns 
+Simulation Result : PASSED
+################################################### 
+
+$finish called from file "bench.v", line 181.
+$finish at simulation time                18790
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 1879000 ps
+CPU Time:      0.280 seconds;       Data structure size:   0.0Mb
+Sun Mar 31 22:51:17 2013
