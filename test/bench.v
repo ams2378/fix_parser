@@ -224,19 +224,3 @@ always @ (posedge clk)
 
 endmodule
 
-
-
-/*
-
-// reference outputs - to be matched with DUT outputs
-always @ (posedge clk) 
-	if (reset == 1)
-		exp <= 8'h00;
-	else if (start == 1) begin
-		#10     statusO = $fscanf(out,"%h\n",exp[7:0]);		// 10 cycles to generate valid outputs by DUT 
-	else if (enable == 1) begin
-		
-
-	end 
-
-*/

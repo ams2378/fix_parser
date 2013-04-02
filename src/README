@@ -1,4 +1,4 @@
 RTL code for FIX parser
 Developed earlier in this semester. It will be incorporated in FIX engine (work in profress) to support FIX session layer.
 
-TODO: Convert to Verilog from current SystemVerilog implementation (should be very trivial) so that ModelSim can handle all the features (just to be in safe side). Functionality is already verified with Synopsys VCS.
+TODO: Convert to Verilog from current SystemVerilog implementation (should be very trivial) so that ModelSim can handle all the features (just to be in safe side). Functionality is already verified.

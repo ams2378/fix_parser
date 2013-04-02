@@ -1,4 +1,4 @@
-A simple testbench for FIX perser.
+A simple testbench to do waveform debugging for FIX parser.
 Makefile is for simulating in VCS.
  
-Note: /test dir contains new automated testbench for the full design... this one will be eventually replaced by the automated one. 
+Note: /test dir contains new automated testbench for the full design... this one will be eventually replaced by the automated one as the parser is just a small part of FIX engine. 

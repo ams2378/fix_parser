@@ -18,9 +18,12 @@ module dut (
   input wire  [7:0] heartBeatInt, 		
 
   output reg [7:0] dout,
-  output reg       valid
+  output reg       valid,
+  output reg [15:0] connectToAddr
 );
 
+
+// just a dummy process to check testbench 
 always @ (posedge clk)
   begin
     dout  <= din;
@@ -29,15 +32,3 @@ always @ (posedge clk)
 
 endmodule
            
-/*
-reg [1:0 ]connectType;			
-reg [7:0] reconnectInt;			
-reg [15:0] starttime;			
-reg [15:0] endtime;			
-reg [5:0] beginstring;			
-reg [5:0] defaultApplVerId;		
-reg [255:0] senderCompId;		
-reg [255:0] targetCompId;		
-reg [15:0] hostAddr;				 
-reg [7:0] heartBeatInt;			
-*/ 
