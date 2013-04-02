@@ -1,1 +1,7 @@
-fix_parser
+dir:
+	/src	:	rtl for fix parser
+	/tb	:	simple testbench to debug parser through waveform
+	/test	:	incremental automated testbench
+
+Note:
+	Currently coding RTL for FIX engine and also modifying this fix parser to incorporate it with the design. Will update the repo with new design before Friday meeting. 
