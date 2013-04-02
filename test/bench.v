@@ -25,7 +25,11 @@
  -  TODO	: Need to add acceptor side (should be very trivial)	  
  -   		  Need real DUT for verification (in progress)
  -   
- -  Instruction : For simulation, run "sh runsim.sh" from command line 
+ -  Instruction : For simulation, run "sh runsim.sh" from command line
+ -		  Sim log saved in "transcript"		
+ -		  Run "nuke.sh" to clean the dir
+ -		  
+ -
  -----------------------------------------------------------------------------
 */
 
@@ -41,16 +45,16 @@ reg configure;
 reg start;
 reg [7:0] din;
 
-reg [1:0 ]connectType;			// 01- initiator, 10- acceptor
-reg [7:0] reconnectInt;			// in second (exp: 60 second)
-reg [15:0] starttime;			// in hh mn sc
-reg [15:0] endtime;			// in hh mn sc
-reg [5:0] beginstring;			// (example) 4.4 - 100 100
-reg [5:0] defaultApplVerId;		// 4.3 - 100 011
-reg [255:0] senderCompId;		// sent as ASCII (max - 256 bits)
-reg [255:0] targetCompId;		// sent as ASCII (max - 256 bits)
-reg [15:0] hostAddr;			// (example) - 16 bit	 
-reg [7:0] heartBeatInt;			// (example) - 8 bit
+reg [1:0 ]connectType;			
+reg [7:0] reconnectInt;			
+reg [15:0] starttime;			
+reg [15:0] endtime;			
+reg [5:0] beginstring;			
+reg [5:0] defaultApplVerId;		
+reg [255:0] senderCompId;		
+reg [255:0] targetCompId;		
+reg [15:0] hostAddr;				 
+reg [7:0] heartBeatInt;			
 
 wire [7:0] dout;
 wire valid;
@@ -99,7 +103,7 @@ initial begin
   	exp = 0;
 	cfg = $fopen("clientconfig.txt","r");
   	in  = $fopen("init_in.txt","r");
-  	out = $fopen("init_in.txt","r");
+  	out = $fopen("init_out.txt","r");
   	mon = $fopen("monitor.txt","w");
 end
 
@@ -194,14 +198,13 @@ forever begin
 	@ (negedge clk)
 	enable = 0;
 	if (din == 8'h3b) begin			// end of one FIX message
-		#10;				// wait for heartbeat
+		#10;				// wait few cycles before sending new inputs
 	end
   end
 	$fclose(in);
 	$fclose(out);
 	#10 -> exit_sim; 
 end
-
 
 // DUT output monitor and compare logic
 always @ (posedge clk)
@@ -220,7 +223,6 @@ always @ (posedge clk)
    	end 
 
 endmodule
-
 
 
 

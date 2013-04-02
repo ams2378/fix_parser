@@ -1,1 +1,4 @@
-bench
+A simple testbench for FIX perser.
+Makefile is for simulating in VCS.
+ 
+Note: /test dir contains new automated testbench for the full design... this one will be eventually replaced by the automated one. 
