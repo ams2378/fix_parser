@@ -58,9 +58,9 @@ TOOL_HOME=/sim/synopsys64/vcs/amd64
 SYN_DIR=/sim/synopsys64
 SYNTH_HOME=/sim/synopsys64/icc
 SYNOPSYS=/sim/synopsys64/icc
-SSH_TTY=/dev/pts/1
-SSH_CONNECTION=128.59.144.171 38904 128.59.15.58 22
-SSH_CLIENT=128.59.144.171 38904 22
+SSH_TTY=/dev/pts/0
+SSH_CONNECTION=128.59.144.166 55998 128.59.15.79 22
+SSH_CLIENT=128.59.144.166 55998 22
 SNPSLMD_LICENSE_FILE=27010@spades.cs.columbia.edu:/sim/synopsys64/vcs/flexlm//license.dat
 SCRNAME=vcs
 SCRIPT_NAME=vcs
@@ -103,4 +103,4 @@ FORMALITY_HOME=/sim/synopsys64/formality
 1322023672 /sim/synopsys64/vcs/amd64/lib/libvirsim.so
 1322023397 /sim/synopsys64/vcs/amd64/lib/liberrorinf.so
 1322023255 /sim/synopsys64/vcs/amd64/lib/libsnpsmalloc.so
-1362705649 ../sim/testbench.exe.daidir
+1364872220 ../sim/testbench.exe.daidir
