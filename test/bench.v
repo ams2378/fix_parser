@@ -26,6 +26,7 @@
  -   		  Need real DUT for verification (in progress)
  -   
  -  Instruction : For simulation, run "sh runsim.sh" from command line 
+ -   
  -----------------------------------------------------------------------------
 */
 
