@@ -22,18 +22,18 @@ module fsm_msg_create_2 # (parameter VALUE_WIDTH = 256, SIZE = 5) (
 
 
 // state encoding
-parameter 			state0  = 10'b000000000001;
-parameter 			state1  = 10'b000000000010;
-parameter 			state2  = 10'b000000000100;
-parameter 			state3  = 10'b000000001000;
-parameter 			state4  = 10'b000000010000;
-parameter 			state5  = 10'b000000100000;
-parameter 			state6  = 10'b000001000000;
-parameter 			state7  = 10'b000010000000;
-parameter 			state8  = 10'b000100000000;
-parameter 			state9  = 10'b001000000000;
-parameter 			state10 = 10'b010000000000;
-parameter 			state11 = 10'b100000000000;
+parameter 			state0  = 12'b000000000001;
+parameter 			state1  = 12'b000000000010;
+parameter 			state2  = 12'b000000000100;
+parameter 			state3  = 12'b000000001000;
+parameter 			state4  = 12'b000000010000;
+parameter 			state5  = 12'b000000100000;
+parameter 			state6  = 12'b000001000000;
+parameter 			state7  = 12'b000010000000;
+parameter 			state8  = 12'b000100000000;
+parameter 			state9  = 12'b001000000000;
+parameter 			state10 = 12'b010000000000;
+parameter 			state11 = 12'b100000000000;
 
 // internal variables
 reg [7:0]			state;
@@ -206,6 +206,7 @@ always @ (state or tag_valid_i or val_valid_i or checksum_i) begin
 
 	state11: begin
 			data_o		=	8'h01;
+			done_o		=	'1;
 			end_o		=	'1;	
 			next_state	=	state0;
 		end

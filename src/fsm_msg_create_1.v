@@ -1,3 +1,34 @@
+
+
+module fsm_msg_create_1 # (parameter VALUE_WIDTH = 256, SIZE = 8) (
+
+		input 				clk,
+		input				rst,
+		input				done_i,
+		input				start_i,
+		input[2:0]			type_i,
+		input				bodyLength_r_i,		
+		input[VALUE_WIDTH-1:0]		v_beginString_i,
+		input[SIZE-1:0]			s_v_beginString_i,
+		input[VALUE_WIDTH-1:0]		v_bodyLength_i,
+		input[SIZE-1:0]			s_v_bodyLength_i,
+		input[VALUE_WIDTH-1:0]		v_msgSeqNum_i,
+		input[SIZE-1:0]			s_v_msgSeqNum_i,
+		input[VALUE_WIDTH-1:0]		v_msgType_i,
+		input[SIZE-1:0]			s_v_msgType_i,
+		
+
+
+		output reg[31:0]		tag_o,
+		output reg 			tag_valid_o,
+		output reg[VALUE_WIDTH-1:0]	val_o,
+		output reg			val_valid_o,
+		output reg[SIZE-1:0]		v_size_o,
+		output reg[4:0]			t_size_o,
+		output reg 			checksum_o
+
+		);
+
 parameter 			state0  = 5'b00000;
 parameter 			state1  = 5'b00001;
 parameter 			state2  = 5'b00010;
@@ -19,6 +50,24 @@ parameter 			state17 = 5'b10001;
 parameter 			state18 = 5'b10010;
 parameter 			state19 = 5'b10011;
 
+
+
+reg[7:0]		t_beginString 		=	8'h38;
+reg[7:0]		t_bodyLength 		=	8'h39;
+reg[15:0]		t_msgSeqNum		=	16'h3334;
+reg[15:0]		t_msgType		=	16'h3334;
+reg[15:0]		t_sourceComId		=	16'h3439;
+reg[15:0]		t_sendTime		=	16'h3532;
+reg[15:0]		t_targetComId		=	16'h3536;
+reg[15:0]		t_encrypMethod		=	16'h3536;
+reg[23:0]		t_heartBeatInt		=	24'h313038;
+reg[15:0]		t_checkSum		=	16'h3130;
+reg[4:0]		s_t_beginString 	=	5'b00001;
+reg[4:0]		s_t_bodyLength 		=	5'b00001;
+reg[4:0]		s_t_msgSeqNum 		=	5'b00011;
+reg[4:0]		s_t_msgType 		=	5'b00011;
+
+
 reg [4:0]			state;
 reg [4:0]			next_state;
 
@@ -31,278 +80,299 @@ always @(posedge clk) begin
 end
 
 
-always @ (state or start_i or type_i or done_i or bodylen_ready) begin
+always @ (state or start_i or type_i or done_i or bodyLength_r_i) begin
 
 	if (rst) begin
 		tag_o 		= '0;	
 		tag_valid_o 	= '0;
 		val_o 		= '0;
 		val_valid_o 	= '0;
-		size_o		= '0;
+		t_size_o	= '0;
+		v_size_o	= '0;
 		checksum_o	= '0;
-		end_o		= '0;
 	end
 
 	case (state)
-
+		
+		// tag beginstring
 	state0: begin
-		if (start_i == 1) begin
-			val_o		=	'0;
-			end_o		=	'0;
-			val_valid_o	=	'0;
-			tag_o		=	t_beginString;
-			tag_valid_o	=	'1;
-			t_size_o	=	s_t_beginString;	
-			next_state 	=	state1;
-		end else begin
-			next_state	=	state0;
-		end
+			if (start_i == 1) begin
+				val_o		=	'0;
+				val_valid_o	=	'0;
+				tag_o		=	t_beginString;
+				tag_valid_o	=	'1;
+				t_size_o	=	s_t_beginString;	
+				next_state 	=	state1;
+			end else begin
+				next_state	=	state0;
+			end
+		end		
 
+		// value beginstring
 	state1: begin
-		if (done_i == 1) begin
-			tag_o		=	'0;
-			end_o		=	'0;
-			tag_valid_o	=	'0;
-			val_o		=	v_beginString_i;
-			val_valid_o	=	'1;
-			v_size_o	=	s_v_beginString;		
-			next_state 	=	state2;
-		end else begin
-			next_state	=	state1;
+			if (done_i == 1) begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				val_o		=	v_beginString_i;
+				val_valid_o	=	'1;
+				v_size_o	=	s_v_beginString;		
+				next_state 	=	state2;
+			end else begin
+				next_state	=	state1;
+			end
 		end
-
+	
+		// tag bodylength
 	state2: begin
-		if (done_i == 1 ) begin
-			val_o		=	'0;
-			end_o		=	'0;
-			val_valid_o	=	'0;
-			tag_o		=	t_bodyLength;
-			tag_valid_o	=	'1;
-			t_size_o	=	s_t_bodyLength;
-			next_state 	=	state3;
-		end else begin
-			next_state	=	state2;
+			if (done_i == 1 ) begin
+				val_o		=	'0;
+				val_valid_o	=	'0;
+				tag_o		=	t_bodyLength;
+				tag_valid_o	=	'1;
+				t_size_o	=	s_t_bodyLength;
+				next_state 	=	state3;
+			end else begin
+				next_state	=	state2;
+			end
 		end
 
+		// value bodylength
 	state3: begin
-		if (done_i == 1 && bodyLength_r == 1) begin
-			tag_o		=	'0;
-			end_o		=	'0;
-			tag_valid_o	=	'0;
-			val_o		=	v_bodyLength;
-			val_valid_o	=	'1;
-			v_size_o	=	s_v_bodyLength;
-			next_state 	=	state4;
-		end else begin
-			next_state	=	state3;
+			if (done_i == 1 && bodyLength_r_i == 1) begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				val_o		=	v_bodyLength_i;
+				val_valid_o	=	'1;
+				v_size_o	=	s_v_bodyLength;
+				next_state 	=	state4;
+			end else begin
+				next_state	=	state3;
+			end
 		end
 
+		// tag msgSeqNumber
 	state4: begin
-		if (done_i == 1 ) begin
-			val_o		=	'0;
-			val_valid_o	=	'0;
-			end_o		=	'0;
-			tag_o		=	t_msgSeqNum;
-			tag_valid_o	=	'1;
-			t_size_o	=	s_t_msgSeqNum;
-			next_state 	=	state5;
-		end else begin
-			next_state	=	state4;
+			if (done_i == 1 ) begin
+				val_o		=	'0;
+				val_valid_o	=	'0;
+				tag_o		=	t_msgSeqNum;
+				tag_valid_o	=	'1;
+				t_size_o	=	s_t_msgSeqNum;
+				next_state 	=	state5;
+			end else begin
+				next_state	=	state4;
+			end
 		end
 
+
+		// value msgSeqNumber
 	state5: begin
-		if (done_i == 1 ) begin
-			tag_o		=	'0;
-			tag_valid_o	=	'0;
-			end_o		=	'0;
-			val_o		=	v_msgSeqNum;
-			val_valid_o	=	'1;
-			v_size_o	=	s_v_msgSeqNum;
-			next_state 	=	state6;
-		end else begin
-			next_state	=	state5;
+			if (done_i == 1 ) begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				val_o		=	v_msgSeqNum_i;
+				val_valid_o	=	'1;
+				v_size_o	=	s_v_msgSeqNum_i;
+				next_state 	=	state6;
+			end else begin
+				next_state	=	state5;
+			end
 		end
 
+		// tag msgType
 	state6: begin
-		if (done_i == 1 ) begin
-			val_o		=	'0;
-			val_valid_o	=	'0;
-			end_o		=	'0;
-			tag_o		=	t_msgType;
-			tag_valid_o	=	'1;
-			t_size_o	=	s_t_msgType;
-			next_state 	=	state7;
-		end else begin
-			next_state	=	state6;
+			if (done_i == 1 ) begin
+				val_o		=	'0;
+				val_valid_o	=	'0;
+				tag_o		=	t_msgType;
+				tag_valid_o	=	'1;
+				t_size_o	=	s_t_msgType;
+				next_state 	=	state7;
+			end else begin
+				next_state	=	state6;
+			end
 		end
 
+		// value msgType
 	state7: begin
-		if (done_i == 1 ) begin
-			tag_o		=	'0;
-			end_o		=	'0;
-			tag_valid_o	=	'0;
-			val_o		=	v_msgType;
-			val_valid_o	=	'1;
-			v_size_o	=	s_v_msgType;
-			next_state 	=	state6;
-		end else begin
-			next_state	=	state7;
+			if (done_i == 1 ) begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				val_o		=	v_msgType_i;
+				val_valid_o	=	'1;
+				v_size_o	=	s_v_msgType_i;
+				next_state 	=	state6;
+			end else begin
+				next_state	=	state7;
+			end
 		end
 
+		// tag senderCompId
 	state8: begin
-		if (done_i == 1 ) begin
-			val_o		=	'0;
-			val_valid_o	=	'0;
-			end_o		=	'0;
-			tag_o		=	t_senderCompId;
-			tag_valid_o	=	'1;
-			t_size_o	=	s_t_senderCompId;
-			next_state 	=	state9;
-		end else begin
-			next_state	=	state8;
+			if (done_i == 1 ) begin
+				val_o		=	'0;
+				val_valid_o	=	'0;
+				tag_o		=	t_senderCompId;
+				tag_valid_o	=	'1;
+				t_size_o	=	s_t_senderCompId;
+				next_state 	=	state9;
+			end else begin
+				next_state	=	state8;
+			end
 		end
 
+		// value senderComptId
 	state9: begin
-		if (done_i == 1 ) begin
-			tag_o		=	'0;
-			end_o		=	'0;
-			tag_valid_o	=	'0;
-			val_o		=	v_senderCompId_i;
-			val_valid_o	=	'1;
-			v_size_o	=	s_v_senderCompId;
-			next_state 	=	state10;
-		end else begin
-			next_state	=	state9;
+			if (done_i == 1 ) begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				val_o		=	v_senderCompId_i;
+				val_valid_o	=	'1;
+				v_size_o	=	s_v_senderCompId;
+				next_state 	=	state10;
+			end else begin
+				next_state	=	state9;
+			end
 		end
 
+		// tag sendTime
 	state10: begin
-		if (done_i == 1 ) begin
-			val_o		=	'0;
-			val_valid_o	=	'0;
-			end_o		=	'0;
-			tag_o		=	t_sendTime;
-			tag_valid_o	=	'1;
-			t_size_o	=	s_t_sendTime;
-			next_state 	=	state11;
-		end else begin
-			next_state	=	state10;
+			if (done_i == 1 ) begin
+				val_o		=	'0;
+				val_valid_o	=	'0;
+				tag_o		=	t_sendTime;
+				tag_valid_o	=	'1;
+				t_size_o	=	s_t_sendTime;
+				next_state 	=	state11;
+			end else begin
+				next_state	=	state10;
+			end
 		end
 
+		// value sendTime
 	state11: begin
-		if (done_i == 1 ) begin
-			tag_o		=	'0;
-			tag_valid_o	=	'0;
-			end_o		=	'0;
-			val_o		=	v_sendTime;
-			val_valid_o	=	'1;
-			v_size_o	=	s_v_sendTime;
-			next_state 	=	state12;
-		end else begin
-			next_state	=	state11;
+			if (done_i == 1 ) begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				val_o		=	v_sendTime;
+				val_valid_o	=	'1;
+				v_size_o	=	s_v_sendTime;
+				next_state 	=	state12;
+			end else begin
+				next_state	=	state11;
+			end
 		end
 
+		// tag targetCompId
 	state12: begin
-		if (done_i == 1 ) begin
-			val_o		=	'0;
-			val_valid_o	=	'0;
-			end_o		=	'0;
-			tag_o		=	t_targetCompId;
-			tag_valid_o	=	'1;
-			t_size_o	=	s_t_targetCompId;
-			next_state 	=	state13;
-		end else begin
-			next_state	=	state12;
+			if (done_i == 1 ) begin
+				val_o		=	'0;
+				val_valid_o	=	'0;
+				tag_o		=	t_targetCompId;
+				tag_valid_o	=	'1;
+				t_size_o	=	s_t_targetCompId;
+				next_state 	=	state13;
+			end else begin
+				next_state	=	state12;
+			end
 		end
 
+		// value targetCompId
 	state13: begin
-		if (done_i == 1 ) begin
-			tag_o		=	'0;
-			end_o		=	'0;
-			tag_valid_o	=	'0;
-			val_o		=	v_targetCompId_i;
-			val_valid_o	=	'1;
-			v_size_o	=	s_v_targetCompId;
-			next_state 	=	state14;
-		end else begin
-			next_state	=	state14;
+			if (done_i == 1 ) begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				val_o		=	v_targetCompId_i;
+				val_valid_o	=	'1;
+				v_size_o	=	s_v_targetCompId;
+				next_state 	=	state14;
+			end else begin
+				next_state	=	state14;
+			end
 		end
 
+		// tag encryptMethod
 	state14: begin
-		if (done_i == 1 ) begin
-			val_o		=	'0;
-			val_valid_o	=	'0;
-			end_o		=	'0;
-			tag_o		=	t_encryptMethod;
-			tag_valid_o	=	'1;
-			t_size_o	=	s_t_encryptMethod;
-			next_state 	=	state15;
-		end else begin
-			next_state	=	state14;
+			if (done_i == 1 ) begin
+				val_o		=	'0;
+				val_valid_o	=	'0;
+				tag_o		=	t_encryptMethod;
+				tag_valid_o	=	'1;
+				t_size_o	=	s_t_encryptMethod;
+				next_state 	=	state15;
+			end else begin
+				next_state	=	state14;
+			end
 		end
 
+		// value encryptMethod
 	state15: begin
-		if (done_i == 1 ) begin
-			tag_o		=	'0;
-			end_o		=	'0;
-			tag_valid_o	=	'0;
-			val_o		=	v_encryptMethod;
-			val_valid_o	=	'1;
-			v_size_o	=	s_v_encryptMethod;
-			next_state 	=	state16;
-		end else begin
-			next_state	=	state15;
+			if (done_i == 1 ) begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				val_o		=	v_encryptMethod;
+				val_valid_o	=	'1;
+				v_size_o	=	s_v_encryptMethod;
+				next_state 	=	state16;
+			end else begin
+				next_state	=	state15;
+			end
 		end
 
+		// tag heartBeatInt
 	state16: begin
-		if (done_i == 1 ) begin
-			val_o		=	'0;
-			val_valid_o	=	'0;
-			end_o		=	'0;
-			tag_o		=	t_heartBeatInt;
-			tag_valid_o	=	'1;
-			t_size_o	=	s_t_heartBeatInt;
-			next_state 	=	state17;
-		end else begin
-			next_state	=	state16;
+			if (done_i == 1 ) begin
+				val_o		=	'0;
+				val_valid_o	=	'0;
+				tag_o		=	t_heartBeatInt;
+				tag_valid_o	=	'1;
+				t_size_o	=	s_t_heartBeatInt;
+				next_state 	=	state17;
+			end else begin
+				next_state	=	state16;
+			end
 		end
 
+		// value heartBeatInt
 	state17: begin
-		if (done_i == 1 ) begin
-			tag_o		=	'0;
-			end_o		=	'0;
-			tag_valid_o	=	'0;
-			val_o		=	v_heartBeatInt_i;
-			val_valid_o	=	'1;
-			v_size_o	=	s_v_heartBeatInt;
-			next_state 	=	state17;
-		end else begin
-			next_state	=	state18;
+			if (done_i == 1 ) begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				val_o		=	v_heartBeatInt_i;
+				val_valid_o	=	'1;
+				v_size_o	=	s_v_heartBeatInt;
+				next_state 	=	state17;
+			end else begin
+				next_state	=	state18;
+			end
 		end
 
+		// tag checksum
 	state18: begin
-		if (done_i == 1 ) begin
-			val_o		=	'0;
-			end_o		=	'0;
-			val_valid_o	=	'0;
-			tag_o		=	t_checksum;
-			size_o		=	s_t_checksum;
-			checksum_o	=	'1;
-			tag_valid_o	=	'1;
-			t_size_o	=	s_t_checksum;	
-			next_state 	=	state19;
-		end else begin
-			next_state	=	state18;
+			if (done_i == 1 ) begin
+				val_o		=	'0;
+				val_valid_o	=	'0;
+				tag_o		=	t_checksum;
+				size_o		=	s_t_checksum;
+				checksum_o	=	'1;
+				tag_valid_o	=	'1;
+				t_size_o	=	s_t_checksum;	
+				next_state 	=	state19;
+			end else begin
+				next_state	=	state18;
+			end
 		end
 
 	state19:
 		begin
-		if (done_i == 1) begin
-			end_o		=	'1;
-			next_state 	=	state0;
-		end else
-			next_state	=	state19;
-		end
+			if (done_i == 1) begin
+				next_state 	=	state0;
+			end else
+				next_state	=	state19;
+			end
 	endcase
 
 end
 
+
+endmodule

@@ -13,7 +13,7 @@ entity fsm_msg_create_2 is
         tag_i           : in     vl_logic_vector(31 downto 0);
         val_i           : in     vl_logic_vector;
         t_size_i        : in     vl_logic_vector(4 downto 0);
-        v_size_i        : in     vl_logic_vector;
+        v_size_i        : in     vl_logic_vector(7 downto 0);
         checksum_i      : in     vl_logic;
         data_o          : out    vl_logic_vector(7 downto 0);
         start_checksum_o: out    vl_logic;
