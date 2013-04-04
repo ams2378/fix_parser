@@ -1,6 +1,6 @@
-SRC=../src/fix_parser.sv ../src/fix_parser_out_module.sv ../src/fix_parser_top.sv ../src/cam/FF.sv ../src/cam/decoder.sv ../src/cam/priorityencoder.sv ../src/cam/camreg.sv ../src/cam/cam.sv ../src/cam_cntrl.sv ../src/ram/FF2.sv ../src/ram/decoder2.sv ../src/ram/multiplexer.sv ../src/ram/ramreg.sv ../src/ram/ram.sv ../src/value_ram.sv ../src/message_loc.sv ../src/message_loc_cntrl.sv ../src/read_message_cntrl.sv ../src/checksum.sv ../src/ascii2int.sv
-BENCH= dut
-DUMP=../sim/testbench.exe
+SRC=fsm_msg_create_2.v
+BENCH= dut.v
+DUMP=testbench.exe
 
 all: 
 	make clean
@@ -11,7 +11,7 @@ src:
 	./$(DUMP)
 
 bench:
-	vcs -full64 -PP -sverilog +define+SV +define+VPD $(SRC)  $(BENCH).sv -o $(DUMP)
+	vcs -full64 -PP -sverilog +define+SV +define+VPD $(SRC)  $(BENCH) -o $(DUMP)
 	./$(DUMP)
 
 view:
