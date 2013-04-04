@@ -9,7 +9,8 @@ module fsm_msg_create_2 # (parameter VALUE_WIDTH = 256, SIZE = 5) (
 		input[31:0]			tag_i,
 		input[VALUE_WIDTH-1:0]		val_i,
 		input[4:0]			t_size_i,
-		input[VALUE_WIDTH>>SIZE -1:0]	v_size_i,
+		//input[VALUE_WIDTH>>SIZE -1:0]	v_size_i,
+		input[7:0]			v_size_i,
 		input				checksum_i,
 
 		output reg[7:0]			data_o,
