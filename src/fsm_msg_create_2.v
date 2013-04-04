@@ -29,6 +29,7 @@ parameter 			state4  = 8'b00010000;
 parameter 			state5  = 8'b00100000;
 parameter 			state6  = 8'b01000000;
 parameter 			state7  = 8'b10000000;
+parameter 			state11  = 8'b11000000;
 
 // internal variables
 reg [7:0]			state;
@@ -89,9 +90,26 @@ always @ (state or tag_valid_i or val_valid_i or checksum_i) begin
 			temp_var 	= 	temp_var + 1;
 			t_width 	= 	t_width >> 1;	
 			done_o 		=	'0;
+			next_state	=	state11;
+		end	
+		end	
+
+
+	state11: begin
+		if (t_width == 0) begin
+			temp_var	=	0;
+			done_o		=	'1;
+			data_o		=	8'h3d;
+			next_state 	=	state2;
+		end else begin
+			data_o		=	tag_i [temp_var*8 +: 8];
+			temp_var 	= 	temp_var + 1;
+			t_width 	= 	t_width >> 1;	
+			done_o 		=	'0;
 			next_state	=	state1;
 		end	
 		end	
+
 
 	state2: begin
 		if (val_valid_i == 1 ) begin
