@@ -1,0 +1,109 @@
+/**
+ * @filename		dut.sv 
+ *
+ * @brief     	        A simple testbench. 	
+ *
+ * @author		Adil Sadik <sadik.adil@gmail.com> 
+ */
+
+module parser_test();
+
+
+	reg 				clk;
+	reg				rst;
+
+                reg                           tag_valid_i;
+                reg                           val_valid_i;
+                reg[31:0]                     tag_i;
+                reg[255:0]          val_i;
+                reg[4:0]                      t_size_i;
+                reg[7:0]   v_size_i;
+                reg                           checksum_i;
+
+                reg[7:0]                 data_o;
+                reg                      start_checksum_o;
+                reg                      done_o;
+                reg                      end_o;
+                reg                      data_valid_o;
+
+fsm_msg_create_2 dut (.clk, .rst, .tag_valid_i, .val_valid_i, .tag_i, .val_i, .t_size_i, .v_size_i, .checksum_i, .data_o, .start_checksum_o, .done_o, .end_o, .data_valid_o);
+
+initial begin
+
+$vcdpluson;
+
+#1 clk = 0;
+#1 clk = 1;
+
+
+
+rst = '1;
+tag_valid_i = 0;
+val_valid_i = 0;
+checksum_i = 0;
+
+#1 clk = 0;
+#1 clk = 1;
+
+rst = '0;
+
+#1 clk = 0;
+#1 clk = 1;
+
+rst= '0;
+#1 clk = 0;
+#1 clk = 1;
+
+tag_valid_i = 1;
+tag_i = 32'h00323139;
+t_size_i = 5'b01111;
+
+
+#1 clk = 0;
+#1 clk = 1;
+
+#1 clk = 0;
+#1 clk = 1;
+
+#1 clk = 0;
+#1 clk = 1;
+
+
+
+#1 clk = 0;
+#1 clk = 1;
+
+
+#1 clk = 0;
+#1 clk = 1;
+
+
+#1 clk = 0;
+#1 clk = 1;
+
+
+#1 clk = 0;
+#1 clk = 1;
+
+#1 clk = 0;
+#1 clk = 1;
+
+
+#1 clk = 0;
+#1 clk = 1;
+
+
+#1 clk = 0;
+#1 clk = 1;
+
+
+#1 clk = 0;
+#1 clk = 1;
+
+
+#1 clk = 0;
+#1 clk = 1;
+
+end
+
+endmodule

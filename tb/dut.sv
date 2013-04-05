@@ -12,7 +12,7 @@ module parser_test();
 	reg 				clk;
 	reg				rst;
 	reg[7:0]			data_i;
-
+	reg				new_message_i;
 	reg[31:0]			tag_o;
 	reg[255:0]			value_o;
 	reg				end_of_body_o;
@@ -33,11 +33,11 @@ module parser_test();
 	reg				output_value_valid_o;
 	reg				checksum_valid_o;
 /*
-fix_parser_top dut(.clk, .rst, .data_i, .tag_o, .value_o, .end_of_body_o, .start_of_header_o, 
+fix_parser_top dut(.clk, .rst, .data_i, .new_message_i, .tag_o, .value_o, .end_of_body_o, .start_of_header_o, 
 		   .t_wr_cs_o, .t_wr_en_o, .v_wr_cs_o, .v_wr_en_o,  .empty, .full);
 */
 
-fix_parser_top dut(.clk, .rst, .data_i, .find_tag_i, .message_num_i, .read_message_i, .output_value_o, 
+fix_parser_top dut(.clk, .rst, .data_i, .new_message_i, .find_tag_i, .message_num_i, .read_message_i, .output_value_o, 
 		   .output_value_valid_o , .start_of_header_o, .empty_o, .full_o, .checksum_valid_o);
 
 initial begin
@@ -90,7 +90,11 @@ while (temp > 0) begin
 	#1 clk = 1;
 
 	rst= '0;
-	data_i = data [8*temp-1 -: 8];
+	data_i = data [8*temp-1 -: 8];	
+	if (data_i == 8'h01) 
+		new_message_i	=	'1;
+	else
+		new_message_i	=	'0;
 	i = i++;
 	temp--;
 
@@ -115,7 +119,10 @@ while (temp > 0) begin
 
 	#1 clk = 0;
 	#1 clk = 1;
-
+	if (temp == 164) 
+		new_message_i	=	'1;
+	else
+		new_message_i	=	'0;
 	rst= '0;
 	data_i = data2 [8*temp-1 -: 8];
 	i = i++;

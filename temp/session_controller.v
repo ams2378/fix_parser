@@ -41,9 +41,9 @@ module session_controller (
 
 parameter 			state0  = 8'b00000001;
 parameter 			state1  = 8'b00000010;
-parameter 			state2  = 8'b00001000;
-parameter 			state3  = 8'b00010000;
-parameter 			state4  = 8'b00100000;
+parameter 			state2  = 8'b00000100;
+parameter 			state3  = 8'b00001000;
+parameter 			state4  = 8'b00010000;
 parameter 			state5  = 8'b00100000;
 parameter 			state6  = 8'b01000000;
 parameter 			state7  = 8'b10000000;
@@ -73,6 +73,7 @@ always @ (state or configure_i or start_i or connected_i or message_created_i or
 
 	if (rst) begin
 		connect_o		<=	'0;
+		load_configure_o	<=	'0;
 		create_message_o	<=	'0;
 		send_message_o		<=	'0;
 		disconnect_o		<=	'0;
@@ -104,8 +105,8 @@ always @ (state or configure_i or start_i or connected_i or message_created_i or
 	// if connected send logon or wait
 	state2: begin
 			if (connected_i == 1) begin
-				create_message_o	<=	3'b001;			// 001 - logon
-				mem_state		<=	3'b001;
+				create_message_o	<=	logon;   			
+				mem_state		<=	logon;	
 				initiate_msg_o		<=	'1;
 				next_state		=	state3;
 			end else
@@ -114,6 +115,7 @@ always @ (state or configure_i or start_i or connected_i or message_created_i or
 
 	// wait until message is created- if done send message
 	state3:	begin
+				initiate_msg_o		<=	'0;
 			if (message_created_i == 1) begin
 				send_message_o		<=	'1;
 				case (mem_state)
@@ -129,6 +131,7 @@ always @ (state or configure_i or start_i or connected_i or message_created_i or
 
 	// wait for LOGON response- if received, handle it properly
 	state4: begin
+				send_message_o		<=	'0;
 			if (response_received_i == 1) begin
 				if (packet_status_i == 000) begin			// 000 - invalid
 					disconnect_o	<=	'1;		
@@ -137,13 +140,14 @@ always @ (state or configure_i or start_i or connected_i or message_created_i or
 					next_state	=	state5;			// goto Normal Session
 			end else if (timeout_i == 1) begin
 				disconnect_o		<=	'1;
-				next_state		=	state5;			// jump to DC
+				next_state		=	state7;			// jump to DC
 			end else
 				next_state		=	state4;
 		end
 
 	// session established
 	state5:	begin
+				send_message_o		<=	'0;
 			if (send_b_a_message_i == 1) begin				// send non-session level msg
 				create_message_o	<=	business;			// 111- business/app
 				mem_state		<=	business;			
@@ -166,7 +170,9 @@ always @ (state or configure_i or start_i or connected_i or message_created_i or
 					initiate_msg_o		<=	'1;
 					next_state		=	state3;		// wait for msg done	
 				end
-			end
+			end else
+					next_state		=	state5;
+			
 		end
 
 	// wait for response (HB)- if received, handle it properly

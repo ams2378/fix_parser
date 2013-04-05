@@ -1,6 +1,6 @@
 
 
-module top #(parameter VALUE_WIDTH = 256, SIZE = 64) (
+module top #(parameter VALUE_WIDTH = 256, SIZE = 64, T_SIZE = 5) (
 	input				clk,
 	input				rst,
 	input				configure_i,
@@ -14,14 +14,24 @@ module top #(parameter VALUE_WIDTH = 256, SIZE = 64) (
 	input [15:0] 			endtime_i,			
 	input [5:0] 			beginstring_i,			
 	input [5:0] 			defaultApplVerId_i,		
-	input [255:0] 			senderCompId_i,		
-	input [255:0] 			targetCompId_i,		
+	input [VALUE_WIDTH-1:0] 	senderCompId_i,		
+	input [VALUE_WIDTH-1:0]		targetCompId_i,		
 	input [15:0] 			hostAddr_i,			 
 	input [7:0] 			heartBeatInt_i,
 	input [SIZE-1:0]		sizeSenderId_i,
 	input [SIZE-1:0]		sizeTargetId_i,
 	input [SIZE-1:0]		sizeHeartBeat_i,
-	input [2:0]			received_msg_type_i,
+
+
+//  temp start
+
+	input				response_received_i,
+	input[2:0]			packet_status_i,		
+	input[2:0]			received_msg_type_i,	
+	input				new_message_r_i,
+//end
+
+
 
 	output reg			connect_o,
 	output reg			send_message_o,
@@ -39,11 +49,13 @@ wire[VALUE_WIDTH-1:0]		heartbeat;
 wire[SIZE-1:0]			sendersize;
 wire[SIZE-1:0]			targetsize;
 wire[SIZE-1:0]			heartbeatsize;
+wire[SIZE-1:0]			valuesize;
+wire[T_SIZE-1:0]		tagsize;
 wire				tagvalid;
 wire				valuevalid;
 wire				doChecksum;
-wire				tag;
-wire				value;
+wire[31:0]			tag;
+wire[VALUE_WIDTH-1:0]		value;
 wire[2:0]			messagetype;
 wire				createmessage;
 wire				done;
@@ -54,8 +66,7 @@ wire				messagecreated;
 configure #(.VALUE_WIDTH(VALUE_WIDTH), .SIZE(SIZE)) configure_module (
 
 		.clk (clk),
-		.rst,
-		.configure(configure),
+		.configure_i(configure),
 		.connectType_i,
 		.reconnectInt_i,
 		.starttime_i,
@@ -96,11 +107,11 @@ session_controller session_control (
 		.start_i,
 		.end_session_i,
 		.connected_i,
-//		.response_received_i,
-//		.packet_status_i,		
-		.timeout_i ('1), 
+		.response_received_i,
+		.packet_status_i,		
+		.timeout_i ('0), 
 		.message_created_i (messagecreated),
-		.new_message_r_i ('0),
+		.new_message_r_i,
 		.send_b_a_message_i ('0),
 		.received_msg_type_i,
 
@@ -117,21 +128,21 @@ create_message #(.VALUE_WIDTH(VALUE_WIDTH), .SIZE(SIZE)) create_messege_module (
 
 		.clk,
 		.rst,
-		.start_i (createmessege),
+		.start_i (createmessage),
 		.done_i (done),
 		.end_i (endd),				
 		.bodyLength_r_i ('1), 	
 		.message_type_i (messagetype),			
 		.v_beginString_i (beginstring),			
-		.s_v_beginString_i (6'b111111) ,    	 // will update later	
+		.s_v_beginString_i (8'b01111111) ,    	 // will update later	
 		.v_senderCompId_i (sendercompid),		
 		.s_v_senderCompId_i (sendersize),		
 		.v_targetCompId_i (targetcompid),		
 		.s_v_targetCompId_i (targetsize),		
 		.v_heartBeatInt_i (heartbeat),	
 		.s_v_heartBeatInt_i (heartbeatsize),	
-		.v_sendTime_i ('0),			// will update later
-		.v_msgSeqNum_i (8'h30),
+		.v_sendTime_i (168'h3537342e33303a30303a30303a35302d3430343033313032),			// will update later
+		.v_msgSeqNum_i ({248'b0,8'h30}),
 		.s_v_msgSeqNum_i (5'b00001),
 
 		.tag_o (tag),
@@ -145,7 +156,7 @@ create_message #(.VALUE_WIDTH(VALUE_WIDTH), .SIZE(SIZE)) create_messege_module (
 		
 		);
 
-fsm_create_2 #(.VALUE_WIDTH(VALUE_WIDTH), .SIZE(SIZE)) fsm (
+fsm_msg_create_2 #(.VALUE_WIDTH(VALUE_WIDTH), .SIZE(SIZE), .T_SIZE(T_SIZE)) fsm (
 
 		.clk,
 		.rst,
