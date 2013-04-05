@@ -9,15 +9,17 @@ module fsm_msg_create_2 # (parameter VALUE_WIDTH = 256, SIZE = 5) (
 		input[31:0]			tag_i,
 		input[VALUE_WIDTH-1:0]		val_i,
 		input[4:0]			t_size_i,
-		input[7:0]			v_size_i,
 		//input[VALUE_WIDTH>>SIZE -1:0]	v_size_i,
-		input				checksum_i,
+		input[7:0]			v_size_i,
+		input 				checksum_i,
+		input[7:0]			checksum_val_i,
 
 		output reg[7:0]			data_o,
-		output reg			start_checksum_o,
+		output reg			start_chksm_o,
 		output reg			done_o,
 		output reg			end_o,
-		output reg			data_valid_o
+		output reg			end_of_msg_o
+	//	output reg			data_valid_o
 		);
 
 
@@ -56,25 +58,32 @@ always @ (state or tag_valid_i or val_valid_i or checksum_i) begin
 	if (rst) begin
 		done_o 			= '0;
 		data_o			= '0;
-		start_checksum_o	= '0;
+		start_chksm_o		= '0;
 		end_o			= '0;
-		data_valid_o		= '0;
+//		data_valid_o		= '0;
 		temp_var		=  0;
 	end
 
 	case (state)
 
+	// sending tag- starts from very first tag
 	state0: begin
 		if ( tag_valid_i == 1 && checksum_i == 0) begin
 			data_o		=	tag_i [temp_var*8 +: 8];
-			t_width		=	t_size_i;
 			done_o		=	'0;
+			end_of_msg_o	=	'0;
+			start_chksm_o	=	'0;
+			end_o		=	'0;			
+			t_width		=	t_size_i;
 			temp_var 	= 	temp_var + 1;
 			t_width 	= 	t_width >> 1;	
 			next_state 	=	state1;
 		end else if (tag_valid_i == 1 && checksum_i == 1) begin
 			data_o		=	tag_i [temp_var*8 +: 8];
+			end_of_msg_o	=	'0;
+			start_chksm_o	=	'0;
 			done_o		=	'0;
+			end_o		=	'0;
 			temp_var 	= 	temp_var + 1;
 			t_width		=	t_size_i;
 			t_width 	= 	t_width >> 1;	
@@ -85,12 +94,19 @@ always @ (state or tag_valid_i or val_valid_i or checksum_i) begin
 
 	state1: begin
 		if (t_width == 0) begin
-			temp_var	=	0;
 			done_o		=	'1;
+			end_o		=	'0;
+			end_of_msg_o	=	'0;
 			data_o		=	8'h3d;
+			start_chksm_o	=	'1;			// send checksum start signal
+			temp_var	=	0;
 			next_state 	=	state3;
 		end else begin
 			data_o		=	tag_i [temp_var*8 +: 8];
+			end_o		=	'0;
+			end_of_msg_o	=	'0;
+			start_chksm_o	=	'0;
+			done_o		=	'0;
 			temp_var 	= 	temp_var + 1;
 			t_width 	= 	t_width >> 1;	
 			done_o 		=	'0;
@@ -101,15 +117,21 @@ always @ (state or tag_valid_i or val_valid_i or checksum_i) begin
 
 	state2: begin
 		if (t_width == 0) begin
-			temp_var	=	0;
 			done_o		=	'1;
+			start_chksm_o	=	'0;
+			end_o		=	'0;
+			end_of_msg_o	=	'0;
 			data_o		=	8'h3d;
+			temp_var	=	0;
 			next_state 	=	state3;
 		end else begin
 			data_o		=	tag_i [temp_var*8 +: 8];
+			done_o		=	'0;
+			end_o		=	'0;
+			end_of_msg_o	=	'0;
+			start_chksm_o	=	'0;
 			temp_var 	= 	temp_var + 1;
 			t_width 	= 	t_width >> 1;	
-			done_o 		=	'0;
 			next_state	=	state1;
 		end	
 		end	
@@ -117,9 +139,12 @@ always @ (state or tag_valid_i or val_valid_i or checksum_i) begin
 
 	state3: begin
 		if (val_valid_i == 1 ) begin
+			end_o		=	'0;
+			start_chksm_o	=	'0;
+			end_of_msg_o	=	'0;
+			done_o		=	'0;
 			data_o		=	val_i [temp_var*8 +: 8];
 			v_width		=	v_size_i;
-			done_o		=	'0;
 			temp_var 	= 	temp_var + 1;
 			v_width 	= 	v_width >> 1;	
 			next_state 	=	state4;
@@ -130,83 +155,123 @@ always @ (state or tag_valid_i or val_valid_i or checksum_i) begin
 
 	state4: begin
 		if (v_width == 0) begin
-			temp_var	=	0;
+			end_o		=	'0;
+			end_of_msg_o	=	'0;
+			start_chksm_o	=	'0;
 			done_o		=	'1;
 			data_o		=	8'h01;
+			temp_var	=	0;
 			next_state 	=	state0;
 		end else begin
 			data_o		=	val_i [temp_var*8 +: 8];
+			done_o 		=	'0;
+			start_chksm_o	=	'0;
+			end_of_msg_o	=	'0;
+			end_o		=	'0;
 			temp_var 	= 	temp_var + 1;
 			v_width 	= 	v_width >> 1;	
-			done_o 		=	'0;
 			next_state	=	state5;
 		end
 		end	
 
 	state5: begin
 		if (v_width == 0) begin
-			temp_var	=	0;
+			end_o		=	'0;
+			end_of_msg_o	=	'0;
+			start_chksm_o	=	'0;
 			done_o		=	'1;
 			data_o		=	8'h01;
+			temp_var	=	0;
 			next_state 	=	state0;
 		end else begin
+			end_o		=	'0;
+			end_of_msg_o	=	'0;
+			start_chksm_o	=	'0;
 			data_o		=	val_i [temp_var*8 +: 8];
+			done_o 		=	'0;
 			temp_var 	= 	temp_var + 1;
 			v_width 	= 	v_width >> 1;	
-			done_o 		=	'0;
 			next_state	=	state4;
 		end
 		end	
 
 	state6: begin
 		if (t_width == 0) begin
-			temp_var	=	0;
+			end_o		=	'0;
+			start_chksm_o	=	'0;
+			end_of_msg_o	=	'1;		// end of msg signal checksum to stop
 			done_o		=	'1;
 			data_o		=	8'h3d;
+			temp_var	=	0;
 			next_state 	=	state8;
 		end else begin
+			end_o		=	'0;
+			end_of_msg_o	=	'0;
+			start_chksm_o	=	'0;
 			data_o		=	tag_i [temp_var*8 +: 8];
+			done_o 		=	'0;
 			temp_var 	= 	temp_var + 1;
 			t_width	 	= 	t_width >> 1;	
-			done_o 		=	'0;
 			next_state	=	state7;
 		end
 		end	
 
 	state7: begin
 		if (t_width == 0) begin
-			temp_var	=	0;
+			end_o		=	'0;
+			start_chksm_o	=	'0;
+			end_of_msg_o	=	'0;	
 			done_o		=	'1;
 			data_o		=	8'h3d;
+			temp_var	=	0;
 			next_state 	=	state8;
 		end else begin
+			end_o		=	'0;
+			start_chksm_o	=	'0;
+			end_of_msg_o	=	'0;	
 			data_o		=	tag_i [temp_var*8 +: 8];
+			done_o 		=	'0;
 			temp_var 	= 	temp_var + 1;
 			t_width	 	= 	t_width >> 1;	
-			done_o 		=	'0;
 			next_state	=	state6;
 		end
 		end	
 
-
+	// checksum first byte
 	state8: begin
-			data_o		=	checksum_i;	
+			end_o		=	'0;
+			done_o		=	'0;
+			end_of_msg_o	=	'0;
+			start_chksm_o	=	'0;
+			data_o		=	checksum_val_i;	
 			next_state	=	state6;
 		end
 
+	// checksum second byte
 	state9: begin
-			data_o		=	checksum_i;	
+			end_o		=	'0;
+			done_o		=	'0;
+			end_of_msg_o	=	'0;
+			start_chksm_o	=	'0;
+			data_o		=	checksum_val_i;	
 			next_state	=	state7;
 		end
 
+	// checksum third byte
 	state10: begin
-			data_o		=	checksum_i;	
+			end_o		=	'0;
+			done_o		=	'0;
+			end_of_msg_o	=	'0;
+			start_chksm_o	=	'0;
+			data_o		=	checksum_val_i;	
 			next_state	=	state7;
 		end
 
 	state11: begin
+			done_o		=	'0;
+			end_of_msg_o	=	'0;
+			start_chksm_o	=	'0;
 			data_o		=	8'h01;
-			done_o		=	'1;
 			end_o		=	'1;	
 			next_state	=	state0;
 		end
