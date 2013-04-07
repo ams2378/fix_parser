@@ -35,7 +35,7 @@ module parser_test();
 		reg 			sendLogon_o;
 		reg 			end_session_o;
 
-top dut (
+session_manager dut (
 		 		.clk,
 		 		.rst,
 		 		.new_message_i,
@@ -65,9 +65,6 @@ top dut (
 	);
 
 initial begin
-
-int temp = 500;
-int i = 0;
 
 $vcdpluson;
 
