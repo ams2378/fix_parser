@@ -1,7 +1,6 @@
 /**
  * @filename		dut.sv 
  *
- * @brief     	        A simple testbench. 	
  *
  * @author		Adil Sadik <sadik.adil@gmail.com> 
  */
