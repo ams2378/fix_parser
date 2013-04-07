@@ -1,5 +1,6 @@
-SRC=fsm_msg_create_2.v session_controller.v create_message.v configure.v top.v
-BENCH= dut.v
+#SRC=fsm_msg_create_2.v session_controller.v create_message.v configure.v top.v
+SRC=session_manager.v
+BENCH= session_manager_dut.v
 DUMP=testbench.exe
 
 all: 
