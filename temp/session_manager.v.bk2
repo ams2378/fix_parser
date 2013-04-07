@@ -19,16 +19,19 @@ module session_manager # (parameter NUM_HOST = 10, VALUE_WIDTH = 256 )(
 		output reg			ignore_o,	
 		output reg			disconnect_o,
 		output reg[2:0]			error_type_o,
+	//	output reg			resendReq_o,		// 1
 		output reg[VALUE_WIDTH-1:0]	targetCompId_o,
 		output reg			igonre_o,
 		output reg			doResend_o,	
+	//	output reg			sendHeartbeat_o,	// 2
+	//	output reg 			sendLogout_o,		// 3
 		output reg 			messagereceived_o,	
 		output reg 			updateSeqCounter_o,
 		output reg[NUM_HOST-1:0] 	seqCounterLoc_o,
 		output reg[NUM_HOST-1:0] 	disconnect_host_num_o,
+	//	output reg 			sendLogon_o,		// 4
 		output reg 			end_session_o,
-		output reg[3:0]			create_message_o,
-		output reg			initiate_msg_o
+		output reg[3:0]			create_message_o
 
 		);
 
@@ -72,6 +75,7 @@ reg			we_2;
 reg[VALUE_WIDTH-1:0]	addr_2;
 reg[3:0]		data_in_2;
 reg[3:0]		data_out_2;
+reg			
 
 reg			resendReq_o;
 reg			sendHeartbeat_o;
@@ -330,13 +334,11 @@ end
 
 
 always @ (posedge clk) begin
-	
+
 	create_message_o	=	sendLogon_o 	? logon 	: 3'b000;
 	create_message_o	=	sendLogout_o 	? logout 	: 3'b000;
 	create_message_o	=	sendHeartbeat_o ? heartbeat 	: 3'b000;
 	create_message_o	=	resendReq_o 	? resendReq 	: 3'b000;
-
-	initiate_msg_o		=	(create_message_o != 3'b000)	? 1 : 0;
 
 end
 

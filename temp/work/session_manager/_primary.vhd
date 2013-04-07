@@ -19,18 +19,16 @@ entity session_manager is
         ignore_o        : out    vl_logic;
         disconnect_o    : out    vl_logic;
         error_type_o    : out    vl_logic_vector(2 downto 0);
-        resendReq_o     : out    vl_logic;
         targetCompId_o  : out    vl_logic_vector;
         igonre_o        : out    vl_logic;
         doResend_o      : out    vl_logic;
-        sendHeartbeat_o : out    vl_logic;
-        sendLogout_o    : out    vl_logic;
         messagereceived_o: out    vl_logic;
         updateSeqCounter_o: out    vl_logic;
         seqCounterLoc_o : out    vl_logic_vector;
         disconnect_host_num_o: out    vl_logic_vector;
-        sendLogon_o     : out    vl_logic;
-        end_session_o   : out    vl_logic
+        end_session_o   : out    vl_logic;
+        create_message_o: out    vl_logic_vector(3 downto 0);
+        initiate_msg_o  : out    vl_logic
     );
     attribute mti_svvh_generic_type : integer;
     attribute mti_svvh_generic_type of NUM_HOST : constant is 1;
