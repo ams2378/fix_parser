@@ -22,18 +22,16 @@ module parser_test();
 		reg			ignore_o;	
 		reg			disconnect_o;
 		reg[2:0]			error_type_o;
-		reg			resendReq_o;
 		reg[256-1:0]	targetCompId_o;
 		reg			igonre_o;
 		reg			doResend_o;
-		reg			sendHeartbeat_o;
-		reg 			sendLogout_o;	
 		reg 			messagereceived_o;
 		reg 			updateSeqCounter_o;
 		reg[10-1:0] 	seqCounterLoc_o;
 		reg[10-1:0] 	disconnect_host_num_o;
-		reg 			sendLogon_o;
 		reg 			end_session_o;
+		reg[3:0]		create_message_o;
+		reg			initiate_msg_o;
 
 session_manager dut (
 		 		.clk,
@@ -50,18 +48,16 @@ session_manager dut (
 		 		.ignore_o,	
 		 		.disconnect_o,
 		 		.error_type_o,
-				.resendReq_o,
 		 		.targetCompId_o,
 		 		.igonre_o,
 		 		.doResend_o,
-		 		.sendHeartbeat_o,
-		  		.sendLogout_o,	
 		  		.messagereceived_o,
 		  		.updateSeqCounter_o,
 		  		.seqCounterLoc_o,
 		  		.disconnect_host_num_o,
-		  		.sendLogon_o,
-		  		.end_session_o
+		  		.end_session_o,
+				.create_message_o,
+				.initiate_msg_o
 	);
 
 initial begin
