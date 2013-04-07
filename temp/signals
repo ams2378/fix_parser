@@ -1,0 +1,92 @@
+connected_i
+sendLogon_o
+targetCompId_o
+connected_host_i
+disconnect_host_num_o
+sendResentReq_o
+disconnect_o
+
+new_message_i
+validity_i
+fatal_need_manual_intervention- error type
+ignore_o
+doResend_o
+resendReq_o
+sendHeartbeat_o
+sendLogout_o
+messagereceived_o
+update_counter_o
+seqCounterLoc_o
+
+
+
+
+sendlogon_o
+connected_host_i
+targetCompId_o
+
+sendLogout_o
+logoutSent
+disconnect_o
+
+error_type_o
+validity_i
+sessionState : ram
+
+readSessionState- task
+updateSessionState - task 
+getTargetCompId
+
+sentheartbeat- state
+disconnected - state
+resendRequestSent : state
+normalSession : state
+logonSent	- state
+logoutSent	- state
+servingResend_logout -state
+sentResendReq - state
+resendReqLogout - state
+servingResend
+------------------------------------
+normalSession		-done
+disconnected 	
+servingResend_logout
+sentResendReq		-done
+sentheartbeat		-done
+resendReqLogout 	-done
+servingResend
+logoutSent		-done
+logonSent		-done
+
+
+signals
+new_message_i
+validity_i
+disconnect_o
+error_type_o
+type_i
+resendReq_o
+targetCompId_o
+disconnect_o
+igonre_o
+doResend_o
+resendReq_o
+sendHeartbeat_o
+sendLogout_o	
+messagereceived_o
+updateSeqCOunter_o
+seqCounterLoc_o
+disconnect_host_num_o
+connected_i
+end_session_i
+sendLogon_o
+sendLogout_o
+end_session_o
+timeout_i
+connected_host_i
+
+
+
+
+
+

@@ -1,211 +1,331 @@
 //note: have a small state machine between this module and create message
 //as long as create message is busy, keep the new crate message order waiting
+// TODO : servingResend_logout and servingResend need to be implemented
+// status: compiling
 
-module session_manager # (parameter NUM_SESSION = 3, ADDR = 10, ID = 64)(
+module session_manager # (parameter NUM_HOST = 10, VALUE_WIDTH = 256 )(
 
 		input				clk,
 		input				rst,
-		input				configure_i,
-		input				connect_i,
-		input[ADDR-1:0]			connectToAddr_i,
-		input[2:0]			validity_i,
-		input[3:0]			message_type_i,
-		input[2:0]			current_session_state_i,
-		input[NUM_SESSION-1:0]		timeout_i,
-		input[ID-1:0]			myID_i,
-	
-		output reg			load_config_o,
-		output reg[NUM_SESSION-1:0]	connect_o,
-		output reg[ADDR-1:0]		connectTo_o,
-		output reg[2:0]			create_message_o,			
-		output reg			send_message_o,
-		output reg[NUM_SESSION-1:0]	disconnect_o,
-		output reg			ignore_o,
-		output reg			initiate_msg_o
-		output reg[ID-1:0]		map_src_o
-		output reg			we_o,
+		input				new_message_i,
+		input[2:0]	 		validity_i,
+		input 				timeout_i,
+		input[NUM_HOST-1:0] 		connected_host_i,
+		input[2:0]			type_i,
+		input				connected_i,
+		input 				end_session_i,
+		input 				resendDone_i,
+
+		output reg			ignore_o,	
+		output reg			disconnect_o,
+		output reg[2:0]			error_type_o,
+		output reg			resendReq_o,
+		output reg[VALUE_WIDTH-1:0]	targetCompId_o,
+		output reg			igonre_o,
+		output reg			doResend_o,
+		output reg			sendHeartbeat_o,
+		output reg 			sendLogout_o,	
+		output reg 			messagereceived_o,
+		output reg 			updateSeqCounter_o,
+		output reg[NUM_HOST-1:0] 	seqCounterLoc_o,
+		output reg[NUM_HOST-1:0] 	disconnect_host_num_o,
+		output reg 			sendLogon_o,
+		output reg 			end_session_o
+
 		);
 
+// valid status
 parameter		msgSeqH		= 	3'b001;
 parameter		garbled		=	3'b010;
-parameter		msgSeqL		=	3'b001;
+parameter		msgSeqL		=	3'b001;		// low and posdupflag not set
 parameter		valid		=	3'b000;
+parameter		invalid		=	3'b100;		// sender/comp does'nt match...
 
-parameter		logon 		= 	4'b0001;
-parameter		business 	= 	4'b0111;
-parameter		logout 		= 	4'b0100;
-parameter		heartbeat	= 	4'b0010;
+// error types
+parameter		fatal_need_manual_intervention	=	3'b001;
 
-reg [ID-1:0]		my_ID;
 
-always @ (posedge clk) begin
+// message types
+parameter		logon 		= 	3'b000;
+parameter		business 	= 	3'b001;
+parameter		logout 		= 	3'b010;
+parameter		heartbeat	= 	3'b011;
+parameter		resendReq	= 	3'b100;
+parameter		reset		= 	3'b101;
+parameter		gapFill		= 	3'b110;
 
-	if (rst) begin
-		connect_o		<=	'0;
-		load_configure_o	<=	'0;
-		create_message_o	<=	'0;
-		send_message_o		<=	'0;
-		disconnect_o		<=	'0;
-		ignore_o		<=	'0;
-		initiate_msg_o		<=	'0;
+// session states
+parameter		normalSession		=	4'b0000;
+parameter		disconnected		=	4'b0001;
+parameter		servingResend_logout	=	4'b0010;
+parameter		sentResendReq		=	4'b0011;
+parameter		sentheartbeat		=	4'b0100;
+parameter		resendReqLogout		=	4'b0101;
+parameter		servingResend		=	4'b0110;
+parameter		logoutSent		=	4'b0111;
+parameter		logonSent		=	4'b1000;
+
+// internal vairables and reg types
+reg			we_1;
+reg[NUM_HOST-1:0]	addr_1;
+reg[3:0]		data_in_1;
+reg[3:0]		data_out_1;
+reg			we_2;
+reg[VALUE_WIDTH-1:0]	addr_2;
+reg[3:0]		data_in_2;
+reg[3:0]		data_out_2;
+
+// instantiating session table
+ram # (.ADDR_WIDTH(NUM_HOST), .DATA_WIDTH(4)) states (
+		.clk	(clk),
+		.we  	(we_1),
+		.data	(data_in_1),
+		.addr	(addr_1),
+		.q	(data_out_1)
+		);
+
+ram # (.ADDR_WIDTH(NUM_HOST), .DATA_WIDTH(VALUE_WIDTH)) compid (
+		.clk	(clk),
+		.we  	(we_2),
+		.data	(data_in_2),
+		.addr	(addr_2),
+		.q	(data_out_2)
+		);
+
+// task and functions- for repeatative codes 
+// updateSessionState (connected_host_i, disconnected)
+task updateSessionState;
+	input[NUM_HOST-1:0]	connected_host_i; 
+	input[3:0]		disconnected;
+
+	begin
+		we_1		<=	'1;	
+		addr_1		<=	connected_host_i;
+		data_in_1	<=	disconnected;
 	end
 
+endtask
 
-	if (new_message == 1) begin
-		if (validity == garbled) 
-			ignore		<= 	'1;
-		else if (validity == msgSeqL)
-			disconnect	<=	'1;	
-		else begin
-			case (exp)
-			
+
+// readSessionState (connected_host_i)
+function readSessionState;
+	input[NUM_HOST-1:0]	connected_host_i;
+
+	begin
+		we_1			=	'0;
+		addr_1			=	connected_host_i;
+		readSessionState	=	data_out_2;
+	end
+
+endfunction
+
+//  getTargetCompId (connected_host_i)
+function getTargetCompId;
+	input[NUM_HOST-1:0]	connected_host_i;
+
+	begin
+		we_2			=	'0;
+		addr_2			=	connected_host_i;
+		getTargetCompId		=	data_out_2;
+	end
+endfunction	
+
+// when a new message receiev, interrogate the session state and take proper action
+always @ (posedge clk) begin
+	
+	ignore_o		<=	'0;	
+	disconnect_o		<=	'0;
+	error_type_o		<=	'0;
+	resendReq_o		<=	'0;
+	targetCompId_o		<=	'0;
+	igonre_o		<=	'0;
+	doResend_o		<=	'0;
+	sendHeartbeat_o		<=	'0;
+	sendLogout_o		<=	'0;
+	messagereceived_o	<=	'0;
+	updateSeqCounter_o	<=	'0;
+	seqCounterLoc_o		<=	'0;
+	disconnect_host_num_o	<=	'0;
+	sendLogon_o		<=	'0;
+	end_session_o		<=	'0;
+
+	if (new_message_i == 1) begin
+		if (validity_i == msgSeqL || validity_i == invalid)	begin
+			disconnect_o		<=	'1;	
+			disconnect_host_num_o	<=	connected_host_i;
+			error_type_o		<=	fatal_need_manual_intervention;
+			updateSessionState (connected_host_i, disconnected);
+		end else begin
+			case (readSessionState (connected_host_i))
 			logonSent: 	begin
-						if (type != logon) begin
-							disconnect	<=	1;
-							address_o	<=	add...
-							we_0		<=	1
-							status_o	<= 	disconnected;
-						end else if (type == logon) begin
-							if (validity == msgSeqH) begin
-								resentReq	<=	'1;
-								targetId_o	<=	targetId;
-								we_0		<=	'1;
-								address_o	<=	add...	
-								status_o	<=	resendReqestSent;
-							end else if (validity == valid) begin
-								targetId_o	<=	targetId;
-								we_0		<=	addr...
-								status_o	<=	normalSession;
-							end
+						if (type_i == logon && validity_i == valid) begin
+							updateSessionState(connected_host_i, normalSession);
+						end else if (type_i == logon && validity_i == msgSeqH) begin
+							resendReq_o	<=	'1;
+							targetCompId_o	<=	getTargetCompId (connected_host_i);
+							updateSessionState(connected_host_i, sentResendReq);
+						end else begin
+							disconnect_o	<=	1;
+							disconnect_host_num_o	<=	connected_host_i;
+							updateSessionState(connected_host_i, disconnected);
 						end
 					end
 			logoutSent:	begin
-						if (type == logout && validity == valid) begin
-							disconnect	<=	1;
-							address_o	<=	add...
-							we_0		<=	1
-							status_o	<= 	disconnected;
-						end else if (type == resendReq) begin
-							doResend	<=	;1
-							address_o	<=	add...
-							we_0		<=	1
-							status_o	<= 	servingResendRequest;
-						end else if (timeout == 1) begin
-							disconnect	<=	'1;
-						end else (type == other) 			// other msg types 
-							disconnect	<=	'1;
+						if (validity_i == garbled) begin
+							ignore_o	<=	'1;
+						end else if (type_i == logout) begin
+							disconnect_o	<=	'1;
+							disconnect_host_num_o	<=	connected_host_i;
+							updateSessionState (connected_host_i, disconnected);
+						end else if (type_i == resendReq) begin
+							doResend_o	<=	'1;
+							targetCompId_o	<=	getTargetCompId (connected_host_i);
+							updateSessionState (connected_host_i, servingResend_logout);
+						end else begin
+							disconnect_o	<=	'1;
+							disconnect_host_num_o	<=	connected_host_i;
+							updateSessionState (connected_host_i, disconnected);
+						end
+					end
+		
+			sentheartbeat:	begin
+						if (validity_i == garbled) begin
+							ignore_o	<=	'1;
+						end else if ( validity_i == msgSeqH) begin
+							resendReq_o	<=	'1;
+							targetCompId_o	<=	getTargetCompId (connected_host_i);
+							updateSessionState (connected_host_i, sentResendReq);
+						//	status_o	<= 	resendReq;
+						end else if (type_i == heartbeat && validity_i == valid) begin
+							sendHeartbeat_o	<=	'1;
+							targetCompId_o	<=	getTargetCompId (connected_host_i);
+							updateSessionState (connected_host_i, sentheartbeat);
+						end else if (type_i == logout && validity_i == valid) begin
+							sendLogout_o	<=	'1;
+							targetCompId_o	<=	getTargetCompId (connected_host_i);
+							updateSessionState (connected_host_i, disconnected);
+						end else if (type_i == logout && validity_i == msgSeqH) begin
+							resendReq_o	<=	'1;
+							targetCompId_o	<=	getTargetCompId (connected_host_i);
+							updateSessionState (connected_host_i, resendReqLogout);
+						end else if (type_i == resendReq) begin
+							doResend_o	<=	'1;
+							targetCompId_o	<=	getTargetCompId (connected_host_i);
+							updateSessionState (connected_host_i, servingResend);
+						//	status_o	<= 	resendReq;
+						end else begin
+							messagereceived_o	<=	'1;		
+							updateSessionState (connected_host_i, normalSession);
+						end
+					end				  
+			normalSession:	begin	
+						if (validity_i == garbled) begin
+							ignore_o	<=	'1;
+						end else if (type_i == logout && validity_i == msgSeqH) begin
+							resendReq_o	<=	'1;
+							targetCompId_o	<=	getTargetCompId (connected_host_i);
+							updateSessionState (connected_host_i, resendReqLogout);
+						end else if (type_i == logout && validity_i == valid) begin
+							sendLogout_o	<=	'1;
+							targetCompId_o	<=	getTargetCompId (connected_host_i);
+							updateSessionState (connected_host_i, disconnected);
+						end else if (type_i == resendReq) begin
+							doResend_o	<=	'1;
+							targetCompId_o	<=	getTargetCompId (connected_host_i);
+							updateSessionState (connected_host_i, servingResend);
+						end else if (validity_i == msgSeqH) begin
+							resendReq_o	<=	'1;
+							targetCompId_o	<=	getTargetCompId (connected_host_i);
+							updateSessionState (connected_host_i, sentResendReq);
+						end else if (type_i == heartbeat) begin
+							sendHeartbeat_o	<=	'1;
+							targetCompId_o	<=	getTargetCompId (connected_host_i);
+							updateSessionState (connected_host_i, sentheartbeat);
+						end else begin
+							messagereceived_o	<=	1;
+						end
 					end		
-				   
-			normalSession:	begin
-						if (validty == msgSeqH && type == logout) begin
-							resendReq	<=	'1
-							address_o	<=	add...
-							we_0		<=	1
-							status_o	<= 	resendReqLogout;
-						if (validty == msgSeqH) begin
-							resendReq	<=	'1
-							address_o	<=	add...
-							we_0		<=	1
-							status_o	<= 	resendReqSent;
-						end else if (type == heartbeat) begin
-							sendheartbeat	<=	'1;
-							address_o	<=	add...
-							we_0		<=	1
-							status_o	<= 	normalSession;
-						end else if (type == resendReq) begin
-							doResend	<=	'1;
-							address_o	<=	add...
-							we_0		<=	1
-							status_o	<= 	servingResendRequest;
-						end else if (type == testRequest) begin
-							reply2testreq	<=	'1;
-							address_o	<=	add...
-							we_0		<=	1
-							status_o	<= 	normalSession;
-						end else if (type == logout) begin
-							respondLogout	<=	'1;
-							address_o	<=	add...
-							we_0		<=	1
-							status_o	<= 	responded2logout;
-						end else if (type == other) begin
-							appMessage	<=	1;
-					end		
-			resendReqSent:	begin
-						if (validity == msgSeqH) begin
-							resendReq	<=	'1
-							address_o	<=	add...
-							we_0		<=	1
-							status_o	<= 	resendReqSent;
-						end if (type == gapFill || type == reset) begin
-							updateSeqCounter	<=	'1;
-							seqCounterLoc		<=	addr...
-							resendReq		<=	'1
-							address_o		<=	add...
-							we_0			<=	1
-							status_o		<= 	resendReqSent;
-						end if (resendDone == 1) begin
-							address_o	<=	add...
-							we_0		<=	1
-							status_o	<=	normalSession;
+			sentResendReq:	begin	
+						if (validity_i == garbled) begin
+							ignore_o	<=	'1;
+						end else if (type_i != reset && validity_i == msgSeqH) begin
+							resendReq_o	<=	'1;
+							targetCompId_o	<=	getTargetCompId (connected_host_i);
+							updateSessionState (connected_host_i, sentResendReq);
+						end if (type_i == gapFill || type_i == reset) begin
+							updateSeqCounter_o	<=	'1;
+							seqCounterLoc_o		<=	connected_host_i;	
+							updateSessionState (connected_host_i, sentResendReq);
+						end if (resendDone_i == 1) begin
+							updateSessionState (connected_host_i, normalSession);
 						end else begin	
-							address_o	<=	add...
-							we_0		<=	1
-							status_o	<=	resendReqSent;
+							updateSessionState (connected_host_i, sentResendReq);
 						end 	
 					end
-			resendReqlogout:begin
-						if (validity == msgSeqH) begin
-							resendReq	<=	'1
-							address_o	<=	add...
-							we_0		<=	1
-							status_o	<= 	resendReqSent;
-						end if (type == gapFill || type == reset) begin
-							updateSeqCounter	<=	'1;
-							seqCounterLoc		<=	addr...
-							resendReq		<=	'1
-							address_o		<=	add...
-							we_0			<=	1
-							status_o		<= 	resendReqSent;
-						end if (resendDone == 1) begin
-							sendLogout	<=	'1
-							address_o	<=	add...
-							we_0		<=	1
-							status_o	<=	logoutSent;
+			resendReqLogout:begin
+						if (validity_i == garbled) begin
+							ignore_o	<=	'1;
+						end else if (type_i != reset && validity_i == msgSeqH) begin
+							resendReq_o	<=	'1;
+							targetCompId_o	<=	getTargetCompId (connected_host_i);
+							updateSessionState (connected_host_i, resendReqLogout);
+						end if (type_i == gapFill || type_i == reset) begin
+							updateSeqCounter_o	<=	'1;
+							seqCounterLoc_o		<=	connected_host_i;	
+							updateSessionState (connected_host_i, resendReqLogout);
+						end if (resendDone_i == 1) begin
+							sendLogout_o	<=	'1;
+							targetCompId_o	<=	getTargetCompId (connected_host_i);
+							updateSessionState (connected_host_i, logoutSent);
 						end else begin	
-							address_o	<=	add...
-							we_0		<=	1
-							status_o	<=	resendReqSent;
+							updateSessionState (connected_host_i, resendReqLogout);
 						end 	
 					end
+			endcase
 		end
-
 	end
+end
 
+// receive connection status for each session and initiate sending messages- logon, logout, heartbeat
+// will incorporate order related message and gap fill later 
 always @ (posedge clk) begin
 
+	disconnect_o		<=	'0;	
+	targetCompId_o		<=	'0;	
+	sendHeartbeat_o		<=	'0;	
+	sendLogout_o		<=	'0;	
+	disconnect_host_num_o	<=	'0;	
+	sendLogon_o		<=	'0;	
+
 	if (connected_i == 1) begin
-		sendLogon	<=	'1;
-		address_o	<=	add...
-		we_0		<=	1
-		status_o	<=	logonSent;
+		sendLogon_o	<=	'1;
+		targetCompId_o	<=	getTargetCompId (connected_host_i);
+		updateSessionState(connected_host_i, logonSent);
 	end
 
-	if (end_session == 1) begin
-		sendLogout	<=	'1;
-		address_o	<=	add...
-		we_0		<=	1
-		status_o	<=	logoutSent;
+	if (end_session_i == 1) begin
+		sendLogout_o	<=	'1;
+		targetCompId_o	<=	getTargetCompId (connected_host_i);
+		updateSessionState(connected_host_i, logoutSent);
 	end
 
-/*	if (send_b_a_message == 1) begin
-		case (ordertype)
-		
 
-
+	if (timeout_i == 1) begin				// timeout corresponding to particular session
+		if (readSessionState (connected_host_i) == logonSent  || 
+		    readSessionState (connected_host_i) == logoutSent || 
+		    readSessionState (connected_host_i) == sentheartbeat) begin
+			disconnect_o		<=	'1;
+			disconnect_host_num_o	<=	connected_host_i;
+			updateSessionState(connected_host_i, disconnected);
+		end else begin
+			sendHeartbeat_o		<=	'1;
+			targetCompId_o		<=	getTargetCompId (connected_host_i);
+			updateSessionState(connected_host_i, sentheartbeat);
+		end
 	end
-*/
 
 end
+
 
 
 endmodule
