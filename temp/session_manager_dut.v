@@ -70,7 +70,12 @@ $vcdpluson;
 
 #1 clk = 0;
 #1 clk = 1;
-
+#1 clk = 0;
+#1 clk = 1;
+#1 clk = 0;
+#1 clk = 1;
+#1 clk = 0;
+#1 clk = 1;
 connected_i = 1;
 
 
