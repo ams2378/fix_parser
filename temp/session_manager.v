@@ -27,8 +27,8 @@ module session_manager # (parameter NUM_HOST = 10, VALUE_WIDTH = 256 )(
 		output reg[NUM_HOST-1:0] 	seqCounterLoc_o,
 		output reg[NUM_HOST-1:0] 	disconnect_host_num_o,
 		output reg 			end_session_o,
-		output wire[3:0]		create_message_o,
-		output wire	 		initiate_msg_o
+		output reg[3:0]			create_message_o,
+		output reg	 		initiate_msg_o
 
 		);
 
@@ -288,13 +288,6 @@ always @ (posedge clk) begin
 	end
 end
 
-assign	create_message_o	=	(sendLogon_o	 == '1) 	? logon 	: 3'b000;
-assign	create_message_o	=	(sendLogout_o	 == '1) 	? logout 	: 3'b000;
-assign	create_message_o	=	(sendHeartbeat_o == '1)		? heartbeat 	: 3'b000;
-assign	create_message_o	=	(resendReq_o	 == '1) 	? resendReq 	: 3'b000;
-assign	initiate_msg_o		=	(create_message_o != 3'b000)	? 1 : 0;
-
-
 // receive connection status for each session and initiate sending messages- logon, logout, heartbeat
 // will incorporate order related message and gap fill later 
 always @ (posedge clk) begin
@@ -335,18 +328,18 @@ always @ (posedge clk) begin
 
 end
 
-/*
+
 always @ (posedge clk) begin
 	
-	create_message_o	=	sendLogon_o 	? logon 	: 3'b000;
-	create_message_o	=	sendLogout_o 	? logout 	: 3'b000;
-	create_message_o	=	sendHeartbeat_o ? heartbeat 	: 3'b000;
-	create_message_o	=	resendReq_o 	? resendReq 	: 3'b000;
+	create_message_o	<=	sendLogon_o 	? logon 	: 3'b000;
+	create_message_o	<=	sendLogout_o 	? logout 	: 3'b000;
+	create_message_o	<=	sendHeartbeat_o ? heartbeat 	: 3'b000;
+	create_message_o	<=	resendReq_o 	? resendReq 	: 3'b000;
 
-	initiate_msg_o		=	(create_message_o != 3'b000)	? 1 : 0;
+	initiate_msg_o		<=	(create_message_o != 3'b000)	? 1 : 0;
 
 end
-*/
+
 
 endmodule
 
