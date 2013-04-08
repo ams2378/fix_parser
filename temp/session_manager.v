@@ -340,7 +340,7 @@ always @ (posedge clk) begin
 	else if (resendReq_o)
 		create_message_o	<=	resendReq;
 
-	initiate_msg_o		<=	(create_message_o != 3'b000)	? 1 : 0;
+	initiate_msg_o		<=	(create_message_o != 4'b0000)	? 1 : 0;
 
 end
 
