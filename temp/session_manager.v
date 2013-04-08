@@ -288,10 +288,10 @@ always @ (posedge clk) begin
 	end
 end
 
-assign	create_message_o	=	sendLogon_o 	? logon 	: 3'b000;
-assign	create_message_o	=	sendLogout_o 	? logout 	: 3'b000;
-assign	create_message_o	=	sendHeartbeat_o ? heartbeat 	: 3'b000;
-assign	create_message_o	=	resendReq_o 	? resendReq 	: 3'b000;
+assign	create_message_o	=	(sendLogon_o	 == '1) 	? logon 	: 3'b000;
+assign	create_message_o	=	(sendLogout_o	 == '1) 	? logout 	: 3'b000;
+assign	create_message_o	=	(sendHeartbeat_o == '1)		? heartbeat 	: 3'b000;
+assign	create_message_o	=	(resendReq_o	 == '1) 	? resendReq 	: 3'b000;
 assign	initiate_msg_o		=	(create_message_o != 3'b000)	? 1 : 0;
 
 
