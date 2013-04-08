@@ -329,18 +329,21 @@ always @ (posedge clk) begin
 end
 
 
-always @ (posedge clk) begin
+always @ (*) begin
+
+	create_message_o	= '0;
+	initiate_msg_o		= '0;
 
 	if (sendLogon_o)
-		create_message_o	<=	logon;
+		create_message_o	=	logon;
 	else if (sendLogout_o)
-		create_message_o	<=	logout;
+		create_message_o	=	logout;
 	else if (sendHeartbeat_o)
-		create_message_o	<=	heartbeat;
+		create_message_o	=	heartbeat;
 	else if (resendReq_o)
-		create_message_o	<=	resendReq;
+		create_message_o	=	resendReq;
 
-	initiate_msg_o		<=	(create_message_o != 4'b0000)	? 1 : 0;
+	initiate_msg_o		=	(create_message_o != 4'b0000)	? 1 : 0;
 
 end
 
