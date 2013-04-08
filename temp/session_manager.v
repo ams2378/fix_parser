@@ -330,11 +330,15 @@ end
 
 
 always @ (posedge clk) begin
-	
-	create_message_o	<=	sendLogon_o 	? logon 	: 3'b000;
-	create_message_o	<=	sendLogout_o 	? logout 	: 3'b000;
-	create_message_o	<=	sendHeartbeat_o ? heartbeat 	: 3'b000;
-	create_message_o	<=	resendReq_o 	? resendReq 	: 3'b000;
+
+	if (sendLogon_o)
+		create_message_o	<=	logon;
+	else if (sendLogout_o)
+		create_message_o	<=	logout;
+	else if (sendHeartbeat_o)
+		create_message_o	<=	heartbeat;
+	else if (resendReq_o)
+		create_message_o	<=	resendReq;
 
 	initiate_msg_o		<=	(create_message_o != 3'b000)	? 1 : 0;
 
