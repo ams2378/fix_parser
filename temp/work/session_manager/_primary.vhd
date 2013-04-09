@@ -12,15 +12,14 @@ entity session_manager is
         validity_i      : in     vl_logic_vector(2 downto 0);
         timeout_i       : in     vl_logic;
         connected_host_i: in     vl_logic_vector;
-        type_i          : in     vl_logic_vector(2 downto 0);
+        type_i          : in     vl_logic_vector(3 downto 0);
         connected_i     : in     vl_logic;
         end_session_i   : in     vl_logic;
         resendDone_i    : in     vl_logic;
-        ignore_o        : out    vl_logic;
         disconnect_o    : out    vl_logic;
         error_type_o    : out    vl_logic_vector(2 downto 0);
         targetCompId_o  : out    vl_logic_vector;
-        igonre_o        : out    vl_logic;
+        ignore_o        : out    vl_logic;
         doResend_o      : out    vl_logic;
         messagereceived_o: out    vl_logic;
         updateSeqCounter_o: out    vl_logic;

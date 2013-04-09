@@ -3,6 +3,8 @@
 // TODO : servingResend_logout and servingResend need to be implemented
 // status: compiling
 
+`include "defines.v"
+
 module session_manager # (parameter NUM_HOST = 10, VALUE_WIDTH = 256 )(
 
 		input				clk,
@@ -11,16 +13,15 @@ module session_manager # (parameter NUM_HOST = 10, VALUE_WIDTH = 256 )(
 		input[2:0]	 		validity_i,
 		input 				timeout_i,
 		input[NUM_HOST-1:0] 		connected_host_i,
-		input[2:0]			type_i,
+		input[3:0]			type_i,
 		input				connected_i,
 		input 				end_session_i,
 		input 				resendDone_i,
 
-		output reg			ignore_o,	
 		output reg			disconnect_o,
 		output reg[2:0]			error_type_o,
 		output reg[VALUE_WIDTH-1:0]	targetCompId_o,
-		output reg			igonre_o,
+		output reg			ignore_o,
 		output reg			doResend_o,	
 		output reg 			messagereceived_o,	
 		output reg 			updateSeqCounter_o,
@@ -62,6 +63,8 @@ parameter		resendReqLogout		=	4'b0101;
 parameter		servingResend		=	4'b0110;
 parameter		logoutSent		=	4'b0111;
 parameter		logonSent		=	4'b1000;
+
+
 
 // internal vairables and reg types
 reg			we_1;
@@ -141,7 +144,7 @@ always @ (posedge clk) begin
 	error_type_o		<=	'0;
 	resendReq_o		<=	'0;
 	targetCompId_o		<=	'0;
-	igonre_o		<=	'0;
+	ignore_o		<=	'0;
 	doResend_o		<=	'0;
 	sendHeartbeat_o		<=	'0;
 	sendLogout_o		<=	'0;
