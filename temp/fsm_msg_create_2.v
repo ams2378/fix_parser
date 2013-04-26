@@ -1,6 +1,8 @@
 // note v_width changed to 1 same to t-width
 
-module fsm_msg_create_2 # (parameter VALUE_WIDTH = 256, T_SIZE = 5, SIZE = 64) (
+`include "defines.vh"
+
+module fsm_msg_create_2 # (parameter VALUE_WIDTH = `VALUE_DATA_WIDTH, T_SIZE = 5, SIZE = 64) (
 
 		input 				clk,
 		input				rst,

@@ -12,7 +12,7 @@ entity create_message is
         done_i          : in     vl_logic;
         end_i           : in     vl_logic;
         bodyLength_r_i  : in     vl_logic;
-        message_type_i  : in     vl_logic_vector(2 downto 0);
+        message_type_i  : in     vl_logic_vector(3 downto 0);
         v_beginString_i : in     vl_logic_vector;
         s_v_beginString_i: in     vl_logic_vector;
         v_senderCompId_i: in     vl_logic_vector;

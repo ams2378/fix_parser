@@ -2,7 +2,7 @@ library verilog;
 use verilog.vl_types.all;
 entity session_manager is
     generic(
-        NUM_HOST        : integer := 10;
+        NUM_HOST        : integer := 4;
         VALUE_WIDTH     : integer := 256
     );
     port(

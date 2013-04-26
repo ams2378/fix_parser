@@ -14,19 +14,17 @@
  *
  */
 
+`include "defines.vh"
 
-module create_message #(parameter VALUE_WIDTH = 256, SIZE = 64) (
+module create_message #(parameter VALUE_WIDTH = `VALUE_DATA_WIDTH, SIZE = 64) (
 		// inputs
 		input				clk,
 		input				rst,
 		input				start_i,
 		input				done_i,
-		input				end_i,				// from create message
-	//	input[2:0]			type_i,				// need to update
-		input				bodyLength_r_i,			// now: 001 - logon
-	//	input   			create_message_i,		// 	010 - hb	
-		input[2:0]			message_type_i,			//	011 - logout
-	//	input[23:0]			checksum_i,
+		input				end_i,				
+		input				bodyLength_r_i,			
+		input[3:0]			message_type_i,			
 		input[VALUE_WIDTH-1:0] 		v_beginString_i,			
 		input[SIZE-1:0] 		s_v_beginString_i,			
 		input[VALUE_WIDTH-1:0] 		v_senderCompId_i,		
@@ -36,16 +34,7 @@ module create_message #(parameter VALUE_WIDTH = 256, SIZE = 64) (
 		input[VALUE_WIDTH-1:0] 		v_heartBeatInt_i,	
 		input[SIZE-1:0] 		s_v_heartBeatInt_i,
 	
-	//	input[VALUE_WIDTH-1:0] 		v_encryptMethod_i,	
-	//	input[SIZE-1:0] 		s_v_encryptMethod_i,	
-	//	input[VALUE_WIDTH-1:0] 		v_bodyLength_i,	
-	//	input[SIZE-1:0] 		s_v_bodyLength_i,	
-
-	//	input[VALUE_WIDTH-1:0] 		v_msgType_i,			// need to update (internally)	
-	//	input[SIZE-1:0] 		s_v_msgType_i,			// generated from type
-
 		input[VALUE_WIDTH-1:0] 		v_sendTime_i,			// need to update (internally)	
-	//	input[SIZE-1:0] 		s_v_sendTime_i,			// generated from type
 
 		input[VALUE_WIDTH-1:0]		v_msgSeqNum_i,
 		input[SIZE-1:0]			s_v_msgSeqNum_i,
@@ -104,67 +93,17 @@ parameter 			state36 = 6'b100100;
 parameter 			state37 = 6'b100101;
 parameter 			state38 = 6'b100110;
 
-
-
-
-
-// include define 
-reg [2:0]			logon 		= 3'b001;
-reg [2:0]			business 	= 3'b111;
-reg [2:0]			logout 		= 3'b100;
-reg [2:0]			heartbeat	= 3'b010;
-
-
-reg[VALUE_WIDTH-1:0] 		v_encryptMethod_i 	=	8'h30;	
-reg[SIZE-1:0] 			s_v_encryptMethod_i	=	8'b00000001;	
-
-reg[VALUE_WIDTH-1:0] 		v_bodyLength_i		=	24'h313233;	
-reg[SIZE-1:0] 			s_v_bodyLength_i	=	8'b00000111;	
-reg[VALUE_WIDTH-1:0] 		v_beginString		=	56'h322e342e584946;	// FIX 4.4  322e342e584946	h4649582e342e32
-
-reg[7:0]		t_beginString 		=	8'h38;			//8
-reg[7:0]		t_bodyLength 		=	8'h39;			//9
-reg[15:0]		t_msgSeqNum		=	16'h3433;		//34
-reg[15:0]		t_msgType		=	16'h3533;		//35
-reg[15:0]		t_senderCompId		=	16'h3934;		//49
-reg[15:0]		t_sendTime		=	16'h3235;		//52
-reg[15:0]		t_targetCompId		=	16'h3635;		//56
-reg[15:0]		t_encryptMethod		=	16'h3839;		//98
-reg[23:0]		t_heartBeatInt		=	24'h383031;		//108
-reg[15:0]		t_checksum		=	16'h3031;		//10
-reg[4:0]		s_t_beginString 	=	5'b00001;
-reg[4:0]		s_t_bodyLength 		=	5'b00001;
-reg[4:0]		s_t_msgSeqNum 		=	5'b00011;
-reg[4:0]		s_t_msgType 		=	5'b00011;
-reg[4:0]		s_t_checksum 		=	5'b00011;
-reg[4:0]		s_t_senderCompId	=	5'b00011;
-reg[4:0]		s_t_targetCompId	=	5'b00011;
-reg[4:0]		s_t_sendTime		=	5'b00011;
-reg[4:0]		s_t_heartBeatInt	=	5'b00111;
-reg[4:0]		s_t_encryptMethod	=	5'b00011;
-reg[20:0]		s_v_sendTime		=	'1;
-
-reg [5:0]		state;
-reg [5:0]		next_state;
-
-// value for various types of message
-reg[7:0]		v_logon			=	8'h61;
-reg[7:0]		v_heartbeat		=	8'h30;
-reg[7:0]		v_logout		=	8'h35;
-
-// size of value for each types of message defied above
-reg			s_v_logon		=	1'b1;
-reg			s_v_heartbeat		=	1'b1;
-reg			s_v_logout		=	1'b1;
+reg [5:0]			state;
+reg [5:0]			next_state;
 
 // function to get value for type 
 function [VALUE_WIDTH-1:0] v_msgType;
-     	input [2:0] t_type;
+     	input [3:0] t_type;
       	begin
 		case (t_type) 
-			3'b001 : v_msgType = v_logon;
-			3'b010 : v_msgType = v_heartbeat;
-			3'b100 : v_msgType = v_logout;
+			3'b001 : v_msgType = `v_logon;
+			3'b010 : v_msgType = `v_heartbeat;
+			3'b100 : v_msgType = `v_logout;
 			default : v_msgType = '0;
       		endcase
       	end
@@ -172,12 +111,12 @@ endfunction
 
 // function to get size of value for each type 
 function [VALUE_WIDTH-1:0] s_v_msgType;
-     	input [2:0] t_type;
+     	input [3:0] t_type;
       	begin
 		case (t_type) 
-			3'b001 : s_v_msgType = s_v_logon;
-			3'b010 : s_v_msgType = s_v_heartbeat;
-			3'b100 : s_v_msgType = s_v_logout;
+			3'b001 : s_v_msgType = `s_v_logon;
+			3'b010 : s_v_msgType = `s_v_heartbeat;
+			3'b100 : s_v_msgType = `s_v_logout;
 			default : s_v_msgType = '0;
       		endcase
       	end
@@ -188,7 +127,6 @@ always @(posedge clk) begin
 	if (rst)		state <= state0;
 	else			state <= next_state;
 end
-
 
 always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end_i) begin
 
@@ -210,9 +148,9 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 			if (start_i == 1) begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
-				tag_o		=	t_beginString;
+				tag_o		=	`t_beginString;
 				tag_valid_o	=	'1;
-				t_size_o	=	s_t_beginString;	
+				t_size_o	=	`s_t_beginString;	
 				msg_creation_done_o 	= 	'0;
 				next_state 	=	state1;
 			end else begin
@@ -232,7 +170,7 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 			if (done_i == 1) begin
 				tag_o		=	'0;
 				tag_valid_o	=	'0;
-				val_o		=	v_beginString;
+				val_o		=	`v_beginString;
 				val_valid_o	=	'0;				// 1 to 0		
 				v_size_o	=	s_v_beginString_i;		
 				next_state 	=	state20;			// 2 to 20
@@ -245,7 +183,7 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 	state20: begin
 				tag_o		=	'0;
 				tag_valid_o	=	'0;
-				val_o		=	v_beginString;
+				val_o		=	`v_beginString;
 				val_valid_o	=	'1;			
 				v_size_o	=	s_v_beginString_i;		
 				next_state 	=	state2;
@@ -256,9 +194,9 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 			if (done_i == 1 ) begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
-				tag_o		=	t_bodyLength;
+				tag_o		=	`t_bodyLength;
 				tag_valid_o	=	'0;
-				t_size_o	=	s_t_bodyLength;
+				t_size_o	=	`s_t_bodyLength;
 				next_state 	=	state21;
 			end else begin
 		//		val_valid_o	=	'1;			
@@ -270,9 +208,9 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 	state21: begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
-				tag_o		=	t_bodyLength;
+				tag_o		=	`t_bodyLength;
 				tag_valid_o	=	'1;
-				t_size_o	=	s_t_bodyLength;
+				t_size_o	=	`s_t_bodyLength;
 				next_state 	=	state3;
 		end
 
@@ -281,9 +219,9 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 			if (done_i == 1 && bodyLength_r_i == 1) begin
 				tag_o		=	'0;
 				tag_valid_o	=	'0;
-				val_o		=	v_bodyLength_i;
+				val_o		=	`v_bodyLength_i;
 				val_valid_o	=	'0;
-				v_size_o	=	s_v_bodyLength_i;
+				v_size_o	=	`s_v_bodyLength_i;
 				next_state 	=	state22;
 			end else begin
 				next_state	=	state3;
@@ -293,9 +231,9 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 	state22: begin
 				tag_o		=	'0;
 				tag_valid_o	=	'0;
-				val_o		=	v_bodyLength_i;
+				val_o		=	`v_bodyLength_i;
 				val_valid_o	=	'1;			
-				v_size_o	=	s_v_bodyLength_i;		
+				v_size_o	=	`s_v_bodyLength_i;		
 				next_state 	=	state4;
 		end
 
@@ -304,9 +242,9 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 			if (done_i == 1 ) begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
-				tag_o		=	t_msgSeqNum;
+				tag_o		=	`t_msgSeqNum;
 				tag_valid_o	=	'0;
-				t_size_o	=	s_t_msgSeqNum;
+				t_size_o	=	`s_t_msgSeqNum;
 				next_state 	=	state23;
 			end else begin
 				next_state	=	state4;
@@ -316,9 +254,9 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 	state23: begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
-				tag_o		=	t_msgSeqNum;
+				tag_o		=	`t_msgSeqNum;
 				tag_valid_o	=	'1;
-				t_size_o	=	s_t_msgSeqNum;
+				t_size_o	=	`s_t_msgSeqNum;
 				next_state 	=	state5;
 		end
 
@@ -345,15 +283,14 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				next_state 	=	state6;
 		end
 
-
 		// tag msgType
 	state6: begin
 			if (done_i == 1 ) begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
-				tag_o		=	t_msgType;
+				tag_o		=	`t_msgType;
 				tag_valid_o	=	'0;
-				t_size_o	=	s_t_msgType;
+				t_size_o	=	`s_t_msgType;
 				next_state 	=	state25;
 			end else begin
 				next_state	=	state6;
@@ -363,9 +300,9 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 	state25: begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
-				tag_o		=	t_msgType;
+				tag_o		=	`t_msgType;
 				tag_valid_o	=	'1;
-				t_size_o	=	s_t_msgType;
+				t_size_o	=	`s_t_msgType;
 				next_state 	=	state7;
 		end
 
@@ -399,9 +336,9 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 			if (done_i == 1 ) begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
-				tag_o		=	t_senderCompId;
+				tag_o		=	`t_senderCompId;
 				tag_valid_o	=	'0;
-				t_size_o	=	s_t_senderCompId;
+				t_size_o	=	`s_t_senderCompId;
 				next_state 	=	state27;
 			end else begin
 				next_state	=	state8;
@@ -411,9 +348,9 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 	state27: begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
-				tag_o		=	t_senderCompId;
+				tag_o		=	`t_senderCompId;
 				tag_valid_o	=	'1;
-				t_size_o	=	s_t_senderCompId;
+				t_size_o	=	`s_t_senderCompId;
 				next_state 	=	state9;
 		end
 
@@ -445,9 +382,9 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 			if (done_i == 1 ) begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
-				tag_o		=	t_sendTime;
+				tag_o		=	`t_sendTime;
 				tag_valid_o	=	'0;
-				t_size_o	=	s_t_sendTime;
+				t_size_o	=	`s_t_sendTime;
 				next_state 	=	state29;
 			end else begin
 				next_state	=	state10;
@@ -457,9 +394,9 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 	state29: begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
-				tag_o		=	t_sendTime;
+				tag_o		=	`t_sendTime;
 				tag_valid_o	=	'1;
-				t_size_o	=	s_t_sendTime;
+				t_size_o	=	`s_t_sendTime;
 				next_state 	=	state11;
 		end
 
@@ -470,7 +407,7 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				tag_valid_o	=	'0;
 				val_o		=	v_sendTime_i;
 				val_valid_o	=	'0;
-				v_size_o	=	s_v_sendTime;
+				v_size_o	=	`s_v_sendTime;
 				next_state 	=	state30;
 			end else begin
 				next_state	=	state11;
@@ -482,7 +419,7 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				tag_valid_o	=	'0;
 				val_o		=	v_sendTime_i;
 				val_valid_o	=	'1;			
-				v_size_o	=	s_v_sendTime;		
+				v_size_o	=	`s_v_sendTime;		
 				next_state 	=	state12;
 		end
 
@@ -491,9 +428,9 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 			if (done_i == 1 ) begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
-				tag_o		=	t_targetCompId;
+				tag_o		=	`t_targetCompId;
 				tag_valid_o	=	'0;
-				t_size_o	=	s_t_targetCompId;
+				t_size_o	=	`s_t_targetCompId;
 				next_state 	=	state31;
 			end else begin
 				next_state	=	state12;
@@ -503,9 +440,9 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 	state31: begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
-				tag_o		=	t_targetCompId;
+				tag_o		=	`t_targetCompId;
 				tag_valid_o	=	'1;
-				t_size_o	=	s_t_targetCompId;
+				t_size_o	=	`s_t_targetCompId;
 				next_state 	=	state13;
 		end
 
@@ -535,20 +472,20 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 
 		// tag encryptMethod
 	state14: begin
-			if (done_i == 1 && (message_type_i == heartbeat || message_type_i == logout)) begin
+			if (done_i == 1 && (message_type_i == `heartbeat || message_type_i == `logout)) begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
-				tag_o		=	t_checksum;
+				tag_o		=	`t_checksum;
 				checksum_o	=	'1;
 				tag_valid_o	=	'0;
-				t_size_o	=	s_t_checksum;	
+				t_size_o	=	`s_t_checksum;	
 				next_state 	=	state34;
 			end else if (done_i == 1) begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
-				tag_o		=	t_encryptMethod;
+				tag_o		=	`t_encryptMethod;
 				tag_valid_o	=	'0;
-				t_size_o	=	s_t_encryptMethod;
+				t_size_o	=	`s_t_encryptMethod;
 				next_state 	=	state33;
 			end else begin
 				next_state	=	state14;
@@ -558,18 +495,18 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 	state33: begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
-				tag_o		=	t_encryptMethod;
+				tag_o		=	`t_encryptMethod;
 				tag_valid_o	=	'1;
-				t_size_o	=	s_t_encryptMethod;
+				t_size_o	=	`s_t_encryptMethod;
 				next_state 	=	state15;
 		end
 
 	state34: begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
-				tag_o		=	t_checksum;
+				tag_o		=	`t_checksum;
 				tag_valid_o	=	'1;
-				t_size_o	=	s_t_checksum;
+				t_size_o	=	`s_t_checksum;
 				next_state 	=	state19;
 		end
 
@@ -578,9 +515,9 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 			if (done_i == 1 ) begin
 				tag_o		=	'0;
 				tag_valid_o	=	'0;
-				val_o		=	v_encryptMethod_i;
+				val_o		=	`v_encryptMethod_i;
 				val_valid_o	=	'0;
-				v_size_o	=	s_v_encryptMethod_i;
+				v_size_o	=	`s_v_encryptMethod_i;
 				next_state 	=	state35;
 			end else begin
 				next_state	=	state15;
@@ -590,9 +527,9 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 	state35: begin
 				tag_o		=	'0;
 				tag_valid_o	=	'0;
-				val_o		=	v_encryptMethod_i;
+				val_o		=	`v_encryptMethod_i;
 				val_valid_o	=	'1;			
-				v_size_o	=	s_v_encryptMethod_i;		
+				v_size_o	=	`s_v_encryptMethod_i;		
 				next_state 	=	state16;
 		end
 
@@ -601,9 +538,9 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 			if (done_i == 1 ) begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
-				tag_o		=	t_heartBeatInt;
+				tag_o		=	`t_heartBeatInt;
 				tag_valid_o	=	'0;
-				t_size_o	=	s_t_heartBeatInt;
+				t_size_o	=	`s_t_heartBeatInt;
 				next_state 	=	state36;
 			end else begin
 				next_state	=	state16;
@@ -613,9 +550,9 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 	state36: begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
-				tag_o		=	t_heartBeatInt;
+				tag_o		=	`t_heartBeatInt;
 				tag_valid_o	=	'1;
-				t_size_o	=	s_t_heartBeatInt;
+				t_size_o	=	`s_t_heartBeatInt;
 				next_state 	=	state17;
 		end
 
@@ -650,10 +587,10 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 			if (done_i == 1 ) begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
-				tag_o		=	t_checksum;
+				tag_o		=	`t_checksum;
 				checksum_o	=	'1;
 				tag_valid_o	=	'0;
-				t_size_o	=	s_t_checksum;	
+				t_size_o	=	`s_t_checksum;	
 				next_state 	=	state38;
 			end else begin
 				next_state	=	state18;
@@ -663,9 +600,9 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 	state38: begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
-				tag_o		=	t_checksum;
+				tag_o		=	`t_checksum;
 				tag_valid_o	=	'1;
-				t_size_o	=	s_t_checksum;
+				t_size_o	=	`s_t_checksum;
 				next_state 	=	state19;
 		end
 

@@ -1,6 +1,8 @@
 // status: compiling- need to verify
 
-module received_msg_processor # (parameter VALUE_WIDTH = 256, COUNTER_DEPTH = 10) (
+`include "defines.vh"
+
+module received_msg_processor # (parameter VALUE_WIDTH = `VALUE_DATA_WIDTH, COUNTER_DEPTH = `COUNTER_RANGE) (
 
 		input				clk,
 		input				rst,
@@ -17,47 +19,6 @@ module received_msg_processor # (parameter VALUE_WIDTH = 256, COUNTER_DEPTH = 10
 		output reg[2:0]			error_type_o,
 		output reg[3:0]			type_o
 		);
-
-parameter			supportedVersion  	= 	24'h342e33;
-parameter			seqResetMsg  		= 	16'h0034;
-parameter			logonMsg		= 	8'h41;
-parameter			logoutMsg		= 	8'h35;
-parameter			heartBeatMsg		= 	8'h30;	
-parameter			resendReqMsg		= 	8'h32;	
-
-parameter			msgSeqH			= 	3'b001;
-parameter			garbled			=	3'b010;
-parameter			msgSeqL			=	3'b001;		// low and posdupflag not set
-parameter			valid			=	3'b000;
-parameter			invalid			=	3'b100;		// sender/comp does'nt match...
-parameter			unsupportedVersion	=	3'b011;
-parameter			invalidMsgType		=	3'b110;
-parameter			requiredTagMissing	=	3'b111;
-
-// message types
-parameter			logon 			= 	4'b0001;
-parameter			heartbeat		= 	4'b0010;
-parameter			resendReq		= 	4'b0011;
-parameter			logout 			= 	4'b0100;
-parameter			reset			= 	4'b0101;
-parameter			gapFill			= 	4'b0110;
-parameter			business 		= 	4'b0111;
-
-
-parameter			possDupFlag		=	32'h00003433;
-parameter			msgSeqNum		=	32'h00003334;
-parameter			targetCompId		=	32'h00003536;
-parameter			sourceCompId		=	32'h00003439;
-parameter			beginSeqNum		=	32'h00000037;
-parameter			endSeqNum		=	32'h00003136;
-parameter			gapFillFlag		=	32'h00313233;
-parameter			newSeqNum		=	32'h00003336;	
-parameter			heartbeatInt		=	32'h00000030;
-parameter			sendtime		=	32'h00003532;
-
-parameter			t_beginString		=	32'h00000038;
-parameter			t_bodylength		=	32'h00000039;
-parameter			t_msgType		=	32'h00003335;
 
 reg[31:0]			buffer_t;
 reg                   		f_possDupFlag;
@@ -113,54 +74,54 @@ task bufferval;
 	input[VALUE_WIDTH-1:0]	val_i;
 	input[31:0]		buffer_t;
 		case(buffer_t) 
-			possDupFlag	: begin	
-						buffer_pdf	<=	val_i;
-						f_possDupFlag	<=	'1;
+			`possDupFlag	: begin	
+						buffer_pdf	=	val_i;
+						f_possDupFlag	=	'1;
 					  end
-			msgSeqNum  	: begin	
-						buffer_msgSeqN	<=	val_i;
-						f_msgSeqNum	<=	'1;
+			`msgSeqNum  	: begin	
+						buffer_msgSeqN	=	val_i;
+						f_msgSeqNum	=	'1;
 					  end
-			targetCompId	: begin
-						buffer_tcompid	<=	val_i;
-						f_targetCompId	<=	'1;
+			`targetCompId	: begin
+						buffer_tcompid	=	val_i;
+						f_targetCompId	=	'1;
 					  end
-			sourceCompId	: begin
-						buffer_srcompid	<=	val_i;
-						f_srcCompId	<=	'1;
+			`sourceCompId	: begin
+						buffer_srcompid	=	val_i;
+						f_srcCompId	=	'1;
 					  end
-			beginSeqNum	: begin	
-						buffer_bgsn	<=	val_i;
-						f_beginSeqNum	<=	'1;
+			`beginSeqNum	: begin	
+						buffer_bgsn	=	val_i;
+						f_beginSeqNum	=	'1;
 					  end
-			endSeqNum  	: begin	
-						buffer_endsn	<=	val_i;
-						f_endSeqNum	<=	'1;
+			`endSeqNum  	: begin	
+						buffer_endsn	=	val_i;
+						f_endSeqNum	=	'1;
 					  end
-			gapFillFlag	: begin
-						buffer_gff	<=	val_i;
-						f_gapFillFlag	<=	'1;
+			`gapFillFlag	: begin
+						buffer_gff	=	val_i;
+						f_gapFillFlag	=	'1;
 					  end
-			newSeqNum	: begin
-						buffer_newsqn	<=	val_i;
-						f_newSeqNum	<=	'1;
+			`newSeqNum	: begin
+						buffer_newsqn	=	val_i;
+						f_newSeqNum	=	'1;
 					  end
-			heartbeatInt	: begin
-						buffer_hrtbtint	<=	val_i;
-						f_heartbeatInt	<=	'1;
+			`heartbeatInt	: begin
+						buffer_hrtbtint	=	val_i;
+						f_heartbeatInt	=	'1;
 					  end
-			sendtime	: begin
-						buffer_sendtime	<=	val_i;
-						f_sendTime	<=	'1;
+			`sendtime	: begin
+						buffer_sendtime	=	val_i;
+						f_sendTime	=	'1;
 					  end
 			default		: begin
-						default_val	<=	val_i;
-						f_default	<=	'1;
+						default_val	=	val_i;
+						f_default	=	'1;
 					  end
 			endcase
 endtask
 
-// getType(buffer_msgType)
+/* getType(buffer_msgType)
 function[3:0] getType;
 	input[31:0]	type;
 	case (type)
@@ -172,6 +133,7 @@ function[3:0] getType;
 		default		:	getType		=	'0;
 	endcase	
 endfunction
+*/
 
 always @(posedge clk) begin
 
@@ -179,28 +141,28 @@ always @(posedge clk) begin
 	else			state <= next_state;
 end
 
-always @ (state or tag_valid_i or val_valid_i or start_of_message_i or end_of_message_i
-	  or checksum_validity_i or done or exit ) begin
+always @ (*) begin
 
 
 	if (rst) begin
-		new_message_o	<=	'0;
-		error_type_o	<=	'0;
-		type_o		<=	'0;
+		new_message_o	=	'0;
+		error_type_o	=	'0;
+		type_o		=	'0;
 	end 
 
 	case (state)
 
 	// expected tag beginstring	
 	state0	: begin
-				end_processing		<=	'0;
+				end_processing		=	'0;
 			if ({start_of_message_i, tag_valid_i} == 2'b11 ) begin
-				if (tag_i == t_beginString) begin
+				if (tag_i == `t_beginString) begin
+					new_message_o	=	'0;
 					next_state	=	state1;
 				end else begin
-					new_message_o	<=	'1;
-					next_state	<=	state0;
-					error_type_o	<=	garbled;
+					new_message_o	=	'1;
+					next_state	=	state0;
+					error_type_o	=	`garbled;
 				end
 			end else
 				next_state	=	state0;
@@ -209,10 +171,10 @@ always @ (state or tag_valid_i or val_valid_i or start_of_message_i or end_of_me
 	// check if beginstring value supports fix4.3
 	state1	: begin
 			if (val_valid_i == 1 ) begin
-				if (val_i[23:0] > supportedVersion) begin
+				if (val_i[23:0] > `supportedVersion) begin
 					next_state	=	state0;
-					new_message_o	<=	'1;
-					error_type_o	<=	unsupportedVersion;
+					new_message_o	=	'1;
+					error_type_o	=	`unsupportedVersion;
 				end else
 					next_state	=	state2;
 			end else
@@ -222,10 +184,10 @@ always @ (state or tag_valid_i or val_valid_i or start_of_message_i or end_of_me
 	// expected tag bodylength
 	state2	: begin
 			if (tag_valid_i == 1 ) begin
-				if (tag_i != t_bodylength) begin
+				if (tag_i != `t_bodylength) begin
 					next_state	=	state0;
-					new_message_o	<=	'1;
-					error_type_o	<=	garbled;
+					new_message_o	=	'1;
+					error_type_o	=	`garbled;
 				end else
 					next_state	=	state3;
 			end 
@@ -235,7 +197,7 @@ always @ (state or tag_valid_i or val_valid_i or start_of_message_i or end_of_me
 	// buffer bodylength for later matching
 	state3	: begin
 			if (val_valid_i == 1 ) begin
-				temp_bodylength <= 	val_i;	
+				temp_bodylength = 	val_i;	
 				next_state	=	state4;	
 			end else
 				next_state	=	state3;
@@ -244,10 +206,10 @@ always @ (state or tag_valid_i or val_valid_i or start_of_message_i or end_of_me
 	// expected tag message type
 	state4	: begin
 			if (tag_valid_i == 1 ) begin
-				if (tag_i != t_msgType) begin
+				if (tag_i != `t_msgType) begin
 					next_state	=	state0;
-					new_message_o	<=	'1;
-					error_type_o	<=	garbled;
+					new_message_o	=	'1;
+					error_type_o	=	`garbled;
 				end else
 					next_state	=	state5;
 			end else
@@ -258,55 +220,78 @@ always @ (state or tag_valid_i or val_valid_i or start_of_message_i or end_of_me
 	state5	: begin
 			if (val_valid_i == 1 ) begin
 				if (checkvalidity(val_i) == '1) begin			// need to define it
-					buffer_msgType		<=	val_i;
+					buffer_msgType		=	val_i;
 					next_state		=	state6;
 				end else begin
-					error_type_o	<=	invalidMsgType;		// need to send reject
-					new_message_o	<=	'1;
+					error_type_o	=	`invalidMsgType;		// need to send reject
+					new_message_o	=	'1;
 					next_state	=	state0;
 				end
 			end else
 				next_state	=	state5;
 		  end
 	
-	state6 : begin	if (exit == '1) 
-				next_state	=	state0;
-			else if (tag_valid_i == 1 && end_of_message_i == 0) begin
-				buffer_t	<=	tag_i;
+	state6 : begin	if (tag_valid_i == 1 && end_of_message_i == 0) begin
+				buffer_t	=	tag_i;
 				next_state	=	state7;
 			end else if (tag_valid_i == 1 && end_of_message_i == 1) begin
 				next_state	=	state8;
 			end else
 				next_state	=	state6;
 		 end
-	state7:  begin  if (exit == '1)
-				next_state	=	state0;
-			else if (val_valid_i == 1) begin
+	state7:  begin  if (val_valid_i == 1) begin
 				bufferval (buffer_t, val_i);
-				next_state	=	state8;
+				next_state	=	state6;
 			end else 
-				next_state	=	state9;
+				next_state	=	state7;
 		 end
 	state8: 	next_state	=	state9;
 	state9:		next_state	=	state10;
 	state10:	next_state	=	state11;
 	state11: begin
-			end_processing		<=	'1;
-			checksum_valid		<=	(checksum_validity_i == '1) ? '1 : '0;
+			end_processing		=	'1;
+			checksum_valid		=	(checksum_validity_i == '1) ? '1 : '0;
 			if (done == '1) begin
 				next_state	=	state0;
-				new_message_o	<=	'1;
+				new_message_o	=	'1;
 			end else
 				next_state	=	state11;
 		 end
 	endcase 
 end
 
+// error checking
 always @ (posedge clk) begin
 	
-	exit		<=	'0;
 	done		<=	'0;
+
+if (end_processing == '1) begin
+	if (buffer_msgSeqN < expectedIncomingSeqNum_i && buffer_pdf[7:0] != 8'h59) begin
+		if(buffer_msgType != `seqResetMsg || (buffer_msgType == `seqResetMsg && buffer_gff[7:0] == 8'h59)) begin
+			error_type_o	<=	`msgSeqL;	// serious error		// 59 - Y (set)
+		end
+	end else if (!checksum_valid) begin
+		error_type_o	<=	`garbled;
+	end else if (!(f_srcCompId && f_targetCompId && f_sendTime && f_msgSeqNum)) begin
+		error_type_o	<=	`requiredTagMissing;
+	end else if (buffer_msgSeqNum > expectedIncomingSeqNum_i) begin
+		error_type_o	<=	`msgSeqH;
+	end
+		
+	if (buffer_msgType == `seqResetMsg)
+		type_o	<=	(buffer_gff[7:0] == 8'h59) ? `gapFill : `reset;
+	else
+		type_o	<=	buffer_msgType;
+
+	done	<=	'1;
+end
+
+end
+
+endmodule
+
 /*
+// intended to check srcId and compId validity before receiving all the remaining tag/val
 if ( f_srcCompId & f_targetCompId  ) begin
 
 	search_i	<=	'1;
@@ -318,28 +303,3 @@ if ( f_srcCompId & f_targetCompId  ) begin
 	end
 end
 */
-
-if (end_processing == '1) begin
-	if (buffer_msgSeqN < expectedIncomingSeqNum_i && buffer_pdf[7:0] != 8'h59) begin
-		if(buffer_msgType != seqResetMsg || (buffer_msgType == seqResetMsg && buffer_gff[7:0] == 8'h59)  ) begin
-			error_type_o	<=	msgSeqL;	// serious error		// 59 - Y (set)
-		end
-	end else if (!checksum_valid) begin
-		error_type_o	<=	garbled;
-	end else if (!(f_srcCompId && f_targetCompId && f_sendTime && f_msgSeqNum)) begin
-		error_type_o	<=	requiredTagMissing;
-	end else if (buffer_msgSeqNum > expectedIncomingSeqNum_i) begin
-		error_type_o	<=	msgSeqH;
-	end
-		
-	type_o		<= 	getType(buffer_msgType);
-	
-	if (buffer_msgType == seqResetMsg) begin
-		type_o	<=	(buffer_gff[7:0] == 8'h59) ? gapFill : reset;
-	end
-	done	<=	'1;
-end
-
-end
-
-endmodule

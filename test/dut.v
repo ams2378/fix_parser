@@ -1,43 +1,25 @@
 `timescale 1 ns / 100 ps
 
 module dut (
-  input wire  clk,enable,
-  input wire  reset,
-  input wire  start,
-  input wire  configure,
-  input wire  [7:0] din,
-  input wire  [1:0 ]connectType, 			
-  input wire  [7:0] reconnectInt, 			
-  input wire  [15:0] starttime, 			
-  input wire  [15:0] endtime, 			
-  input wire  [5:0] beginstring, 			
-  input wire  [5:0] defaultApplVerId, 		
-  input wire  [255:0] senderCompId, 		
-  input wire  [255:0] targetCompId, 		
-  input wire  [15:0] hostAddr, 				 
-  input wire  [7:0] heartBeatInt, 		
+  input wire  		clk,
+  input wire  		reset,
+  input wire  		configure_i,
+  input wire  		connect_i,
+  input wire  		connected_i,
+  input wire[5:0] 	connected_host_addr_i,
+  input wire  		new_message_i,
+  input wire[7:0]  	message_i,
 
-  output reg [7:0] dout,
-  output reg       valid
+  output reg		connect_req_o,
+  output reg[5:0]  	connect_host_addr_o,
+  output reg		send_message_o,
+  output reg[7:0]	message_o
 );
 
 always @ (posedge clk)
   begin
-    dout  <= din;
-    valid  <= enable;
+    message_o  <= message_i;
+//    valid  <= enable;
   end
 
 endmodule
-           
-/*
-reg [1:0 ]connectType;			
-reg [7:0] reconnectInt;			
-reg [15:0] starttime;			
-reg [15:0] endtime;			
-reg [5:0] beginstring;			
-reg [5:0] defaultApplVerId;		
-reg [255:0] senderCompId;		
-reg [255:0] targetCompId;		
-reg [15:0] hostAddr;				 
-reg [7:0] heartBeatInt;			
-*/ 
