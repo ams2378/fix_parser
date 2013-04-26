@@ -314,8 +314,6 @@ initial forever begin		// only for first host
 	count_expired_addr = '0;	
 end
 
-
-
 // golden model
 always @ (posedge clk) begin
 
