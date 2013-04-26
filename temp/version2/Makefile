@@ -1,5 +1,5 @@
 INCLUDE= defines.vh
-SRC=ram.v received_msg_processor.v session_manager.v create_message.v fsm_msg_create_2.v counter.v sequence_generator.v
+SRC=hostaddress.v ram.v received_msg_processor.v session_manager.v create_message.v fsm_msg_create_2.v counter.v sequence_generator.v
 
 all: 
 	make src  

@@ -3,6 +3,7 @@
 `define _my_const_param
 
 `define			NUMBER_OF_HOST			4
+`define			HOST_ADDR_WIDTH			2
 `define			VALUE_DATA_WIDTH		256
 `define			COUNTER_RANGE			10
 
@@ -13,14 +14,14 @@
 `define			heartBeatMsg		  	8'h30 	
 `define			resendReqMsg		  	8'h32 	
 
-`define			msgSeqH			  	3'b001 
-`define			garbled			 	3'b010 
-`define			msgSeqL			 	3'b001 		// low and posdupflag not set
-`define			valid			 	3'b000 
-`define			invalid			 	3'b100 		// sender/comp does'nt match...
-`define			unsupportedVersion	 	3'b011 
-`define			invalidMsgType		 	3'b110 
-`define			requiredTagMissing	 	3'b111 
+`define			msgSeqH			  	4'b0001 
+`define			garbled			 	4'b0010 
+`define			msgSeqL			 	4'b0001 		// low and posdupflag not set
+`define			valid			 	4'b0000 
+`define			invalid			 	4'b0100 		// sender/comp does'nt match...
+`define			unsupportedVersion	 	4'b0011 
+`define			invalidMsgType		 	4'b0110 
+`define			requiredTagMissing	 	4'b0111 
 
 // message types
 `define			logon 			  	4'b0001 

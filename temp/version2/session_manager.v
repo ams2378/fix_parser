@@ -9,41 +9,52 @@ module session_manager # (parameter NUM_HOST = `NUMBER_OF_HOST, VALUE_WIDTH = `V
 
 		input				clk,
 		input				rst,
-		input				new_message_i,
-		input[2:0]	 		validity_i,
-		input 				timeout_i,
-		input[NUM_HOST-1:0] 		connected_host_i,
-		input[3:0]			type_i,
-		input				connected_i,
-		input 				end_session_i,
-		input 				resendDone_i,
+		input				new_message_i,			// from received msg processor
+		input[2:0]	 		validity_i,			// from received msg processor
+		input 				timeout_i,			// from counter
+		input[NUM_HOST-1:0] 		connected_host_i,		// from toe***
+		input[3:0]			type_i,				// from received msg processor
+		input				connected_i,			// from toe***
+		input 				end_session_i,			// *** 
+		input 				resendDone_i,			// ***
+		input[VALUE_WIDTH-1:0]		data_out_2,			// from hostaddress table
 
-		output reg			disconnect_o,
-		output reg[2:0]			error_type_o,
-		output reg[VALUE_WIDTH-1:0]	targetCompId_o,
-		output reg			ignore_o,
-		output reg			doResend_o,	
-		output reg 			messagereceived_o,	
-		output reg 			updateSeqCounter_o,
-		output reg[NUM_HOST-1:0] 	seqCounterLoc_o,
-		output reg[NUM_HOST-1:0] 	disconnect_host_num_o,
-		output reg 			end_session_o,
-		output reg[3:0]			create_message_o,
-		output reg	 		initiate_msg_o
+		output reg			we_2,				// to hostaddress
+		output reg[VALUE_WIDTH-1:0]	addr_2,				// to hostaddress
+		output reg[VALUE_WIDTH-1:0]	data_in_2,			// to hostaddress
+	
+		output reg			disconnect_o,			// to toe***
+		output reg[3:0]			error_type_o,			// to create message
+		output reg[VALUE_WIDTH-1:0]	targetCompId_o,			// to create message
+		output reg			ignore_o,			// to sequence generator 
+		output reg			doResend_o,			// ***
+		output reg 			messagereceived_o,		// *** output interface 
+		output reg 			updateSeqCounter_o,		// to sequence generator *** 
+		output reg[NUM_HOST-1:0] 	seqCounterLoc_o,		// to sequence generator *** 
+		output reg[NUM_HOST-1:0] 	disconnect_host_num_o,		// to toe*** 
+		output reg 			end_session_o,			// no need 
+		output reg[3:0]			create_message_o,		// to create message
+		output reg	 		initiate_msg_o			// to create message
 
 		);
 
 parameter		fatal_need_manual_intervention	=	3'b001;
+// need to define default error message when sending reject
+
+
 
 // internal vairables and reg types
 reg			we_1;
 reg[NUM_HOST-1:0]	addr_1;
 reg[3:0]		data_in_1;
 reg[3:0]		data_out_1;
+
+/*
 reg			we_2;
 reg[VALUE_WIDTH-1:0]	addr_2;
 reg[3:0]		data_in_2;
 reg[3:0]		data_out_2;
+*/
 
 reg			resendReq_o;
 reg			sendHeartbeat_o;
@@ -58,7 +69,7 @@ ram # (.ADDR_WIDTH(NUM_HOST), .DATA_WIDTH(4)) states (
 		.addr	(addr_1),
 		.q	(data_out_1)
 		);
-
+/*
 ram # (.ADDR_WIDTH(NUM_HOST), .DATA_WIDTH(VALUE_WIDTH)) compid (
 		.clk	(clk),
 		.we  	(we_2),
@@ -66,8 +77,9 @@ ram # (.ADDR_WIDTH(NUM_HOST), .DATA_WIDTH(VALUE_WIDTH)) compid (
 		.addr	(addr_2),
 		.q	(data_out_2)
 		);
-
-// task and functions- for repeatative codes 
+*/
+// task and functions- for repeatative codes
+ 
 // updateSessionState (connected_host_i, disconnected)
 task updateSessionState;
 	input[NUM_HOST-1:0]	connected_host_i; 

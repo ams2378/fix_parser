@@ -69,6 +69,18 @@ parameter 			state11  = 12'b100000000000;
 reg[7:0]			state;
 reg[7:0]			next_state;
 
+
+// checkvalidity(val_i)
+function checkvalidity;
+	input[VALUE_WIDTH-1:0] val;
+	
+	begin
+		checkvalidity = '1;
+	end
+
+endfunction
+
+
 // task and functions
 task bufferval;
 	input[VALUE_WIDTH-1:0]	val_i;
