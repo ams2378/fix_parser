@@ -1,0 +1,368 @@
+$timescale
+ 1s
+$end
+
+$scope module parser_test $end
+$var reg        1 "    clk $end
+$var reg        1 #    rst $end
+$var reg        1 $    new_message_i $end
+$var reg        3 %    validity_i [2:0] $end
+$var reg        1 &    timeout_i $end
+$var reg       10 '    connected_host_i [9:0] $end
+$var reg        3 (    type_i [2:0] $end
+$var reg        1 )    connected_i $end
+$var reg        1 *    end_session_i $end
+$var reg        1 +    resendDone_i $end
+$var reg        1 ,    ignore_o $end
+$var reg        1 -    disconnect_o $end
+$var reg        3 .    error_type_o [2:0] $end
+$var reg      256 /    targetCompId_o [255:0] $end
+$var reg        1 0    igonre_o $end
+$var reg        1 1    doResend_o $end
+$var reg        1 2    messagereceived_o $end
+$var reg        1 3    updateSeqCounter_o $end
+$var reg       10 4    seqCounterLoc_o [9:0] $end
+$var reg       10 5    disconnect_host_num_o [9:0] $end
+$var reg        1 6    end_session_o $end
+$var reg        4 7    create_message_o [3:0] $end
+$var reg        1 8    initiate_msg_o $end
+
+$scope module dut $end
+$var wire       1 "    clk $end
+$var wire       1 #    rst $end
+$var wire       1 $    new_message_i $end
+$var wire       3 %    validity_i [2:0] $end
+$var wire       1 &    timeout_i $end
+$var wire      10 '    connected_host_i [9:0] $end
+$var wire       3 (    type_i [2:0] $end
+$var wire       1 )    connected_i $end
+$var wire       1 *    end_session_i $end
+$var wire       1 +    resendDone_i $end
+$var reg        1 ,    ignore_o $end
+$var reg        1 -    disconnect_o $end
+$var reg        3 .    error_type_o [2:0] $end
+$var reg      256 /    targetCompId_o [255:0] $end
+$var reg        1 0    igonre_o $end
+$var reg        1 1    doResend_o $end
+$var reg        1 2    messagereceived_o $end
+$var reg        1 3    updateSeqCounter_o $end
+$var reg       10 4    seqCounterLoc_o [9:0] $end
+$var reg       10 5    disconnect_host_num_o [9:0] $end
+$var reg        1 6    end_session_o $end
+$var reg        4 7    create_message_o [3:0] $end
+$var reg        1 8    initiate_msg_o $end
+$var reg        1 9    we_1 $end
+$var reg       10 :    addr_1 [9:0] $end
+$var reg        4 ;    data_in_1 [3:0] $end
+$var reg        4 <    data_out_1 [3:0] $end
+$var reg        1 =    we_2 $end
+$var reg      256 >    addr_2 [255:0] $end
+$var reg        4 ?    data_in_2 [3:0] $end
+$var reg        4 @    data_out_2 [3:0] $end
+$var reg        1 A    resendReq_o $end
+$var reg        1 B    sendHeartbeat_o $end
+$var reg        1 C    sendLogout_o $end
+$var reg        1 D    sendLogon_o $end
+$var parameter  32 E    NUM_HOST [31:0] $end
+$var parameter  32 F    VALUE_WIDTH [31:0] $end
+$var parameter   3 G    msgSeqH [2:0] $end
+$var parameter   3 H    garbled [2:0] $end
+$var parameter   3 I    msgSeqL [2:0] $end
+$var parameter   3 J    valid [2:0] $end
+$var parameter   3 K    invalid [2:0] $end
+$var parameter   3 L    fatal_need_manual_intervention [2:0] $end
+$var parameter   4 M    logon [3:0] $end
+$var parameter   4 N    heartbeat [3:0] $end
+$var parameter   4 O    resendReq [3:0] $end
+$var parameter   4 P    logout [3:0] $end
+$var parameter   4 Q    reset [3:0] $end
+$var parameter   4 R    gapFill [3:0] $end
+$var parameter   4 S    business [3:0] $end
+$var parameter   4 T    normalSession [3:0] $end
+$var parameter   4 U    disconnected [3:0] $end
+$var parameter   4 V    servingResend_logout [3:0] $end
+$var parameter   4 W    sentResendReq [3:0] $end
+$var parameter   4 X    sentheartbeat [3:0] $end
+$var parameter   4 Y    resendReqLogout [3:0] $end
+$var parameter   4 Z    servingResend [3:0] $end
+$var parameter   4 [    logoutSent [3:0] $end
+$var parameter   4 \    logonSent [3:0] $end
+
+$scope task updateSessionState $end
+$var reg       10 ]    connected_host_i [9:0] $end
+$var reg        4 ^    disconnected [3:0] $end
+$upscope $end
+
+$scope function readSessionState $end
+$var reg        1 _    readSessionState $end
+$var reg       10 `    connected_host_i [9:0] $end
+$upscope $end
+
+$scope function getTargetCompId $end
+$var reg        1 a    getTargetCompId $end
+$var reg       10 b    connected_host_i [9:0] $end
+$upscope $end
+
+$scope module states $end
+$var wire       4 ;    data [3:0] $end
+$var wire      10 :    addr [9:0] $end
+$var wire       1 9    we $end
+$var wire       1 "    clk $end
+$var wire       4 c    q [3:0] $end
+$var reg       10 d    addr_reg [9:0] $end
+$var parameter  32 e    ADDR_WIDTH [31:0] $end
+$var parameter  32 f    DATA_WIDTH [31:0] $end
+$var parameter  32 g    RAM_DEPTH [31:0] $end
+$upscope $end
+
+$scope module compid $end
+$var wire     256 h    data [255:0] $end
+$var wire      10 i    addr [9:0] $end
+$var wire       1 =    we $end
+$var wire       1 "    clk $end
+$var wire     256 j    q [255:0] $end
+$var reg       10 k    addr_reg [9:0] $end
+$var parameter  32 l    ADDR_WIDTH [31:0] $end
+$var parameter  32 m    DATA_WIDTH [31:0] $end
+$var parameter  32 n    RAM_DEPTH [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+bxxxxxxxxxx b
+b0011 W
+b001 L
+xA
+x6
+x+
+b00000000000000000000000100000000 m
+b00000000000000000000010000000000 n
+bxxxx c
+b0100 X
+b0001 M
+xB
+bxxxx 7
+x,
+x-
+x"
+bxxxxxxxxxx d
+b0101 Y
+b0010 N
+xC
+x8
+bxxx .
+x#
+b00000000000000000000000000001010 e
+b0110 Z
+b0011 O
+xD
+x9
+bxxxxxxxxxx :
+bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx /
+x$
+b00000000000000000000000000000100 f
+b0111 [
+b0100 P
+b00000000000000000000000000001010 E
+bxxxx ;
+x0
+bxxx %
+b00000000000000000000010000000000 g
+b1000 \
+b0101 Q
+b00000000000000000000000100000000 F
+b001 G
+bxxxx <
+x1
+x&
+b000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000xxxx h
+bxxxxxxxxxx ]
+b0110 R
+b010 H
+x=
+x2
+bxxxxxxxxxx '
+bxxxxxxxxxx i
+bxxxx ^
+b0111 S
+b0000 T
+b001 I
+bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx >
+x3
+bxxx (
+bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx j
+x_
+b0001 U
+b000 J
+bxxxx ?
+bxxxxxxxxxx 4
+x)
+bxxxxxxxxxx k
+bxxxxxxxxxx `
+xa
+b0010 V
+b100 K
+bxxxx @
+bxxxxxxxxxx 5
+x*
+b00000000000000000000000000001010 l
+$end
+#1
+0"
+#2
+0A
+06
+0B
+b0000 7
+0,
+0-
+0C
+08
+b000 .
+0D
+b0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 /
+00
+01
+02
+03
+b0000000000 4
+b0000000000 5
+1"
+#3
+0"
+#4
+1"
+#5
+0"
+#6
+1"
+#7
+0"
+#8
+19
+b1000 ;
+0=
+b1000 ^
+b000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000xxxxxxxxxx >
+1)
+b0001 7
+18
+1D
+b000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000x /
+1"
+#9
+0"
+#10
+0)
+b0000 7
+08
+0D
+b0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 /
+1"
+#11
+0"
+#12
+1"
+#13
+0"
+#14
+1"
+#15
+0"
+#16
+1"
+#17
+0"
+#18
+1"
+#19
+0"
+#20
+1"
+#21
+0"
+#22
+1"
+#23
+0"
+#24
+1"
+#25
+0"
+#26
+1"
+#27
+0"
+#28
+1"
+#29
+0"
+#30
+1"
+#31
+0"
+#32
+1"
+#33
+0"
+#34
+1"
+#35
+0"
+#36
+1"
+#37
+0"
+#38
+1"
+#39
+0"
+#40
+1"
+#41
+0"
+#42
+1"
+#43
+0"
+#44
+1"
+#45
+0"
+#46
+1"
+#47
+0"
+#48
+1"
+#49
+0"
+#50
+1"
+#51
+0"
+#52
+1"
+#53
+0"
+#54
+1"
+#55
+0"
+#56
+1"
+#57
+0"
+#58
+1"
+#59
+0"
+#60
+1"
+#61
+0"
+#62
+1"
+#72
