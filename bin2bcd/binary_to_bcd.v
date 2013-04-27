@@ -1,4 +1,4 @@
-module binary_to_bcd (
+module binary_to_bcd # (parameter BITS_IN_PP = 32, BCD_DIGITS_OUT_PP = 10, BIT_COUNT_WIDTH_PP = 5) (
   clk_i,
   ce_i,
   rst_i,
@@ -12,9 +12,9 @@ module binary_to_bcd (
   width_o
   );
 
-parameter BITS_IN_PP         = 32; // # of bits of binary input
-parameter BCD_DIGITS_OUT_PP  = 10;  // # of digits of BCD output
-parameter BIT_COUNT_WIDTH_PP = 5;  // Width of bit counter
+//parameter BITS_IN_PP         = 32; // # of bits of binary input
+//parameter BCD_DIGITS_OUT_PP  = 10;  // # of digits of BCD output
+//parameter BIT_COUNT_WIDTH_PP = 5;  // Width of bit counter
  
 // I/O declarations
 input  clk_i;                      // clock signal
