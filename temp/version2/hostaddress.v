@@ -1,7 +1,7 @@
 
 `include "defines.vh"
 
-module hostaddress # (parameter ADDR_WIDTH = `HOST_ADDR_WIDTH, DATA_WIDTH = `VALUE_DATA_WIDTH)
+module hostaddress # (parameter ADDR_WIDTH = `HOST_ADDR_WIDTH, DATA_WIDTH = `VALUE_DATA_WIDTH + `VALUE_SIZE)
 	(
 		input [DATA_WIDTH-1:0] data,
 		input [ADDR_WIDTH-1:0] addr,

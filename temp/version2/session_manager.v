@@ -5,34 +5,35 @@
 
 `include "defines.vh"
 
-module session_manager # (parameter NUM_HOST = `NUMBER_OF_HOST, VALUE_WIDTH = `VALUE_DATA_WIDTH )(
+module session_manager # (parameter NUM_HOST = `HOST_ADDR_WIDTH, VALUE_WIDTH = `VALUE_DATA_WIDTH, SIZE = `VALUE_SIZE )(
 
 		input				clk,
 		input				rst,
 		input				new_message_i,			// from received msg processor
-		input[2:0]	 		validity_i,			// from received msg processor
+		input[3:0]	 		validity_i,			// from received msg processor
 		input 				timeout_i,			// from counter
-		input[NUM_HOST-1:0] 		connected_host_i,		// from toe***
+		input[NUM_HOST-1:0] 		connected_host_i,		// from connection_toe 
 		input[3:0]			type_i,				// from received msg processor
-		input				connected_i,			// from toe***
-		input 				end_session_i,			// *** 
-		input 				resendDone_i,			// ***
-		input[VALUE_WIDTH-1:0]		data_out_2,			// from hostaddress table
+		input				connected_i,			// from connection_toe 
+		input 				end_session_i,			// *** now hwired to 0  
+		input 				resendDone_i,			// *** now hwired to 0
+		input[VALUE_WIDTH+SIZE-1:0]	data_out_2,			// from hostaddress table
 
 		output reg			we_2,				// to hostaddress
 		output reg[VALUE_WIDTH-1:0]	addr_2,				// to hostaddress
 		output reg[VALUE_WIDTH-1:0]	data_in_2,			// to hostaddress
 	
 		output reg			disconnect_o,			// to toe***
+		output reg[NUM_HOST-1:0] 	disconnect_host_num_o,		// to toe*** 
 		output reg[3:0]			error_type_o,			// to create message
 		output reg[VALUE_WIDTH-1:0]	targetCompId_o,			// to create message
+		output reg[SIZE-1:0]		s_v_targetCompId_o,		// to create message
 		output reg			ignore_o,			// to sequence generator 
-		output reg			doResend_o,			// ***
+		output reg			doResend_o,			// *** now ignored
 		output reg 			messagereceived_o,		// *** output interface 
 		output reg 			updateSeqCounter_o,		// to sequence generator *** 
 		output reg[NUM_HOST-1:0] 	seqCounterLoc_o,		// to sequence generator *** 
-		output reg[NUM_HOST-1:0] 	disconnect_host_num_o,		// to toe*** 
-		output reg 			end_session_o,			// no need 
+		output reg 			end_session_o,			// *** no need- ignored 
 		output reg[3:0]			create_message_o,		// to create message
 		output reg	 		initiate_msg_o			// to create message
 
@@ -69,15 +70,7 @@ ram # (.ADDR_WIDTH(NUM_HOST), .DATA_WIDTH(4)) states (
 		.addr	(addr_1),
 		.q	(data_out_1)
 		);
-/*
-ram # (.ADDR_WIDTH(NUM_HOST), .DATA_WIDTH(VALUE_WIDTH)) compid (
-		.clk	(clk),
-		.we  	(we_2),
-		.data	(data_in_2),
-		.addr	(addr_2),
-		.q	(data_out_2)
-		);
-*/
+
 // task and functions- for repeatative codes
  
 // updateSessionState (connected_host_i, disconnected)
@@ -93,7 +86,6 @@ task updateSessionState;
 
 endtask
 
-
 // readSessionState (connected_host_i)
 function readSessionState;
 	input[NUM_HOST-1:0]	connected_host_i;
@@ -101,21 +93,34 @@ function readSessionState;
 	begin
 		we_1			=	'0;
 		addr_1			=	connected_host_i;
-		readSessionState	=	data_out_2;
+		readSessionState	=	data_out_1;
 	end
 
 endfunction
 
-//  getTargetCompId (connected_host_i)
+//  getTargetCompId (connected_host_i) from hostaddress.v
 function getTargetCompId;
 	input[NUM_HOST-1:0]	connected_host_i;
 
 	begin
 		we_2			=	'0;
 		addr_2			=	connected_host_i;
-		getTargetCompId		=	data_out_2;
+		getTargetCompId		=	data_out_2 [VALUE_WIDTH-1:0];
 	end
 endfunction	
+
+
+//  get_s_v_TargetCompId (connected_host_i) from hostaddress.v
+function get_s_v_TargetCompId;
+	input[NUM_HOST-1:0]	connected_host_i;
+
+	begin
+//		we_2			=	'0;
+//		addr_2			=	connected_host_i;
+		get_s_v_TargetCompId	=	data_out_2 [VALUE_WIDTH+SIZE-1:VALUE_WIDTH];
+	end
+endfunction	
+
 
 // when a new message receiev, interrogate the session state and take proper action
 always @ (posedge clk) begin
@@ -128,6 +133,7 @@ always @ (posedge clk) begin
 	ignore_o		<=	'0;
 	doResend_o		<=	'0;
 	sendHeartbeat_o		<=	'0;
+	s_v_targetCompId_o	<=	'0;	
 	sendLogout_o		<=	'0;
 	messagereceived_o	<=	'0;
 	updateSeqCounter_o	<=	'0;
@@ -150,6 +156,7 @@ always @ (posedge clk) begin
 						end else if (type_i == `logon && validity_i == `msgSeqH) begin
 							resendReq_o	<=	'1;
 							targetCompId_o	<=	getTargetCompId (connected_host_i);
+							s_v_targetCompId_o	<=	get_s_v_TargetCompId (connected_host_i);
 							updateSessionState(connected_host_i, `sentResendReq);
 						end else begin
 							disconnect_o	<=	1;
@@ -167,6 +174,7 @@ always @ (posedge clk) begin
 						end else if (type_i == `resendReq) begin
 							doResend_o	<=	'1;
 							targetCompId_o	<=	getTargetCompId (connected_host_i);
+							s_v_targetCompId_o	<=	get_s_v_TargetCompId (connected_host_i);
 							updateSessionState (connected_host_i, `servingResend_logout);
 						end else begin
 							disconnect_o	<=	'1;
@@ -180,23 +188,28 @@ always @ (posedge clk) begin
 						end else if ( validity_i == `msgSeqH) begin
 							resendReq_o	<=	'1;
 							targetCompId_o	<=	getTargetCompId (connected_host_i);
+							s_v_targetCompId_o	<=	get_s_v_TargetCompId (connected_host_i);
 							updateSessionState (connected_host_i, `sentResendReq);
 						//	status_o	<= 	resendReq;
 						end else if (type_i == `heartbeat && validity_i == `valid) begin
 							sendHeartbeat_o	<=	'1;
 							targetCompId_o	<=	getTargetCompId (connected_host_i);
+							s_v_targetCompId_o	<=	get_s_v_TargetCompId (connected_host_i);
 							updateSessionState (connected_host_i, `sentheartbeat);
 						end else if (type_i == `logout && validity_i == `valid) begin
 							sendLogout_o	<=	'1;
 							targetCompId_o	<=	getTargetCompId (connected_host_i);
+							s_v_targetCompId_o	<=	get_s_v_TargetCompId (connected_host_i);
 							updateSessionState (connected_host_i, `disconnected);
 						end else if (type_i == `logout && validity_i == `msgSeqH) begin
 							resendReq_o	<=	'1;
 							targetCompId_o	<=	getTargetCompId (connected_host_i);
+							s_v_targetCompId_o	<=	get_s_v_TargetCompId (connected_host_i);
 							updateSessionState (connected_host_i, `resendReqLogout);
 						end else if (type_i == `resendReq) begin
 							doResend_o	<=	'1;
 							targetCompId_o	<=	getTargetCompId (connected_host_i);
+							s_v_targetCompId_o	<=	get_s_v_TargetCompId (connected_host_i);
 							updateSessionState (connected_host_i, `servingResend);
 						//	status_o	<= 	resendReq;
 						end else begin
@@ -210,22 +223,27 @@ always @ (posedge clk) begin
 						end else if (type_i == `logout && validity_i == `msgSeqH) begin
 							resendReq_o	<=	'1;
 							targetCompId_o	<=	getTargetCompId (connected_host_i);
+							s_v_targetCompId_o	<=	get_s_v_TargetCompId (connected_host_i);
 							updateSessionState (connected_host_i, `resendReqLogout);
 						end else if (type_i == `logout && validity_i == `valid) begin
 							sendLogout_o	<=	'1;
 							targetCompId_o	<=	getTargetCompId (connected_host_i);
+							s_v_targetCompId_o	<=	get_s_v_TargetCompId (connected_host_i);
 							updateSessionState (connected_host_i, `disconnected);
 						end else if (type_i == `resendReq) begin
 							doResend_o	<=	'1;
 							targetCompId_o	<=	getTargetCompId (connected_host_i);
+							s_v_targetCompId_o	<=	get_s_v_TargetCompId (connected_host_i);
 							updateSessionState (connected_host_i, `servingResend);
 						end else if (validity_i == `msgSeqH) begin
 							resendReq_o	<=	'1;
 							targetCompId_o	<=	getTargetCompId (connected_host_i);
+							s_v_targetCompId_o	<=	get_s_v_TargetCompId (connected_host_i);
 							updateSessionState (connected_host_i, `sentResendReq);
 						end else if (type_i == `heartbeat) begin
 							sendHeartbeat_o	<=	'1;
 							targetCompId_o	<=	getTargetCompId (connected_host_i);
+							s_v_targetCompId_o	<=	get_s_v_TargetCompId (connected_host_i);
 							updateSessionState (connected_host_i, `sentheartbeat);
 						end else begin
 							messagereceived_o	<=	1;
@@ -237,6 +255,7 @@ always @ (posedge clk) begin
 						end else if (type_i != `reset && validity_i == `msgSeqH) begin
 							resendReq_o	<=	'1;
 							targetCompId_o	<=	getTargetCompId (connected_host_i);
+							s_v_targetCompId_o	<=	get_s_v_TargetCompId (connected_host_i);
 							updateSessionState (connected_host_i, `sentResendReq);
 						end if (type_i == `gapFill || type_i == `reset) begin
 							updateSeqCounter_o	<=	'1;
@@ -254,6 +273,7 @@ always @ (posedge clk) begin
 						end else if (type_i != `reset && validity_i == `msgSeqH) begin
 							resendReq_o	<=	'1;
 							targetCompId_o	<=	getTargetCompId (connected_host_i);
+							s_v_targetCompId_o	<=	get_s_v_TargetCompId (connected_host_i);
 							updateSessionState (connected_host_i, `resendReqLogout);
 						end if (type_i == `gapFill || type_i == `reset) begin
 							updateSeqCounter_o	<=	'1;
@@ -262,6 +282,7 @@ always @ (posedge clk) begin
 						end if (resendDone_i == 1) begin
 							sendLogout_o	<=	'1;
 							targetCompId_o	<=	getTargetCompId (connected_host_i);
+							s_v_targetCompId_o	<=	get_s_v_TargetCompId (connected_host_i);
 							updateSessionState (connected_host_i, `logoutSent);
 						end else begin	
 							updateSessionState (connected_host_i, `resendReqLogout);
@@ -277,7 +298,8 @@ end
 always @ (posedge clk) begin
 
 	disconnect_o		<=	'0;	
-	targetCompId_o		<=	'0;	
+	targetCompId_o		<=	'0;
+	s_v_targetCompId_o	<=	'0;	
 	sendHeartbeat_o		<=	'0;	
 	sendLogout_o		<=	'0;	
 	disconnect_host_num_o	<=	'0;	
@@ -286,12 +308,14 @@ always @ (posedge clk) begin
 	if (connected_i == 1) begin
 		sendLogon_o	<=	'1;
 		targetCompId_o	<=	getTargetCompId (connected_host_i);
+		s_v_targetCompId_o	<=	get_s_v_TargetCompId (connected_host_i);
 		updateSessionState(connected_host_i, `logonSent);
 	end
 
 	if (end_session_i == 1) begin
 		sendLogout_o	<=	'1;
 		targetCompId_o	<=	getTargetCompId (connected_host_i);
+		s_v_targetCompId_o	<=	get_s_v_TargetCompId (connected_host_i);
 		updateSessionState(connected_host_i, `logoutSent);
 	end
 
@@ -306,6 +330,7 @@ always @ (posedge clk) begin
 		end else begin
 			sendHeartbeat_o		<=	'1;
 			targetCompId_o		<=	getTargetCompId (connected_host_i);
+			s_v_targetCompId_o	<=	get_s_v_TargetCompId (connected_host_i);
 			updateSessionState(connected_host_i, `sentheartbeat);
 		end
 	end

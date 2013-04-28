@@ -6,6 +6,7 @@
 `define			HOST_ADDR_WIDTH			2
 `define			VALUE_DATA_WIDTH		256
 `define			COUNTER_RANGE			10
+`define			VALUE_SIZE			64
 
 `define			supportedVersion  	  	24'h342e33 
 `define			seqResetMsg  		  	16'h0034 
@@ -64,6 +65,9 @@
 `define 		v_encryptMethod_i 	 	8'h30 	
 `define 		s_v_encryptMethod_i	 	8'b00000001 	
 
+`define 		v_senderCompId			48'h636c69656e74;
+`define			s_v_senderCompId		6'b111111;
+
 `define 		v_bodyLength_i		 	24'h313233 	
 `define 		s_v_bodyLength_i	 	8'b00000111 	
 `define 		v_beginString		 	56'h322e342e584946 	
@@ -90,6 +94,27 @@
 `define			s_t_heartBeatInt	 	5'b00111 
 `define			s_t_encryptMethod	 	5'b00011 
 `define			s_v_sendTime		 	'1 
+
+
+
+`define			l_t_beginString 	 	3'b001		 
+`define			l_t_bodyLength 		 	3'b001		 
+`define			l_t_msgSeqNum 		 	3'b010		 
+`define			l_t_msgType 		 	3'b010		
+`define			l_t_checksum 		 	3'b010	 
+`define			l_t_senderCompId	 	3'b010	
+`define			l_t_targetCompId	 	3'b010	 
+`define			l_t_sendTime		 	3'b010		 
+`define			l_t_heartBeatInt	 	3'b011		
+`define			l_t_encryptMethod	 	3'b010	
+
+`define			l_v_logon		 	1'b1 
+`define			l_v_logout		 	1'b1 
+`define 		l_v_encryptMethod	 	1'b1 	
+`define			l_v_heartbeat		 	1'b1 		// configure s_v_heartbeat with this
+
+`define 		l_v_senderCompId	 	3'b110		// client 	
+`define			l_v_sendTime		 	5'10101		// 21- sendtimeval-const 
 
 // value for various types of message
 `define			v_logon			 	8'h61 

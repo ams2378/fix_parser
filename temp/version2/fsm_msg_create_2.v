@@ -14,10 +14,10 @@ module fsm_msg_create_2 # (parameter VALUE_WIDTH = `VALUE_DATA_WIDTH, T_SIZE = 5
 		//input[VALUE_WIDTH>>SIZE -1:0]	v_size_i,
 		input[SIZE-1:0]			v_size_i,
 		input 				checksum_i,
-		input[7:0]			checksum_val_i,
+		input[7:0]			checksum_val_i,		// from create_checksum
 
 		output reg[7:0]			data_o,
-		output reg			start_chksm_o,
+		output reg			start_chksm_o,		// indicates start create_checksum
 		output reg			done_o,
 		output reg			end_o,
 		output reg			end_of_msg_o
@@ -251,7 +251,8 @@ always @ (state or tag_valid_i or val_valid_i or checksum_i or t_width or v_widt
 			done_o		=	'0;
 			end_of_msg_o	=	'0;
 			start_chksm_o	=	'0;
-			data_o		=	8'h33;			//checksum_val_i; temp	
+		//	data_o		=	8'h33;			//checksum_val_i; temp	
+			data_o		=	checksum_val_i;	
 			next_state	=	state9;
 		end
 
@@ -261,7 +262,8 @@ always @ (state or tag_valid_i or val_valid_i or checksum_i or t_width or v_widt
 			done_o		=	'0;
 			end_of_msg_o	=	'0;
 			start_chksm_o	=	'0;
-			data_o		=	8'h31;			//checksum_val_i; temp	
+		//	data_o		=	8'h31;			//checksum_val_i; temp	
+			data_o		=	checksum_val_i;	
 			next_state	=	state10;
 		end
 
@@ -271,7 +273,8 @@ always @ (state or tag_valid_i or val_valid_i or checksum_i or t_width or v_widt
 			done_o		=	'0;
 			end_of_msg_o	=	'0;
 			start_chksm_o	=	'0;
-			data_o		=	8'h36;			//checksum_val_i; temp	
+		//	data_o		=	8'h36;			//checksum_val_i; temp	
+			data_o		=	checksum_val_i;	
 			next_state	=	state11;
 		end
 

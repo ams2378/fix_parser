@@ -27,8 +27,8 @@ module create_message #(parameter VALUE_WIDTH = `VALUE_DATA_WIDTH, SIZE = 64) (
 		input[3:0]			message_type_i,			
 		input[VALUE_WIDTH-1:0] 		v_beginString_i,			
 		input[SIZE-1:0] 		s_v_beginString_i,			
-		input[VALUE_WIDTH-1:0] 		v_senderCompId_i,		
-		input[SIZE-1:0] 		s_v_senderCompId_i,		
+		input[VALUE_WIDTH-1:0] 		v_senderCompId_i,		// will be hardcoded		
+		input[SIZE-1:0] 		s_v_senderCompId_i,		// will be hardcoded		
 		input[VALUE_WIDTH-1:0] 		v_targetCompId_i,		
 		input[SIZE-1:0] 		s_v_targetCompId_i,		
 		input[VALUE_WIDTH-1:0] 		v_heartBeatInt_i,	
@@ -36,8 +36,8 @@ module create_message #(parameter VALUE_WIDTH = `VALUE_DATA_WIDTH, SIZE = 64) (
 	
 		input[VALUE_WIDTH-1:0] 		v_sendTime_i,			// need to update (internally)	
 
-		input[VALUE_WIDTH-1:0]		v_msgSeqNum_i,
-		input[SIZE-1:0]			s_v_msgSeqNum_i,
+		input[VALUE_WIDTH-1:0]		v_msgSeqNum_i,			// from seq generator
+		input[SIZE-1:0]			s_v_msgSeqNum_i,		// from seq generator
 
 		// outputs		
 		output reg[31:0]		tag_o,

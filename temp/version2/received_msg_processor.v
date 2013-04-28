@@ -6,18 +6,18 @@ module received_msg_processor # (parameter VALUE_WIDTH = `VALUE_DATA_WIDTH, COUN
 
 		input				clk,
 		input				rst,
-		input				tag_valid_i,
-		input[31:0]			tag_i,
-		input				val_valid_i,
-		input[VALUE_WIDTH-1:0]		val_i,
-		input				start_of_message_i,
-		input				end_of_message_i,
-		input[COUNTER_DEPTH-1:0]	expectedIncomingSeqNum_i,
-		input				checksum_validity_i,
+		input				tag_valid_i,			// from parser
+		input[31:0]			tag_i,				// from parser
+		input				val_valid_i,			// from parser
+		input[VALUE_WIDTH-1:0]		val_i,				// from parser
+		input				start_of_message_i,		// from parser
+		input				end_of_message_i,		// from parser
+		input[COUNTER_DEPTH-1:0]	expectedIncomingSeqNum_i,	// from sequence generator
+		input				checksum_validity_i,		// from checksum calc	
 
-		output reg			new_message_o,
-		output reg[2:0]			error_type_o,
-		output reg[3:0]			type_o
+		output reg			new_message_o,			// to session manager
+		output reg[2:0]			error_type_o,			// to session manager
+		output reg[3:0]			type_o				// to session manager
 		);
 
 reg[31:0]			buffer_t;
