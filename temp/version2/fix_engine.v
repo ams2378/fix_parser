@@ -167,17 +167,17 @@ create_message  create_messege_module (
 	.end_i (w_endd),					// from fsm
 	.bodyLength_r_i ('1), 					// from bodylength module (ready) 
 	.message_type_i (w_messagetype),			// from SM	
-	.v_beginString_i (`v_beginString),			// from defines	
-	.s_v_beginString_i (8'b01111111),    			// from defines 	
-	.v_senderCompId_i(`v_senderCompId),			// from defines	
-	.s_v_senderCompId_i(`s_v_senderCompId),			// from defines	
 	.v_targetCompId_i (w_v_targetCompId),			// from SM	
 	.s_v_targetCompId_i (w_s_v_targetCompId),		// from SM	
-	.v_heartBeatInt_i (`v_heartbeat),			// from defines
-	.s_v_heartBeatInt_i (`s_v_heartbeat),			// from defines
 	.v_sendTime_i (168'h3537342e33303a30303a30303a35302d3430343033313032),//***
 	.v_msgSeqNum_i (w_outseqnum),				// from seq gen **** enable valid	
 	.s_v_msgSeqNum_i (w_s_msgSeqNum),			// from seq gen (add valid)
+	.v_senderCompId_i(`v_senderCompId),			// from defines	
+	.s_v_beginString_i (8'b01111111),    			// from defines 	
+	.v_beginString_i (`v_beginString),			// from defines	
+	.s_v_senderCompId_i(`s_v_senderCompId),			// from defines	
+	.v_heartBeatInt_i (`v_heartbeat),			// from defines
+	.s_v_heartBeatInt_i (`s_v_heartbeat),			// from defines
 
 	.tag_o (w_tag),						// to fsm
 	.tag_valid_o (w_tagvalid),				// to fsm
@@ -212,34 +212,34 @@ fsm_msg_create_2  fsm (
 
 create_checksum	checksum_calc(
 
-	clk(clk),
-	rst(rst),	
-	data_i(message_o),
-	start_i(w_start_chksm),
-	end_i(w_end_chksm),
+	.clk(clk),
+	.rst(rst),	
+	.data_i(message_o),
+	.start_i(w_start_chksm),
+	.end_i(w_end_chksm),
 
-	checksum_o(w_checksum_val)
+	.checksum_o(w_checksum_val)
 );
 
 
 sequence_generator sequence_manager (
 
-	 clk(clk),
-	 rst(rst),
-	 receive_new_message_i('0),				// not supported now- from fifo control***
-	 create_message_i(w_messagetype),			// from session manager 
-	 ignore_i (w_ignore),					// from session manager
-	 updateSeqCounter_i(w_updatecnt),			// from session manager
-	 seqCounterLoc_i(w_seqCounterLoc),			// from session manager
-	 newSeqNum_i('0),					// from received message processor***
-	 sending_to_host_addr_i('0),				// from session manager ***
-	 received_host_addr_i('0),				// ***
+	 .clk(clk),
+	 .rst(rst),
+	 .receive_new_message_i('0),				// not supported now- from fifo control***
+	 .create_message_i(w_messagetype),			// from session manager 
+	 .ignore_i (w_ignore),					// from session manager
+	 .updateSeqCounter_i(w_updatecnt),			// from session manager
+	 .seqCounterLoc_i(w_seqCounterLoc),			// from session manager
+	 .newSeqNum_i('0),					// from received message processor***
+	 .sending_to_host_addr_i('0),				// from session manager ***
+	 .received_host_addr_i('0),				// ***
 
- 	 expected_seq_num_o(w_expseqnum),			//  ***
-	 outgoing_seq_num_o(w_outseqnum),			// to create message
-	 size_seq_num_o(w_s_msgSeqNum),				// to create message
-//	 valid_seq_num_o					// to create message (need to enable it)
-//	 width_seq_o						// *** not needed now				
+ 	 .expected_seq_num_o(w_expseqnum),			//  ***
+	 .outgoing_seq_num_o(w_outseqnum),			// to create message
+	 .size_seq_num_o(w_s_msgSeqNum)				// to create message
+//	 .valid_seq_num_o					// to create message (need to enable it)
+//	 .width_seq_o						// *** not needed now				
 	);
 
 fix_parser parser(
