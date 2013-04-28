@@ -27,7 +27,7 @@
 module fix_engine #(parameter NUM_HOST = `HOST_ADDR_WIDTH, SIZE = 64, T_SIZE = 5) (
 	input				clk,
 	input				rst,
-	input				configure_i,			// from app
+//	input				configure_i,			// from app
 	input				connect_i,			// from app
 	input[NUM_HOST-1:0]		connect_to_host_i,		// from app
 	input				connected_i,			// from toe
