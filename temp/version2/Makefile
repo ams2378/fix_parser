@@ -11,7 +11,7 @@ all:
 	make src1
 	make src2  
 src1:
-	vlog $(INCLUDE) $(SRC)
+	vlog $(INCLUDE) $(SRC) $(BENCH)
 
 src2:
 	vcs -full64 -PP -sverilog +define+SV +define+VPD $(INCLUDE) $(SRC) $(BENCH) -o $(DUMP)

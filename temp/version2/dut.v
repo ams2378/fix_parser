@@ -6,29 +6,29 @@
  * @author		Adil Sadik <sadik.adil@gmail.com> 
  */
 
-module fix_engine();
+module fix_engine_test();
 
-	reg				clk,
-	reg				rst,
-//	reg				configure_i,			// from app
-	reg				connect_i,			// from app
-	reg[1:0]			connect_to_host_i,		// from app
-	reg				connected_i,			// from toe
-	reg[1:0]			connected_host_addr_i,		// from toe
-	reg[7:0]			message_i,			// from toe
-	reg				valid_i,			// from toe
+	reg				clk;
+	reg				rst;
+//	reg				configure_i;			// from app
+	reg				connect_i;			// from app
+	reg[1:0]			connect_to_host_i;		// from app
+	reg				connected_i;			// from toe
+	reg[1:0]			connected_host_addr_i;		// from toe
+	reg[7:0]			message_i;			// from toe
+	reg				valid_i;			// from toe
 
-	reg				new_message_i,			// will be implemented by fifo contr.
+	reg				new_message_i;			// will be implemented by fifo contr.
 
-	reg				connect_req_o,			// goes to fifo
-	reg				disconnect_o,			// goes to fifo
-	reg[1:0]			connect_addr_o,			// goes to fifo
-	reg[1:0]			disconnect_host_num_o,		// goes to fifo
-	reg				send_message_valid_o,		// goes to fifo
-	reg[7:0]			message_o	,		// goes to fifo
-	reg				message_received_o		// to api
+	reg				connect_req_o;			// goes to fifo
+	reg				disconnect_o;			// goes to fifo
+	reg[1:0]			connect_addr_o;			// goes to fifo
+	reg[1:0]			disconnect_host_num_o;		// goes to fifo
+	reg				send_message_valid_o;		// goes to fifo
+	reg[7:0]			message_o	;		// goes to fifo
+	reg				message_received_o;		// to api
 
-top dut (
+fix_engine dut (
 	 	.clk,
 	 	.rst,
 	// 	.configure_i,			// from app
@@ -71,7 +71,7 @@ rst = 0;
 #1 clk = 1;
 
 connect_i	=	'1;
-connect_to_host_addr_i	=	2'b00;
+connect_to_host_i	=	2'b00;
 
 #1 clk = 0;
 #1 clk = 1;

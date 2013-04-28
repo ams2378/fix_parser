@@ -9,7 +9,6 @@ entity fix_engine is
     port(
         clk             : in     vl_logic;
         rst             : in     vl_logic;
-        configure_i     : in     vl_logic;
         connect_i       : in     vl_logic;
         connect_to_host_i: in     vl_logic_vector;
         connected_i     : in     vl_logic;
