@@ -4,7 +4,7 @@ BENCH= dut.v
 DUMP= testbench.exe
 
 vcs:
-	make sr2
+	make src2
 	make gtkwave 
 
 all: 
