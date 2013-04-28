@@ -104,16 +104,6 @@ connected_host_addr_i	=	2'b00;
 #1 clk = 0;
 #1 clk = 1;
 
-while ( i < temp/2) begin
-#1 clk = 0;
-#1 clk = 1;
-
-temp = temp - 1;
-
-end
-
-
-
 #10 $finish;
 
 end

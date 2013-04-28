@@ -25,7 +25,5 @@ gtkwave:
 
 clean:
 	rm -rf csrc *.exe.daidir *.exe *.log *.inf .leda_work *.key *.vpd *.vcd DVEfiles
-	rm -rf ../sim/testbench*
+	rm -rf testbench*
 	
-clean:
-	rm -rf work
