@@ -61,10 +61,10 @@ rst = 0;
 
 $vcdpluson;
 
-#1 rst = 1;
-#1 rst = 1;
+#3 rst = 1;
+//#1 rst = 1;
 
-#1 rst = 1;
+//#1 rst = 1;
 #1 rst = 0;
 
 #5
