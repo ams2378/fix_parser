@@ -66,6 +66,8 @@ $vcdpluson;
 
 #5
 rst = 0;
+
+#1
 connect_i	=	'1;
 connect_to_host_i	=	2'b00;
 

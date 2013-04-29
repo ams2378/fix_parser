@@ -122,6 +122,31 @@ function [SIZE-1:0] get_s_v_TargetCompId;
 endfunction	
 
 
+always @ (posedge clk) begin
+
+	if (rst) begin
+		ignore_o		<=	'0;	
+		disconnect_o		<=	'0;
+		error_type_o		<=	'0;
+		resendReq_o		<=	'0;
+		targetCompId_o		<=	'0;
+		ignore_o		<=	'0;
+		doResend_o		<=	'0;
+		sendHeartbeat_o		<=	'0;
+		s_v_targetCompId_o	<=	'0;	
+		sendLogout_o		<=	'0;
+		messagereceived_o	<=	'0;
+		updateSeqCounter_o	<=	'0;
+		seqCounterLoc_o		<=	'0;
+		disconnect_host_num_o	<=	'0;
+		sendLogon_o		<=	'0;
+		end_session_o		<=	'0;
+	end
+
+
+
+end
+
 // when a new message receiev, interrogate the session state and take proper action
 always @ (posedge clk) begin
 	
