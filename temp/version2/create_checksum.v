@@ -33,11 +33,7 @@ reg [2:0]			state;
 reg [2:0]			next_state;
 reg [7:0]			checksum;
 reg [8:0]			temp;
-reg [7:0]			soh = 8'h01;
-reg [7:0]			head = 8'h38;
 
-reg [7:0]		 	rcv_checksum;
-reg				ready2cmp_i;
 reg				valid;
 reg [7:0]			q_10;
 reg [7:0]			r_10;
@@ -53,7 +49,7 @@ end
 always @(*) begin
 
 	if (rst) begin
-		checksum = '0;
+		checksum_o = '0;
 		valid = '0;
 	end
 
@@ -96,20 +92,21 @@ always @(*) begin
 					temp = temp - 9'd256;
 				end
 				temp = temp % 9'd256;
-				if (temp[7:0] < 100) begin
+		//		if (temp[7:0] < 100) begin
 					checksum_o	= 	8'h30;		// out is 0
-					q_10 = temp[7:0] / 8'd10;
-					r_10 = temp[7:0] % 8'd10;	
+		//			q_10 = temp[7:0] / 8'd10;
+		//			r_10 = temp[7:0] % 8'd10;	
 					next_state = state4;
-				end else begin
-					if (temp[7:0] > 199) begin
-						checksum_o = 8'h32;
-					end else begin
-						checksum_o = 8'h31;
-						r_100 = temp[7:0] / 8'd100;
-					end
-					next_state = state6;
-				end					
+		//		end else begin
+		//			if (temp[7:0] > 199) begin
+		//				checksum_o = 8'h32;
+		//				r_100 = temp[7:0] / 8'd100;
+		//			end else begin
+		//				checksum_o = 8'h31;
+		//				r_100 = temp[7:0] / 8'd100;
+		//			end
+		//			next_state = state6;
+		//		end					
 		end
 
 		state4: begin
