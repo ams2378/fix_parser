@@ -71,12 +71,12 @@ rst = 0;
 #1
 
 connect_i	=	'1;
-connect_to_host_i	=	2'b01;
+connect_to_host_i	=	2'b00;
 
 #2
 
 connected_i =	 '1;
-connected_host_addr_i	=	2'b01;
+connected_host_addr_i	=	2'b00;
 
 #2
 
