@@ -86,31 +86,11 @@ connect_to_host_i	=	2'b00;
 connected_i =	 '1;
 connected_host_addr_i	=	2'b00;
 
-/*
-
-#1 clk = 0;
-#1 clk = 1;
-
-#1 clk = 0;
-#1 clk = 1;
-
 #1 clk = 0;
 #1 clk = 1;
 
 
-#1 clk = 0;
-#1 clk = 1;
 
-
-#1 clk = 0;
-#1 clk = 1;
-
-
-#1 clk = 0;
-#1 clk = 1;
-
-//#10 $finish;
-*/
 end
 
 endmodule
