@@ -105,7 +105,7 @@ function getTargetCompId;
 	begin
 		we_2			=	'0;
 		addr_2			=	connected_host_i;
-		getTargetCompId		=	data_out_2 [VALUE_WIDTH-1:0];
+		getTargetCompId		=	data_out_2 [VALUE_WIDTH+SIZE-1:0];
 	end
 endfunction	
 
