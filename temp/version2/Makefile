@@ -4,6 +4,7 @@ BENCH= dut.v
 DUMP= testbench.exe
 
 vcs:
+	make clean
 	make src2
 	make gtkwave 
 
