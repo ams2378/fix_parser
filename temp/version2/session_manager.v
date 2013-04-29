@@ -87,7 +87,7 @@ task updateSessionState;
 endtask
 
 // readSessionState (connected_host_i)
-function readSessionState;
+function [3:0] readSessionState;
 	input[NUM_HOST-1:0]	connected_host_i;
 
 	begin
@@ -99,7 +99,7 @@ function readSessionState;
 endfunction
 
 //  getTargetCompId (connected_host_i) from hostaddress.v
-function getTargetCompId;
+function [VALUE_WIDTH-1:0] getTargetCompId;
 	input[NUM_HOST-1:0]	connected_host_i;
 
 	begin
@@ -111,7 +111,7 @@ endfunction
 
 
 //  get_s_v_TargetCompId (connected_host_i) from hostaddress.v
-function get_s_v_TargetCompId;
+function [SIZE-1:0] get_s_v_TargetCompId;
 	input[NUM_HOST-1:0]	connected_host_i;
 
 	begin
