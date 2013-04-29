@@ -67,12 +67,14 @@ rst = 1;
 
 rst = 0;
 
-/*
+
 #1 clk = 0;
 #1 clk = 1;
 
 connect_i	=	'1;
 connect_to_host_i	=	2'b00;
+
+/*
 
 #1 clk = 0;
 #1 clk = 1;
