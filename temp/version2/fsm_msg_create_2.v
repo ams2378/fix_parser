@@ -49,7 +49,7 @@ integer				temp_var;
 
 
 // build state flops
-always @(posedge clk or rst) begin
+always @(posedge clk ) begin
 
 	if (rst)		state <= state0;
 	else			state <= next_state;
