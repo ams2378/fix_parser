@@ -78,35 +78,35 @@ always @(*) begin
 		state2: begin
 				if (end_i != 1) begin
 			//		temp = temp + data_i;
-			//		if (temp >= 9'd256) begin
-			//			temp = temp - 9'd256;
-			//		end
+					if (temp >= 9'd256) begin
+						temp = temp - 9'd256;
+					end
 					next_state = state1;
 				end else begin
 					next_state = state3;
 				end
 		end
 		state3: begin
-		//		temp = temp - 8'd97;	
-		//		if (temp >= 9'd256) begin	
-		//			temp = temp - 9'd256;
-		//		end
-		//		temp = temp % 9'd256;
-		//		if (temp[7:0] < 100) begin
+				temp = temp - 8'd97;	
+				if (temp >= 9'd256) begin	
+					temp = temp - 9'd256;
+				end
+				temp = temp % 9'd256;
+				if (temp[7:0] < 100) begin
 					checksum_o	= 	8'h30;		// out is 0
-		//			q_10 = temp[7:0] / 8'd10;
-		//			r_10 = temp[7:0] % 8'd10;	
+					q_10 = temp[7:0] / 8'd10;
+					r_10 = temp[7:0] % 8'd10;	
 					next_state = state4;
-		//		end else begin
-		//			if (temp[7:0] > 199) begin
-		//				checksum_o = 8'h32;
-		//				r_100 = temp[7:0] / 8'd100;
-		//			end else begin
-		//				checksum_o = 8'h31;
-		//				r_100 = temp[7:0] / 8'd100;
-		//			end
-		//			next_state = state6;
-		//		end					
+				end else begin
+					if (temp[7:0] > 199) begin
+						checksum_o = 8'h32;
+						r_100 = temp[7:0] / 8'd100;
+					end else begin
+						checksum_o = 8'h31;
+						r_100 = temp[7:0] / 8'd100;
+					end
+					next_state = state6;
+				end					
 		end
 
 		state4: begin
