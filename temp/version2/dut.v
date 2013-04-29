@@ -73,6 +73,9 @@ connect_to_host_i	=	2'b00;
 connected_i =	 '1;
 connected_host_addr_i	=	2'b00;
 
+#1
+connected_i	=	'0;
+
 #2
 
 #1000 $finish;

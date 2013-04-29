@@ -229,7 +229,7 @@ always @ (state or tag_valid_i or val_valid_i or checksum_i or t_width or v_widt
 		if (t_width == 0) begin
 			end_o		=	'0;
 			start_chksm_o	=	'0;
-			end_of_msg_o	=	'0;	
+			end_of_msg_o	=	'1;	
 			done_o		=	'1;
 			data_o		=	8'h3d;
 			temp_var	=	0;

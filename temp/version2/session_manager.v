@@ -295,6 +295,7 @@ always @ (posedge clk) begin
 							ignore_o	<=	'1;
 						end else if (type_i != `reset && validity_i == `msgSeqH) begin
 							resendReq_o	<=	'1;
+					//		create_message_o <= 	`resendReq;
 							targetCompId_o	<=	getTargetCompId (connected_host_i);
 							s_v_targetCompId_o	<=	get_s_v_TargetCompId (connected_host_i);
 							updateSessionState (connected_host_i, `resendReqLogout);
@@ -329,11 +330,12 @@ always @ (posedge clk) begin
 	sendLogon_o		<=	'0;	
 
 	create_message_o	<=	'0;
-	initiate_msg_o		<=	'0;
+//	initiate_msg_o		<=	'0;
 
 	if (connected_i == 1) begin
 		sendLogon_o	<=	'1;
-		{initiate_msg_o, create_message_o}	<=	{'1, `logon};
+//		{initiate_msg_o, create_message_o}	<=	{'1, `logon};
+//		create_message_o	<=	`logon;
 		targetCompId_o	<=	getTargetCompId (connected_host_i);
 		s_v_targetCompId_o	<=	get_s_v_TargetCompId (connected_host_i);
 		updateSessionState(connected_host_i, `logonSent);
@@ -341,6 +343,7 @@ always @ (posedge clk) begin
 
 	if (end_session_i == 1) begin
 		sendLogout_o	<=	'1;
+//		create_message_o	<=	`logout;
 		targetCompId_o	<=	getTargetCompId (connected_host_i);
 		s_v_targetCompId_o	<=	get_s_v_TargetCompId (connected_host_i);
 		updateSessionState(connected_host_i, `logoutSent);
@@ -356,6 +359,7 @@ always @ (posedge clk) begin
 			updateSessionState(connected_host_i, `disconnected);
 		end else begin
 			sendHeartbeat_o		<=	'1;
+//			create_message_o	<=	`heartbeat;
 			targetCompId_o		<=	getTargetCompId (connected_host_i);
 			s_v_targetCompId_o	<=	get_s_v_TargetCompId (connected_host_i);
 			updateSessionState(connected_host_i, `sentheartbeat);
