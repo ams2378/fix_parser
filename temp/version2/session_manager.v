@@ -358,6 +358,11 @@ always @ (posedge clk) begin
 		end
 	end
 
+end
+
+
+always @ (posedge clk) begin
+
 	create_message_o	<= '0;
 	initiate_msg_o		<= '0;
 
@@ -372,28 +377,8 @@ always @ (posedge clk) begin
 
 	initiate_msg_o		<=	(create_message_o != 4'b0000)	? 1 : 0;
 
-
 end
 
-/*
-always @ (*) begin
-
-	create_message_o	= '0;
-	initiate_msg_o		= '0;
-
-	if (sendLogon_o)
-		create_message_o	=	`logon;
-	else if (sendLogout_o)
-		create_message_o	=	`logout;
-	else if (sendHeartbeat_o)
-		create_message_o	=	`heartbeat;
-	else if (resendReq_o)
-		create_message_o	=	`resendReq;
-
-	initiate_msg_o		=	(create_message_o != 4'b0000)	? 1 : 0;
-
-end
-*/
 
 endmodule
 
