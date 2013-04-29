@@ -47,6 +47,7 @@ reg[T_SIZE-1:0]			t_width;
 reg[SIZE -1 :0]			v_width;
 integer				temp_var;
 
+
 // build state flops
 always @(posedge clk or rst) begin
 

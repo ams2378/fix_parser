@@ -93,7 +93,7 @@
 `define			s_t_sendTime		 	5'b00011 
 `define			s_t_heartBeatInt	 	5'b00111 
 `define			s_t_encryptMethod	 	5'b00011 
-`define			s_v_sendTime		 	'1 
+`define			s_v_sendTime		 	21'h1fffff 
 
 
 
