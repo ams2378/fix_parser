@@ -56,6 +56,8 @@ always
 
 initial begin
 
+clk = 1;
+
 int temp = 0;
 int i = 0;
 
