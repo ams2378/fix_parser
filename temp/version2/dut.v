@@ -51,11 +51,8 @@ fix_engine dut (
 	);
 
 
-initial forever begin
-
-	#1 clk = 1;
-	#1 clk = 0;
-end
+always
+	#1	clk = ~clk;
 
 initial begin
 
@@ -83,7 +80,6 @@ connected_i =	 '1;
 connected_host_addr_i	=	2'b00;
 
 #2
-//always #1 clk = ~clk;
 
 #10 $finish;
 
