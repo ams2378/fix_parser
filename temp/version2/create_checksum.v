@@ -25,7 +25,7 @@ parameter			state1 = 3'b001;
 parameter			state2 = 3'b010;
 parameter			state3 = 3'b011;
 parameter			state4 = 3'b100;
-parameter			state5 = 3'b111;
+parameter			state5 = 3'b101;
 parameter			state6 = 3'b110;
 parameter			state7 = 3'b111;
 
@@ -92,7 +92,7 @@ always @(*) begin
 		end
 		state3: begin
 				temp = temp - 8'd97;	
-		/*		if (temp >= 9'd256) begin	
+				if (temp >= 9'd256) begin	
 					temp = temp - 9'd256;
 				end
 				temp = temp % 9'd256;
@@ -109,8 +109,7 @@ always @(*) begin
 						r_100 = temp[7:0] / 8'd100;
 					end
 					next_state = state6;
-				end					*/
-					next_state = state6;
+				end					
 		end
 
 		state4: begin
