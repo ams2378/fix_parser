@@ -329,7 +329,7 @@ always @ (posedge clk) begin
 	disconnect_host_num_o	<=	'0;	
 	sendLogon_o		<=	'0;	
 
-	create_message_o	<=	'0;
+//	create_message_o	<=	'0;
 //	initiate_msg_o		<=	'0;
 
 	if (connected_i == 1) begin
@@ -368,11 +368,11 @@ always @ (posedge clk) begin
 
 end
 
-/*
+
 always @ (posedge clk) begin
 
-//	create_message_o	<= '0;
-//	initiate_msg_o		<= '0;
+	create_message_o	<= '0;
+	initiate_msg_o		<= '0;
 
 	if (sendLogon_o)
 		create_message_o	<=	`logon;
@@ -386,7 +386,7 @@ always @ (posedge clk) begin
 	initiate_msg_o		<=	(create_message_o != 4'b0000)	? 1 : 0;
 
 end
-*/
+
 
 endmodule
 
