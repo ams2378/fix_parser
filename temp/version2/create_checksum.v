@@ -44,7 +44,7 @@ reg [7:0]			r_10;
 reg [7:0]			q_100;
 reg [7:0]			r_100;
 
-always @(posedge clk or rst) begin
+always @(posedge clk) begin
 
 	if (rst)		state <= state0;
 	else			state <= next_state;

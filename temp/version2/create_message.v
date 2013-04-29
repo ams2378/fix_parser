@@ -122,7 +122,7 @@ function [VALUE_WIDTH-1:0] s_v_msgType;
       	end
 endfunction
 
-always @(posedge clk or rst) begin
+always @(posedge clk) begin
 
 	if (rst)		state <= state0;
 	else			state <= next_state;
