@@ -16,7 +16,7 @@ src1:
 #$(BENCH)
 
 src2:
-	vcs -full64 -PP -sverilog +define+SV +define+VPD $(INCLUDE) $(SRC) $(BENCH) -o $(DUMP)
+	vcs -full64 -PP -sverilog +vcs+loopreport[+200] +define+SV +define+VPD $(INCLUDE) $(SRC) $(BENCH) -o $(DUMP)
 	./$(DUMP)
 view:
 	dve -full64 -vpd vcdplus.vpd &
