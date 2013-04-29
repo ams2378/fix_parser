@@ -147,7 +147,7 @@ function[3:0] getType;
 endfunction
 */
 
-always @(posedge clk) begin
+always @(posedge clk or rst) begin
 
 	if (rst)		state <= state0;
 	else			state <= next_state;

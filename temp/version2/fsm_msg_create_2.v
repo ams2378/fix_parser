@@ -48,7 +48,7 @@ reg[SIZE -1 :0]			v_width;
 integer				temp_var;
 
 // build state flops
-always @(posedge clk) begin
+always @(posedge clk or rst) begin
 
 	if (rst)		state <= state0;
 	else			state <= next_state;

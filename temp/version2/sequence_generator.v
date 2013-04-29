@@ -30,7 +30,7 @@ reg			start_conv;
 reg			done;
 
 // initialize mem at rst
-always @(clk) begin
+always @(posedge clk or rst) begin
 	if (rst) begin
 		for (i = 0; i<MEM_DEPTH; i=i+1) begin
 			mem[i]	<=	'0;
