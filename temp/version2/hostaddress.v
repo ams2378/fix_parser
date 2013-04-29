@@ -17,7 +17,7 @@ module hostaddress # (parameter ADDR_WIDTH = `HOST_ADDR_WIDTH, DATA_WIDTH = `VAL
 
 	initial begin
 		ram[0]	= 80'h6f726465726d61746368;	
-		ram[1]	= 80'h6f726465726d61746368;	
+		ram[1]	= 80'h63686f726465726d6174;	
 		ram[2]	= 80'h6f726465726d61746368;	
 		ram[3]	= 80'h6f726465726d61746368;	
 	end
