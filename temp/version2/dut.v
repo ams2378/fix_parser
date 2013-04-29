@@ -52,7 +52,7 @@ fix_engine dut (
 
 initial begin
 
-int temp = 500;
+int temp = 0;
 int i = 0;
 
 $vcdpluson;
@@ -88,6 +88,12 @@ connected_host_addr_i	=	2'b00;
 
 #1 clk = 0;
 #1 clk = 1;
+
+while (temp < 500) begin
+#1 clk = 0;
+#1 clk = 1;
+temp = temp - 1;
+end
 
 //always #1 clk = ~clk;
 
