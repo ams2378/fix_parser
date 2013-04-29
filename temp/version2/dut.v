@@ -89,7 +89,7 @@ connected_host_addr_i	=	2'b00;
 #1 clk = 0;
 #1 clk = 1;
 
-always #1 clk = ~clk;
+//always #1 clk = ~clk;
 
 #10 $finish;
 
