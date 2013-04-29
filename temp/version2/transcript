@@ -1,0 +1,74 @@
+# vsim -lib work -t ps fix_engine 
+# Loading work.fix_engine
+# Loading work.hostaddress
+# Loading work.connection_toe
+# Loading work.session_manager
+# Loading work.ram
+# Loading work.received_msg_processor
+# Loading work.create_message
+# Loading work.fsm_msg_create_2
+# Loading work.create_checksum
+# Loading work.sequence_generator
+# Loading work.binary_to_bcd
+# Loading work.fix_parser
+# Loading work.fix_parser_out_module
+# Loading work.checksum
+# Loading work.ascii2int
+# ** Warning: (vsim-3017) fix_engine.v(141): [TFMPC] - Too few port connections. Expected 27, found 24.
+#         Region: /fix_engine/session_controller
+# ** Warning: (vsim-3015) fix_engine.v(141): [PCDPC] - Port size (256 or 256) does not match connection size (2) for port 'addr_2'. The port definition is at: session_manager.v(23).
+#         Region: /fix_engine/session_controller
+# ** Warning: (vsim-3015) fix_engine.v(141): [PCDPC] - Port size (256 or 256) does not match connection size (320) for port 'data_in_2'. The port definition is at: session_manager.v(24).
+#         Region: /fix_engine/session_controller
+# ** Warning: (vsim-3722) fix_engine.v(141): [TFMPC] - Missing connection for port 'error_type_o'.
+# ** Warning: (vsim-3722) fix_engine.v(141): [TFMPC] - Missing connection for port 'doResend_o'.
+# ** Warning: (vsim-3722) fix_engine.v(141): [TFMPC] - Missing connection for port 'end_session_o'.
+# ** Error: (vsim-3053) session_manager.v(72): Illegal output or inout port connection for "port 'q'".
+#         Region: /fix_engine/session_controller/states
+# ** Warning: (vsim-3015) fix_engine.v(159): [PCDPC] - Port size (10 or 10) does not match connection size (256) for port 'expectedIncomingSeqNum_i'. The port definition is at: received_msg_processor.v(15).
+#         Region: /fix_engine/message_processor
+# ** Warning: (vsim-3015) fix_engine.v(159): [PCDPC] - Port size (3 or 3) does not match connection size (4) for port 'error_type_o'. The port definition is at: received_msg_processor.v(19).
+#         Region: /fix_engine/message_processor
+# ** Warning: (vsim-3017) fix_engine.v(191): [TFMPC] - Too few port connections. Expected 26, found 25.
+#         Region: /fix_engine/create_messege_module
+# ** Warning: (vsim-3015) fix_engine.v(191): [PCDPC] - Port size (256 or 256) does not match connection size (168) for port 'v_sendTime_i'. The port definition is at: create_message.v(37).
+#         Region: /fix_engine/create_messege_module
+# ** Warning: (vsim-3015) fix_engine.v(191): [PCDPC] - Port size (256 or 256) does not match connection size (48) for port 'v_senderCompId_i'. The port definition is at: create_message.v(30).
+#         Region: /fix_engine/create_messege_module
+# ** Warning: (vsim-3015) fix_engine.v(191): [PCDPC] - Port size (64 or 64) does not match connection size (8) for port 's_v_beginString_i'. The port definition is at: create_message.v(29).
+#         Region: /fix_engine/create_messege_module
+# ** Warning: (vsim-3015) fix_engine.v(191): [PCDPC] - Port size (256 or 256) does not match connection size (56) for port 'v_beginString_i'. The port definition is at: create_message.v(28).
+#         Region: /fix_engine/create_messege_module
+# ** Warning: (vsim-3015) fix_engine.v(191): [PCDPC] - Port size (64 or 64) does not match connection size (6) for port 's_v_senderCompId_i'. The port definition is at: create_message.v(31).
+#         Region: /fix_engine/create_messege_module
+# ** Warning: (vsim-3015) fix_engine.v(191): [PCDPC] - Port size (256 or 256) does not match connection size (8) for port 'v_heartBeatInt_i'. The port definition is at: create_message.v(34).
+#         Region: /fix_engine/create_messege_module
+# ** Warning: (vsim-3015) fix_engine.v(191): [PCDPC] - Port size (64 or 64) does not match connection size (1) for port 's_v_heartBeatInt_i'. The port definition is at: create_message.v(35).
+#         Region: /fix_engine/create_messege_module
+# ** Warning: (vsim-3722) fix_engine.v(191): [TFMPC] - Missing connection for port 'msg_creation_done_o'.
+# ** Warning: (vsim-3017) fix_engine.v(243): [TFMPC] - Too few port connections. Expected 15, found 13.
+#         Region: /fix_engine/sequence_manager
+# ** Warning: (vsim-3722) fix_engine.v(243): [TFMPC] - Missing connection for port 'valid_seq_num_o'.
+# ** Warning: (vsim-3722) fix_engine.v(243): [TFMPC] - Missing connection for port 'width_seq_o'.
+# ** Warning: (vsim-3017) sequence_generator.v(72): [TFMPC] - Too few port connections. Expected 10, found 9.
+#         Region: /fix_engine/sequence_manager/converted
+# ** Warning: (vsim-3015) sequence_generator.v(72): [PCDPC] - Port size (32 or 32) does not match connection size (256) for port 'dat_binary_i'. The port definition is at: bin2bcd/binary_to_bcd.v(6).
+#         Region: /fix_engine/sequence_manager/converted
+# ** Error: (vsim-3053) sequence_generator.v(72): Illegal output or inout port connection for "port 'done_o'".
+#         Region: /fix_engine/sequence_manager/converted
+# ** Warning: (vsim-3015) sequence_generator.v(72): [PCDPC] - Port size (80 or 80) does not match connection size (256) for port 'ascii_o'. The port definition is at: bin2bcd/binary_to_bcd.v(10).
+#         Region: /fix_engine/sequence_manager/converted
+# ** Error: (vsim-3053) sequence_generator.v(72): Illegal output or inout port connection for "port 'size_o'".
+#         Region: /fix_engine/sequence_manager/converted
+# ** Warning: (vsim-3015) sequence_generator.v(72): [PCDPC] - Port size (10 or 10) does not match connection size (64) for port 'size_o'. The port definition is at: bin2bcd/binary_to_bcd.v(11).
+#         Region: /fix_engine/sequence_manager/converted
+# ** Warning: (vsim-3722) sequence_generator.v(72): [TFMPC] - Missing connection for port 'dat_bcd_o'.
+# ** Warning: (vsim-3017) fix_engine.v(274): [TFMPC] - Too few port connections. Expected 14, found 13.
+#         Region: /fix_engine/out_module
+# ** Warning: (vsim-3722) fix_engine.v(274): [TFMPC] - Missing connection for port 'start_of_header_o'.
+# ** Error: (vsim-3053) checksum.v(119): Illegal output or inout port connection for "port 'done_o'".
+#         Region: /fix_engine/checksum/ascii2binary
+# ** Error: (vsim-3053) checksum.v(119): Illegal output or inout port connection for "port 'result_o'".
+#         Region: /fix_engine/checksum/ascii2binary
+# Error loading design
+# Load canceled

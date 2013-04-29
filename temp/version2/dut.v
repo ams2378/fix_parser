@@ -56,16 +56,14 @@ always
 
 initial begin
 
-clk = 1;
+clk = 0;
 rst = 0;
 
 $vcdpluson;
 
 #1 rst = 1;
-//#1 rst = 0;
+#2 rst = 0;
 
-#5
-rst = 0;
 
 #1
 connect_i	=	'1;
