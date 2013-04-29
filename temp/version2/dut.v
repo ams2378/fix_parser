@@ -56,7 +56,7 @@ always
 
 initial begin
 
-clk = 1;
+clk = 0;
 
 $vcdpluson;
 
