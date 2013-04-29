@@ -64,7 +64,7 @@ $vcdpluson;
 
 rst = 1;
 
-#3
+#2
 
 rst = 0;
 
