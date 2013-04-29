@@ -80,7 +80,7 @@ connected_host_addr_i	=	2'b00;
 
 #2
 
-#10 $finish;
+#1000 $finish;
 
 end
 
