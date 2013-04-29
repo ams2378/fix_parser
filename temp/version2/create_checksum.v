@@ -57,7 +57,7 @@ always @(*) begin
 		
 		state0: begin 
 				if (start_i == 1) begin
-					temp = 8'd117;	// head + data_i; 
+			//		temp = 8'd117;	// head + data_i; 
 					next_state = state1;
 				end else begin
 					valid = '0;
@@ -66,10 +66,10 @@ always @(*) begin
 		end
 		state1: begin
 				if (end_i != 1) begin
-					temp = temp + data_i;
-					if (temp >= 9'd256) begin
-						temp = temp - 9'd256;
-					end
+			//		temp = temp + data_i;
+			//		if (temp >= 9'd256) begin
+			//			temp = temp - 9'd256;
+			//		end
 					next_state = state2;
 				end else begin
 					next_state = state3;
@@ -77,10 +77,10 @@ always @(*) begin
 		end
 		state2: begin
 				if (end_i != 1) begin
-					temp = temp + data_i;
-					if (temp >= 9'd256) begin
-						temp = temp - 9'd256;
-					end
+			//		temp = temp + data_i;
+			//		if (temp >= 9'd256) begin
+			//			temp = temp - 9'd256;
+			//		end
 					next_state = state1;
 				end else begin
 					next_state = state3;
