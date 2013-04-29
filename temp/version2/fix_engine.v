@@ -255,8 +255,8 @@ fix_parser parser(
 
 fix_parser_out_module out_module(
 
-		.clk,
-		.rst,
+		.clk(rst),
+		.rst(rst),
 		.data_i(w_data),
 		.start_tag_i(w_tag_s),
 		.start_value_i(w_value_s),
