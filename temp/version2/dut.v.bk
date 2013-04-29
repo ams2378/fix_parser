@@ -50,8 +50,6 @@ fix_engine dut (
 		.message_received_o		// to api
 	);
 
-always #1 clk = ~clk;
-
 initial begin
 
 int temp = 0;
@@ -59,25 +57,44 @@ int i = 0;
 
 $vcdpluson;
 
-#1
+#1 clk = 0;
+#1 clk = 1;
 
 rst = 1;
 
-#1
+#1 clk = 0;
+#1 clk = 1;
 
 rst = 0;
 
-#1
+
+#1 clk = 0;
+#1 clk = 1;
 
 connect_i	=	'1;
 connect_to_host_i	=	2'b00;
 
-#2
+
+
+#1 clk = 0;
+#1 clk = 1;
+
+
+#1 clk = 0;
+#1 clk = 1;
 
 connected_i =	 '1;
 connected_host_addr_i	=	2'b00;
 
-#2
+#1 clk = 0;
+#1 clk = 1;
+
+while (temp < 500) begin
+#1 clk = 0;
+#1 clk = 1;
+temp = temp + 1;
+end
+
 //always #1 clk = ~clk;
 
 #10 $finish;
