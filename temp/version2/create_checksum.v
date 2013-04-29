@@ -92,7 +92,7 @@ always @(*) begin
 		end
 		state3: begin
 				temp = temp - 8'd97;	
-				if (temp >= 9'd256) begin	
+		/*		if (temp >= 9'd256) begin	
 					temp = temp - 9'd256;
 				end
 				temp = temp % 9'd256;
@@ -109,7 +109,8 @@ always @(*) begin
 						r_100 = temp[7:0] / 8'd100;
 					end
 					next_state = state6;
-				end
+				end					*/
+					next_state = state6;
 		end
 
 		state4: begin
