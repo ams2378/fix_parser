@@ -50,6 +50,7 @@ fix_engine dut (
 		.message_received_o		// to api
 	);
 
+clk = '1;
 always #1 clk = ~clk;
 
 initial begin
