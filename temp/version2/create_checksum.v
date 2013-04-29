@@ -87,11 +87,11 @@ always @(*) begin
 				end
 		end
 		state3: begin
-				temp = temp - 8'd97;	
-				if (temp >= 9'd256) begin	
-					temp = temp - 9'd256;
-				end
-				temp = temp % 9'd256;
+		//		temp = temp - 8'd97;	
+		//		if (temp >= 9'd256) begin	
+		//			temp = temp - 9'd256;
+		//		end
+		//		temp = temp % 9'd256;
 		//		if (temp[7:0] < 100) begin
 					checksum_o	= 	8'h30;		// out is 0
 		//			q_10 = temp[7:0] / 8'd10;
