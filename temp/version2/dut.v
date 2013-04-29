@@ -92,7 +92,7 @@ connected_host_addr_i	=	2'b00;
 while (temp < 500) begin
 #1 clk = 0;
 #1 clk = 1;
-temp = temp - 1;
+temp = temp + 1;
 end
 
 //always #1 clk = ~clk;
