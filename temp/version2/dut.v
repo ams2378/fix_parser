@@ -65,7 +65,7 @@ $vcdpluson;
 //#1 rst = 1;
 
 //#1 rst = 1;
-#1 rst = 0;
+#2 rst = 0;
 
 #5
 connect_i	=	'1;
