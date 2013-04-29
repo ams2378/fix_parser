@@ -3,7 +3,7 @@ SRC= ascii2int.v bin2bcd/binary_to_bcd.v hostaddress.v ram.v received_msg_proces
 BENCH= dut.v
 DUMP= testbench.exe
 
-vcs:
+test:
 	make clean
 	make src2
 	make gtkwave 
@@ -25,6 +25,6 @@ gtkwave:
 	gtkwave waveform.vcd &
 
 clean:
-	rm -rf csrc *.exe.daidir *.exe *.log *.inf .leda_work *.key *.vpd *.vcd DVEfiles
+	rm -rf csrc *.exe.daidir *.exe *.log *.inf .leda_work *.key *.vpd *.vcd DVEfiles simv*
 	rm -rf testbench*
 	
