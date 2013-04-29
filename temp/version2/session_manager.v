@@ -143,8 +143,6 @@ always @ (posedge clk) begin
 		end_session_o		<=	'0;
 	end
 
-
-
 end
 
 // when a new message receiev, interrogate the session state and take proper action

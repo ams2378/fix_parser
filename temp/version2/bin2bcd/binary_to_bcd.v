@@ -102,7 +102,7 @@ begin
 end
  
 // Busy bit, input and output registers
-always @(posedge clk_i or rst_i)
+always @(posedge clk_i )
 begin
   if (rst_i)
   begin
