@@ -66,7 +66,7 @@ always @(*) begin
 		end
 		state1: begin
 				if (end_i != 1) begin
-			//		temp = temp + data_i;
+					temp = temp + data_i;
 			//		if (temp >= 9'd256) begin
 			//			temp = temp - 9'd256;
 			//		end
