@@ -67,16 +67,21 @@ $vcdpluson;
 
 #1
 connect_i	=	'1;
-connect_to_host_i	=	2'b00;
+connect_to_host_i	=	2'b01;
 
 #2
 connected_i =	 '1;
-connected_host_addr_i	=	2'b00;
+connected_host_addr_i	=	2'b01;
 
-#2
+#6
 connected_i	=	'0;
 
 #2
+
+#1000 
+
+new_message_i	=	'1;
+connected_host_addr_i	=	2'b01;
 
 #1000 $finish;
 

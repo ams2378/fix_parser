@@ -65,7 +65,7 @@
 `define 		v_encryptMethod_i 	 	8'h30 	
 `define 		s_v_encryptMethod_i	 	8'b00000001 	
 
-`define 		v_senderCompId			48'h636c69656e74
+`define 		v_senderCompId			48'h746e65696c63
 `define			s_v_senderCompId		6'b111111
 
 `define 		v_bodyLength_i		 	24'h313233 	
@@ -114,7 +114,7 @@
 `define			l_v_heartbeat		 	1'b1 		// configure s_v_heartbeat with this
 
 `define 		l_v_senderCompId	 	3'b110		// client 	
-`define			l_v_sendTime		 	5'10101		// 21- sendtimeval-const 
+`define			l_v_sendTime		 	5'b10101		// 21- sendtimeval-const 
 
 // value for various types of message
 `define			v_logon			 	8'h61 

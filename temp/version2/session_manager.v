@@ -20,8 +20,8 @@ module session_manager # (parameter NUM_HOST = `HOST_ADDR_WIDTH, VALUE_WIDTH = `
 		input[VALUE_WIDTH+SIZE-1:0]	data_out_2,			// from hostaddress table
 
 		output reg			we_2,				// to hostaddress
-		output reg[VALUE_WIDTH-1:0]	addr_2,				// to hostaddress
-		output reg[VALUE_WIDTH-1:0]	data_in_2,			// to hostaddress
+		output reg[NUM_HOST-1:0]	addr_2,				// to hostaddress
+		output reg[VALUE_WIDTH+SIZE-1:0]data_in_2,			// to hostaddress
 	
 		output reg			disconnect_o,			// to toe***
 		output reg[NUM_HOST-1:0] 	disconnect_host_num_o,		// to toe*** 
@@ -100,6 +100,7 @@ endfunction
 
 //  getTargetCompId (connected_host_i) from hostaddress.v
 function [VALUE_WIDTH-1:0] getTargetCompId;
+//task getTargetCompId;
 	input[NUM_HOST-1:0]	connected_host_i;
 
 	begin
@@ -107,7 +108,7 @@ function [VALUE_WIDTH-1:0] getTargetCompId;
 		addr_2			=	connected_host_i;
 		getTargetCompId		=	data_out_2 [VALUE_WIDTH-1:0];
 	end
-endfunction	
+endfunction
 
 
 //  get_s_v_TargetCompId (connected_host_i) from hostaddress.v
@@ -115,8 +116,6 @@ function [SIZE-1:0] get_s_v_TargetCompId;
 	input[NUM_HOST-1:0]	connected_host_i;
 
 	begin
-//		we_2			=	'0;
-//		addr_2			=	connected_host_i;
 		get_s_v_TargetCompId	=	data_out_2 [VALUE_WIDTH+SIZE-1:VALUE_WIDTH];
 	end
 endfunction	
@@ -152,11 +151,11 @@ always @ (posedge clk) begin
 	disconnect_o		<=	'0;
 	error_type_o		<=	'0;
 	resendReq_o		<=	'0;
-	targetCompId_o		<=	'0;
+//	targetCompId_o		<=	'0;
 	ignore_o		<=	'0;
 	doResend_o		<=	'0;
 	sendHeartbeat_o		<=	'0;
-	s_v_targetCompId_o	<=	'0;	
+//	s_v_targetCompId_o	<=	'0;	
 	sendLogout_o		<=	'0;
 	messagereceived_o	<=	'0;
 	updateSeqCounter_o	<=	'0;
@@ -322,20 +321,15 @@ end
 always @ (posedge clk) begin
 
 	disconnect_o		<=	'0;	
-	targetCompId_o		<=	'0;
-	s_v_targetCompId_o	<=	'0;	
+//	targetCompId_o		<=	'0;
+//	s_v_targetCompId_o	<=	'0;	
 	sendHeartbeat_o		<=	'0;	
 	sendLogout_o		<=	'0;	
 	disconnect_host_num_o	<=	'0;	
 	sendLogon_o		<=	'0;	
 
-//	create_message_o	<=	'0;
-//	initiate_msg_o		<=	'0;
-
 	if (connected_i == 1) begin
 		sendLogon_o	<=	'1;
-//		{initiate_msg_o, create_message_o}	<=	{'1, `logon};
-//		create_message_o	<=	`logon;
 		targetCompId_o	<=	getTargetCompId (connected_host_i);
 		s_v_targetCompId_o	<=	get_s_v_TargetCompId (connected_host_i);
 		updateSessionState(connected_host_i, `logonSent);
@@ -343,7 +337,6 @@ always @ (posedge clk) begin
 
 	if (end_session_i == 1) begin
 		sendLogout_o	<=	'1;
-//		create_message_o	<=	`logout;
 		targetCompId_o	<=	getTargetCompId (connected_host_i);
 		s_v_targetCompId_o	<=	get_s_v_TargetCompId (connected_host_i);
 		updateSessionState(connected_host_i, `logoutSent);
@@ -359,7 +352,6 @@ always @ (posedge clk) begin
 			updateSessionState(connected_host_i, `disconnected);
 		end else begin
 			sendHeartbeat_o		<=	'1;
-//			create_message_o	<=	`heartbeat;
 			targetCompId_o		<=	getTargetCompId (connected_host_i);
 			s_v_targetCompId_o	<=	get_s_v_TargetCompId (connected_host_i);
 			updateSessionState(connected_host_i, `sentheartbeat);
@@ -371,20 +363,24 @@ end
 
 always @ (posedge clk) begin
 
-	create_message_o	<= '0;
+//	create_message_o	<= '0;
 	initiate_msg_o		<= '0;
 
-	if (sendLogon_o)
+	if (sendLogon_o) begin
 		create_message_o	<=	`logon;
-	else if (sendLogout_o)
+		initiate_msg_o		<=	'1;
+	end else if (sendLogout_o) begin
 		create_message_o	<=	`logout;
-	else if (sendHeartbeat_o)
+		initiate_msg_o		<=	'1;
+	end else if (sendHeartbeat_o) begin
 		create_message_o	<=	`heartbeat;
-	else if (resendReq_o)
+		initiate_msg_o		<=	'1;
+	end else if (resendReq_o) begin
 		create_message_o	<=	`resendReq;
-
-	initiate_msg_o		<=	(create_message_o != 4'b0000)	? 1 : 0;
-
+		initiate_msg_o		<=	'1;
+	end
+//		initiate_msg_o		<=	(create_message_o != 4'b0000)	? 1 : 0;
+		
 end
 
 

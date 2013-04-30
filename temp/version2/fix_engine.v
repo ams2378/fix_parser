@@ -78,6 +78,7 @@ wire				w_tag_s;
 wire				w_value_s;
 wire				w_start_message;
 wire				w_end_message;
+wire				w_seq_ready;
 wire				w_checksum_valid;
 wire[31:0]			w_tag_val;
 wire[`VALUE_DATA_WIDTH-1:0]	w_val_val;
@@ -85,6 +86,11 @@ wire				w_we_2;
 wire[`HOST_ADDR_WIDTH-1:0]	w_addr_2;
 wire[HOSTADDR_DATA_WIDTH-1:0]	w_data_2;
 wire[HOSTADDR_DATA_WIDTH-1:0]	w_q_2;
+wire[5:0]			w_host_size;
+wire[3:0]			w_l_msgSeqNum;
+wire				w_bodyLength_valid;
+wire[5:0]			w_s_v_bodyLength;
+wire[79:0]			w_v_bodyLength;
 
 
 hostaddress  hostaddresstable(
@@ -93,7 +99,8 @@ hostaddress  hostaddresstable(
 		.we(w_we_2),
 		.q(w_q_2),
 		.addr(w_addr_2),
-		.data(w_data_2)
+		.data(w_data_2),
+		.host_size(w_host_size)
 	);
 
 
@@ -165,7 +172,10 @@ create_message  create_messege_module (
 	.start_i (w_initiate_msg),				// from SM
 	.done_i (w_done),					// from fsm
 	.end_i (w_endd),					// from fsm
-	.bodyLength_r_i ('1), 					// from bodylength module (ready) 
+	.bodyLength_r_i (w_bodyLength_valid), 			// from bodylength module (ready) 
+	.v_bodyLength_i(w_v_bodyLength),
+	.s_v_bodyLength_i(w_s_v_bodyLength),
+
 	.message_type_i (w_messagetype),			// from SM	
 	.v_targetCompId_i (w_v_targetCompId),			// from SM	
 	.s_v_targetCompId_i (w_s_v_targetCompId),		// from SM	
@@ -178,14 +188,17 @@ create_message  create_messege_module (
 	.s_v_senderCompId_i(`s_v_senderCompId),			// from defines	
 	.v_heartBeatInt_i (`v_heartbeat),			// from defines
 	.s_v_heartBeatInt_i (`s_v_heartbeat),			// from defines
+	.seq_ready_i(w_seq_ready),
 
+	.start_chksm_o(w_start_chksm),			// edit ams
 	.tag_o (w_tag),						// to fsm
 	.tag_valid_o (w_tagvalid),				// to fsm
 	.val_o (w_value),					// to fsm
 	.val_valid_o (w_valuevalid),				// to fsm
 	.v_size_o (w_valuesize),				// to fsm
 	.t_size_o (w_tagsize),					// to fsm
-	.checksum_o (w_doChecksum)				// to fsm
+	.checksum_o (w_doChecksum),				// to fsm
+	.output_valid_o(send_message_valid_o)
 //	.msg_creation_done_o (messagecreated)			// to SM 
 		
 	);
@@ -204,7 +217,7 @@ fsm_msg_create_2  fsm (
 	.checksum_val_i (w_checksum_val),			// will update later
 
 	.data_o(message_o),
-	.start_chksm_o(w_start_chksm),				// to checksum calc (start calc)
+//	.start_chksm_o(w_start_chksm),				// to checksum calc (start calc)
 	.done_o (w_done),
 	.end_o (w_endd),
 	.end_of_msg_o(w_end_chksm)				// to checksum calc (end calc)
@@ -221,13 +234,12 @@ create_checksum	checksum_calc(
 	.checksum_o(w_checksum_val)
 );
 
-
 sequence_generator sequence_manager (
 
 	 .clk(clk),
 	 .rst(rst),
 	 .receive_new_message_i('0),				// not supported now- from fifo control***
-	 .create_message_i(w_messagetype),			// from session manager 
+	 .create_message_i(w_start_chksm),			// from session manager 
 	 .ignore_i (w_ignore),					// from session manager
 	 .updateSeqCounter_i(w_updatecnt),			// from session manager
 	 .seqCounterLoc_i(w_seqCounterLoc),			// from session manager
@@ -237,54 +249,68 @@ sequence_generator sequence_manager (
 
  	 .expected_seq_num_o(w_expseqnum),			//  ***
 	 .outgoing_seq_num_o(w_outseqnum),			// to create message
-	 .size_seq_num_o(w_s_msgSeqNum)				// to create message
-//	 .valid_seq_num_o					// to create message (need to enable it)
-//	 .width_seq_o						// *** not needed now				
+	 .size_seq_num_o(w_s_msgSeqNum),				// to create message
+	 .valid_seq_num_o(w_seq_ready),					// to create message (need to enable it)
+	 .width_seq_o(w_l_msgSeqNum)						// *** not needed now				
 	);
 
-fix_parser parser(
-		.clk(clk),
-		.rst(rst),
-		.data_i(message_i),
-		.new_message_i(new_message_i),		
 
-		.data_o(w_data),
-		.tag_s_o(w_tag_s),
-		.value_s_o(w_value_s)
+
+bodylength bodylengthcalc (
+
+	.clk(clk),
+	.rst(rst),
+	.start_i(w_start_chksm),
+	.create_message_i(w_messagetype),	
+	.l_v_msgSeqNum_i(w_l_msgSeqNum),
+	.l_v_targetCompId(w_host_size),	
+
+	.v_bodyLength_o(w_v_bodyLength),
+	.valid_o(w_bodyLength_valid),
+	.s_v_bodyLength_o (w_s_v_bodyLength)	
+);
+
+
+fix_parser parser(
+	.clk(clk),
+	.rst(rst),
+	.data_i(message_i),
+	.new_message_i(new_message_i),		
+
+	.data_o(w_data),
+	.tag_s_o(w_tag_s),
+	.value_s_o(w_value_s)
 );
 
 fix_parser_out_module out_module(
 
-		.clk(rst),
-		.rst(rst),
-		.data_i(w_data),
-		.start_tag_i(w_tag_s),
-		.start_value_i(w_value_s),
-		
-		.t_wr_cs_o (w_tag_en),
-		.t_wr_en_o (w_tag_en),
-		.v_wr_cs_o (w_val_en),
-		.v_wr_en_o (w_val_en),
-		.tag_o 	   (w_tag_val),
-		.value_o   (w_val_val),
+	.clk(rst),
+	.rst(rst),
+	.data_i(w_data),
+	.start_tag_i(w_tag_s),
+	.start_value_i(w_value_s),
+	
+	.t_wr_cs_o (w_tag_en),
+	.t_wr_en_o (w_tag_en),
+	.v_wr_cs_o (w_val_en),
+	.v_wr_en_o (w_val_en),
+	.tag_o 	   (w_tag_val),
+	.value_o   (w_val_val),
 
-		.end_of_body_o (w_end_message),
-//		.start_of_header_o,
-		.start_message_o (w_start_message)
+	.end_of_body_o (w_end_message),
+//	.start_of_header_o,
+	.start_message_o (w_start_message)
 );
 
 checksum  checksum (
 	
-		.clk (clk), 		
-		.rst (rst), 
-	
-		.data_i(message_i),
-		.start_i (w_start_message),
-		.end_i(w_end_message),
-		.valid_o(w_checksum_valid)	
+	.clk (clk), 		
+	.rst (rst), 
 
+	.data_i(message_i),
+	.start_i (w_start_message),
+	.end_i(w_end_message),
+	.valid_o(w_checksum_valid)	
 ); 
-
-
 
 endmodule
