@@ -11,7 +11,7 @@ module bodylength #(parameter HOST_ADDR = `HOST_ADDR_WIDTH, MAX_SIZE = 80, VALUE
 		input[3:0]			l_v_msgSeqNum_i,
 		input[5:0]			l_v_targetCompId,	// 256 bits of val
 
-		output[MAX_SIZE-1:0]		v_bodyLength_o,
+		output reg[MAX_SIZE-1:0]	v_bodyLength_o,
 		output				valid_o,
 		output[5:0]			s_v_bodyLength_o 	// s_v_bodylength
 		);
@@ -23,6 +23,7 @@ reg				done;
 reg				start_conv;
 integer				k;
 reg [3:0]			width;
+reg[MAX_SIZE-1:0]		v_bodyLength_temp;
 
 always @ (*) begin
 
@@ -65,7 +66,7 @@ end
 
 always @(*) begin
 	for (k = 0; k<width; k=k+1) begin
-		s_v_bodyLength_o[k*8 +: 8] = s_v_bodyLength_temp[8*(width-1-k) +: 8];	
+		v_bodyLength_o[k*8 +: 8] = v_bodyLength_temp[8*(width-1-k) +: 8];	
 	end
 end
 
@@ -78,8 +79,8 @@ binary_to_bcd # (.BITS_IN_PP(32), .BCD_DIGITS_OUT_PP(10), .BIT_COUNT_WIDTH_PP(5)
 		.start_i(start_conv),
 		.dat_binary_i(length),
 		.done_o(done),
-		.ascii_o(v_bodyLength_o),
-		.size_o(s_v_bodyLength_temp)
+		.ascii_o(v_bodyLength_temp),
+		.size_o(s_v_bodyLength_o),
 		.width_o(width)
 	);
 
