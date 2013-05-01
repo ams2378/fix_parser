@@ -2,7 +2,7 @@ library verilog;
 use verilog.vl_types.all;
 entity sequence_generator is
     generic(
-        MAX_SIZE        : integer := 256;
+        MAX_SIZE        : integer := 80;
         HOST_ADDR       : integer := 2;
         SIZE            : integer := 64
     );
@@ -10,7 +10,7 @@ entity sequence_generator is
         clk             : in     vl_logic;
         rst             : in     vl_logic;
         receive_new_message_i: in     vl_logic;
-        create_message_i: in     vl_logic_vector(3 downto 0);
+        create_message_i: in     vl_logic;
         ignore_i        : in     vl_logic;
         updateSeqCounter_i: in     vl_logic;
         seqCounterLoc_i : in     vl_logic_vector(1 downto 0);

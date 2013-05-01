@@ -17,7 +17,7 @@ module sequence_generator #(parameter MAX_SIZE = 80, HOST_ADDR = `HOST_ADDR_WIDT
 		input[`HOST_ADDR_WIDTH-1:0]	received_host_addr_i,	// 
 	
 		output reg[MAX_SIZE-1:0]	expected_seq_num_o,
-		output reg[MAX_SIZE-1:0]	outgoing_seq_num_o,
+		output wire[MAX_SIZE-1:0]	outgoing_seq_num_o,
 		output reg[SIZE-1:0]		size_seq_num_o,
 		output wire			valid_seq_num_o,
 		output reg[3:0]			width_seq_o
@@ -64,25 +64,25 @@ always @(*) begin
 		outgoing_seq_num[k*8 +: 8] = outgoing_seq_num_temp[8*(width-1-k) +: 8];	
 	end
 
-	if (outgoing_seq_num_temp < 32'd10)
+	if (mem[sending_to_host_addr_i] < 32'd10)
 		width_seq_o	=	4'b0001;
-	else if (outgoing_seq_num_temp < 32'd100)
+	else if (mem[sending_to_host_addr_i] < 32'd100)
 		width_seq_o	=	4'b0010;
-	else if ( outgoing_seq_num_temp < 32'd1000)	
+	else if ( mem[sending_to_host_addr_i] < 32'd1000)	
 		width_seq_o	=	4'b0011;
-	else if (outgoing_seq_num_temp < 32'd10000)
+	else if (mem[sending_to_host_addr_i] < 32'd10000)
 		width_seq_o	=	4'b0100;
-	else if ( outgoing_seq_num_temp < 32'd100000)		
+	else if ( mem[sending_to_host_addr_i] < 32'd100000)		
 		width_seq_o	=	4'b0101;
-	else if (outgoing_seq_num_temp < 32'd1000000)
+	else if (mem[sending_to_host_addr_i] < 32'd1000000)
 		width_seq_o	=	4'b0110;
-	else if ( outgoing_seq_num_temp < 32'd10000000)	
+	else if ( mem[sending_to_host_addr_i] < 32'd10000000)	
 		width_seq_o	=	4'b0111;
-	else if ( outgoing_seq_num_temp < 32'd100000000)	
+	else if ( mem[sending_to_host_addr_i] < 32'd100000000)	
 		width_seq_o	=	4'b1000;
-	else if (outgoing_seq_num_temp < 32'd1000000000)
+	else if ( mem[sending_to_host_addr_i] < 32'd1000000000)
 		width_seq_o	=	4'b1001;
-	else if ( outgoing_seq_num_temp < 32'd10000000000)		
+	else if ( mem[sending_to_host_addr_i] < 32'd10000000000)		
 		width_seq_o	=	4'b1010;
 	
 end
