@@ -17,7 +17,7 @@ module fix_engine_test();
 	reg[1:0]			connected_host_addr_i;		// from toe
 	reg[7:0]			message_i;			// from toe
 	reg				valid_i;			// from toe
-
+	reg				fifo_full_i;
 	reg				new_message_i;			// will be implemented by fifo contr.
 
 	reg				connect_req_o;			// goes to fifo
@@ -38,7 +38,7 @@ fix_engine dut (
 	 	.connected_host_addr_i,		// from toe
 	 	.message_i,			// from toe
 	 	.valid_i,			// from toe
-
+		.fifo_full_i,
 		.new_message_i,			// will be implemented by fifo contr.
 
 		.connect_req_o,			// goes to fifo
@@ -64,6 +64,11 @@ end
 always @ (posedge clk) begin
 	if ( send_message_valid_o)
 		$fwrite(mon,"%h ",message_o);
+
+	if (send_message_valid_o == 1) begin
+		#5 fifo_full_i = '1;
+		#5 fifo_full_i = '0;
+	end
 end
 
 
@@ -71,6 +76,7 @@ initial begin
 
 clk = 0;
 rst = 0;
+fifo_full_i = '0;
 
 $vcdpluson;
 

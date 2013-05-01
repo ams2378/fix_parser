@@ -147,6 +147,7 @@ always @ (posedge clk) begin
 
 end
 
+/*
 parameter		state0 = 2'b00;
 parameter		state1 = 2'b01;
 parameter		state2 = 2'b10;
@@ -180,13 +181,15 @@ always @ (*) begin
 					new_message_valid   =  '1;
 					next_state	= state0;
 			end
-/*		state3:	begin
+		state3:	begin
 					new_message_valid   =  '1;
 					next_state	= state0;
 			end
-*/
+
 	endcase
 end
+*/
+
 
 // when a new message receiev, interrogate the session state and take proper action
 always @ (posedge clk) begin
@@ -208,7 +211,7 @@ always @ (posedge clk) begin
 	sendLogon_o		<=	'0;
 	end_session_o		<=	'0;
 
-	if (new_message_valid == 1) begin
+	if (new_message_i == 1) begin
 		if (validity_i == `msgSeqL || validity_i == `invalid)	begin
 			disconnect_o		<=	'1;	
 			disconnect_host_num_o	<=	connected_host_i;

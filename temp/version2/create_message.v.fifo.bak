@@ -22,7 +22,8 @@ module create_message #(parameter VALUE_WIDTH = `VALUE_DATA_WIDTH, SIZE = 64) (
 		input				rst,
 		input				start_i,
 		input				done_i,
-		input				end_i,				
+		input				end_i,	
+		input				fifo_full_i,			
 		input				bodyLength_r_i,			
 		input[3:0]			message_type_i,			
 		input[VALUE_WIDTH-1:0] 		v_beginString_i,			
@@ -135,7 +136,7 @@ always @(posedge clk) begin
 	else			state <= next_state;
 end
 
-always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end_i or seq_ready_i) begin
+always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end_i or seq_ready_i or fifo_full_i) begin
 
 	if (rst) begin
 		tag_o 			= '0;	
@@ -153,6 +154,9 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 		
 		// tag beginstring
 	state0: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state0;
+		else begin
 			if (start_i == 1) begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
@@ -173,10 +177,14 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				v_size_o		=	'0;
 				next_state		=	state0;
 			end
+		end
 		end		
 
 		// value beginstring
 	state1: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state1;
+		else begin
 			if (done_i == 1) begin
 				tag_o		=	'0;
 				tag_valid_o	=	'0;
@@ -191,8 +199,12 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				next_state	=	state1;
 			end
 		end
+		end
 
 	state20: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state20;
+		else begin
 				start_chksm_o	=	'0;				// edit ams	
 				tag_o		=	'0;
 				output_valid_o	=	'1;
@@ -202,9 +214,13 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				v_size_o	=	s_v_beginString_i;		
 				next_state 	=	state2;
 		end
+		end
 
 		// tag bodylength
 	state2: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state2;
+		else begin
 			if (done_i == 1 ) begin
 				val_o		=	'0;
 				output_valid_o	=	'1;
@@ -219,8 +235,12 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				next_state	=	state2;
 			end
 		end
+		end
 
 	state21: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state21;
+		else begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
 				output_valid_o	=	'1;
@@ -229,9 +249,13 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				t_size_o	=	`s_t_bodyLength;
 				next_state 	=	state3;
 		end
+		end
 
 		// value bodylength
 	state3: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state3;
+		else begin
 			if (done_i == 1 ) begin
 		//		tag_o		=	'0;
 		//		tag_valid_o	=	'0;
@@ -245,8 +269,12 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				next_state	=	state3;
 			end
 		end
+		end
 
 	state40: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state40;
+		else begin
 			if (bodyLength_r_i == 1) begin
 				tag_o		=	'0;
 				tag_valid_o	=	'0;
@@ -260,8 +288,12 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 			end		
 
 		 end
+		end
 
 	state22: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state22;
+		else begin
 				tag_o		=	'0;
 				tag_valid_o	=	'0;
 				output_valid_o	=	'1;
@@ -270,9 +302,13 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				v_size_o	=	s_v_bodyLength_i;	// edit	
 				next_state 	=	state4;
 		end
+		end
 
 		// tag msgSeqNumber
 	state4: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state4;
+		else begin
 			if (done_i == 1 ) begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
@@ -285,8 +321,12 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				next_state	=	state4;
 			end
 		end
+		end
 
 	state23: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state23;
+		else begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
 				output_valid_o	=	'1;
@@ -295,9 +335,13 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				t_size_o	=	`s_t_msgSeqNum;
 				next_state 	=	state5;
 		end
+		end
 
 		// value msgSeqNumber
 	state5: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state5;
+		else begin
 			if (done_i == 1 ) begin
 				next_state	=	state39;
 				output_valid_o	=	'1;
@@ -311,8 +355,12 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				next_state	=	state5;
 			end
 		end
+		end
 
 	state39: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state39;
+		else begin
 			if (seq_ready_i == 1) begin
 				tag_o		=	'0;
 				tag_valid_o	=	'0;
@@ -326,8 +374,12 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 			end		
 
 		 end
+		end
 
 	state24: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state24;
+		else begin
 				tag_o		=	'0;
 				output_valid_o	=	'1;
 				tag_valid_o	=	'0;
@@ -336,9 +388,13 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				v_size_o	=	s_v_msgSeqNum_i;		
 				next_state 	=	state6;
 		end
+		end
 
 		// tag msgType
 	state6: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state6;
+		else begin
 			if (done_i == 1 ) begin
 				val_o		=	'0;
 				output_valid_o	=	'1;
@@ -351,8 +407,12 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				next_state	=	state6;
 			end
 		end
+		end
 
 	state25: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state25;
+		else begin
 				val_o		=	'0;
 				output_valid_o	=	'1;
 				val_valid_o	=	'0;
@@ -361,10 +421,14 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				t_size_o	=	`s_t_msgType;
 				next_state 	=	state7;
 		end
+		end
 
 
 		// value msgType
 	state7: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state7;
+		else begin
 		if (done_i == 1 ) begin
 			tag_o		=	'0;
 			output_valid_o	=	'1;
@@ -377,9 +441,13 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 			next_state	=	state7;
 		end
 		end
+		end
 
 
 	state26: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state26;
+		else begin
 				tag_o		=	'0;
 				tag_valid_o	=	'0;	
 				output_valid_o	=	'1;
@@ -388,9 +456,13 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				v_size_o	=	s_v_msgType(message_type_i);		
 				next_state 	=	state8;
 		end
+		end
 
 		// tag senderCompId
 	state8: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state8;
+		else begin
 			if (done_i == 1 ) begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
@@ -403,8 +475,12 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				next_state	=	state8;
 			end
 		end
+		end
 
 	state27: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state27;
+		else begin
 				val_o		=	'0;
 				output_valid_o	=	'1;
 				val_valid_o	=	'0;
@@ -413,9 +489,13 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				t_size_o	=	`s_t_senderCompId;
 				next_state 	=	state9;
 		end
+		end
 
 		// value senderComptId
 	state9: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state9;
+		else begin
 			if (done_i == 1 ) begin
 				tag_o		=	'0;
 				tag_valid_o	=	'0;
@@ -428,8 +508,12 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				next_state	=	state9;
 			end
 		end
+		end
 
 	state28: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state28;
+		else begin
 				tag_o		=	'0;
 				tag_valid_o	=	'0;
 				output_valid_o	=	'1;
@@ -438,9 +522,13 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				v_size_o	=	s_v_senderCompId_i;		
 				next_state 	=	state10;
 		end
+		end
 
 		// tag sendTime
 	state10: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state10;
+		else begin
 			if (done_i == 1 ) begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
@@ -454,7 +542,11 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 			end
 		end
 
+		end
 	state29: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state29;
+		else begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
 				output_valid_o	=	'1;
@@ -464,8 +556,12 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				next_state 	=	state11;
 		end
 
+		end
 		// value sendTime
 	state11: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state11;
+		else begin
 			if (done_i == 1 ) begin
 				tag_o		=	'0;
 				tag_valid_o	=	'0;
@@ -478,8 +574,12 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				next_state	=	state11;
 			end
 		end
+		end
 
 	state30: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state30;
+		else begin
 				tag_o		=	'0;
 				tag_valid_o	=	'0;
 				output_valid_o	=	'1;
@@ -488,9 +588,13 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				v_size_o	=	`s_v_sendTime;		
 				next_state 	=	state12;
 		end
+		end
 
 		// tag targetCompId
 	state12: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state12;
+		else begin
 			if (done_i == 1 ) begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
@@ -503,8 +607,12 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				next_state	=	state12;
 			end
 		end
+		end
 
 	state31: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state31;
+		else begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
 				output_valid_o	=	'1;
@@ -513,9 +621,13 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				t_size_o	=	`s_t_targetCompId;
 				next_state 	=	state13;
 		end
+		end
 
 		// value targetCompId
 	state13: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state13;
+		else begin
 			if (done_i == 1 ) begin
 				tag_o		=	'0;
 				tag_valid_o	=	'0;
@@ -528,8 +640,12 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				next_state	=	state13;
 			end
 		end
+		end
 
 	state32: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state32;
+		else begin
 				tag_o		=	'0;
 				tag_valid_o	=	'0;
 				output_valid_o	=	'1;
@@ -538,10 +654,14 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				v_size_o	=	s_v_targetCompId_i;		
 				next_state 	=	state14;
 		end
+		end
 
 
 		// tag encryptMethod
 	state14: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state14;
+		else begin
 			if (done_i == 1 && (message_type_i == `heartbeat || message_type_i == `logout)) begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
@@ -563,8 +683,12 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				next_state	=	state14;
 			end
 		end
+		end
 
 	state33: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state33;
+		else begin
 				val_o		=	'0;
 				output_valid_o	=	'1;
 				val_valid_o	=	'0;
@@ -573,8 +697,12 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				t_size_o	=	`s_t_encryptMethod;
 				next_state 	=	state15;
 		end
+		end
 
 	state34: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state34;
+		else begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
 				tag_o		=	`t_checksum;
@@ -583,9 +711,13 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				t_size_o	=	`s_t_checksum;
 				next_state 	=	state19;
 		end
+		end
 
 		// value encryptMethod
 	state15: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state15;
+		else begin
 			if (done_i == 1 ) begin
 				tag_o		=	'0;
 				tag_valid_o	=	'0;
@@ -598,8 +730,12 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				next_state	=	state15;
 			end
 		end
+		end
 
 	state35: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state35;
+		else begin
 				tag_o		=	'0;
 				tag_valid_o	=	'0;
 				output_valid_o	=	'1;
@@ -609,8 +745,12 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				next_state 	=	state16;
 		end
 
+		end
 		// tag heartBeatInt
 	state16: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state16;
+		else begin
 			if (done_i == 1 ) begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
@@ -623,8 +763,12 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				next_state	=	state16;
 			end
 		end
+		end
 
 	state36: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state36;
+		else begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
 				tag_o		=	`t_heartBeatInt;
@@ -633,10 +777,14 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				t_size_o	=	`s_t_heartBeatInt;
 				next_state 	=	state17;
 		end
+		end
 
 
 		// value heartBeatInt
 	state17: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state17;
+		else begin
 			if (done_i == 1 ) begin
 				tag_o		=	'0;
 				tag_valid_o	=	'0;
@@ -649,9 +797,13 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				next_state	=	state17;
 			end
 		end
+		end
 
 
 	state37: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state37;
+		else begin
 				tag_o		=	'0;
 				tag_valid_o	=	'0;
 				val_o		=	v_heartBeatInt_i;
@@ -660,10 +812,14 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				v_size_o	=	s_v_heartBeatInt_i;		
 				next_state 	=	state18;
 		end
+		end
 
 
 		// tag checksum
 	state18: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state18;
+		else begin
 			if (done_i == 1 ) begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
@@ -677,8 +833,12 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				next_state	=	state18;
 			end
 		end
+		end
 
 	state38: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state38;
+		else begin
 				val_o		=	'0;
 				output_valid_o	=	'1;
 				val_valid_o	=	'0;
@@ -688,9 +848,13 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				next_state 	=	state19;
 		end
 
+		end
 		// end of message creation
 	state19:
 		begin
+		if (fifo_full_i == 1) 
+			next_state	=	state19;
+		else begin
 				checksum_o	=	'0;
 				output_valid_o	=	'1;
 			if (end_i == 1) begin
@@ -698,6 +862,7 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				next_state 		=	state0;
 			end else
 				next_state	=	state19;
+		end
 		end
 	endcase
 

@@ -34,6 +34,7 @@ module fix_engine #(parameter NUM_HOST = `HOST_ADDR_WIDTH, SIZE = 64, T_SIZE = 5
 	input[NUM_HOST-1:0]		connected_host_addr_i,		// from toe
 	input[7:0]			message_i,			// from toe
 	input				valid_i,			// from toe
+	input				fifo_full_i,
 
 	input				new_message_i,			// will be implemented by fifo contr.
 
@@ -175,6 +176,9 @@ create_message  create_messege_module (
 	.bodyLength_r_i (w_bodyLength_valid), 			// from bodylength module (ready) 
 	.v_bodyLength_i(w_v_bodyLength),
 	.s_v_bodyLength_i(w_s_v_bodyLength),
+
+//	.fifo_full_i(fifo_full_i),
+
 
 	.message_type_i (w_messagetype),			// from SM	
 	.v_targetCompId_i (w_v_targetCompId),			// from SM	
