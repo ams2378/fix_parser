@@ -265,9 +265,9 @@ always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end
 				tag_o		=	'0;
 				tag_valid_o	=	'0;
 				output_valid_o	=	'1;
-				val_o		=	`v_bodyLength_i;
+				val_o		=	v_bodyLength_i;		// edit
 				val_valid_o	=	'1;			
-				v_size_o	=	`s_v_bodyLength_i;		
+				v_size_o	=	s_v_bodyLength_i;	// edit	
 				next_state 	=	state4;
 		end
 

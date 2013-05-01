@@ -38,7 +38,7 @@ always @ (*) begin
 					 `l_t_sendTime  + `l_v_sendTime +
 					 `l_t_targetCompId + l_v_targetCompId + 
 					 `l_t_encryptMethod + `l_v_encryptMethod +
-					 `l_t_heartBeatInt + `l_v_heartbeat;	
+					 `l_t_heartBeatInt + `l_v_heartbeat + 8'd7;	
 				end
 		`logout	:	begin
 				start_conv	=	'1;
