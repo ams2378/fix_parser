@@ -16,6 +16,7 @@ module create_checksum(
 	input[7:0]		data_i,
 	input			start_i,
 	input			end_i,
+	input			data_valid_i,
 
 	output reg[7:0]		checksum_o
 );
@@ -55,7 +56,7 @@ always @(*) begin
 	case(state) 
 		
 		state0: begin 
-				if (start_i == 1) begin
+				if (start_i == 1 && data_valid_i == 1) begin
 					temp = 8'd117;	// head + data_i; 
 					next_state = state1;
 				end else begin
@@ -63,50 +64,62 @@ always @(*) begin
 				end
 		end
 		state1: begin
-				if (end_i != 1) begin
-					temp2 = temp + data_i;
-					if (temp2 >= 9'd256) begin
-						temp2 = temp2 - 9'd256;
+				if (data_valid_i == 0) begin
+					next_state  =  state1;
+				end else begin 
+					if (end_i != 1) begin
+						temp2 = temp + data_i;
+						if (temp2 >= 9'd256) begin
+							temp2 = temp2 - 9'd256;
+						end
+						next_state = state2;
+						end else begin
+						temp3 = temp2 - 8'd97;
+						next_state = state3;
 					end
-					next_state = state2;
-				end else begin
-					temp3 = temp2 - 8'd97;
-					next_state = state3;
 				end
 		end
 		state2: begin
-				if (end_i != 1) begin
-					temp = temp2 + data_i;
-					if (temp >= 9'd256) begin
-						temp = temp - 9'd256;
-					end
-					next_state = state1;
+				if (data_valid_i == 0) begin
+					next_state   =  state2;
 				end else begin
-					temp3 = temp - 8'd97;
-					next_state = state3;
+					if (end_i != 1) begin
+						temp = temp2 + data_i;
+						if (temp >= 9'd256) begin
+							temp = temp - 9'd256;
+						end
+						next_state = state1;
+					end else begin
+						temp3 = temp - 8'd97;
+						next_state = state3;
+					end
 				end
 		end
 		state3: begin
+				if (data_valid_i == 0) begin
+					next_state  =  state3;
+				end else begin				
 		//		temp = temp - 8'd97;	
-				if (temp3 >= 9'd256) begin	
-					temp3 = temp3 - 9'd256;
-				end
-				temp3 = temp3 % 9'd256;
-				if (temp3[7:0] < 100) begin
-					checksum_o	= 	8'h30;		// out is 0
-					q_10 = temp3[7:0] / 8'd10;
-					r_10 = temp3[7:0] % 8'd10;	
-					next_state = state4;
-				end else begin
-					if (temp3[7:0] > 199) begin
-						checksum_o = 8'h32;
-						r_100 = temp3[7:0] / 8'd100;
-					end else begin
-						checksum_o = 8'h31;
-						r_100 = temp3[7:0] / 8'd100;
+					if (temp3 >= 9'd256) begin	
+						temp3 = temp3 - 9'd256;
 					end
-					next_state = state6;
-				end					
+					temp3 = temp3 % 9'd256;
+					if (temp3[7:0] < 100) begin
+						checksum_o	= 	8'h30;		// out is 0
+						q_10 = temp3[7:0] / 8'd10;
+						r_10 = temp3[7:0] % 8'd10;	
+						next_state = state4;
+					end else begin
+						if (temp3[7:0] > 199) begin
+							checksum_o = 8'h32;
+							r_100 = temp3[7:0] / 8'd100;
+						end else begin
+							checksum_o = 8'h31;
+							r_100 = temp3[7:0] / 8'd100;
+						end
+						next_state = state6;
+					end	
+				end				
 		end
 
 		state4: begin

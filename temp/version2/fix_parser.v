@@ -15,6 +15,7 @@ module fix_parser(
 	input				rst,
 	input[7:0]			data_i,
 	input				new_message_i,
+	input				end_message_i,
 	
 	output[7:0]			data_o,
 	output				tag_s_o,
@@ -23,15 +24,14 @@ module fix_parser(
 
 parameter 			initial_s = 2'b00;
 parameter			tag = 2'b01;
-parameter			value = 2'b10;
+parameter			value1 = 2'b10;
+parameter			value2 = 2'b11;
 
 reg [1:0]			state;
 reg [1:0]			next_state;
 reg [7:0]			data;
 reg				tag_s;
-//reg   			tag_e;
 reg				value_s;
-//reg				value_e;
 
 reg [7:0] 			soh_c = 8'h01;		// ASCII for SOH 
 reg [7:0] 			sep_c = 8'h3d;		// ASCII for "="
@@ -42,8 +42,8 @@ always @(posedge clk) begin
 	else			state <= next_state;
 end
 
-always @(state or data_i or new_message_i) begin
-
+//always @(state or data_i or new_message_i) begin
+always @ (*) begin
 	if (rst) begin
 		data = '0;	
 		tag_s = '0;
@@ -52,7 +52,8 @@ always @(state or data_i or new_message_i) begin
 
 	case(state) 
 		
-		2'b00: begin 
+		2'b00: begin 	tag_s = '0;
+				value_s = '0;
 				if (new_message_i == 1) begin
 					next_state = tag;
 				end else begin
@@ -65,10 +66,14 @@ always @(state or data_i or new_message_i) begin
 					tag_s = '1;
 					value_s = '0;
 					next_state = tag;
-				end else if (data_i == sep_c) begin
+				end else if (data_i == sep_c && end_message_i == 1) begin
 					tag_s = '0;
 					value_s = '0;
-					next_state = value;
+					next_state = value2;
+				end else begin
+					tag_s = '0;
+					value_s = '0;
+					next_state = value1;
 				end
 		end
 		2'b10: begin	
@@ -76,11 +81,23 @@ always @(state or data_i or new_message_i) begin
 					data = data_i;
 					tag_s = '0;
 					value_s = '1;
-					next_state = value;
+					next_state = value1;
 				end else if (data_i == soh_c) begin
 					tag_s = '0;
 					value_s = '0;
 					next_state = tag;
+				end	
+		end
+		2'b11: begin	
+				if (data_i != soh_c) begin
+					data = data_i;
+					tag_s = '0;
+					value_s = '1;
+					next_state = value2;
+				end else if (data_i == soh_c) begin
+					tag_s = '0;
+					value_s = '0;
+					next_state = initial_s;
 				end	
 		end
 	endcase

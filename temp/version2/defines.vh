@@ -42,13 +42,8 @@
 `define			endSeqNum		 	32'h00003136 
 `define			gapFillFlag		 	32'h00313233 
 `define			newSeqNum		 	32'h00003336 	
-`define			heartbeatInt		 	32'h00000030 
+`define			heartbeatInt		 	32'h00313038 
 `define			sendtime		 	32'h00003532 
-
-`define			t_beginString		 	32'h00000038 
-`define			t_bodylength		 	32'h00000039 
-`define			t_msgType		 	32'h00003335 
-
 
 // session states
 `define			normalSession		 	4'b0000 
@@ -75,6 +70,9 @@
 //`define		t_beginString 		 	8'h38 			//8
 //`define		t_msgType		 	16'h3533 		//35
 
+`define			t_beginString		 	32'h00000038 
+`define			t_bodylength		 	32'h00000039 
+`define			t_msgType		 	32'h00003533 
 `define			t_bodyLength 		 	8'h39 			//9
 `define			t_msgSeqNum		 	16'h3433 		//34
 `define			t_senderCompId		 	16'h3934 		//49
@@ -93,9 +91,13 @@
 `define			s_t_sendTime		 	5'b00011 
 `define			s_t_heartBeatInt	 	5'b00111 
 `define			s_t_encryptMethod	 	5'b00011 
-`define			s_v_sendTime		 	21'h1fffff 
+`define			s_v_sendTime		 	21'h0fffff 
 
 
+`define			c_t_beginString		 	32'h00000038 
+`define			c_t_bodylength 		 	8'h39 			//9
+`define			c_t_msgSeqNum		 	16'h3334 		//34
+`define			c_t_msgType		 	32'h00003335 
 
 `define			l_t_beginString 	 	3'b001		 
 `define			l_t_bodyLength 		 	3'b001		 

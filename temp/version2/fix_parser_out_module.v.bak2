@@ -48,8 +48,11 @@ reg				t_wr_en;
 reg				v_wr_cs;		   
 reg				v_wr_en; 
 		   
-reg[31:0]			tag = '0;
-reg[255:0]			value = '0;
+reg[31:0]			tag;
+reg[31:0]			tag_t;
+reg[31:0]			tag_tf;
+reg[255:0]			value;
+reg[255:0]			value_t;
 reg				end_of_body;
 reg				start_of_header;
 reg				start_message;
@@ -66,7 +69,8 @@ always @(posedge clk) begin
 	else			state <= next_state;
 end
 
-always @(state or start_tag_i or start_value_i) begin
+//always @(state or start_tag_i or start_value_i) begin
+always @(*) begin
 	
 	if (rst) begin
 		tag = '0;
@@ -109,21 +113,22 @@ always @(state or start_tag_i or start_value_i) begin
 				v_wr_en = '0;	
 				if (start_tag_i == 1) begin
 				//	tag  <<= 8;
-					tag  =  tag << 8;
-					tag[7:0] = data_i;
+					tag_t  =  tag << 8;
+					tag_t[7:0] = data_i;
 					next_state = state2;
 				end else if (start_tag_i == 0 ) begin
 					t_wr_cs = '1;	
 					t_wr_en = '1;
-					if (tag [7:0] == first_tag) begin
+					if (tag_t [7:0] == first_tag) begin
 						start_of_header = '1;
-						start_message = '1;
+						start_message = '1;	
 						next_state = state3;
-					end else if (tag [15:0] == last_tag) begin
-						end_of_body = 1;
+					end else if (tag_t [15:0] == last_tag) begin
+						end_of_body = 1;  	
 						next_state = state3;
 					end else 
 						next_state = state3;
+					tag_tf = tag_t;
 				end
 		end
 		state2: begin
@@ -132,7 +137,7 @@ always @(state or start_tag_i or start_value_i) begin
 				v_wr_en = '0;	
 				if (start_tag_i == 1) begin
 				//	tag  <<= 8;
-					tag = tag << 8;
+					tag = tag_t << 8;
 					tag[7:0] = data_i;
 					next_state = state1;
 				end else if (start_tag_i == 0) begin
@@ -147,6 +152,7 @@ always @(state or start_tag_i or start_value_i) begin
 						next_state = state3;
 					end else 
 						next_state = state3;
+					tag_tf = tag_t;
 				end
 		end
 		state3: begin
@@ -169,14 +175,14 @@ always @(state or start_tag_i or start_value_i) begin
 				start_message = '0;	
 				if (start_value_i == 1) begin
 				//	value <<= 8;
-					value  =  value << 8;
-					value [7:0] = data_i;
+					value_t  =  value << 8;
+					value_t [7:0] = data_i;
 					next_state = state5;
 				end else begin	
 					v_wr_cs = '1;	
 					v_wr_en = '1;			
 			 		if (end_of_body == 1) 		next_state = state0;
-					else 				next_state = state0;
+					else 				next_state = state1;
 				end
 			end	
 		state5: begin
@@ -186,14 +192,14 @@ always @(state or start_tag_i or start_value_i) begin
 				start_message = '0;	
 				if (start_value_i == 1) begin
 				//	value <<= 8;
-					value  =  value << 8;
+					value  =  value_t << 8;
 					value [7:0] = data_i;
 					next_state = state4;
 				end else begin
 					v_wr_cs = '1;	
 					v_wr_en = '1;	
 			 		if (end_of_body == 1) 		next_state = state0;
-					else 				next_state = state0;
+					else 				next_state = state1;
 				end
 
 		end

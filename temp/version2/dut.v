@@ -50,9 +50,22 @@ fix_engine dut (
 		.message_received_o		// to api
 	);
 
+integer	in, status, mon;
+reg[7:0]	temp_in;
 
 always
 	#1	clk = ~clk;
+
+initial begin
+  	in = $fopen("inputs.txt","r");
+	mon = $fopen("monitor.txt", "w");
+end
+
+always @ (posedge clk) begin
+	if ( send_message_valid_o)
+		$fwrite(mon,"%h ",message_o);
+end
+
 
 initial begin
 
@@ -82,6 +95,20 @@ connected_i	=	'0;
 
 new_message_i	=	'1;
 connected_host_addr_i	=	2'b01;
+
+while (!($feof(in))) begin
+	@ (posedge clk)
+	new_message_i	=	'0;
+	status = $fscanf(in,"%h",temp_in[7:0]);
+	if (temp_in != 8'h3b)
+		message_i  =  temp_in;
+	else begin
+		repeat (100) @ (posedge clk);
+		new_message_i	=	'1;
+	end
+end
+
+
 
 #1000 $finish;
 

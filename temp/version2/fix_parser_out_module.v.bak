@@ -48,8 +48,8 @@ reg				t_wr_en;
 reg				v_wr_cs;		   
 reg				v_wr_en; 
 		   
-reg[31:0]			tag = '0;
-reg[255:0]			value = '0;
+reg[31:0]			tag;
+reg[255:0]			value;
 reg				end_of_body;
 reg				start_of_header;
 reg				start_message;
@@ -176,7 +176,7 @@ always @(state or start_tag_i or start_value_i) begin
 					v_wr_cs = '1;	
 					v_wr_en = '1;			
 			 		if (end_of_body == 1) 		next_state = state0;
-					else 				next_state = state0;
+					else 				next_state = state1;
 				end
 			end	
 		state5: begin
@@ -193,7 +193,7 @@ always @(state or start_tag_i or start_value_i) begin
 					v_wr_cs = '1;	
 					v_wr_en = '1;	
 			 		if (end_of_body == 1) 		next_state = state0;
-					else 				next_state = state0;
+					else 				next_state = state1;
 				end
 
 		end

@@ -230,6 +230,7 @@ create_checksum	checksum_calc(
 	.data_i(message_o),
 	.start_i(w_start_chksm),
 	.end_i(w_end_chksm),
+	.data_valid_i(send_message_valid_o),
 
 	.checksum_o(w_checksum_val)
 );
@@ -276,6 +277,7 @@ fix_parser parser(
 	.rst(rst),
 	.data_i(message_i),
 	.new_message_i(new_message_i),		
+	.end_message_i(w_end_message),
 
 	.data_o(w_data),
 	.tag_s_o(w_tag_s),
@@ -284,7 +286,7 @@ fix_parser parser(
 
 fix_parser_out_module out_module(
 
-	.clk(rst),
+	.clk(clk),
 	.rst(rst),
 	.data_i(w_data),
 	.start_tag_i(w_tag_s),
