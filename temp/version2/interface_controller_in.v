@@ -30,6 +30,8 @@ parameter		state2 = 3'b010;
 parameter		state3 = 3'b011;
 parameter		state4 = 3'b100;
 parameter		state5 = 3'b101;
+parameter		state6 = 3'b110;
+parameter		state7 = 3'b111;
 
 reg			writereq_temp;
 reg			send_message_valid_temp1;
@@ -160,7 +162,7 @@ always @ (*) begin
 					data_t_2 	= '1;
 					writereq_temp	= '0;		//
 					data_o		= data_temp_2;		// length of payload
-					next_state	= state0;
+					next_state	= state6;
 				end
 			end
 		state5:	begin
@@ -171,9 +173,38 @@ always @ (*) begin
 					next_state	= state5;
 				end else begin
 					data_t_1 	= '0;
-					data_t_2 	= '1;
+					data_t_2 	= '0;
 					writereq_temp	= '0;		//
 					data_o		= data_temp_1;		// length of payload
+					next_state	= state7;
+				end
+			end
+		state6:	begin
+				if (full_i == 1 ) begin
+					data_t_1 	= '0;
+					data_t_2 	= '0;
+					writereq_temp	= '0;
+					writereq_temp	= '0;
+					next_state	= state6;
+				end else begin
+					data_t_1 	= '0;
+					data_t_2 	= '0;
+					writereq_temp	= '0;		//
+					data_o		= data_temp_1;		// length of payload
+					next_state	= state0;
+				end
+			end
+		state7:	begin
+				if (full_i == 1 ) begin
+					data_t_1 	= '0;
+					data_t_2 	= '0;
+					writereq_temp	= '0;
+					next_state	= state7;
+				end else begin
+					data_t_1 	= '0;
+					data_t_2 	= '0;
+					writereq_temp	= '0;		//
+					data_o		= data_temp_2;		// length of payload
 					next_state	= state0;
 				end
 			end
