@@ -65,10 +65,9 @@ always @ (*) begin
 
 end
 
-
 always @(*) begin
 		v_bodyLength_o		=  '0;
-	for (k = 0; k<width; k=k+1) begin
+	for (k = 0; k<10; k=k+1) begin
 		v_bodyLength_o[k*8 +: 8] = v_bodyLength_temp[8*(width-1-k) +: 8];	
 	end
 end

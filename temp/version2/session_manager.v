@@ -127,7 +127,7 @@ function [SIZE-1:0] get_s_v_TargetCompId;
 	end
 endfunction	
 
-
+// when a new message receiev, interrogate the session state and take proper action
 always @ (posedge clk) begin
 
 	if (rst) begin
@@ -149,55 +149,6 @@ always @ (posedge clk) begin
 		end_session_o		<=	'0;	
 		new_message_valid	<=	'0;
 	end
-
-end
-
-/*
-parameter		state0 = 2'b00;
-parameter		state1 = 2'b01;
-parameter		state2 = 2'b10;
-parameter		state3 = 2'b11;
-
-reg[1:0]		state;
-reg[1:0]		next_state;
-
-
-always @ (posedge clk) begin
-	if (rst)	state	<=	state0;
-	else		state	<=	next_state;
-end
-
-always @ (*) begin
-
-	case(state)
-		state0:	begin
-					new_message_valid   =  '0;
-				if (new_message_i == 1) begin
-					new_message_valid   =  '1;
-					next_state	= state1;
-				end else 
-					next_state	= state0;		
-			end
-		state1:	begin
-					new_message_valid   =  '1;
-					next_state	= state2;
-			end
-		state2:	begin
-					new_message_valid   =  '1;
-					next_state	= state0;
-			end
-		state3:	begin
-					new_message_valid   =  '1;
-					next_state	= state0;
-			end
-
-	endcase
-end
-*/
-
-
-// when a new message receiev, interrogate the session state and take proper action
-always @ (posedge clk) begin
 	
 	ignore_o		<=	'0;	
 	disconnect_o		<=	'0;
@@ -366,19 +317,15 @@ always @ (posedge clk) begin
 			endcase
 		end
 	end
-end
+//end
 
 // receive connection status for each session and initiate sending messages- logon, logout, heartbeat
 // will incorporate order related message and gap fill later 
-always @ (posedge clk) begin
+//always @ (posedge clk) begin
 
-	disconnect_o		<=	'0;	
-//	targetCompId_o		<=	'0;
-//	s_v_targetCompId_o	<=	'0;	
-//	sendHeartbeat_o		<=	'0;	
-//	sendLogout_o		<=	'0;	
-	disconnect_host_num_o	<=	'0;	
-	sendLogon_o		<=	'0;	
+//	disconnect_o		<=	'0;	
+//	disconnect_host_num_o	<=	'0;	
+//	sendLogon_o		<=	'0;	
 
 	if (connected_i == 1) begin
 		sendLogon_o	<=	'1;
