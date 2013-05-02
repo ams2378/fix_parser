@@ -27,9 +27,12 @@ module fix_parser_out_module (
 	output[255:0]			value_o,
 	output				end_of_body_o,
 
-	output				start_message_o,
-	output				start_of_header_o
+	output				start_message_o
+//	output				start_of_header_o
 );
+
+// bellow 1 moved from port list
+reg				start_of_header_o;
 
 /* state variable */
 parameter 			state0 = 3'b000;

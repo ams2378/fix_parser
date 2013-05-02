@@ -25,15 +25,15 @@ module session_manager # (parameter NUM_HOST = `HOST_ADDR_WIDTH, VALUE_WIDTH = `
 	
 		output reg			disconnect_o,			// to toe***
 		output reg[NUM_HOST-1:0] 	disconnect_host_num_o,		// to toe*** 
-		output reg[3:0]			error_type_o,			// to create message
+//		output reg[3:0]			error_type_o,			// to create message
 		output reg[VALUE_WIDTH-1:0]	targetCompId_o,			// to create message
 		output reg[SIZE-1:0]		s_v_targetCompId_o,		// to create message
 		output reg			ignore_o,			// to sequence generator 
-		output reg			doResend_o,			// *** now ignored
-		output reg 			messagereceived_o,		// *** output interface 
+//		output reg			doResend_o,			// *** now ignored
+//		output reg 			messagereceived_o,		// *** output interface 
 		output reg 			updateSeqCounter_o,		// to sequence generator *** 
 		output reg[NUM_HOST-1:0] 	seqCounterLoc_o,		// to sequence generator *** 
-		output reg 			end_session_o,			// *** no need- ignored 
+//		output reg 			end_session_o,			// *** no need- ignored 
 		output reg[3:0]			create_message_o,		// to create message
 		output reg	 		initiate_msg_o			// to create message
 
@@ -42,6 +42,11 @@ module session_manager # (parameter NUM_HOST = `HOST_ADDR_WIDTH, VALUE_WIDTH = `
 parameter		fatal_need_manual_intervention	=	3'b001;
 // need to define default error message when sending reject
 
+// *** bellow temporarily moved from port list above
+reg			doResend_o;			// *** now ignored
+reg 			end_session_o;			// *** no need- ignored 
+reg[3:0]		error_type_o;			// to create message
+reg			messagereceived_o;
 
 
 // internal vairables and reg types

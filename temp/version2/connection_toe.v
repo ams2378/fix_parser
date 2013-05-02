@@ -16,14 +16,22 @@ module connection_toe #(parameter HOST_ADDR = `HOST_ADDR_WIDTH) (
 
 
 always @ (posedge clk) begin
+
+
+//		connected_o		<= '0;
+		connect_o		<= '0;
 	
 	if (rst) begin
 		connect_o		<= '0;
 		connect_host_addr_o 	<= '0;
-	end else begin
+	end 
+
+//	if (connect_status_i == 1) begin
+//		connected_i		<=	1;
+//	end
+
 		connect_o		<= connect_i;
 		connect_host_addr_o 	<= connect_addr_i;
-	end
 end
 
 endmodule

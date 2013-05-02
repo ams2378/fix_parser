@@ -18,20 +18,22 @@ module sequence_generator #(parameter MAX_SIZE = 80, HOST_ADDR = `HOST_ADDR_WIDT
 	
 		output reg[MAX_SIZE-1:0]	expected_seq_num_o,
 		output wire[MAX_SIZE-1:0]	outgoing_seq_num_o,
-		output reg[SIZE-1:0]		size_seq_num_o,
+		output wire[SIZE-1:0]		size_seq_num_o,
 		output wire			valid_seq_num_o,
 		output reg[3:0]			width_seq_o
 
 		);
 
 parameter 		MEM_DEPTH = 1 << `HOST_ADDR_WIDTH;
-reg[32-1-1:0]		mem[MEM_DEPTH-1:0];
+reg[32-1:0]		mem[MEM_DEPTH-1:0];
 integer			i, j, k;
 reg[MAX_SIZE-1:0]	outgoing_seq_num;
 reg[MAX_SIZE-1:0]	outgoing_seq_num_temp;
 reg			start_conv;
 reg			done;
 reg[3:0]		width;
+wire[4*10-1:0] 		dat_bcd;  // output bus
+
 
 // initialize mem at rst
 always @(posedge clk ) begin
@@ -82,8 +84,8 @@ always @(*) begin
 		width_seq_o	=	4'b1000;
 	else if ( mem[sending_to_host_addr_i] < 32'd1000000000)
 		width_seq_o	=	4'b1001;
-	else if ( mem[sending_to_host_addr_i] < 32'd10000000000)		
-		width_seq_o	=	4'b1010;
+//	else if ( mem[sending_to_host_addr_i] < 32'd10000000000)		
+//		width_seq_o	=	4'b1010;
 	
 end
 
@@ -95,12 +97,14 @@ binary_to_bcd # (.BITS_IN_PP(32), .BCD_DIGITS_OUT_PP(10), .BIT_COUNT_WIDTH_PP(5)
 		.start_i(start_conv),
 //		.dat_binary_i(outgoing_seq_num),
 		.dat_binary_i(mem[sending_to_host_addr_i]),
+		.dat_bcd_o( dat_bcd),
 		.done_o(done),					// edit ams
 		.ascii_o(outgoing_seq_num_temp),
-		.size_o(size_seq_num_o),
+		.size_o(size_seq_num_o[9:0]),
 		.width_o(width)
 	);
 
+assign	size_seq_num_o[63:10]	=	'0;		
 assign	valid_seq_num_o		=	(done == 1) ? '1 : '0;
 assign	outgoing_seq_num_o	=	outgoing_seq_num;
 

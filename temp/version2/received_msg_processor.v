@@ -2,7 +2,7 @@
 
 `include "defines.vh"
 
-module received_msg_processor # (parameter VALUE_WIDTH = `VALUE_DATA_WIDTH, COUNTER_DEPTH = `COUNTER_RANGE) (
+module received_msg_processor # (parameter VALUE_WIDTH = `VALUE_DATA_WIDTH, COUNTER_DEPTH = 80) (
 
 		input				clk,
 		input				rst,

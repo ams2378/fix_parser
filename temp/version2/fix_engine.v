@@ -1,35 +1,11 @@
-/*
-	in from toe:
-		connected_i
-		connected_host_addr_i
-		data_i
-		valid_i
-
-	out to toe:
-		disconnect_o
-		connect_req_o
-		connect_addr_o
-		send_message_valid_o
-		message_o
-		disconnect_host_num_o	
-
-	Inteface will read from fifo and split out the signals
-
-	todo:
-		fix_parser
-		fix_parser_out_module
-
-*/
-
-
 `include "defines.vh"
 
 module fix_engine #(parameter NUM_HOST = `HOST_ADDR_WIDTH, SIZE = 64, T_SIZE = 5) (
 	input				clk,
 	input				rst,
-//	input				configure_i,			// from app
 	input				connect_i,			// from app
 	input[NUM_HOST-1:0]		connect_to_host_i,		// from app
+
 	input				connected_i,			// from toe
 	input[NUM_HOST-1:0]		connected_host_addr_i,		// from toe
 	input[7:0]			message_i,			// from toe
@@ -37,14 +13,9 @@ module fix_engine #(parameter NUM_HOST = `HOST_ADDR_WIDTH, SIZE = 64, T_SIZE = 5
 	input				fifo_full_i,
 
 	input				new_message_i,			// will be implemented by fifo contr.
+	output				fifo_write_o,
+	output[7:0]			message_o			// goes to fifo
 
-	output				connect_req_o,			// goes to fifo
-	output				disconnect_o,			// goes to fifo
-	output[NUM_HOST-1:0]		connect_addr_o,			// goes to fifo
-	output[NUM_HOST-1:0]		disconnect_host_num_o,		// goes to fifo
-	output				send_message_valid_o,		// goes to fifo
-	output[7:0]			message_o	,		// goes to fifo
-	output				message_received_o		// to api
 	);
 
 parameter	HOSTADDR_DATA_WIDTH = `VALUE_DATA_WIDTH + `VALUE_SIZE;
@@ -58,8 +29,8 @@ wire				w_updatecnt;
 wire[NUM_HOST-1:0]		w_seqCounterLoc;
 wire[3:0]			w_messagetype;
 wire				w_initiate_msg;
-wire[`VALUE_DATA_WIDTH-1:0]	w_expseqnum;			// not supported yet
-wire[`VALUE_DATA_WIDTH-1:0]	w_outseqnum;			
+wire[`SEQ_NUM_DEPTH-1:0]	w_expseqnum;			// not supported yet
+wire[`SEQ_NUM_DEPTH-1:0]	w_outseqnum;			
 wire				w_new_message;
 wire				w_done;
 wire				w_endd;
@@ -90,8 +61,16 @@ wire[HOSTADDR_DATA_WIDTH-1:0]	w_q_2;
 wire[5:0]			w_host_size;
 wire[3:0]			w_l_msgSeqNum;
 wire				w_bodyLength_valid;
-wire[5:0]			w_s_v_bodyLength;
+wire[9:0]			w_s_v_bodyLength;
 wire[79:0]			w_v_bodyLength;
+wire				w_all_sent;
+wire				w_connect_req_o;
+wire[`HOST_ADDR_WIDTH-1:0]	w_connect_addr_o;
+wire				w_disconnect_o;
+wire[`HOST_ADDR_WIDTH-1:0]	w_disconnect_host_num_o;
+wire				w_send_message_valid_o;
+wire[7:0]			w_message_o;
+wire[7:0]			w_msg_length;
 
 
 hostaddress  hostaddresstable(
@@ -111,8 +90,8 @@ connection_toe  toe_if (
 		.rst(rst),
 		.connect_i(connect_i),
 		.connect_addr_i(connect_to_host_i),
-		.connect_o(connect_req_o),
-		.connect_host_addr_o(connect_addr_o)
+		.connect_o(w_connect_req_o),
+		.connect_host_addr_o(w_connect_addr_o)
 	);
 
 
@@ -134,11 +113,11 @@ session_manager session_controller (
 	.addr_2(w_addr_2),					// to hostaddress
 	.data_in_2(w_data_2),					// to hostaddress
 	.disconnect_o(disconnect_o),				// to toe ***
- 	.disconnect_host_num_o(disconnect_host_num_o),		// to toe ***
+ 	.disconnect_host_num_o(w_disconnect_host_num_o),		// to toe ***
 	.targetCompId_o (w_v_targetCompId),			// to create message	
 	.s_v_targetCompId_o(w_s_v_targetCompId),		// to create message
 	.ignore_o (w_ignore),					// to seq gen (not supported yet)
-	.messagereceived_o(message_received_o),			// to api ***
+//	.messagereceived_o(message_received_o),			// to api ***
 	.updateSeqCounter_o(w_updatecnt),			// to seq gen
 	.seqCounterLoc_o(w_seqCounterLoc),			// to seq gen
 	.create_message_o(w_messagetype),			// to create message
@@ -174,24 +153,24 @@ create_message  create_messege_module (
 	.done_i (w_done),					// from fsm
 	.end_i (w_endd),					// from fsm
 	.bodyLength_r_i (w_bodyLength_valid), 			// from bodylength module (ready) 
-	.v_bodyLength_i(w_v_bodyLength),
-	.s_v_bodyLength_i(w_s_v_bodyLength),
+	.v_bodyLength_i({176'b0, w_v_bodyLength}),
+	.s_v_bodyLength_i({54'b0, w_s_v_bodyLength}),
 
-//	.fifo_full_i(fifo_full_i),
+	.fifo_full_i(fifo_full_i),
 
 
 	.message_type_i (w_messagetype),			// from SM	
 	.v_targetCompId_i (w_v_targetCompId),			// from SM	
 	.s_v_targetCompId_i (w_s_v_targetCompId),		// from SM	
-	.v_sendTime_i (168'h3537342e33303a30303a30303a35302d3430343033313032),//***
-	.v_msgSeqNum_i (w_outseqnum),				// from seq gen **** enable valid	
+	.v_sendTime_i ({64'b0, 192'h3537342e33303a30303a30303a35302d3430343033313032}),//***
+	.v_msgSeqNum_i ({176'b0, w_outseqnum}),				// from seq gen **** enable valid	
 	.s_v_msgSeqNum_i (w_s_msgSeqNum),			// from seq gen (add valid)
-	.v_senderCompId_i(`v_senderCompId),			// from defines	
-	.s_v_beginString_i (8'b01111111),    			// from defines 	
-	.v_beginString_i (`v_beginString),			// from defines	
-	.s_v_senderCompId_i(`s_v_senderCompId),			// from defines	
-	.v_heartBeatInt_i (`v_heartbeat),			// from defines
-	.s_v_heartBeatInt_i (`s_v_heartbeat),			// from defines
+	.v_senderCompId_i({ 208'b0, `v_senderCompId}),			// from defines	
+	.s_v_beginString_i ({56'b0, 8'b01111111}),    			// from defines 	
+	.v_beginString_i ({200'b0, `v_beginString}),			// from defines	
+	.s_v_senderCompId_i({58'b0, `s_v_senderCompId}),			// from defines	
+	.v_heartBeatInt_i ({248'b0, `v_heartbeat}),			// from defines
+	.s_v_heartBeatInt_i ({63'b0, `s_v_heartbeat}),			// from defines
 	.seq_ready_i(w_seq_ready),
 
 	.start_chksm_o(w_start_chksm),			// edit ams
@@ -201,8 +180,8 @@ create_message  create_messege_module (
 	.val_valid_o (w_valuevalid),				// to fsm
 	.v_size_o (w_valuesize),				// to fsm
 	.t_size_o (w_tagsize),					// to fsm
-	.checksum_o (w_doChecksum),				// to fsm
-	.output_valid_o(send_message_valid_o)
+	.checksum_o (w_doChecksum)				// to fsm
+//	.output_valid_o(send_message_valid_o)
 //	.msg_creation_done_o (messagecreated)			// to SM 
 		
 	);
@@ -220,21 +199,26 @@ fsm_msg_create_2  fsm (
 	.checksum_i (w_doChecksum),
 	.checksum_val_i (w_checksum_val),			// will update later
 
-	.data_o(message_o),
+
+	.fifo_full_i(fifo_full_i),
+
+	.data_o(w_message_o),
 //	.start_chksm_o(w_start_chksm),				// to checksum calc (start calc)
 	.done_o (w_done),
 	.end_o (w_endd),
-	.end_of_msg_o(w_end_chksm)				// to checksum calc (end calc)
+	.end_of_msg_o(w_end_chksm),				// to checksum calc (end calc)
+	.data_valid_o(w_send_message_valid_o),
+	.all_sent_o(w_all_sent)
 	);
 
 create_checksum	checksum_calc(
 
 	.clk(clk),
 	.rst(rst),	
-	.data_i(message_o),
+	.data_i(w_message_o),
 	.start_i(w_start_chksm),
 	.end_i(w_end_chksm),
-	.data_valid_i(send_message_valid_o),
+	.data_valid_i(w_send_message_valid_o),
 
 	.checksum_o(w_checksum_val)
 );
@@ -259,8 +243,6 @@ sequence_generator sequence_manager (
 	 .width_seq_o(w_l_msgSeqNum)						// *** not needed now				
 	);
 
-
-
 bodylength bodylengthcalc (
 
 	.clk(clk),
@@ -270,6 +252,7 @@ bodylength bodylengthcalc (
 	.l_v_msgSeqNum_i(w_l_msgSeqNum),
 	.l_v_targetCompId(w_host_size),	
 
+	.msg_length_bin_o(w_msg_length),
 	.v_bodyLength_o(w_v_bodyLength),
 	.valid_o(w_bodyLength_valid),
 	.s_v_bodyLength_o (w_s_v_bodyLength)	
@@ -318,5 +301,26 @@ checksum  checksum (
 	.end_i(w_end_message),
 	.valid_o(w_checksum_valid)	
 ); 
+
+
+interface_controller_in if_controller (
+
+	.clk(clk),
+	.rst(rst),
+	.full_i(fifo_full_i),
+	.send_message_valid_i(w_send_message_valid_o),
+	.message_i(w_message_o),
+	.connect_req_i(w_connect_req_o),
+	.connect_host_addr_i(w_connect_addr_o),
+	.disconnect_i(w_disconnect_o),
+	.disconnect_addr_i(w_disconnect_host_num_o),
+	.message_length_i(w_msg_length),
+	.all_sent_i(w_all_sent),
+	.initiate_msg_i(w_initiate_msg),
+
+	.data_o(message_o),
+	.writereq_o(fifo_write_o)
+	);
+
 
 endmodule

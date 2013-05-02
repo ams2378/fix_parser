@@ -10,20 +10,22 @@ module bodylength #(parameter HOST_ADDR = `HOST_ADDR_WIDTH, MAX_SIZE = 80, VALUE
 		input[3:0]			create_message_i,	// messagetype
 		input[3:0]			l_v_msgSeqNum_i,
 		input[5:0]			l_v_targetCompId,	// 256 bits of val
-
+		
+		output wire [7:0]		msg_length_bin_o,
 		output reg[MAX_SIZE-1:0]	v_bodyLength_o,
 		output				valid_o,
-		output[5:0]			s_v_bodyLength_o 	// s_v_bodylength
+		output[9:0]			s_v_bodyLength_o 	// s_v_bodylength
 		);
 
 
-reg [VALUE_WIDTH-1:0]		length;
+reg [32-1:0]			length;
 reg [5:0]			l_length;	 // s_v_bodylength
 reg				done;
 reg				start_conv;
 integer				k;
 reg [3:0]			width;
 reg[MAX_SIZE-1:0]		v_bodyLength_temp;
+wire[40-1:0]			dat_bcd;
 
 always @ (*) begin
 
@@ -40,7 +42,7 @@ always @ (*) begin
 					 `l_t_sendTime  + `l_v_sendTime +
 					 `l_t_targetCompId + l_v_targetCompId + 
 					 `l_t_encryptMethod + `l_v_encryptMethod +
-					 `l_t_heartBeatInt + `l_v_heartbeat + 8'd7;	
+					 `l_t_heartBeatInt + `l_v_heartbeat + 8'd13;	
 				end
 		`logout	:	begin
 				start_conv	=	'1;
@@ -48,7 +50,7 @@ always @ (*) begin
 					 `l_t_msgType   + `l_v_logon	 +
 					 `l_t_senderCompId + `l_v_senderCompId +
 					 `l_t_sendTime  + `l_v_sendTime +
-					 `l_t_targetCompId + l_v_targetCompId;
+					 `l_t_targetCompId + l_v_targetCompId + 8'd10;
 				end
 		`heartbeat:	begin
 				start_conv	=	'1;
@@ -56,7 +58,7 @@ always @ (*) begin
 					 `l_t_msgType   + `l_v_logon	 +
 					 `l_t_senderCompId + `l_v_senderCompId +
 					 `l_t_sendTime  + `l_v_sendTime +
-					 `l_t_targetCompId + l_v_targetCompId;
+					 `l_t_targetCompId + l_v_targetCompId + 8'd10;
 				end
 		endcase
 	end
@@ -79,13 +81,15 @@ binary_to_bcd # (.BITS_IN_PP(32), .BCD_DIGITS_OUT_PP(10), .BIT_COUNT_WIDTH_PP(5)
 		.ce_i('1),
 		.start_i(start_conv),
 		.dat_binary_i(length),
+		.dat_bcd_o( dat_bcd),
 		.done_o(done),
 		.ascii_o(v_bodyLength_temp),
-		.size_o(s_v_bodyLength_o),
+		.size_o( s_v_bodyLength_o),
 		.width_o(width)
 	);
 
 
-assign 	valid_o	=	(done == 1) ? 1 : 0;
+assign 	valid_o			=	(done == 1) ? 1 : 0;
+assign  msg_length_bin_o	=	length[7:0];	
 
 endmodule

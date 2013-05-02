@@ -74,7 +74,7 @@ always @(*) begin
 						end
 						next_state = state2;
 						end else begin
-						temp3 = temp2 - 8'd97;
+						temp3 = temp2 - 8'd48;
 						next_state = state3;
 					end
 				end
@@ -90,7 +90,7 @@ always @(*) begin
 						end
 						next_state = state1;
 					end else begin
-						temp3 = temp - 8'd97;
+						temp3 = temp - 8'd48;		// 48 instead of 97
 						next_state = state3;
 					end
 				end
@@ -112,10 +112,10 @@ always @(*) begin
 					end else begin
 						if (temp3[7:0] > 199) begin
 							checksum_o = 8'h32;
-							r_100 = temp3[7:0] / 8'd100;
+							r_100 = temp3[7:0] % 8'd100;
 						end else begin
 							checksum_o = 8'h31;
-							r_100 = temp3[7:0] / 8'd100;
+							r_100 = temp3[7:0] % 8'd100;
 						end
 						next_state = state6;
 					end	
