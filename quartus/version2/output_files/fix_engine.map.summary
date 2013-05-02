@@ -1,0 +1,23 @@
+Analysis & Synthesis Status : Successful - Thu May  2 04:32:35 2013
+Quartus II 64-Bit Version : 12.1 Build 177 11/07/2012 SJ Full Version
+Revision Name : fix_engine
+Top-level Entity Name : fix_engine
+Family : Stratix V
+Logic utilization (in ALMs) : N/A
+Total registers : 600
+Total pins : 28
+Total virtual pins : 0
+Total block memory bits : 1,280
+Total DSP Blocks : 0
+Total HSSI STD RX PCSs : 0
+Total HSSI 10G RX PCSs : 0
+Total HSSI GEN3 RX PCSs : 0
+Total HSSI PMA RX Deserializers : 0
+Total HSSI STD TX PCSs : 0
+Total HSSI 10G TX PCSs : 0
+Total HSSI GEN3 TX PCSs : 0
+Total HSSI PMA TX Serializers : 0
+Total HSSI PIPE GEN1_2s : 0
+Total HSSI GEN3s : 0
+Total PLLs : 0
+Total DLLs : 0

@@ -1,0 +1,136 @@
+Flow report for fix_engine
+Thu May  2 04:45:46 2013
+Quartus II 64-Bit Version 12.1 Build 177 11/07/2012 SJ Full Version
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Flow Summary
+  3. Flow Settings
+  4. Flow Non-Default Global Settings
+  5. Flow Elapsed Time
+  6. Flow OS Summary
+  7. Flow Log
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 1991-2012 Altera Corporation
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, Altera MegaCore Function License 
+Agreement, or other applicable license agreement, including, 
+without limitation, that your use is for the sole purpose of 
+programming logic devices manufactured by Altera and sold by 
+Altera or its authorized distributors.  Please refer to the 
+applicable agreement for further details.
+
+
+
++-----------------------------------------------------------------------------+
+; Flow Summary                                                                ;
++---------------------------------+-------------------------------------------+
+; Flow Status                     ; Successful - Thu May  2 04:45:45 2013     ;
+; Quartus II 64-Bit Version       ; 12.1 Build 177 11/07/2012 SJ Full Version ;
+; Revision Name                   ; fix_engine                                ;
+; Top-level Entity Name           ; fix_engine                                ;
+; Family                          ; Stratix V                                 ;
+; Device                          ; 5SGXMA5K2F40C3                            ;
+; Timing Models                   ; Final                                     ;
+; Logic utilization (in ALMs)     ; 1,422 / 185,000 ( < 1 % )                 ;
+; Total registers                 ; 604                                       ;
+; Total pins                      ; 28 / 864 ( 3 % )                          ;
+; Total virtual pins              ; 0                                         ;
+; Total block memory bits         ; 1,280 / 47,185,920 ( < 1 % )              ;
+; Total DSP Blocks                ; 0 / 256 ( 0 % )                           ;
+; Total HSSI STD RX PCSs          ; 0 / 36 ( 0 % )                            ;
+; Total HSSI 10G RX PCSs          ; 0 / 36 ( 0 % )                            ;
+; Total HSSI GEN3 RX PCSs         ; 0 / 36 ( 0 % )                            ;
+; Total HSSI PMA RX Deserializers ; 0 / 36 ( 0 % )                            ;
+; Total HSSI STD TX PCSs          ; 0 / 36 ( 0 % )                            ;
+; Total HSSI 10G TX PCSs          ; 0 / 36 ( 0 % )                            ;
+; Total HSSI GEN3 TX PCSs         ; 0 / 36 ( 0 % )                            ;
+; Total HSSI PMA TX Serializers   ; 0 / 36 ( 0 % )                            ;
+; Total HSSI PIPE GEN1_2s         ; 0 / 36 ( 0 % )                            ;
+; Total HSSI GEN3s                ; 0 / 36 ( 0 % )                            ;
+; Total PLLs                      ; 0 / 80 ( 0 % )                            ;
+; Total DLLs                      ; 0 / 4 ( 0 % )                             ;
++---------------------------------+-------------------------------------------+
+
+
++-----------------------------------------+
+; Flow Settings                           ;
++-------------------+---------------------+
+; Option            ; Setting             ;
++-------------------+---------------------+
+; Start date & time ; 05/02/2013 04:31:52 ;
+; Main task         ; Compilation         ;
+; Revision Name     ; fix_engine          ;
++-------------------+---------------------+
+
+
++----------------------------------------------------------------------------------------------------------------------------+
+; Flow Non-Default Global Settings                                                                                           ;
++-------------------------------------+---------------------------------------+---------------+-------------+----------------+
+; Assignment Name                     ; Value                                 ; Default Value ; Entity Name ; Section Id     ;
++-------------------------------------+---------------------------------------+---------------+-------------+----------------+
+; COMPILER_SIGNATURE_ID               ; 233360582023868.136748351118677       ; --            ; --          ; --             ;
+; EDA_OUTPUT_DATA_FORMAT              ; Systemverilog Hdl                     ; --            ; --          ; eda_simulation ;
+; EDA_SIMULATION_TOOL                 ; ModelSim-Altera (SystemVerilog)       ; <None>        ; --          ; --             ;
+; MAX_CORE_JUNCTION_TEMP              ; 85                                    ; --            ; --          ; --             ;
+; MIN_CORE_JUNCTION_TEMP              ; 0                                     ; --            ; --          ; --             ;
+; PARTITION_COLOR                     ; 16764057                              ; --            ; --          ; Top            ;
+; PARTITION_FITTER_PRESERVATION_LEVEL ; PLACEMENT_AND_ROUTING                 ; --            ; --          ; Top            ;
+; PARTITION_NETLIST_TYPE              ; SOURCE                                ; --            ; --          ; Top            ;
+; POWER_BOARD_THERMAL_MODEL           ; None (CONSERVATIVE)                   ; --            ; --          ; --             ;
+; POWER_PRESET_COOLING_SOLUTION       ; 23 MM HEAT SINK WITH 200 LFPM AIRFLOW ; --            ; --          ; --             ;
+; PROJECT_OUTPUT_DIRECTORY            ; output_files                          ; --            ; --          ; --             ;
++-------------------------------------+---------------------------------------+---------------+-------------+----------------+
+
+
++-------------------------------------------------------------------------------------------------------------------------------+
+; Flow Elapsed Time                                                                                                             ;
++---------------------------+--------------+-------------------------+---------------------+------------------------------------+
+; Module Name               ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
++---------------------------+--------------+-------------------------+---------------------+------------------------------------+
+; Analysis & Synthesis      ; 00:00:42     ; 1.0                     ; 732 MB              ; 00:00:42                           ;
+; Fitter                    ; 00:09:22     ; 2.6                     ; 5645 MB             ; 00:13:13                           ;
+; Assembler                 ; 00:02:10     ; 1.0                     ; 1544 MB             ; 00:02:10                           ;
+; TimeQuest Timing Analyzer ; 00:01:01     ; 1.2                     ; 3619 MB             ; 00:01:05                           ;
+; EDA Netlist Writer        ; 00:00:05     ; 1.0                     ; 931 MB              ; 00:00:06                           ;
+; Total                     ; 00:13:20     ; --                      ; --                  ; 00:17:16                           ;
++---------------------------+--------------+-------------------------+---------------------+------------------------------------+
+
+
++-----------------------------------------------------------------------------------------------------+
+; Flow OS Summary                                                                                     ;
++---------------------------+--------------------------+----------------+------------+----------------+
+; Module Name               ; Machine Hostname         ; OS Name        ; OS Version ; Processor type ;
++---------------------------+--------------------------+----------------+------------+----------------+
+; Analysis & Synthesis      ; trillian.cs.columbia.edu ; CentOS release ; 6          ; x86_64         ;
+; Fitter                    ; trillian.cs.columbia.edu ; CentOS release ; 6          ; x86_64         ;
+; Assembler                 ; trillian.cs.columbia.edu ; CentOS release ; 6          ; x86_64         ;
+; TimeQuest Timing Analyzer ; trillian.cs.columbia.edu ; CentOS release ; 6          ; x86_64         ;
+; EDA Netlist Writer        ; trillian.cs.columbia.edu ; CentOS release ; 6          ; x86_64         ;
++---------------------------+--------------------------+----------------+------------+----------------+
+
+
+------------
+; Flow Log ;
+------------
+quartus_map --read_settings_files=on --write_settings_files=off fix_engine -c fix_engine
+quartus_fit --read_settings_files=off --write_settings_files=off fix_engine -c fix_engine
+quartus_asm --read_settings_files=off --write_settings_files=off fix_engine -c fix_engine
+quartus_sta fix_engine -c fix_engine
+quartus_eda --read_settings_files=off --write_settings_files=off fix_engine -c fix_engine
+
+
+
