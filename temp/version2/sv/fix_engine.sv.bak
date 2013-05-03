@@ -10,6 +10,7 @@ module fix_engine #(parameter NUM_HOST = `HOST_ADDR_WIDTH, SIZE = 64, T_SIZE = 5
 	input[NUM_HOST-1:0]		connected_host_addr_i,		// from toe
 	input[NUM_HOST-1:0]		id_i,				// from toe
 	input[7:0]			message_i,			// from toe
+//	input				valid_i,			// from toe
 	input				fifo_full_i,
 	input				new_message_i,			// will be implemented by fifo contr.
 	output				fifo_write_o,
@@ -55,8 +56,8 @@ wire[31:0]			w_tag_val;
 wire[`VALUE_DATA_WIDTH-1:0]	w_val_val;
 wire				w_we_2;
 wire[`HOST_ADDR_WIDTH-1:0]	w_addr_2;
-wire[HOSTADDR_DATA_WIDTH:0]	w_data_2;
-wire[HOSTADDR_DATA_WIDTH:0]	w_q_2;
+wire[HOSTADDR_DATA_WIDTH-1:0]	w_data_2;
+wire[HOSTADDR_DATA_WIDTH-1:0]	w_q_2;
 wire[5:0]			w_host_size;
 wire[3:0]			w_l_msgSeqNum;
 wire				w_bodyLength_valid;

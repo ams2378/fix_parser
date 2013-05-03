@@ -350,7 +350,7 @@ always @(*) begin
 				next_state	=	state39;
 				output_valid_o	=	'1;
 			//	tag_o		=	'0;
-			//	tag_valid_o	=	'0;
+				tag_valid_o	=	'0;
 			//	val_o		=	v_msgSeqNum_i;
 			//	val_valid_o	=	'0;
 			//	v_size_o	=	s_v_msgSeqNum_i;
@@ -383,12 +383,20 @@ always @(*) begin
 	state24: begin
 		if (fifo_full_i == 1) 
 			next_state	=	state24;
-		else begin
+		else if (done_i == 1) begin						// from here to
+				val_o		=	'0;
+				output_valid_o	=	'1;
+				val_valid_o	=	'0;
+				tag_o		=	`t_msgType;
+				tag_valid_o	=	'0;
+				t_size_o	=	`s_t_msgType;
+				next_state 	=	state25;
+		end else begin								// here - modified
 				tag_o		=	'0;
 				output_valid_o	=	'1;
 				tag_valid_o	=	'0;
 				val_o		=	v_msgSeqNum_i;
-				val_valid_o	=	'1;			
+				val_valid_o	=	'0;			// changed to 0			
 				v_size_o	=	s_v_msgSeqNum_i;		
 				next_state 	=	state6;
 		end

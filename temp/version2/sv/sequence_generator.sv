@@ -39,7 +39,7 @@ wire[4*10-1:0] 		dat_bcd;  // output bus
 always @(posedge clk ) begin
 	if (rst) begin
 		for (i = 0; i<MEM_DEPTH; i=i+1) begin
-			mem[i]	<=	8'd123;
+			mem[i]	<=	8'd0;
 		end
 	end
 //end

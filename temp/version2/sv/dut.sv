@@ -15,8 +15,9 @@ module fix_engine_test();
 	reg[1:0]			connect_to_host_i;		// from app
 	reg				connected_i;			// from toe
 	reg[1:0]			connected_host_addr_i;		// from toe
+	reg[1:0]			id_i;				// from toe
 	reg[7:0]			message_i;			// from toe
-	reg				valid_i;			// from toe
+//	reg				valid_i;			// from toe
 	reg				fifo_full_i;
 	reg				new_message_i;			// will be implemented by fifo contr.
 
@@ -36,13 +37,14 @@ module fix_engine_test();
 fix_engine dut (
 	 	.clk,
 	 	.rst,
+		.id_i,
 	// 	.configure_i,			// from app
 	 	.connect_i,			// from app
 	 	.connect_to_host_i,		// from app
 	 	.connected_i,			// from toe
 	 	.connected_host_addr_i,		// from toe
 	 	.message_i,			// from toe
-	 	.valid_i,			// from toe
+//	 	.valid_i,			// from toe
 		.fifo_full_i,
 		.new_message_i,			// will be implemented by fifo contr.
 
@@ -97,6 +99,7 @@ $vcdpluson;
 #1
 connect_i	=	'1;
 connect_to_host_i	=	2'b01;
+id_i		=	2'b01;
 
 #2 connect_i	=	'0;
 

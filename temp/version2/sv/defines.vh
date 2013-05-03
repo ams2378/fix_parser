@@ -57,6 +57,7 @@
 `define			servingResend		 	4'b0110 
 `define			logoutSent		 	4'b0111 
 `define			logonSent		 	4'b1000 
+`define			connected			4'b1001
 
 
 `define 		v_encryptMethod_i 	 	8'h30 	

@@ -77,8 +77,8 @@ end
 //always @(state or start_tag_i or start_value_i) begin
 always @ (*) begin	
 	if (rst) begin
-		tag = '0;
-		value = '0;
+//		tag = '0;
+//		value = '0;
 		end_of_body = '0;
 		start_of_header = '0;
 		t_wr_cs = '0; 
@@ -240,6 +240,14 @@ end
 
 
 always @(posedge clk) begin
+
+	if (rst) begin
+		tag	<=	'0;
+		value	<=	'0;
+	end
+
+//		tag[7:0]	<=	data_i;
+//		tag[7:0]	<=	data_i;
 
 	if (load_tag) begin
 		tag[7:0]	<=	data_i;
