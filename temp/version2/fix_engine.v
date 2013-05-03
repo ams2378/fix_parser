@@ -138,7 +138,7 @@ received_msg_processor message_processor (
 	.start_of_message_i(w_start_message),			// from parser
 	.end_of_message_i(w_end_message),			// from parser
 	.expectedIncomingSeqNum_i(w_expseqnum),			// from sequence generator ***
-	.checksum_validity_i (w_checksum_valid),		// from checksum calc	
+	.checksum_validity_i ('1),				// from checksum calc	
 		
 	.new_message_o (w_new_message),				// to session manager
 	.error_type_o (w_validity),				// to session manager

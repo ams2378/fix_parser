@@ -42,9 +42,9 @@ always @(posedge clk ) begin
 			mem[i]	<=	8'd123;
 		end
 	end
-end
+//end
 
-always @(posedge clk) begin
+//always @(posedge clk) begin
 	
 	start_conv	<=	'0;
 

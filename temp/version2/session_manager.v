@@ -86,9 +86,9 @@ task updateSessionState;
 	input[3:0]		disconnected;
 
 	begin
-		we_1		<=	'1;	
-		addr_1		<=	connected_host_i;
-		data_in_1	<=	disconnected;
+		we_1		=	'1;	
+		addr_1		=	connected_host_i;
+		data_in_1	=	disconnected;
 	end
 
 endtask
