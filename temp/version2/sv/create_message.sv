@@ -304,82 +304,11 @@ always @(*) begin
 				val_o		=	v_bodyLength_i;		// edit
 				val_valid_o	=	'1;			
 				v_size_o	=	s_v_bodyLength_i;	// edit	
-				next_state 	=	state4;
+				next_state 	=	state24;
 		end
 		end
 
-		// tag msgSeqNumber
-	state4: begin
-		if (fifo_full_i == 1) 
-			next_state	=	state4;
-		else begin
-			if (done_i == 1 ) begin
-				val_o		=	'0;
-				val_valid_o	=	'0;
-				output_valid_o	=	'1;
-				tag_o		=	`t_msgSeqNum;
-				tag_valid_o	=	'0;
-				t_size_o	=	`s_t_msgSeqNum;
-				next_state 	=	state23;
-			end else begin
-				next_state	=	state4;
-			end
-		end
-		end
-
-	state23: begin
-		if (fifo_full_i == 1) 
-			next_state	=	state23;
-		else begin
-				val_o		=	'0;
-				val_valid_o	=	'0;
-				output_valid_o	=	'1;
-				tag_o		=	`t_msgSeqNum;
-				tag_valid_o	=	'1;
-				t_size_o	=	`s_t_msgSeqNum;
-				next_state 	=	state5;
-		end
-		end
-
-		// value msgSeqNumber
-	state5: begin
-		if (fifo_full_i == 1) 
-			next_state	=	state5;
-		else begin
-			if (done_i == 1 ) begin
-				next_state	=	state39;
-				output_valid_o	=	'1;
-			//	tag_o		=	'0;
-				tag_valid_o	=	'0;
-			//	val_o		=	v_msgSeqNum_i;
-			//	val_valid_o	=	'0;
-			//	v_size_o	=	s_v_msgSeqNum_i;
-			//	next_state 	=	state24;
-			end else begin
-				next_state	=	state5;
-			end
-		end
-		end
-
-	state39: begin
-		if (fifo_full_i == 1) 
-			next_state	=	state39;
-		else begin
-			if (seq_ready_i == 1) begin
-				tag_o		=	'0;
-				tag_valid_o	=	'0;
-				val_o		=	v_msgSeqNum_i;
-				val_valid_o	=	'1;
-				v_size_o	=	s_v_msgSeqNum_i;
-				next_state 	=	state24;			
-			end else begin
-				output_valid_o	=	'0;
-				next_state	=	state39;		
-			end		
-
-		 end
-		end
-
+	// tag message type
 	state24: begin
 		if (fifo_full_i == 1) 
 			next_state	=	state24;
@@ -466,9 +395,82 @@ always @(*) begin
 				val_o		=	v_msgType(message_type_i);
 				val_valid_o	=	'1;			
 				v_size_o	=	s_v_msgType(message_type_i);		
-				next_state 	=	state8;
+				next_state 	=	state4;
 		end
 		end
+
+		// tag msgSeqNumber
+	state4: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state4;
+		else begin
+			if (done_i == 1 ) begin
+				val_o		=	'0;
+				val_valid_o	=	'0;
+				output_valid_o	=	'1;
+				tag_o		=	`t_msgSeqNum;
+				tag_valid_o	=	'0;
+				t_size_o	=	`s_t_msgSeqNum;
+				next_state 	=	state23;
+			end else begin
+				next_state	=	state4;
+			end
+		end
+		end
+
+	state23: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state23;
+		else begin
+				val_o		=	'0;
+				val_valid_o	=	'0;
+				output_valid_o	=	'1;
+				tag_o		=	`t_msgSeqNum;
+				tag_valid_o	=	'1;
+				t_size_o	=	`s_t_msgSeqNum;
+				next_state 	=	state5;
+		end
+		end
+
+		// value msgSeqNumber
+	state5: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state5;
+		else begin
+			if (done_i == 1 ) begin
+				next_state	=	state39;
+				output_valid_o	=	'1;
+			//	tag_o		=	'0;
+				tag_valid_o	=	'0;
+			//	val_o		=	v_msgSeqNum_i;
+			//	val_valid_o	=	'0;
+			//	v_size_o	=	s_v_msgSeqNum_i;
+			//	next_state 	=	state24;
+			end else begin
+				next_state	=	state5;
+			end
+		end
+		end
+
+	state39: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state39;
+		else begin
+			if (seq_ready_i == 1) begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				val_o		=	v_msgSeqNum_i;
+				val_valid_o	=	'1;
+				v_size_o	=	s_v_msgSeqNum_i;
+				next_state 	=	state24;			
+			end else begin
+				output_valid_o	=	'0;
+				next_state	=	state39;		
+			end		
+
+		 end
+		end
+
 
 		// tag senderCompId
 	state8: begin
