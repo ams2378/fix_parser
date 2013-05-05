@@ -462,7 +462,7 @@ always @(*) begin
 				val_o		=	v_msgSeqNum_i;
 				val_valid_o	=	'1;
 				v_size_o	=	s_v_msgSeqNum_i;
-				next_state 	=	state24;			
+				next_state 	=	state8;			
 			end else begin
 				output_valid_o	=	'0;
 				next_state	=	state39;		
