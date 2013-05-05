@@ -88,19 +88,22 @@ end
 
 always @(*) begin
 
-	state0	:	begin
-					new_message_valid = '0;
-				if (new_message_i == 1) begin
-					new_message_valid = '1;
-					next_state = state1;
-				end else
-					next_state = state0;
-			end
+	case (state) 
 
-	state1	:	begin
-					new_message_valid = '1;
-					next_state = state0;
-			end
+		state0	:	begin
+						new_message_valid = '0;
+					if (new_message_i == 1) begin
+						new_message_valid = '1;
+						next_state = state1;
+					end else
+						next_state = state0;
+				end
+
+		state1	:	begin
+						new_message_valid = '1;
+						next_state = state0;
+				end
+	endcase
 end
 
 
