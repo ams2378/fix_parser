@@ -189,7 +189,7 @@ always @ (posedge clk) begin
 	end_session_o		<=	'0;
 	acceptor_respond	<=	'0;
 
-	if (new_message_i == 1 || new_message_valid == 1 || new_message_valid_2 == 1 || acceptor_respond == 1) begin
+	if (new_message_i == 1 || acceptor_respond == 1) begin
 		if (validity_i == `msgSeqL || validity_i == `invalid)	begin
 			disconnect_o		<=	'1;	
 			disconnect_host_num_o	<=	connected_host_i;
