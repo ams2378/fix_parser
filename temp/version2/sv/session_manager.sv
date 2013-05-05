@@ -1,4 +1,4 @@
-s// note: have a small state machine between this module and create message
+// note: have a small state machine between this module and create message
 // as long as create message is busy, keep the new crate message order waiting
 // TODO : servingResend_logout and servingResend need to be implemented
 // status: compiling
