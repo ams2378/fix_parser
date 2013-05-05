@@ -63,8 +63,10 @@
 `define 		v_encryptMethod_i 	 	8'h30 	
 `define 		s_v_encryptMethod_i	 	8'b00000001 	
 
-`define 		v_senderCompId			48'h746e65696c63
-`define			s_v_senderCompId		6'b111111
+//`define 		v_senderCompId			48'h746e65696c63
+//`define		s_v_senderCompId		6'b111111
+`define 		v_senderCompId			56'h31544e45494c43
+`define			s_v_senderCompId		7'b1111111
 
 `define 		v_bodyLength_i		 	24'h313233 	
 `define 		s_v_bodyLength_i	 	8'b00000111 	
@@ -94,7 +96,7 @@
 `define			s_t_sendTime		 	5'b00011 
 `define			s_t_heartBeatInt	 	5'b00111 
 `define			s_t_encryptMethod	 	5'b00011 
-`define			s_v_sendTime		 	24'hffffff 
+`define			s_v_sendTime		 	24'h1fffff 
 
 
 `define			c_t_beginString		 	32'h00000038 
@@ -122,8 +124,8 @@
 `define			l_v_sendTime		 	5'b11000		// 21- sendtimeval-const 
 
 // value for various types of message
-`define			v_logon			 	8'h61 
-`define			v_heartbeat		 	8'h30 
+`define			v_logon			 	8'h41 
+`define			v_heartbeat		 	8'h35 
 `define			v_logout		 	8'h35 
 
 // size of value for each types of message defied above

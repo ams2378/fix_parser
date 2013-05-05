@@ -13,7 +13,8 @@ module fix_engine #(parameter NUM_HOST = `HOST_ADDR_WIDTH, SIZE = 64, T_SIZE = 5
 	input				fifo_full_i,
 	input				new_message_i,			// will be implemented by fifo contr.
 	output				fifo_write_o,
-	output[7:0]			message_o			// goes to fifo
+	output[7:0]			message_o,			// goes to fifo
+	output				end_o				// only to assist bench
 
 	);
 
@@ -73,6 +74,7 @@ wire[7:0]			w_msg_length;
 wire[1:0]			w_connected_host_addr_i;
 
 
+assign	end_o				=	w_end_chksm;
 assign	w_connected_host_addr_i		=	(new_message_i == '1) ? id_i : connected_host_addr_i;
 
 hostaddress  hostaddresstable(
@@ -164,13 +166,13 @@ create_message  create_messege_module (
 	.message_type_i (w_messagetype),			// from SM	
 	.v_targetCompId_i (w_v_targetCompId),			// from SM	
 	.s_v_targetCompId_i (w_s_v_targetCompId),		// from SM	
-	.v_sendTime_i ({64'b0, 192'h3537342e33303a30303a30303a35302d3430343033313032}),//***
+	.v_sendTime_i ({88'b0, 168'h3537342e30303a30303a35302d3430343033313032}),//***
 	.v_msgSeqNum_i ({176'b0, w_outseqnum}),				// from seq gen **** enable valid	
 	.s_v_msgSeqNum_i (w_s_msgSeqNum),			// from seq gen (add valid)
-	.v_senderCompId_i({ 208'b0, `v_senderCompId}),			// from defines	
+	.v_senderCompId_i({ 200'b0, `v_senderCompId}),			// from defines	
 	.s_v_beginString_i ({56'b0, 8'b01111111}),    			// from defines 	
 	.v_beginString_i ({200'b0, `v_beginString}),			// from defines	
-	.s_v_senderCompId_i({58'b0, `s_v_senderCompId}),			// from defines	
+	.s_v_senderCompId_i({57'b0, `s_v_senderCompId}),			// from defines	
 	.v_heartBeatInt_i ({248'b0, `v_heartbeat}),			// from defines
 	.s_v_heartBeatInt_i ({63'b0, `s_v_heartbeat}),			// from defines
 	.seq_ready_i(w_seq_ready),

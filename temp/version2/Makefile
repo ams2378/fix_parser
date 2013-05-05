@@ -1,6 +1,6 @@
 INCLUDE= defines.vh
-SRC= ascii2int.v bin2bcd/binary_to_bcd.v hostaddress.v ram.v received_msg_processor.v session_manager.v create_message.v fsm_msg_create_2.v counter.v sequence_generator.v connection_toe.v create_checksum.v fix_parser.v fix_parser_out_module.v checksum.v fix_engine.v bodylength.v interface_controller_in.v
-BENCH= dut.v
+SRC= ascii2int.sv binary_to_bcd.sv hostaddress.sv ram.sv rece.sved_msg_processor.sv session_manager.sv create_message.sv fsm_msg_create_2.sv counter.sv sequence_generator.sv connection_toe.sv create_checksum.sv fix_parser.sv fix_parser_out_module.sv checksum.sv fix_engine.sv bodylength.sv interface_controller_in.sv
+BENCH= dut.sv
 DUMP= testbench.exe
 
 test:

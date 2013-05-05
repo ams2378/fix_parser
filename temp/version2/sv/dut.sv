@@ -108,7 +108,7 @@ id_i		=	2'b01;
 connected_i =	 '1;
 connected_host_addr_i	=	2'b01;
 
-#6
+#4
 connected_i	=	'0;
 
 #2

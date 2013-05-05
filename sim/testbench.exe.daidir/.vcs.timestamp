@@ -1,0 +1,106 @@
+0 
+45
++define+SV
++define+VPD
++itf+/sim/synopsys64/vcs/amd64/lib/vcsdp.tab
++vcsd
+-Mamsrun=
+-Masflags=
+-Mcc=gcc
+-Mcfl= -pipe -O -I/sim/synopsys64/vcs/include
+-Mcplusplus=g++
+-Mcrt0=
+-Mcrtn=
+-Mcsrc=
+-Mldflags=
+-Mobjects= /sim/synopsys64/vcs/amd64/lib/libvirsim.so /sim/synopsys64/vcs/amd64/lib/liberrorinf.so /sim/synopsys64/vcs/amd64/lib/libsnpsmalloc.so
+-Mout=../sim/testbench.exe
+-Msaverestoreobj=/sim/synopsys64/vcs/amd64/lib/vcs_save_restore_new.o
+-Msyslibs=-ldl -lm
+-Mvcsaceobjs=
+-full64
+-gen_obj
+-o ../sim/testbench.exe
+-pp_used
+-sverilog
+../src/ascii2int.sv
+../src/cam/FF.sv
+../src/cam/cam.sv
+../src/cam/camreg.sv
+../src/cam/decoder.sv
+../src/cam/priorityencoder.sv
+../src/cam_cntrl.sv
+../src/checksum.sv
+../src/fix_parser.sv
+../src/fix_parser_out_module.sv
+../src/fix_parser_top.sv
+../src/message_loc.sv
+../src/message_loc_cntrl.sv
+../src/ram/FF2.sv
+../src/ram/decoder2.sv
+../src/ram/multiplexer.sv
+../src/ram/ram.sv
+../src/ram/ramreg.sv
+../src/read_message_cntrl.sv
+../src/value_ram.sv
+/sim/synopsys64/vcs/amd64/bin/vcs1
+dut.sv
+28
+sysc_uni_pwd=/home/asc2171/fix_parser/tb
+VMR_MODE_FLAG=64
+VCS_MODE_FLAG=64
+VCS_HOME=/sim/synopsys64/vcs
+VCS_DEPTH=0
+VCS_ARG_ADDED_FOR_TMP=1
+VCS_ARCH=amd64
+UNAME=/bin/uname
+TOOL_HOME=/sim/synopsys64/vcs/amd64
+SYN_DIR=/sim/synopsys64
+SYNTH_HOME=/sim/synopsys64/icc
+SYNOPSYS=/sim/synopsys64/icc
+SSH_TTY=/dev/pts/6
+SSH_CONNECTION=128.59.144.180 39245 128.59.15.63 22
+SSH_CLIENT=128.59.144.180 39245 22
+SNPSLMD_LICENSE_FILE=27010@spades.cs.columbia.edu:/sim/synopsys64/vcs/flexlm//license.dat
+SCRNAME=vcs
+SCRIPT_NAME=vcs
+PRIMETIME_HOME=/sim/synopsys64/primetime
+OVA_UUM=0
+MFLAGS=-w
+MAKELEVEL=2
+MAKEFLAGS=w
+LESSOPEN=| /usr/bin/lesspipe %s
+LESSCLOSE=/usr/bin/lesspipe %s %s
+LEDA_PATH=/sim/synopsys64/leda
+FPGA_HOME=/sim/synopsys64/fpga
+FORMALITY_HOME=/sim/synopsys64/formality
+0
+22
+1365376601 dut.sv
+1365376600 ../src/ascii2int.sv
+1367363674 ../src/checksum.sv
+1365376600 ../src/read_message_cntrl.sv
+1365376600 ../src/message_loc_cntrl.sv
+1365376600 ../src/message_loc.sv
+1365376600 ../src/value_ram.sv
+1365376600 ../src/ram/ram.sv
+1365376600 ../src/ram/ramreg.sv
+1365376600 ../src/ram/multiplexer.sv
+1365376600 ../src/ram/decoder2.sv
+1365376600 ../src/ram/FF2.sv
+1365376600 ../src/cam_cntrl.sv
+1365376600 ../src/cam/cam.sv
+1365376600 ../src/cam/camreg.sv
+1365376600 ../src/cam/priorityencoder.sv
+1365376600 ../src/cam/decoder.sv
+1365376600 ../src/cam/FF.sv
+1365376600 ../src/fix_parser_top.sv
+1365376600 ../src/fix_parser_out_module.sv
+1365376600 ../src/fix_parser.sv
+1322023114 /sim/synopsys64/vcs/amd64/lib/vcsdp.tab
+4
+0 
+1322023672 /sim/synopsys64/vcs/amd64/lib/libvirsim.so
+1322023397 /sim/synopsys64/vcs/amd64/lib/liberrorinf.so
+1322023255 /sim/synopsys64/vcs/amd64/lib/libsnpsmalloc.so
+1367543503 ../sim/testbench.exe.daidir

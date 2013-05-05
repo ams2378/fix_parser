@@ -241,6 +241,8 @@ end
 
 always @(posedge clk) begin
 
+		value[7:0]	<=	data_i;
+		tag[7:0]	<=	data_i;
 	if (load_tag) begin
 		tag[7:0]	<=	data_i;
 	end

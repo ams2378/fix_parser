@@ -38,6 +38,24 @@ logic [7:0]		 	rcv_checksum;
 logic				ready2cmp_i;
 logic				valid;
 
+function [8:0] add;
+	input[8:0]	a;
+	input[8:0]	b;
+
+	begin
+		add = a + b;
+	end
+endfunction
+
+function [8:0] sub;
+	input[8:0]	a;
+	input[8:0]	b;
+
+	begin
+		sub = a - b;
+	end
+endfunction
+
 
 always_ff @(posedge clk) begin
 
@@ -46,6 +64,7 @@ always_ff @(posedge clk) begin
 end
 
 always_ff @(state or start_i or end_i or ready2cmp_i ) begin
+//always_comb begin
 
 	if (rst) begin
 		checksum = '0;

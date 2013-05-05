@@ -36,7 +36,7 @@ $vcdpluson;
 start_i = 0;
 //dat_binary_i = 16'b0000000000001111;
 rst_i = 1;
-ce_i = 0;
+ce_i = 1;
 #1 clk_i = 0;
 #1 clk_i = 1;
 
@@ -52,7 +52,7 @@ rst_i = 0;
 //dat_binary_i = 16'b1111111111111111;
 //dat_binary_i = 16'b0000000000010000;
 
-dat_binary_i = {1'b1, 31'b0};
+dat_binary_i = {31'b0, 1'b1};
 
 start_i = 1;
 

@@ -43,44 +43,38 @@
 module bench;
 
 // decleare dut in/out ports
-reg  		clk,
-reg  		reset,
-reg  		configure_i,
-reg  		connect_i,
-reg[2:0]	connect_to_addr_i,
-//reg  		read_msg_num_i,
-//reg		read_msg_tag_i,
-reg		connected_i,
-reg[2:0]	connected_host_addr_i,
-reg		new_msg_received_i,
-reg[7:0]	message_i,
+reg				clk;
+reg				rst;
+reg				connect_i;			// from app
+reg[NUM_HOST-1:0]		connect_to_host_i;		// from app
 
-reg		connect_req_o,
-reg[2:0]  	connect_host_addr_o,
-reg		send_message_valid_o,
-reg[7:0]	message_o
+reg				connected_i;			// from toe
+reg[NUM_HOST-1:0]		connected_host_addr_i;		// from toe
+reg[NUM_HOST-1:0]		id_i;				// from toe
+reg[7:0]			message_i;			// from toe
+reg				fifo_full_i;
+reg				new_message_i;			// will be implemented by fifo contr.
+reg				fifo_write_o;
+reg[7:0]			message_o;			// goes to fifo
 
 // instantiate dut
 dut dut (	  
-   		.clk,
-    		.reset,
-    		.configure_i,
-    		.connect_i,
-		.connect_to_addr_i,
+ 		.clk,
+ 		.rst,
+ 		.connect_i,			// from app
+ 		.connect_to_host_i,		// from app
 
-    		.connected_i,
-  	 	.connected_host_addr_i,
-   		.new_message_received_i,
-  	  	.message_i,
-
-  		.connect_req_o,
- 	  	.connect_host_addr_o,
-  		.send_message_valid_o,
-  		.message_o
+		.connected_i,			// from toe
+ 		.connected_host_addr_i,		// from toe
+ 		.id_i,				// from toe
+ 		.message_i,			// from toe
+ 		.fifo_full_i,
+ 		.new_message_i,			// will be implemented by fifo contr.
+ 		.fifo_write_o,
+ 		.message_o			// goes to fifo
 	);
 
 // internal variables and events
-
 reg[2:0] session_state [7:0];
 reg[2:0] session_map_counter [15:0];
 reg	 count_expired;
@@ -146,8 +140,6 @@ end
 initial begin
   	#10 -> reset_enable;
   	@ (reset_done);
-  	-> configure_enable;	
-  	@ (configure_done);
   	#10 -> start_initiator;
   	@ (error);
   	-> exit_sim;
@@ -184,9 +176,10 @@ forever begin
 	@ (start_initiator);
 	@ (negedge clk)
 	$display ("Initiating a new connection @ %0dns", $time);
-	connect_i = 8'b00000001;
+	connect_i = '1;
+	connect_to_host_i  =  2'b01; 
 	@ (negedge clk)
-	start = 0;
+	connect_i = '0;
 	-> waiting_for_ack;
 	@connected;
 	-> initiation_trigger_sent;
@@ -200,7 +193,7 @@ initial begin
 	@(waiting_for_ack);
 	#3 @(negedge clk);
 	connected_i = '1;
-	connected_host_add_i = 3'b001;
+	connected_host_add_i = 2'b01;
 	->connected;
 end
 
@@ -223,6 +216,14 @@ end
 initial
 forever begin
 	@(initiation_trigger_sent)
+	if (fifo_write_o) 
+		// compare outputs
+
+	while (fifo_write_o)
+		// compare outputs
+
+	-> comparison_done;
+
    while (!($feof(in))) begin
 	@ (negedge clk)
 	$display ("DUT receiving inputs from acceptor @ %0dns", $time);
@@ -317,25 +318,28 @@ end
 // golden model
 always @ (posedge clk) begin
 
+	fifo_write_o	=	'0;
+
 	if (rst == 1) begin
-  		connect_req_o		= 	'0;
- 	  	connect_host_addr_o	= 	'0;
-  		send_message_valid_o	= 	'0;
+  		fifo_write_o		= 	'0;
   		message_o		= 	'0;
 	end
 
 	if (connect_i == 1) begin
-		connect_req_o		=	'1;
-		connect_host_addr_o	=	connect_to_addr_i;
-		send_msg_valid_o	=	'0;
-		update_state (connect_host_addr_o, waiting_for_connection);
+		message_o		= {3'b000, 1'b0, connect_to_host_i, connect};	
+		fifo_write_o		= 	'1;
 	end 
 
 	if (connected_i == 1) begin
-		update_state (connect_host_addr_o, connected);
 		send_logon(connect_host_addr_o);
-		send_msg_valid_o	=	'0;
+		update_state (connect_host_addr_o, logonsent);
 	end
+
+	if (new_message_i == 1) begin
+		send_logon(connect_host_addr_o);
+		update_state (connect_host_addr_o, logonsent);
+	end
+
 
 	if (count_expired == 1) begin				// need to define it later
 		send_heartbeat (count_expired_addr);
