@@ -72,6 +72,39 @@ reg			new_message_valid;
 reg			new_message_valid_1;
 reg			new_message_valid_2;
 
+
+parameter		state0 = 2'b00;
+parameter		state1 = 2'b01;
+parameter		state2 = 2'b10;
+
+reg[1:0]		state;
+reg[1:0]		next_state;
+
+always @ (posedge clk) begin
+	if(rst)		state  <= state0;
+	else		state  <= next_state;
+end
+
+
+always @(*) begin
+
+	state0	:	begin
+					new_message_valid = '0;
+				if (new_message_i == 1) begin
+					new_message_valid = '1;
+					next_state = state1;
+				end else
+					next_state = state0;
+			end
+
+	state1	:	begin
+					new_message_valid = '1;
+					next_state = state0;
+			end
+end
+
+
+
 // instantiating session table
 ram # (.ADDR_WIDTH(NUM_HOST), .DATA_WIDTH(4)) states (
 		.clk	(clk),
@@ -189,7 +222,7 @@ always @ (posedge clk) begin
 	end_session_o		<=	'0;
 	acceptor_respond	<=	'0;
 
-	if (new_message_i == 1 || acceptor_respond == 1) begin
+	if (new_message_valid == 1 || acceptor_respond == 1) begin
 		if (validity_i == `msgSeqL || validity_i == `invalid)	begin
 			disconnect_o		<=	'1;	
 			disconnect_host_num_o	<=	connected_host_i;
