@@ -348,18 +348,19 @@ forever begin
 	repeat (2) @ (negedge clk) begin
 		statusO = $fscanf(in, "%h ",exp_g[7:0]);
 	end	
-
+	
+	@ (negedge clk)
 	new_message_i = '1;
 	id_i	=	2'b01;
 	while (!$feof(in)) begin
       		@ (negedge clk);
 		new_message_i = '0;
       		statusI = $fscanf(in,"%h ", message_i[7:0]);
-      //		@ (negedge clk);
 		if (message_i == 8'h3b) begin
-			# 100 -> input_stimuli_sent;
+			repeat (400) @ (negedge clk);
 		end
-end
+			new_message_i = '1;
+	end
 end
 
 always @ (posedge clk) begin

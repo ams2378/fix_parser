@@ -69,6 +69,8 @@ reg			sendLogon_o;
 
 reg			acceptor_respond;
 reg			new_message_valid;
+reg			new_message_valid_1;
+reg			new_message_valid_2;
 
 // instantiating session table
 ram # (.ADDR_WIDTH(NUM_HOST), .DATA_WIDTH(4)) states (
@@ -136,7 +138,15 @@ function [1] getType;
 		addr_2			=	connected_host_i;
 		getType			=	data_out_2 [VALUE_WIDTH+SIZE];
 	end
-endfunction	
+endfunction
+
+always @ (negedge clk) begin
+
+	new_message_valid <= new_message_i;
+	new_message_valid_1 <= new_message_valid;
+	new_message_valid_2 <= new_message_valid_1;
+
+end	
 
 // when a new message receiev, interrogate the session state and take proper action
 always @ (posedge clk) begin
@@ -179,7 +189,7 @@ always @ (posedge clk) begin
 	end_session_o		<=	'0;
 	acceptor_respond	<=	'0;
 
-	if (new_message_i == 1 || acceptor_respond == 1) begin
+	if (new_message_i == 1 || new_message_valid == 1 || new_message_valid_2 == 1 || acceptor_respond == 1) begin
 		if (validity_i == `msgSeqL || validity_i == `invalid)	begin
 			disconnect_o		<=	'1;	
 			disconnect_host_num_o	<=	connected_host_i;
