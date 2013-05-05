@@ -101,6 +101,11 @@ always @(*) begin
 
 		state1	:	begin
 						new_message_valid = '1;
+						next_state = state2;
+				end
+
+		state2	:	begin
+						new_message_valid = '1;
 						next_state = state0;
 				end
 	endcase
