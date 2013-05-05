@@ -173,6 +173,7 @@ function [1] getType;
 	end
 endfunction
 
+/*
 always @ (negedge clk) begin
 
 	new_message_valid <= new_message_i;
@@ -180,6 +181,8 @@ always @ (negedge clk) begin
 	new_message_valid_2 <= new_message_valid_1;
 
 end	
+*/
+
 
 // when a new message receiev, interrogate the session state and take proper action
 always @ (posedge clk) begin
