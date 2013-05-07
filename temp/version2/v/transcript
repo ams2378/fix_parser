@@ -1,0 +1,26 @@
+# do runsim.do 
+# ** Warning: (vlib-34) Library already exists at "work".
+# Modifying modelsim.ini
+# Model Technology ModelSim ALTERA vlog 10.1b Compiler 2012.04 Apr 27 2012
+# -- Compiling module ascii2int
+# -- Compiling module binary_to_bcd
+# -- Compiling module hostaddress
+# -- Compiling module ram_fix
+# -- Compiling module received_msg_processor
+# -- Compiling module session_manager
+# ** Error: session_manager.v(175): Packed dimension must specify a range.
+# -- Compiling module create_message
+# -- Compiling module fsm_msg_create_2
+# -- Compiling module sequence_generator
+# -- Compiling module connection_toe
+# -- Compiling module create_checksum
+# -- Compiling module fix_parser_out_module
+# -- Compiling module checksum
+# -- Compiling module fix_engine
+# -- Compiling module bodylength
+# -- Compiling module interface_controller_in
+# ** Error: /home/adilsadik/altera/12.1/modelsim_ase/linuxaloem/vlog failed.
+# Error in macro ./runsim.do line 4
+# /home/adilsadik/altera/12.1/modelsim_ase/linuxaloem/vlog failed.
+#     while executing
+# "vlog ascii2int.v binary_to_bcd.v hostaddress.v ram_fix.v received_msg_processor.v session_manager.v create_message.v fsm_msg_create_2.v sequence_gener..."
