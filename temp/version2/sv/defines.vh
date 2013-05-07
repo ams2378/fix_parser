@@ -125,7 +125,7 @@
 
 // value for various types of message
 `define			v_logon			 	8'h41 
-`define			v_heartbeat		 	8'h35 
+`define			v_heartbeat		 	8'h30 
 `define			v_logout		 	8'h35 
 
 // size of value for each types of message defied above

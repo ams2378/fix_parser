@@ -71,7 +71,7 @@ reg			acceptor_respond;
 reg			new_message_valid;
 
 // instantiating session table
-ram # (.ADDR_WIDTH(NUM_HOST), .DATA_WIDTH(4)) states (
+ram_fix # (.ADDR_WIDTH(NUM_HOST), .DATA_WIDTH(4)) states (
 		.clk	(clk),
 		.we  	(we_1),
 		.data	(data_in_1),
@@ -179,7 +179,7 @@ always @ (posedge clk) begin
 	end_session_o		<=	'0;
 	acceptor_respond	<=	'0;
 
-	if (new_message_i == 1 || acceptor_respond == 1) begin
+	if (new_message_i == 1 || acceptor_respond == 1) begin					// acceptor respond not required
 		if (validity_i == `msgSeqL || validity_i == `invalid)	begin
 			disconnect_o		<=	'1;	
 			disconnect_host_num_o	<=	connected_host_i;
