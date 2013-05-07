@@ -8,6 +8,7 @@
 `define			COUNTER_RANGE			10
 `define			VALUE_SIZE			64
 `define			SEQ_NUM_DEPTH			80	
+`define			HB_RANGE			10	
 
 
 `define			supportedVersion  	  	24'h342e33 
@@ -17,10 +18,10 @@
 `define			heartBeatMsg		  	8'h30 	
 `define			resendReqMsg		  	8'h32 	
 
+`define			valid			 	4'b0000 
 `define			msgSeqH			  	4'b0001 
 `define			garbled			 	4'b0010 
 `define			msgSeqL			 	4'b0001 		// low and posdupflag not set
-`define			valid			 	4'b0000 
 `define			invalid			 	4'b0100 		// sender/comp does'nt match...
 `define			unsupportedVersion	 	4'b0011 
 `define			invalidMsgType		 	4'b0110 
@@ -127,6 +128,8 @@
 `define			v_logon			 	8'h41 
 `define			v_heartbeat		 	8'h30 
 `define			v_logout		 	8'h35 
+
+`define			heartbeat_val		 	10'h3ff 
 
 // size of value for each types of message defied above
 `define			s_v_logon		 	1'b1 

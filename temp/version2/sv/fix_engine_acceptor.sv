@@ -1,16 +1,6 @@
-/*
-
-History:
-	port mapping changed for hostaddress connected host addr i
-	session manager connected host addr i
-	added heartbeat counter and port mapped it with timing functionality of session controller
-
-*/
-
-
 `include "defines.vh"
 
-module fix_engine #(parameter NUM_HOST = `HOST_ADDR_WIDTH, SIZE = 64, T_SIZE = 5) (
+module fix_engine_acceptor #(parameter NUM_HOST = `HOST_ADDR_WIDTH, SIZE = 64, T_SIZE = 5) (
 	input				clk,
 	input				rst,
 	input				connect_i,			// from app
@@ -25,6 +15,7 @@ module fix_engine #(parameter NUM_HOST = `HOST_ADDR_WIDTH, SIZE = 64, T_SIZE = 5
 	output				fifo_write_o,
 	output[7:0]			message_o,			// goes to fifo
 	output				end_o				// only to assist bench
+
 	);
 
 parameter	HOSTADDR_DATA_WIDTH = `VALUE_DATA_WIDTH + `VALUE_SIZE;
@@ -81,19 +72,17 @@ wire				w_send_message_valid_o;
 wire[7:0]			w_message_o;
 wire[7:0]			w_msg_length;
 wire[1:0]			w_connected_host_addr_i;
-wire				w_threshold_reached;
 
 
-//assign	end_o				=	w_end_chksm;
-assign	end_o				=	w_end_message;
+assign	end_o				=	w_end_chksm;
 assign	w_connected_host_addr_i		=	(new_message_i == '1) ? id_i : connected_host_addr_i;
 
-hostaddress  hostaddresstable(
+hostaddress_acceptor  hostaddresstable(
 
 		.clk(clk),
 		.we(w_we_2),
 		.q(w_q_2),
-		.addr(connected_host_addr_i),  		// replaced w_addr_2	changed from w_
+		.addr(w_addr_2),
 		.data(w_data_2),
 		.host_size(w_host_size)
 	);
@@ -116,8 +105,8 @@ session_manager session_controller (
 	.rst(rst),
 	.new_message_i (w_new_message),				// from message processor
 	.validity_i(w_validity),				// from message processor
-	.timeout_i (w_threshold_reached),					// from counter
- 	.connected_host_i(connected_host_addr_i),		// *** - need to multiplex
+	.timeout_i ('0),					// from counter
+ 	.connected_host_i(w_connected_host_addr_i),		// *** - need to multiplex
 	.type_i (w_type),					// from message processor
 	.connected_i(connected_i),				// from connection toe
 	.end_session_i ('0),			 		// now hwired to 0
@@ -220,8 +209,7 @@ fsm_msg_create_2  fsm (
 	.data_o(w_message_o),
 //	.start_chksm_o(w_start_chksm),				// to checksum calc (start calc)
 	.done_o (w_done),
-	.msg_last_byte_o (w_endd),
-//	.end_o (w_endd),
+	.end_o (w_endd),
 	.end_of_msg_o(w_end_chksm),				// to checksum calc (end calc)
 	.data_valid_o(w_send_message_valid_o),
 	.all_sent_o(w_all_sent)
@@ -274,18 +262,6 @@ bodylength bodylengthcalc (
 	.s_v_bodyLength_o (w_s_v_bodyLength)	
 );
 
-hbcounter hbcounter (
-
-	.clk(clk),
-	.rst(rst),
-	.start_counter_i(w_endd),
-	.heartbeat_val_i(`heartbeat_val),
-	.received_new_msg_i(new_message_i),
-
-	.threshold_recahed_o(w_threshold_reached)
-
-);
-
 
 fix_parser parser(
 	.clk(clk),
@@ -304,8 +280,6 @@ fix_parser_out_module out_module(
 	.clk(clk),
 	.rst(rst),
 	.data_i(w_data),
-	.message_i(message_i),
-
 	.start_tag_i(w_tag_s),
 	.start_value_i(w_value_s),
 	
@@ -316,7 +290,8 @@ fix_parser_out_module out_module(
 	.tag_o 	   (w_tag_val),
 	.value_o   (w_val_val),
 
-	.end_detected_o (w_end_message),
+	.end_of_body_o (w_end_message),
+//	.start_of_header_o,
 	.start_message_o (w_start_message)
 );
 
@@ -330,6 +305,7 @@ checksum  checksum (
 	.end_i(w_end_message),
 	.valid_o(w_checksum_valid)	
 ); 
+
 
 interface_controller_in if_controller (
 

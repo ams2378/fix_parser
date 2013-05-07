@@ -94,7 +94,7 @@ function [3:0] getMsgType;
 
 	begin
 		case (buffer_msgType) 
-			16'h0061 	: getMsgType = `logon;
+			16'h0041 	: getMsgType = `logon;
 			16'h0030 	: getMsgType = `heartbeat;
 			16'h0035 	: getMsgType = `logout;
 			default 	: getMsgType = '0;

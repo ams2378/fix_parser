@@ -14,6 +14,7 @@ module interface_controller_in #(parameter NUM_HOST = `HOST_ADDR_WIDTH) (
 		input[7:0]		message_length_i,
 		input			all_sent_i,
 		input			initiate_msg_i,
+//		input			client_type_i,
 	
 		output reg[7:0]		data_o,
 		output wire		writereq_o
@@ -71,6 +72,7 @@ always @ (*) begin
 					writereq_temp	= '0;
 					next_state	=	state0;
 				end else begin
+			//		if (connect_req_i == 1 && client_type_i == '1 ) begin
 					if (connect_req_i == 1) begin
 						writereq_temp	= '1;
 						data_o		= {3'b000, 1'b0, connect_host_addr_i, connect};

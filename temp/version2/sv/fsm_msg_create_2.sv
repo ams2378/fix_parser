@@ -21,11 +21,16 @@ module fsm_msg_create_2 # (parameter VALUE_WIDTH = `VALUE_DATA_WIDTH, T_SIZE = 5
 		output reg[7:0]			data_o,
 	//	output reg			start_chksm_o,		// indicates start create_checksum
 		output reg			done_o,
-		output reg			end_o,
+		output reg			msg_last_byte_o,
 		output reg			all_sent_o,
 		output reg			end_of_msg_o,
 		output reg			data_valid_o
 		);
+
+
+
+
+reg				end_o;
 
 
 // state encoding
@@ -415,5 +420,48 @@ always @ (*) begin
 
 end
 
+/*
+reg			msg_last_byte_o;
+always @ (negedge clk) begin
+	msg_last_byte_o	<=	end_o;
+end
+*/
+
+reg			msg_last_byte_o;
+parameter		sstate0 = 2'b00;
+parameter		sstate1 = 2'b01;
+parameter		sstate2 = 2'b10;
+
+reg[1:0]		sstate;
+reg[1:0]		next_sstate;
+
+always @ (posedge clk) begin
+	if(rst)		sstate  <= sstate0;
+	else		sstate  <= next_sstate;
+end
+
+always @(*) begin
+
+	case (sstate) 
+
+		sstate0	:	begin
+						msg_last_byte_o = '0;
+					if (end_o == 1) begin
+						next_sstate = sstate1;
+					end else
+						next_sstate = sstate0;
+				end
+
+		sstate1	:	begin
+						msg_last_byte_o = '0;
+						next_sstate = sstate2;
+				end
+
+		sstate2	:	begin
+						msg_last_byte_o = '1;
+						next_sstate = sstate0;
+				end
+	endcase
+end
 
 endmodule

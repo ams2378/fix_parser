@@ -172,7 +172,7 @@ function [SIZE-1:0] get_s_v_TargetCompId;
 endfunction	
 
 // getType(connected_host_i)
-function [1] getType;
+function  getType;
 	input[NUM_HOST-1:0]	connected_host_i;
 
 	begin
@@ -233,7 +233,7 @@ always @ (posedge clk) begin
 	end_session_o		<=	'0;
 	acceptor_respond	<=	'0;
 
-	if (new_message_valid == 1 || acceptor_respond == 1) begin
+	if (new_message_valid == 1 ) begin
 		if (validity_i == `msgSeqL || validity_i == `invalid)	begin
 			disconnect_o		<=	'1;	
 			disconnect_host_num_o	<=	connected_host_i;
@@ -241,12 +241,23 @@ always @ (posedge clk) begin
 			updateSessionState (connected_host_i, `disconnected);
 		end else begin
 			case (readSessionState (connected_host_i))
-
+			// for acceptor- connected and wait for logon
 			`connected: 	begin
+						if (type_i == `logon && validity_i == `valid) begin
 							sendLogon_o	<=	'1;
 							targetCompId_o	<=	getTargetCompId (connected_host_i);
 							s_v_targetCompId_o	<=	get_s_v_TargetCompId (connected_host_i);
-							updateSessionState(connected_host_i, `normalSession);		// for now keep it like that
+							updateSessionState(connected_host_i, `normalSession);
+						end else if (type_i == `logon && validity_i == `msgSeqH) begin
+							resendReq_o	<=	'1;
+							targetCompId_o	<=	getTargetCompId (connected_host_i);
+							s_v_targetCompId_o	<=	get_s_v_TargetCompId (connected_host_i);
+							updateSessionState(connected_host_i, `sentResendReq);
+						end else begin
+							disconnect_o	<=	1;
+							disconnect_host_num_o	<=	connected_host_i;
+							updateSessionState(connected_host_i, `disconnected);
+						end						
 					end
 
 			`logonSent: 	begin
@@ -401,12 +412,13 @@ always @ (posedge clk) begin
 //	disconnect_host_num_o	<=	'0;	
 //	sendLogon_o		<=	'0;	
 
-	if (connected_i == 1 && getType(connected_host_i) == '1) begin
+//	if (connected_i == 1 && getType(connected_host_i) == '1) begin
+	if (connected_i == 1 && data_out_2 [VALUE_WIDTH+SIZE] == '1) begin
 		sendLogon_o	<=	'1;
 		targetCompId_o	<=	getTargetCompId (connected_host_i);
 		s_v_targetCompId_o	<=	get_s_v_TargetCompId (connected_host_i);
 		updateSessionState(connected_host_i, `logonSent);
-	end else if (connected_i == 1 && getType(connected_host_i) == '0) begin
+	end else if (connected_i == 1 && data_out_2 [VALUE_WIDTH+SIZE] == '0) begin
 		acceptor_respond <= '1;
 		updateSessionState(connected_host_i, `connected);
 	end
