@@ -94,7 +94,7 @@ function [3:0] getMsgType;
 
 	begin
 		case (buffer_msgType) 
-			16'h0061 	: getMsgType = `logon;
+			16'h0041 	: getMsgType = `logon;
 			16'h0030 	: getMsgType = `heartbeat;
 			16'h0035 	: getMsgType = `logout;
 			default 	: getMsgType = '0;
@@ -176,38 +176,11 @@ always @ (*) begin
 				new_message_o	=	'0;
 			if (val_valid_i == 1 ) begin
 				temp_bodylength = 	val_i;	
-				next_state	=	state12;	
+				next_state	=	state4;	
 			end else
 				next_state	=	state3;
 		  end
 
-	// expected tag msgseqnum
-	state12	: begin
-				error_type_o	=	'0;
-				new_message_o	=	'0;
-			if (tag_valid_i == 1 ) begin
-				if (tag_i != `c_t_msgSeqNum) begin
-					next_state	=	state0;
-					new_message_o	=	'1;
-					error_type_o	=	`garbled;
-				end else 
-					next_state	=	state13;
-			end else begin
-				next_state	=	state12;
-			end
-		  end	
-
-	// buffer value msgseqnum for later matching
-	state13	: begin
-				error_type_o	=	'0;
-				new_message_o	=	'0;
-			if (val_valid_i == 1 ) begin
-		//		buffer_msgSeqN  = 	val_i;	
-				buffer_msgSeqN_signal  = 	'1;		// edit	
-				next_state	=	state4;	
-			end else
-				next_state	=	state13;
-		  end
 
 	// expected tag message type
 	state4	: begin
@@ -233,7 +206,7 @@ always @ (*) begin
 				if (checkvalidity(val_i) == '1) begin			// need to define it
 			//		buffer_msgType		=	val_i;
 					buffer_msgtype_signal	=	'1;
-					next_state		=	state6;
+					next_state		=	state12;
 				end else begin
 					error_type_o	=	`invalidMsgType;		// need to send reject
 					new_message_o	=	'1;
@@ -242,6 +215,37 @@ always @ (*) begin
 			end else
 				next_state	=	state5;
 		  end
+
+	// expected tag msgseqnum
+	state12	: begin
+				buffer_msgtype_signal	= '0;
+				error_type_o	=	'0;
+				new_message_o	=	'0;
+			if (tag_valid_i == 1 ) begin
+				if (tag_i != `c_t_msgSeqNum) begin
+					next_state	=	state0;
+					new_message_o	=	'1;
+					error_type_o	=	`garbled;
+				end else 
+					next_state	=	state13;
+			end else begin
+				next_state	=	state12;
+			end
+		  end	
+
+	// buffer value msgseqnum for later matching
+	state13	: begin
+				error_type_o	=	'0;
+				new_message_o	=	'0;
+			if (val_valid_i == 1 ) begin
+		//		buffer_msgSeqN  = 	val_i;	
+				buffer_msgSeqN_signal  = 	'1;		// edit	
+				next_state	=	state6;	
+			end else
+				next_state	=	state13;
+		  end
+
+
 	
 	state6 : begin
 				buffer_msgtype_signal	=	'0;

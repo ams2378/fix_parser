@@ -98,10 +98,12 @@ integer statusI,statusO, mon;
 reg	  start_checking;
 reg [7:0] exp;
 reg [7:0] exp_g;		// garbage
-integer in,out,cfg;
+integer 	in,out,cfg;
 integer dut_error;
 integer		temp_count;
 integer		count_bytes;
+reg		start;
+
 
 event message_sent;
 event reset_enable;
@@ -145,7 +147,9 @@ end
 initial begin
 	$display ("\n");
 	$display ("################################################### \n");
-  	$display ("STARTING SIMULATION\n");
+//	$fdisplay (mon, "################################################### \n");
+//  	$display ("STARTING SIMULATION\n");
+//	$fdisplay (mon, "STARTING SIMULATION\n");
 	temp			=	0;
 	clk			=	'0;
     	rst			=	'0;
@@ -159,12 +163,11 @@ initial begin
   	message_i		=	'0;
 	temp_count		=	0;
 	count_bytes		=	0;
-	not_done		=	1;
-	chk_connect		=	'0;
 	chksm_tag_done		=	10;
   	in  = $fopen("init_out.txt","r");
- // 	out = $fopen("init_out.txt","r");
   	mon = $fopen("monitor.txt","w");
+	
+//	$fdisplay (mon, "Initiator Name: CLIENT1 \nAcceptor Name: ORDERMATCH \n");
 end
 
 // test flow:  
@@ -179,36 +182,39 @@ initial begin
   	#10 -> start_initiator;
 end
 
+// initiate initiator  
+initial 
+forever begin 
+	@ (start_initiator);
+	@ (posedge clk)
+	$display ("Initiating a new connection request @ %0dns", $time);
+//	$fdisplay (mon, "Initiating a new connection requst @ %0dns", $time);
+	connect_i = '1;
+	connect_to_host_i  =  2'b01; 
+	@ (posedge clk)
+	connect_i = '0;
+	-> waiting_for_ack;
+	@connected;
+	#7 connected_i = '0;
+	-> input_stimuli_sent;
+	$display ("ACK received from TOE: connected!! @ %0dns", $time);
+//	$fdisplay (mon, "ACK received from TOE: connected!! @ %0dns", $time);
+	@error;
+	->exit_sim;
+end
+
 // applying reset logic
 initial
 forever begin
  	@ (reset_enable);
  	@ (negedge clk)
  	$display ("Applying reset @ %0dns", $time);
+ //	$fdisplay (mon, "Applying reset @ %0dns", $time);
    	rst = 1;
  	@ (negedge clk)
    	rst = 0;
- 	$display ("Came out of Reset @ %0dns", $time);
+ //	$fdisplay (mon, "Came out of Reset @ %0dns", $time);
  	-> reset_done;
-end
-
-// initiate initiator  
-initial 
-forever begin 
-	@ (start_initiator);
-	@ (negedge clk)
-	$display ("Initiating a new connection @ %0dns", $time);
-	connect_i = '1;
-	connect_to_host_i  =  2'b01; 
-	@ (negedge clk)
-	connect_i = '0;
-	-> waiting_for_ack;
-	@connected;
-	#7 connected_i = '0;
-	-> input_stimuli_sent;
-	$display ("ACK received @ %0dns", $time);
-	@error;
-	->exit_sim;
 end
 
 // send connection status
@@ -217,18 +223,24 @@ initial begin
 	#3 @(negedge clk)
 	connected_i = '1;
 	connected_host_addr_i = 2'b01;
-//	@ (negedge clk)
-//	connected_i = '0;
 	->connected;
 end
 
 // exiting simulation
 initial
 	@ (exit_sim)  begin
-	$display ("Terminating simulation @ %0dns ", $time);
-     		$display("       Got  %h",message_o);
-     		$display("       Exp  %h",exp);
- 	$display ("################################################### \n");
+
+	if (dut_error == 1) begin
+		$display ("Terminating simulation @ %0dns ", $time);
+		$display ("SIMLUATION FAILED @ %0dns ", $time);
+			$display("       Got  %h",message_o);
+			$display("       Exp  %h",exp);
+		$display ("################################################### \n");
+	end else begin
+		$display ("Terminating simulation @ %0dns ", $time);
+		$display ("SIMLUATION PASSED @ %0dns ", $time);
+		$display ("################################################### \n");
+	end
  	#10 $finish;
 end
 
@@ -240,83 +252,36 @@ always @(*) begin
 	if (connect_i == 1) begin
 		exp		= {3'b000, 1'b0, connect_to_host_i, 3'b000};	
 	end
-	
-	t_fifo_write_o	=	fifo_write_o;
-	
-end
 
-
-always @ (posedge clk) begin 
 
 	if (fifo_write_o == 1 && connect_i == 0 ) begin
-		start_checking =  '1;
-	end else
-		start_checking = '0;
+		start =  '1;
+	end else 
+		start = '0;
+	
+	t_fifo_write_o	=	fifo_write_o;
 end
-
 
 always @ (negedge clk) begin
 	t_end_o  <= #5 end_o;
 
 	if (t_end_o == '1)
 		chksm_tag_done = 1;
-
 end
 
 always @ (negedge clk) begin
 #4	t1_end_o  <= t_end_o;
 end
 
-
-// handle bodylength
 always @ (posedge clk) begin
 
-	@handle_bodylength;
-
-	while (t_fifo_write_o == 1 && message_o != 8'h01) begin
-		statusO = $fscanf(in, "%h ",exp_g[7:0]);
-		exp	= 8'hxx;
-	end
-end
-
-// handle time
-always @ (posedge clk) begin
-
-	@handle_time;
-	count_bytes	=	count_bytes + 1;
-	if (message_o != 8'h01) begin
-		statusO = $fscanf(in, "%h ",exp_g[7:0]);
-		exp	= 8'hxx;
-		-> handle_time;
-	end else
-		-> send_message;
-end
-
-
-// handle checksum 
-always @ (posedge clk) begin
-
-	@handle_checksum;
-	count_bytes	=	count_bytes + 1;
-	if (message_o != 8'h01) begin
-		statusO = $fscanf(in, "%h ",exp_g[7:0]);
-		exp	= 8'h3b;
-		-> handle_checksum;
-	end else
-		-> message_sent;
-end
-
-always @ (posedge clk) begin
-
-if (fifo_write_o == 1) begin
-	if (connect_i == 1) begin
-		start_checking = '1;
-	end else begin
-		if (temp_count <3) begin
+if (start == 1 ) begin
+		if (temp_count <2  ) begin
 			temp_count	=	temp_count + 1;
 			start_checking = '0;
 		end else begin
-			if (count_bytes >= 12 && count_bytes < 15 && message_o != 8'h01) begin		// end_o : end_i at checksum calc 
+			start_checking = '1;
+			if (count_bytes >= 12 && count_bytes < 15 && message_o != 8'h01) begin
 				count_bytes = count_bytes + 1;
 				statusO = $fscanf(in, "%h ",exp_g[7:0]);
 				exp	= 8'h3b;
@@ -329,25 +294,26 @@ if (fifo_write_o == 1) begin
 				statusO = $fscanf(in, "%h ",exp_g[7:0]);
 				exp	= 8'h3b; 
 			end else if (chksm_tag_done == 4) begin
+				statusO = $fscanf(in, "%h %h ",exp[7:0], exp_g[7:0]);
+				temp_count	=	0;				
+				count_bytes	=	0;
+				chksm_tag_done	=	0;
 				-> message_sent;	
 			end else begin
 				count_bytes 	= 	count_bytes + 1;		// initialize at 5 
 				statusO = $fscanf(in, "%h ",exp[7:0]);
 			end
 		end
-	end
-end
+end else
+		start_checking	=	'0;
 end
 
 // jump here for comparison_done
 initial
 forever begin
 	@ message_sent;
-	#10 @ (negedge clk) 
 
-	repeat (2) @ (negedge clk) begin
-		statusO = $fscanf(in, "%h ",exp_g[7:0]);
-	end	
+	#10 @ (negedge clk) 
 
 	new_message_i = '1;
 	id_i	=	2'b01;
@@ -355,25 +321,25 @@ forever begin
       		@ (negedge clk);
 		new_message_i = '0;
       		statusI = $fscanf(in,"%h ", message_i[7:0]);
-      //		@ (negedge clk);
 		if (message_i == 8'h3b) begin
-			# 100 -> input_stimuli_sent;
+			# 500 //-> input_stimuli_sent;
+    		  		@ (negedge clk);
+				new_message_i = '1;
 		end
-end
+	end
+			dut_error	=	'0;
+			-> exit_sim;
 end
 
 always @ (posedge clk) begin
 	if (start_checking) begin
 		if (message_o == exp || exp == 8'h3b) begin
 			$display("%0dns passed : input and output  matched",$time);
-			$display("       Got  %h",message_o);
-			$display("       Exp  %h",exp);
 		end else begin
 			dut_error	=	1;
 			-> error;
 		end
 	end
 end
-
 
 endmodule

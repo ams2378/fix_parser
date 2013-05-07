@@ -8,6 +8,7 @@
 `define			COUNTER_RANGE			10
 `define			VALUE_SIZE			64
 `define			SEQ_NUM_DEPTH			80	
+`define			HB_RANGE			10	
 
 
 `define			supportedVersion  	  	24'h342e33 
@@ -126,6 +127,7 @@
 // value for various types of message
 `define			v_logon			 	8'h41 
 `define			v_heartbeat		 	8'h30 
+`define			heartbeat_val		 	8'h35 
 `define			v_logout		 	8'h35 
 
 // size of value for each types of message defied above

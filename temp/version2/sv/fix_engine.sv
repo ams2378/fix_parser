@@ -172,7 +172,7 @@ create_message  create_messege_module (
 	.s_v_beginString_i ({56'b0, 8'b01111111}),    			// from defines 	
 	.v_beginString_i ({200'b0, `v_beginString}),			// from defines	
 	.s_v_senderCompId_i({57'b0, `s_v_senderCompId}),			// from defines	
-	.v_heartBeatInt_i ({248'b0, `v_heartbeat}),			// from defines
+	.v_heartBeatInt_i ({248'b0, `heartbeat_val}),			// from defines
 	.s_v_heartBeatInt_i ({63'b0, `s_v_heartbeat}),			// from defines
 	.seq_ready_i(w_seq_ready),
 
