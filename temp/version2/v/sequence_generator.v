@@ -28,10 +28,13 @@ parameter 		MEM_DEPTH = 1 << `HOST_ADDR_WIDTH;
 reg[32-1:0]		mem[MEM_DEPTH-1:0];
 integer			i, j, k;
 reg[MAX_SIZE-1:0]	outgoing_seq_num;
-reg[MAX_SIZE-1:0]	outgoing_seq_num_temp;
+//reg[MAX_SIZE-1:0]	outgoing_seq_num_temp;
+wire[MAX_SIZE-1:0]	outgoing_seq_num_temp;
 reg			start_conv;
-reg			done;
-reg[3:0]		width;
+//reg			done;
+wire			done;
+wire[3:0]		width;
+//reg[3:0]		width;
 wire[4*10-1:0] 		dat_bcd;  // output bus
 
 

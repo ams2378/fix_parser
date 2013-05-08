@@ -56,10 +56,13 @@ reg[NUM_HOST-1:0]		id_i;				// from toe
 reg[7:0]			message_i;			// from toe
 reg				fifo_full_i;
 reg				new_message_i;			// will be implemented by fifo contr.
-reg				fifo_write_o;
-reg[7:0]			message_o;			// goes to fifo
-reg				end_o;
+//reg				fifo_write_o;
+//reg[7:0]			message_o;			// goes to fifo
+//reg				end_o;
 
+wire				fifo_write_o;
+wire[7:0]			message_o;			// goes to fifo
+wire				end_o;
 
 // instantiate dut
 fix_engine dut (	  
@@ -137,11 +140,11 @@ end
 //enable if compiling with VCS
 //initial 
 
-initial begin
+//initial begin
 
-$vcdpluson;		 
+//$vcdpluson;		 
 
-end
+//end
 
 // initialization
 initial begin

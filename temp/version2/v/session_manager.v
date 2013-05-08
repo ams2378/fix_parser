@@ -53,7 +53,8 @@ reg			messagereceived_o;
 reg			we_1;
 reg[NUM_HOST-1:0]	addr_1;
 reg[3:0]		data_in_1;
-reg[3:0]		data_out_1;
+wire[3:0]		data_out_1;
+//reg[3:0]		data_out_1;
 
 /*
 reg			we_2;
@@ -172,7 +173,8 @@ function [SIZE-1:0] get_s_v_TargetCompId;
 endfunction	
 
 // getType(connected_host_i)
-function [1] getType;
+//function [1] getType;
+function getType;
 	input[NUM_HOST-1:0]	connected_host_i;
 
 	begin

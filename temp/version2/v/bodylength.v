@@ -20,11 +20,14 @@ module bodylength #(parameter HOST_ADDR = `HOST_ADDR_WIDTH, MAX_SIZE = 80, VALUE
 
 reg [32-1:0]			length;
 reg [5:0]			l_length;	 // s_v_bodylength
-reg				done;
+//reg				done;
+wire				done;
 reg				start_conv;
 integer				k;
-reg [3:0]			width;
-reg[MAX_SIZE-1:0]		v_bodyLength_temp;
+//reg [3:0]			width;
+wire [3:0]			width;
+//reg[MAX_SIZE-1:0]		v_bodyLength_temp;
+wire[MAX_SIZE-1:0]		v_bodyLength_temp;
 wire[40-1:0]			dat_bcd;
 
 always @ (*) begin

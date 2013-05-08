@@ -8,19 +8,65 @@
 # -- Compiling module ram_fix
 # -- Compiling module received_msg_processor
 # -- Compiling module session_manager
-# ** Error: session_manager.v(175): Packed dimension must specify a range.
 # -- Compiling module create_message
 # -- Compiling module fsm_msg_create_2
 # -- Compiling module sequence_generator
 # -- Compiling module connection_toe
 # -- Compiling module create_checksum
+# -- Compiling module fix_parser
 # -- Compiling module fix_parser_out_module
 # -- Compiling module checksum
-# -- Compiling module fix_engine
 # -- Compiling module bodylength
 # -- Compiling module interface_controller_in
-# ** Error: /home/adilsadik/altera/12.1/modelsim_ase/linuxaloem/vlog failed.
-# Error in macro ./runsim.do line 4
-# /home/adilsadik/altera/12.1/modelsim_ase/linuxaloem/vlog failed.
-#     while executing
-# "vlog ascii2int.v binary_to_bcd.v hostaddress.v ram_fix.v received_msg_processor.v session_manager.v create_message.v fsm_msg_create_2.v sequence_gener..."
+# -- Compiling module fix_engine
+# 
+# Top level modules:
+# 	fix_engine
+# Model Technology ModelSim ALTERA vlog 10.1b Compiler 2012.04 Apr 27 2012
+# -- Skipping module bench
+# 
+# Top level modules:
+# 	bench
+# vsim -lib work -t ps bench 
+# Loading work.bench
+# Loading work.fix_engine
+# Loading work.hostaddress
+# Loading work.connection_toe
+# Loading work.session_manager
+# Loading work.ram_fix
+# Loading work.received_msg_processor
+# Loading work.create_message
+# Loading work.fsm_msg_create_2
+# Loading work.create_checksum
+# Loading work.sequence_generator
+# Loading work.binary_to_bcd
+# Loading work.bodylength
+# Loading work.fix_parser
+# Loading work.fix_parser_out_module
+# Loading work.checksum
+# Loading work.ascii2int
+# Loading work.interface_controller_in
+# ** Error: (vish-4014) No objects found matching '/testbench/clk'.
+# Executing ONERROR command at macro ./waveformat.do line 3
+# ** Error: (vish-4014) No objects found matching '/testbench/lfsr_0/lfsr_out'.
+# Executing ONERROR command at macro ./waveformat.do line 4
+# 
+# 
+################################################### 
+# 
+# Applying reset @ 12ns
+# Initiating a new connection request @ 25ns
+# ACK received from TOE: connected!! @ 37ns
+# Terminating simulation @ 41ns 
+# SIMLUATION FAILED @ 41ns 
+#        Got  59
+#        Exp  38
+################################################### 
+# 
+# ** Note: $finish    : bench.v(247)
+#    Time: 51 ps  Iteration: 0  Instance: /bench
+# 1
+# Break in Module bench at bench.v line 247
+# Simulation Breakpoint: 1
+# Break in Module bench at bench.v line 247
+# MACRO ./runsim.do PAUSED at line 10

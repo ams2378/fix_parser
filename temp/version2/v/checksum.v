@@ -34,8 +34,10 @@ reg [8:0]			temp;
 reg [7:0]			soh = 8'h01;
 reg [7:0]			head = 8'h38;
 
-reg [7:0]		 	rcv_checksum;
-reg				ready2cmp_i;
+//reg [7:0]		 	rcv_checksum;
+wire [7:0]		 	rcv_checksum;
+wire				ready2cmp_i;
+//reg				ready2cmp_i;
 reg				valid;
 
 
