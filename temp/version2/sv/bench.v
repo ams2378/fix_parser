@@ -330,7 +330,6 @@ always @ (posedge clk) begin
 			start_checking	=	'0;
 end
 
-
 // buffer sent data from each end
 always @ (posedge clk) begin
 
@@ -365,9 +364,7 @@ always @ (posedge clk) begin
 	end
 end
 
-
 // ------------------ acceptor -------------
-
 
 reg		start_a;
 
@@ -431,7 +428,6 @@ end
 
 endmodule
 
-
 /*
 // exiting simulation
 initial
@@ -442,9 +438,6 @@ initial
  	$display ("################################################### \n");
  	#10 $finish;
 end
-
-
-
 
 // golden model
 always @(*) begin
@@ -459,7 +452,6 @@ always @(*) begin
 	
 end
 
-
 always @ (posedge clk) begin 
 
 	if (fifo_write_o == 1 && connect_i == 0 ) begin
@@ -467,7 +459,6 @@ always @ (posedge clk) begin
 	end else
 		start_checking = '0;
 end
-
 
 always @ (negedge clk) begin
 	t_end_o  <= #5 end_o;
@@ -505,7 +496,6 @@ always @ (posedge clk) begin
 	end else
 		-> send_message;
 end
-
 
 // handle checksum 
 always @ (posedge clk) begin
