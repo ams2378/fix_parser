@@ -180,6 +180,10 @@ always @ (*) begin
 			end else
 				next_state	=	state3;
 		  end
+<<<<<<< HEAD
+=======
+
+>>>>>>> f83c563eb82b7b51e483b1d7ea09393642d0a2ce
 
 	// expected tag message type
 	state4	: begin
@@ -215,10 +219,16 @@ always @ (*) begin
 				next_state	=	state5;
 		  end
 
+<<<<<<< HEAD
 	
 	// expected tag msgseqnum
 	state12	: begin
 				buffer_msgtype_signal	=	'0;
+=======
+	// expected tag msgseqnum
+	state12	: begin
+				buffer_msgtype_signal	= '0;
+>>>>>>> f83c563eb82b7b51e483b1d7ea09393642d0a2ce
 				error_type_o	=	'0;
 				new_message_o	=	'0;
 			if (tag_valid_i == 1 ) begin
@@ -246,7 +256,10 @@ always @ (*) begin
 		  end
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> f83c563eb82b7b51e483b1d7ea09393642d0a2ce
 	
 	state6 : begin
 				buffer_msgtype_signal	=	'0;

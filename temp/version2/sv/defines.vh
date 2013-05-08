@@ -127,6 +127,10 @@
 // value for various types of message
 `define			v_logon			 	8'h41 
 `define			v_heartbeat		 	8'h30 
+<<<<<<< HEAD
+=======
+`define			heartbeat_val		 	8'h35 
+>>>>>>> f83c563eb82b7b51e483b1d7ea09393642d0a2ce
 `define			v_logout		 	8'h35 
 
 `define			heartbeat_val		 	10'h3ff 

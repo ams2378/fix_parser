@@ -1,5 +1,9 @@
 INCLUDE= defines.vh
+<<<<<<< HEAD
 SRC= ascii2int.sv binary_to_bcd.sv hostaddress.sv ram.sv received_msg_processor.sv session_manager.sv create_message.sv fsm_msg_create_2.sv counter.sv sequence_generator.sv connection_toe.sv create_checksum.sv fix_parser.sv fix_parser_out_module.sv checksum.sv fix_engine.sv hbcounter.sv bodylength.sv interface_controller_in.sv end_to_end_system.sv
+=======
+SRC= ascii2int.sv binary_to_bcd.sv hostaddress.sv ram_fix.sv received_msg_processor.sv session_manager.sv create_message.sv fsm_msg_create_2.sv counter.sv sequence_generator.sv connection_toe.sv create_checksum.sv fix_parser.sv fix_parser_out_module.sv checksum.sv fix_engine.sv bodylength.sv interface_controller_in.sv
+>>>>>>> f83c563eb82b7b51e483b1d7ea09393642d0a2ce
 BENCH= bench.v  
 #BENCH= dut.v
 DUMP= testbench.exe
@@ -17,8 +21,8 @@ src1:
 #$(BENCH)
 
 src2:
-	vcs -full64 -PP -sverilog +vcs+loopreport[+200] +define+SV +define+VPD $(INCLUDE) $(SRC) $(BENCH) -o $(DUMP)
-	./$(DUMP)
+	vcs -full64 -PP -sverilog +vcs+loopreport[+200] +define+SV +define+VPD $(INCLUDE) $(SRC) $(BENCH) -o $(DUMP) 
+	./$(DUMP)> log.txt
 view:
 	dve -full64 -vpd vcdplus.vpd &
 

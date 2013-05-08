@@ -25,7 +25,12 @@ module fix_engine #(parameter NUM_HOST = `HOST_ADDR_WIDTH, SIZE = 64, T_SIZE = 5
 	output				fifo_write_o,
 	output[7:0]			message_o,			// goes to fifo
 	output				end_o				// only to assist bench
+<<<<<<< HEAD
 	);
+=======
+
+);
+>>>>>>> f83c563eb82b7b51e483b1d7ea09393642d0a2ce
 
 parameter	HOSTADDR_DATA_WIDTH = `VALUE_DATA_WIDTH + `VALUE_SIZE;
 
@@ -99,7 +104,6 @@ hostaddress  hostaddresstable(
 		.host_size(w_host_size)
 	);
 
-
 connection_toe  toe_if (
 
 		.clk(clk),
@@ -129,7 +133,7 @@ session_manager session_controller (
 	.addr_2(w_addr_2),					// to hostaddress
 	.data_in_2(w_data_2),					// to hostaddress
 	.disconnect_o(disconnect_o),				// to toe ***
- 	.disconnect_host_num_o(w_disconnect_host_num_o),		// to toe ***
+ 	.disconnect_host_num_o(w_disconnect_host_num_o),	// to toe ***
 	.targetCompId_o (w_v_targetCompId),			// to create message	
 	.s_v_targetCompId_o(w_s_v_targetCompId),		// to create message
 	.ignore_o (w_ignore),					// to seq gen (not supported yet)
@@ -185,7 +189,11 @@ create_message  create_messege_module (
 	.s_v_beginString_i ({56'b0, 8'b01111111}),    			// from defines 	
 	.v_beginString_i ({200'b0, `v_beginString}),			// from defines	
 	.s_v_senderCompId_i({57'b0, `s_v_senderCompId}),			// from defines	
+<<<<<<< HEAD
 	.v_heartBeatInt_i ({248'b0, `v_heartbeat_val}),			// from defines
+=======
+	.v_heartBeatInt_i ({248'b0, `heartbeat_val}),			// from defines
+>>>>>>> f83c563eb82b7b51e483b1d7ea09393642d0a2ce
 	.s_v_heartBeatInt_i ({63'b0, `s_v_heartbeat}),			// from defines
 	.seq_ready_i(w_seq_ready),
 
@@ -350,6 +358,5 @@ interface_controller_in if_controller (
 	.data_o(message_o),
 	.writereq_o(fifo_write_o)
 	);
-
 
 endmodule
