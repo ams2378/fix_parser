@@ -45,45 +45,72 @@ module bench;
 parameter			NUM_HOST  = 2;
 
 // decleare dut in/out ports
-reg				clk;
-reg				rst;
-reg				connect_i;			// from app
-reg[NUM_HOST-1:0]		connect_to_host_i;		// from app
+	reg				clk;
+	reg				rst;
+	reg				connect_i;			// from app
+	reg[1:0]			connect_to_host_i;		// from app
 
-reg				connected_i;			// from toe
-reg[NUM_HOST-1:0]		connected_host_addr_i;		// from toe
-reg[NUM_HOST-1:0]		id_i;				// from toe
-reg[7:0]			message_i;			// from toe
-reg				fifo_full_i;
-reg				new_message_i;			// will be implemented by fifo contr.
-reg				fifo_write_o;
-reg[7:0]			message_o;			// goes to fifo
-reg				end_o;
+	reg				connected_i_i;			// from toe
+	reg[1:0]			connected_host_addr_i_i;		// from toe
+	reg[1:0]			id_i_i;				// from toe
+	reg[7:0]			message_i_i;			// from toe
+	reg				fifo_full_i_i;
+	reg				new_message_i_i;			// will be implemented by fifo contr.
+
+	reg				fifo_write_i_o;
+	reg[7:0]			message_i_o;			// goes to fifo
+	reg				end_i_o;
+
+
+	reg				clk;
+	reg				rst;
+
+	reg				connected_a_i;			// from toe
+	reg[1:0]			connected_host_addr_a_i;		// from toe
+	reg[1:0]			id_a_i;				// from toe
+	reg[7:0]			message_a_i;			// from toe
+	reg				fifo_full_a_i;
+	reg				new_message_a_i;			// will be implemented by fifo contr.
+
+
+	reg				fifo_write_a_o;
+	reg[7:0]			message_a_o;			// goes to fifo
+	reg				end_a_o;
 
 
 // instantiate dut
-fix_engine dut (	  
- 		.clk,
- 		.rst,
- 		.connect_i,			// from app
- 		.connect_to_host_i,		// from app
+end_to_end_system dut (	  
+	 	.clk,
+	 	.rst,
+		.id_i_i,
+		.id_a_i,
+	 	.connect_i,			// from app
+	 	.connect_to_host_i,		// from app
+	 	.connected_i_i,			// from toe
+	 	.connected_host_addr_i_i,		// from toe
+	 	.message_i_i,			// from toe
+		.fifo_full_i_i,
+		.new_message_i_i,			// will be implemented by fifo contr.
 
-		.connected_i,			// from toe
- 		.connected_host_addr_i,		// from toe
- 		.id_i,				// from toe
- 		.message_i,			// from toe
- 		.fifo_full_i,
- 		.new_message_i,			// will be implemented by fifo contr.
- 		.fifo_write_o,
- 		.message_o,			// goes to fifo
-		.end_o
+		.fifo_write_i_o,
+		.message_i_o,
+		.end_i_o,
+
+	 	.clk,
+	 	.rst,
+
+	 	.connected_a_i,			// from toe
+	 	.connected_host_addr_a_i,		// from toe
+	 	.message_a_i,			// from toe
+		.fifo_full_a_i,
+		.new_message_a_i,			// will be implemented by fifo contr.
+
+		.fifo_write_a_o,
+		.message_a_o,
+		.end_a_o
 	);
 
 // internal variables and events
-reg[2:0] session_state [7:0];
-reg[2:0] session_map_counter [15:0];
-reg	 count_expired;
-reg[2:0] count_expired_addr;
 reg	 t_fifo_write_o;
 reg	 chk_connect;
 reg	 t_end_o;
@@ -96,12 +123,28 @@ integer	not_done;
 integer	temp;
 integer statusI,statusO, mon;
 reg	  start_checking;
+reg	  start_checking_a;
 reg [7:0] exp;
 reg [7:0] exp_g;		// garbage
 integer in,out,cfg;
 integer dut_error;
 integer		temp_count;
+integer		temp_count_a;
 integer		count_bytes;
+
+
+//reg[499:0]	buffer_i[7:0]; 
+reg[7:0]	buffer_i[499:0]; 
+integer		addr_i;		// initialize to zero
+integer		t1_i;
+integer		temp_addr_i;
+
+reg[7:0]	buffer_a[499:0]; 
+integer		addr_a;		// initialize to zero
+integer		t1_a;
+integer		temp_addr_a;
+reg		transfer_i2a;
+reg		transfer_a2i;
 
 event message_sent;
 event reset_enable;
@@ -113,14 +156,19 @@ event start_initiator;
 event start_acceptor;
 event error;
 event initiation_trigger_sent;
-event waiting_for_ack;
-event connected;
+event waiting_for_ack_i;
+event waiting_for_ack_a;
+event connected_i;
+event connected_a;
 event comparison_done;
 event handle_checksum;
 event handle_time;
 event handle_bodylength;
 event input_stimuli_sent;
 event send_message;
+event transfer_message_i2a;
+event transfer_message_a2i;
+
 
 // clock generator
 always # 1 clk = ~clk;
@@ -151,42 +199,49 @@ initial begin
     	rst			=	'0;
     	connect_i		=	'0;
 	connect_to_host_i	=	'0;
-    	connected_i		=	'0;
-  	connected_host_addr_i	=	'0;
-	id_i			=	'0;
-	fifo_full_i		=	'0;
-   	new_message_i		=	'0;
-  	message_i		=	'0;
+    	connected_i_i		=	'0;
+    	connected_a_i		=	'0;
+  	connected_host_addr_i_i	=	'0;
+  	connected_host_addr_a_i	=	'0;
+	id_i_i			=	'0;
+	id_a_i			=	'0;
+	fifo_full_a_i		=	'0;
+   	new_message_i_i		=	'0;
+   	new_message_a_i		=	'0;
+  	message_i_i		=	'0;
+  	message_a_i		=	'0;
 	temp_count		=	0;
+	temp_count_a		=	0;
 	count_bytes		=	0;
 	not_done		=	1;
 	chk_connect		=	'0;
 	chksm_tag_done		=	10;
+	addr_i			=	0;
+	addr_a			=	0;
+	t1_a			=	0;
+	t1_i			=	0;
+	temp_addr_a		=	0;
+	temp_addr_i		=	0;
+
   	in  = $fopen("init_out.txt","r");
- // 	out = $fopen("init_out.txt","r");
   	mon = $fopen("monitor.txt","w");
 end
 
-// test flow:  
-// start with a reset (after warmup cycle)
-// configure DUT 
-// upon configuration, tell DUT to initiate a fix session by sending logon
-// exit in case of any error
-// log information regarding error
 initial begin
   	#10 -> reset_enable;
   	@ (reset_done);
   	#10 -> start_initiator;
+  	#1 -> start_acceptor;
 end
 
 // applying reset logic
 initial
 forever begin
  	@ (reset_enable);
- 	@ (negedge clk)
+ 	@ (posedge clk)
  	$display ("Applying reset @ %0dns", $time);
    	rst = 1;
- 	@ (negedge clk)
+ 	@ (posedge clk)
    	rst = 0;
  	$display ("Came out of Reset @ %0dns", $time);
  	-> reset_done;
@@ -196,32 +251,188 @@ end
 initial 
 forever begin 
 	@ (start_initiator);
-	@ (negedge clk)
-	$display ("Initiating a new connection @ %0dns", $time);
+	@ (posedge clk)
+	$display ("Initiator: Initiating a new connection @ %0dns", $time);
 	connect_i = '1;
 	connect_to_host_i  =  2'b01; 
-	@ (negedge clk)
+	@ (posedge clk)
 	connect_i = '0;
-	-> waiting_for_ack;
-	@connected;
-	#7 connected_i = '0;
-	-> input_stimuli_sent;
+	-> waiting_for_ack_i;
+	@connected_i;
+	#7 connected_i_i = '0;
 	$display ("ACK received @ %0dns", $time);
-	@error;
-	->exit_sim;
+
+	#10000 $finish;
+
+//	@error;
+//	->exit_sim;
 end
 
-// send connection status
+// initiate acceptor  
+initial 
+forever begin 
+	@ (start_acceptor);
+	@ (posedge clk)
+	$display ("Acceptor: waiting for a new connection @ %0dns", $time);
+	-> waiting_for_ack_a;
+	@connected_a;
+	#7 connected_a_i = '0;
+	$display ("ACK received @ %0dns", $time);
+
+//	#1000 $finish;	
+
+//	@error;
+//	->exit_sim;
+end
+
+// connection status: initiator side  
 initial begin
-	@(waiting_for_ack);
-	#3 @(negedge clk)
-	connected_i = '1;
-	connected_host_addr_i = 2'b01;
-//	@ (negedge clk)
-//	connected_i = '0;
-	->connected;
+	@(waiting_for_ack_i);
+	#3 @(posedge clk)
+	connected_i_i = '1;
+	connected_host_addr_i_i = 2'b01;
+	->connected_i;
 end
 
+// connection status: acceptor side  
+initial begin
+	@(waiting_for_ack_a);
+	#3 @(posedge clk)
+	connected_a_i = '1;
+	connected_host_addr_a_i = 2'b00;
+	->connected_a;
+end
+
+reg		start;
+
+always @(*) begin
+
+	if (fifo_write_i_o == 1 && connect_i == 0) begin
+		start	=	'1;
+	end else	
+		start	=	'0;
+end
+
+reg[7:0]		message_temp;
+
+always @ (posedge clk) begin
+
+	if (start == 1) begin
+		if (temp_count <1) begin
+			temp_count	=	temp_count + 1;
+			start_checking  = '0;
+		end else begin
+			buffer_i[addr_i]    = message_i_o;
+			addr_i = addr_i + 1;	
+			start_checking  = '1; 
+		end
+	end else
+			start_checking	=	'0;
+end
+
+
+// buffer sent data from each end
+always @ (posedge clk) begin
+
+		new_message_a_i = '0;
+
+	if (end_i_o  == 1) begin
+		temp_count  = 0;
+		temp_addr_i   =  addr_i;
+		addr_i	 = 0;
+		new_message_a_i = '1;
+	end
+end
+
+always @ (*) begin
+	if (t1_i == temp_addr_i-1) begin
+		transfer_i2a <= '0;
+		t1_i	= '0;
+	end
+end
+
+always @ (posedge clk) begin
+
+	if (new_message_a_i == 1)
+		transfer_i2a <= '1;	
+end
+
+always @ (posedge clk) begin
+
+	if (transfer_i2a == 1) begin
+		message_a_i	=	buffer_i[1+t1_i];
+		t1_i = t1_i + 1;
+	end
+end
+
+
+// ------------------ acceptor -------------
+
+
+reg		start_a;
+
+always @(*) begin
+
+	if (fifo_write_a_o == 1 ) begin
+		start_a	=	'1;
+	end else	
+		start_a	=	'0;
+end
+
+always @ (posedge clk) begin
+
+	if (start_a == 1) begin
+		if (temp_count_a <1) begin
+			temp_count_a	=	temp_count_a + 1;
+			start_checking_a  = '0;
+		end else begin
+			buffer_a[addr_a]    = message_a_o;
+			addr_a = addr_a + 1;	
+			start_checking_a  = '1; 
+		end
+	end else
+			start_checking_a	=	'0;
+end
+
+
+// buffer sent data from each end
+always @ (posedge clk) begin
+
+		new_message_i_i = '0;
+
+	if (end_a_o  == 1) begin
+		temp_count_a  = 0;
+		temp_addr_a   =  addr_a;
+		addr_a	 = 0;
+		new_message_i_i = '1;
+	end
+end
+
+always @ (*) begin
+	if (t1_a == temp_addr_a-1) begin
+		transfer_a2i <= '0;
+		t1_a	= '0;
+	end
+end
+
+always @ (posedge clk) begin
+
+	if (new_message_i_i == 1)
+		transfer_a2i <= '1;	
+end
+
+always @ (posedge clk) begin
+
+	if (transfer_a2i == 1) begin
+		message_i_i	=	buffer_a[1+t1_a];
+		t1_a = t1_a + 1;
+	end
+end
+
+endmodule
+
+
+/*
 // exiting simulation
 initial
 	@ (exit_sim)  begin
@@ -231,6 +442,9 @@ initial
  	$display ("################################################### \n");
  	#10 $finish;
 end
+
+
+
 
 // golden model
 always @(*) begin
@@ -378,3 +592,21 @@ end
 
 
 endmodule
+
+*/
+
+
+/*
+initial 
+forever begin
+
+	@ transfer_message_i2a;
+//	@ (posedge clk);
+//	while (t1_i <= temp_addr_i ) begin	
+		@ (posedge clk);
+		message_a_i = buffer_i[t1_i];
+		t1_i = t1_i + 1;
+//	end
+
+end
+*/

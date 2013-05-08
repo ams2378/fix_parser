@@ -22,6 +22,7 @@ module fsm_msg_create_2 # (parameter VALUE_WIDTH = `VALUE_DATA_WIDTH, T_SIZE = 5
 	//	output reg			start_chksm_o,		// indicates start create_checksum
 		output reg			done_o,
 		output reg			msg_last_byte_o,
+		output reg			end_o,
 		output reg			all_sent_o,
 		output reg			end_of_msg_o,
 		output reg			data_valid_o
@@ -30,7 +31,7 @@ module fsm_msg_create_2 # (parameter VALUE_WIDTH = `VALUE_DATA_WIDTH, T_SIZE = 5
 
 
 
-reg				end_o;
+//reg				end_o;
 
 
 // state encoding

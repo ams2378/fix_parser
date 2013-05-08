@@ -14,6 +14,7 @@ module end_to_end_system #(parameter NUM_HOST = `HOST_ADDR_WIDTH, SIZE = 64, T_S
 	input				new_message_i_i,			
 	output				fifo_write_i_o,
 	output[7:0]			message_i_o,			// goes to fifo
+	output				end_i_o,
 
 	input				connected_a_i,			// from toe
 	input[NUM_HOST-1:0]		connected_host_addr_a_i,		// from toe
@@ -22,7 +23,8 @@ module end_to_end_system #(parameter NUM_HOST = `HOST_ADDR_WIDTH, SIZE = 64, T_S
 	input				fifo_full_a_i,
 	input				new_message_a_i,			
 	output				fifo_write_a_o,
-	output[7:0]			message_a_o			// goes to fifo
+	output[7:0]			message_a_o,			// goes to fifo
+	output				end_a_o
 
 	);
 
@@ -39,7 +41,10 @@ fix_engine initiator (
 	 .fifo_full_i(fifo_full_i_i),
 	 .new_message_i(new_message_i_i),			
 	 .fifo_write_o(fifo_write_i_o),
-	 .message_o(message_i_o)			
+	 .message_o(message_i_o),
+
+	 .end_o(end_i_o)
+			
 
 	);
 
@@ -56,7 +61,10 @@ fix_engine acceptor (
 	 .fifo_full_i(fifo_full_a_i),
 	 .new_message_i(new_message_a_i),			
 	 .fifo_write_o(fifo_write_a_o),
-	 .message_o(message_a_o)			
+	 .message_o(message_a_o),
+
+			
+	 .end_o(end_a_o)
 
 	);
 

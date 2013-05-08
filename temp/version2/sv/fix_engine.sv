@@ -43,6 +43,7 @@ wire[`SEQ_NUM_DEPTH-1:0]	w_outseqnum;
 wire				w_new_message;
 wire				w_done;
 wire				w_endd;
+wire				w_endd_old;
 wire[SIZE-1:0]			w_s_msgSeqNum;			
 wire[31:0]			w_tag;
 wire				w_tagvalid;
@@ -84,8 +85,8 @@ wire[1:0]			w_connected_host_addr_i;
 wire				w_threshold_reached;
 
 
-//assign	end_o				=	w_end_chksm;
-assign	end_o				=	w_end_message;
+assign	end_o				=	w_endd;
+//assign	end_o				=	w_end_message;
 assign	w_connected_host_addr_i		=	(new_message_i == '1) ? id_i : connected_host_addr_i;
 
 hostaddress  hostaddresstable(
@@ -166,7 +167,7 @@ create_message  create_messege_module (
 	.rst(rst),
 	.start_i (w_initiate_msg),				// from SM
 	.done_i (w_done),					// from fsm
-	.end_i (w_endd),					// from fsm
+	.end_i (w_endd_old),					// from fsm
 	.bodyLength_r_i (w_bodyLength_valid), 			// from bodylength module (ready) 
 	.v_bodyLength_i({176'b0, w_v_bodyLength}),
 	.s_v_bodyLength_i({54'b0, w_s_v_bodyLength}),
@@ -184,7 +185,7 @@ create_message  create_messege_module (
 	.s_v_beginString_i ({56'b0, 8'b01111111}),    			// from defines 	
 	.v_beginString_i ({200'b0, `v_beginString}),			// from defines	
 	.s_v_senderCompId_i({57'b0, `s_v_senderCompId}),			// from defines	
-	.v_heartBeatInt_i ({248'b0, `v_heartbeat}),			// from defines
+	.v_heartBeatInt_i ({248'b0, `v_heartbeat_val}),			// from defines
 	.s_v_heartBeatInt_i ({63'b0, `s_v_heartbeat}),			// from defines
 	.seq_ready_i(w_seq_ready),
 
@@ -221,7 +222,7 @@ fsm_msg_create_2  fsm (
 //	.start_chksm_o(w_start_chksm),				// to checksum calc (start calc)
 	.done_o (w_done),
 	.msg_last_byte_o (w_endd),
-//	.end_o (w_endd),
+	.end_o (w_endd_old),
 	.end_of_msg_o(w_end_chksm),				// to checksum calc (end calc)
 	.data_valid_o(w_send_message_valid_o),
 	.all_sent_o(w_all_sent)

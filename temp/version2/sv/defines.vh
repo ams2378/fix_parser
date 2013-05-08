@@ -130,6 +130,7 @@
 `define			v_logout		 	8'h35 
 
 `define			heartbeat_val		 	10'h3ff 
+`define			v_heartbeat_val		 	10'h3ff 
 
 // size of value for each types of message defied above
 `define			s_v_logon		 	1'b1 
