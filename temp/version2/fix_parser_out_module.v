@@ -59,18 +59,23 @@ reg				start_message;
 reg				end_message;
 
 reg [7:0] 			first_tag = 8'h38;		// ASCII for "8" - indicates start of a new FIX message
-reg [15:0] 			last_tag = 16'h3130;		// ASCII for "10" - indicates the last TAG
+reg [31:0] 			last_tag = 32'h00003130;		// ASCII for "10" - indicates the last TAG
 
 reg				last_tag_valid;
 reg				incr_i;
+reg				load_tag;
+reg				load_val;
+reg				shift_tag;
+reg				shift_val;
+
  
 always @(posedge clk) begin
 	if (rst)		state <= state0;
 	else			state <= next_state;
 end
 
-always @(state or start_tag_i or start_value_i) begin
-	
+//always @(state or start_tag_i or start_value_i) begin
+always @ (*) begin	
 	if (rst) begin
 		tag = '0;
 		value = '0;
@@ -84,11 +89,16 @@ always @(state or start_tag_i or start_value_i) begin
 	
 	case(state) 
 	
-		state0: begin 				
+		state0: begin 	
+					load_tag  = '0;
+					shift_tag = '0;
+					load_val  = '0;
+					shift_val = '0;			
 				if (start_tag_i == 1) begin
 					start_of_header = '0;
 					end_of_body = '0;
-					tag [7:0] = data_i;
+				//	tag [7:0] = data_i;		
+					load_tag = '1;		
 					v_wr_cs = '0;	
 					v_wr_en = '0;
 					t_wr_cs = '0;
@@ -107,13 +117,18 @@ always @(state or start_tag_i or start_value_i) begin
 				end
 		end
 		state1: begin
+					load_tag  = '0;
+					shift_tag = '0;
+					load_val  = '0;
+					shift_val = '0;	
 				value = '0;
 				v_wr_cs = '0;	
 				v_wr_en = '0;	
 				if (start_tag_i == 1) begin
 				//	tag  <<= 8;
-					tag  =  tag << 8;
-					tag[7:0] = data_i;
+				//	tag  =  tag << 8;		
+					shift_tag   =	'1;		
+				//	tag[7:0] = data_i;
 					next_state = state2;
 				end else if (start_tag_i == 0 ) begin
 					t_wr_cs = '1;	
@@ -122,7 +137,7 @@ always @(state or start_tag_i or start_value_i) begin
 						start_of_header = '1;
 						start_message = '1;
 						next_state = state3;
-					end else if (tag [15:0] == last_tag) begin
+					end else if (tag [31:0] == last_tag) begin
 						end_of_body = 1;
 						next_state = state3;
 					end else 
@@ -130,13 +145,18 @@ always @(state or start_tag_i or start_value_i) begin
 				end
 		end
 		state2: begin
+					load_tag  = '0;
+					shift_tag = '0;
+					load_val  = '0;
+					shift_val = '0;	
 				value = '0;
 				v_wr_cs = '0;	
 				v_wr_en = '0;	
 				if (start_tag_i == 1) begin
 				//	tag  <<= 8;
-					tag = tag << 8;
-					tag[7:0] = data_i;
+				//	tag = tag << 8;		
+					shift_tag   =  '1;
+				//	tag[7:0] = data_i;
 					next_state = state1;
 				end else if (start_tag_i == 0) begin
 					t_wr_cs = '1;	
@@ -145,7 +165,7 @@ always @(state or start_tag_i or start_value_i) begin
 						start_of_header = '1;
 						start_message = '1;
 						next_state = state3;
-					end else if (tag [15:0] == last_tag) begin
+					end else if (tag [31:0] == last_tag) begin
 						end_of_body = 1;
 						next_state = state3;
 					end else 
@@ -153,6 +173,10 @@ always @(state or start_tag_i or start_value_i) begin
 				end
 		end
 		state3: begin
+					load_tag  = '0;
+					shift_tag = '0;
+					load_val  = '0;
+					shift_val = '0;	
 				t_wr_cs = '0;	
 				t_wr_en = '0;
 				v_wr_cs = '0;	
@@ -160,20 +184,26 @@ always @(state or start_tag_i or start_value_i) begin
 				start_message = '0;
 				end_of_body = '0;	
 				if (start_value_i == 1) begin
-					value[7:0] = data_i;
+			//		value[7:0] = data_i;		
+					load_val =  '1;
 					next_state = state4;
 				end else 
 					next_state = state3;
 		end
 		state4:	begin
+					load_tag  = '0;
+					shift_tag = '0;
+					load_val  = '0;
+					shift_val = '0;	
 				tag = '0;
 				t_wr_cs = '0;	
 				t_wr_en = '0;
 				start_message = '0;	
 				if (start_value_i == 1) begin
 				//	value <<= 8;
-					value  =  value << 8;
-					value [7:0] = data_i;
+			//		value  =  value << 8;		
+					shift_val  = '1;
+			//		value [7:0] = data_i;
 					next_state = state5;
 				end else begin	
 					v_wr_cs = '1;	
@@ -183,14 +213,19 @@ always @(state or start_tag_i or start_value_i) begin
 				end
 			end	
 		state5: begin
+					load_tag  = '0;
+					shift_tag = '0;
+					load_val  = '0;
+					shift_val = '0;	
 				tag = '0;
 				t_wr_cs = '0;	
 				t_wr_en = '0;
 				start_message = '0;	
 				if (start_value_i == 1) begin
 				//	value <<= 8;
-					value  =  value << 8;
-					value [7:0] = data_i;
+			//		value  =  value << 8;	    
+					shift_val  = '1;
+			//		value [7:0] = data_i;
 					next_state = state4;
 				end else begin
 					v_wr_cs = '1;	
@@ -202,6 +237,32 @@ always @(state or start_tag_i or start_value_i) begin
 		end
 	endcase
 end
+
+
+always @(posedge clk) begin
+
+		value[7:0]	<=	data_i;
+		tag[7:0]	<=	data_i;
+	if (load_tag) begin
+		tag[7:0]	<=	data_i;
+	end
+
+	if (shift_tag) begin
+		tag		<=	tag << 8;
+		tag[7:0]	<=	data_i;
+	end
+
+	if (load_val) begin
+		value[7:0]	<=	data_i;
+	end
+
+	if (shift_val) begin
+		value		<=	value << 8;
+		value[7:0]	<=	data_i;
+	end
+end
+
+
 
 assign 	tag_o 			= 	tag;
 assign 	value_o 		= 	value;

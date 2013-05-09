@@ -140,8 +140,8 @@ always @(posedge clk) begin
 	else			state <= next_state;
 end
 
-always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end_i or seq_ready_i or fifo_full_i) begin
-
+//always @ (state or start_i or done_i or bodyLength_r_i or  message_type_i or end_i or seq_ready_i or fifo_full_i) begin
+always @(*) begin
 	if (rst) begin
 		tag_o 			= '0;	
 		tag_valid_o 		= '0;

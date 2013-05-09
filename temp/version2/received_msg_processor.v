@@ -56,7 +56,7 @@ reg				buffer_msgtype_signal;
 reg				buffer_msgSeqN_signal;
 reg				buffer_t_signal;
 reg				bufferval_signal;
-
+reg[3:0]			error_type_temp;
 
 // state related variables
 parameter 			state0   = 14'b00000000000001;
@@ -101,20 +101,6 @@ function [3:0] getMsgType;
       		endcase
 	end
 endfunction
-
-/* getType(buffer_msgType)
-function[3:0] getType;
-	input[31:0]	type;
-	case (type)
-		logonMsg	:	getType		=	logon;
-		logoutMsg	:	getType		=	logout;
-		heartBeatMsg	:	getType		=	heartbeat;
-		seqResetMsg	:	getType		=	reset;
-		resendReqMsg	:	getType		=	resendReq;
-		default		:	getType		=	'0;
-	endcase	
-endfunction
-*/
 
 always @(posedge clk ) begin
 
@@ -299,13 +285,36 @@ always @ (*) begin
 			end else
 				next_state	=	state11;
 		 end
-	endcase 
+	endcase
+
+	done		=	'0;
+
+if (end_processing == '1) begin
+	if (buffer_msgSeqN < expectedIncomingSeqNum_i && buffer_pdf[7:0] != 8'h59) begin
+		if(buffer_msgType != `seqResetMsg || (buffer_msgType == `seqResetMsg && buffer_gff[7:0] == 8'h59)) begin
+			error_type_o	=	`msgSeqL;	// serious error		// 59 - Y (set)
+		end  
+	end else if (!checksum_valid) begin
+		error_type_o	=	`garbled;
+	end else if (!(f_srcCompId && f_targetCompId && f_sendTime && f_msgSeqNum)) begin
+		error_type_o	=	`requiredTagMissing;
+	end else if (buffer_msgSeqNum > expectedIncomingSeqNum_i) begin
+		error_type_o	=	`msgSeqH;
+	end
+		
+	if (buffer_msgType == `seqResetMsg)
+		type_o	=	(buffer_gff[7:0] == 8'h59) ? `gapFill : `reset;
+	else
+		type_o	=	getMsgType(buffer_msgType[15:0]);
+
+	done	=	'1;
+end
+
 end
 
 // error checking
 always @ (posedge clk) begin
 	
-	done		<=	'0;
 
 if (buffer_msgtype_signal == 1)
 	buffer_msgType	<=	val_i;
@@ -366,12 +375,26 @@ if (bufferval_signal == 1) begin
 			endcase
 end
 
+
+
+end
+/*
+always @ (*) begin
+
+//	error_type_o	<=	'0;
+
+if (new_message_o == 1) begin
+	error_type_o	<=	error_type_temp;
+end
+
+
+	done		<=	'0;
+
 if (end_processing == '1) begin
 	if (buffer_msgSeqN < expectedIncomingSeqNum_i && buffer_pdf[7:0] != 8'h59) begin
 		if(buffer_msgType != `seqResetMsg || (buffer_msgType == `seqResetMsg && buffer_gff[7:0] == 8'h59)) begin
 			error_type_o	<=	`msgSeqL;	// serious error		// 59 - Y (set)
-		end //else 
-		//	error_type_o	<=	'1;	// serious error		// 59 - Y (set)
+		end  
 	end else if (!checksum_valid) begin
 		error_type_o	<=	`garbled;
 	end else if (!(f_srcCompId && f_targetCompId && f_sendTime && f_msgSeqNum)) begin
@@ -389,9 +412,8 @@ if (end_processing == '1) begin
 end
 
 end
-
+*/
 endmodule
-
 /*
 // intended to check srcId and compId validity before receiving all the remaining tag/val
 if ( f_srcCompId & f_targetCompId  ) begin

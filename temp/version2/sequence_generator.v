@@ -42,9 +42,9 @@ always @(posedge clk ) begin
 			mem[i]	<=	8'd123;
 		end
 	end
-end
+//end
 
-always @(posedge clk) begin
+//always @(posedge clk) begin
 	
 	start_conv	<=	'0;
 
@@ -62,7 +62,7 @@ end
 
 always @(*) begin
 		outgoing_seq_num		=	'0;
-	for (k = 0; k<width; k=k+1) begin
+	for (k = 0; k<10; k=k+1) begin
 		outgoing_seq_num[k*8 +: 8] = outgoing_seq_num_temp[8*(width-1-k) +: 8];	
 	end
 
