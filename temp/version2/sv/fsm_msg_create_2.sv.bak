@@ -428,7 +428,7 @@ always @ (negedge clk) begin
 end
 */
 
-//reg			msg_last_byte_o;				//edit syn
+reg			msg_last_byte_o;
 parameter		sstate0 = 2'b00;
 parameter		sstate1 = 2'b01;
 parameter		sstate2 = 2'b10;

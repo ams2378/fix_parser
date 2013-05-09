@@ -86,6 +86,10 @@ wire[7:0]			w_message_o;
 wire[7:0]			w_msg_length;
 wire[1:0]			w_connected_host_addr_i;
 wire				w_threshold_reached;
+wire				w_tag_en_cs;
+wire				w_tag_en_en;
+wire				w_val_en_cs;
+wire				w_val_en_en;
 
 
 assign	end_o				=	w_endd;
@@ -150,9 +154,9 @@ received_msg_processor message_processor (
 
 	.clk(clk),
 	.rst(rst),
-	.tag_valid_i(w_tag_en),					// from parser
+	.tag_valid_i(w_tag_en_en),					// from parser
 	.tag_i(w_tag_val),					// from parser
-	.val_valid_i(w_val_en),					// from parser
+	.val_valid_i(w_val_en_en),					// from parser
 	.val_i(w_val_val),					// from parser
 	.start_of_message_i(w_start_message),			// from parser
 	.end_of_message_i(w_end_message),			// from parser
@@ -318,10 +322,10 @@ fix_parser_out_module out_module(
 	.start_tag_i(w_tag_s),
 	.start_value_i(w_value_s),
 	
-	.t_wr_cs_o (w_tag_en),
-	.t_wr_en_o (w_tag_en),
-	.v_wr_cs_o (w_val_en),
-	.v_wr_en_o (w_val_en),
+	.t_wr_cs_o (w_tag_en_cs),
+	.t_wr_en_o (w_tag_en_en),
+	.v_wr_cs_o (w_val_en_cs),
+	.v_wr_en_o (w_val_en_en),
 	.tag_o 	   (w_tag_val),
 	.value_o   (w_val_val),
 
