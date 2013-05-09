@@ -38,8 +38,8 @@ module end_to_end_system #(parameter NUM_HOST = `HOST_ADDR_WIDTH, SIZE = 64, T_S
 parameter	v_sendercompid_i	=  {200'b0, `v_senderCompId_i};	
 parameter	s_v_sendercompid_i	=  {57'b0, `s_v_senderCompId_i};
 
-parameter	v_sendercompid_a	=  {175'b0, `v_senderCompId_a};	
-parameter	s_v_sendercompid_a	=  {53'b0, `s_v_senderCompId_a};
+parameter	v_sendercompid_a	=  {176'b0, `v_senderCompId_a};	
+parameter	s_v_sendercompid_a	=  {54'b0, `s_v_senderCompId_a};
 
 fix_engine initiator (
 	 .clk,

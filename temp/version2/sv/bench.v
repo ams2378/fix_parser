@@ -150,6 +150,9 @@ integer		temp_addr_a;
 reg		transfer_i2a;
 reg		transfer_a2i;
 
+
+reg		start_a;
+
 event message_sent;
 event reset_enable;
 event reset_done;
@@ -270,13 +273,13 @@ forever begin
 	#7 connected_i_i = '0;
 	$display ("ACK received @ %0dns", $time);
 
-	#10000
+	#50000
 	@ (posedge clk)
 	end_session_i_i = 1;
 //	@ (posedge clk)
 	@ (posedge clk)
 	end_session_i_i = 0;
-	#500 $finish;
+	#900 $finish;
 
 //	@error;
 //	->exit_sim;
@@ -384,6 +387,25 @@ always @ (posedge clk) begin
 
 end
 
+always @ (posedge clk) begin
+
+/*	if (fifo_write_i_o == 1 && start == 1) begin
+		$fwrite(log1, "%c", message_i_o );
+	end
+
+	if (end_i_o)
+		$fdisplay(log1, "\n");
+*/
+
+	if (fifo_write_a_o == 1 && start_a == 1) begin
+		$fwrite(log2, "%c", message_a_o );
+	end
+
+	if (end_a_o)
+		$fdisplay(log2, "\n");
+end
+
+
 /*
 always @ (posedge clk) begin
 
@@ -410,7 +432,6 @@ end
 */
 // ------------------ acceptor -------------
 
-reg		start_a;
 
 always @(*) begin
 
