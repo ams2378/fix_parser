@@ -10,12 +10,15 @@ History:
 
 `include "defines.vh"
 
-module fix_engine #(parameter NUM_HOST = `HOST_ADDR_WIDTH, SIZE = 64, T_SIZE = 5) (
+module fix_engine #(parameter NUM_HOST = `HOST_ADDR_WIDTH, SIZE = 64) (
 	input				clk,
 	input				rst,
 	input				connect_i,			// from app
 	input[NUM_HOST-1:0]		connect_to_host_i,		// from app
 
+	input				end_session_i,
+
+	input[319:0]			sendercompinfo_i,
 	input				connected_i,			// from toe
 	input[NUM_HOST-1:0]		connected_host_addr_i,		// from toe
 	input[NUM_HOST-1:0]		id_i,				// from toe
@@ -121,7 +124,7 @@ session_manager session_controller (
  	.connected_host_i(connected_host_addr_i),		// *** - need to multiplex
 	.type_i (w_type),					// from message processor
 	.connected_i(connected_i),				// from connection toe
-	.end_session_i ('0),			 		// now hwired to 0
+	.end_session_i (end_session_i),			 		// now hwired to 0
 	.resendDone_i ('0),					// now hwired to 0
 	.data_out_2(w_q_2),					// from hostaddress table
 	
@@ -181,12 +184,17 @@ create_message  create_messege_module (
 	.v_sendTime_i ({88'b0, 168'h3537342e30303a30303a35302d3430343033313032}),//***
 	.v_msgSeqNum_i ({176'b0, w_outseqnum}),				// from seq gen **** enable valid	
 	.s_v_msgSeqNum_i (w_s_msgSeqNum),			// from seq gen (add valid)
-	.v_senderCompId_i({ 200'b0, `v_senderCompId}),			// from defines	
+
+	.v_senderCompId_i(sendercompinfo_i[255:0]),			// from defines	
+	.s_v_senderCompId_i(sendercompinfo_i[319:256]),			// from defines	
+
+//	.s_v_senderCompId_i({57'b0, `s_v_senderCompId}),			// from defines	
+//	.v_senderCompId_i({ 200'b0, `v_senderCompId}),			// from defines	
+
 	.s_v_beginString_i ({56'b0, 8'b01111111}),    			// from defines 	
 	.v_beginString_i ({200'b0, `v_beginString}),			// from defines	
-	.s_v_senderCompId_i({57'b0, `s_v_senderCompId}),			// from defines	
-	.v_heartBeatInt_i ({248'b0, `v_heartbeat_val}),			// from defines
-	.s_v_heartBeatInt_i ({63'b0, `s_v_heartbeat}),			// from defines
+	.v_heartBeatInt_i ({224'b0, `v_heartbeat_val}),			// from defines
+	.s_v_heartBeatInt_i ({50'b0, `s_v_heartbeat_val}),			// from defines
 	.seq_ready_i(w_seq_ready),
 
 	.start_chksm_o(w_start_chksm),			// edit ams

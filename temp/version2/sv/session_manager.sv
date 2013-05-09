@@ -413,6 +413,8 @@ always @ (posedge clk) begin
 //	sendLogon_o		<=	'0;	
 
 //	if (connected_i == 1 && getType(connected_host_i) == '1) begin
+
+
 	if (connected_i == 1 && data_out_2 [VALUE_WIDTH+SIZE] == '1) begin
 		sendLogon_o	<=	'1;
 		targetCompId_o	<=	getTargetCompId (connected_host_i);

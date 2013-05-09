@@ -50,6 +50,7 @@ parameter			NUM_HOST  = 2;
 	reg				connect_i;			// from app
 	reg[1:0]			connect_to_host_i;		// from app
 
+	reg				end_session_i_i;
 	reg				connected_i_i;			// from toe
 	reg[1:0]			connected_host_addr_i_i;		// from toe
 	reg[1:0]			id_i_i;				// from toe
@@ -71,7 +72,7 @@ parameter			NUM_HOST  = 2;
 	reg[7:0]			message_a_i;			// from toe
 	reg				fifo_full_a_i;
 	reg				new_message_a_i;			// will be implemented by fifo contr.
-
+	reg				end_session_a_i;
 
 	reg				fifo_write_a_o;
 	reg[7:0]			message_a_o;			// goes to fifo
@@ -91,6 +92,9 @@ end_to_end_system dut (
 	 	.message_i_i,			// from toe
 		.fifo_full_i_i,
 		.new_message_i_i,			// will be implemented by fifo contr.
+
+		.end_session_i_i,
+		.end_session_a_i,
 
 		.fifo_write_i_o,
 		.message_i_o,
@@ -121,7 +125,7 @@ reg	 t3_end_o;
 integer chksm_tag_done;
 integer	not_done;
 integer	temp;
-integer statusI,statusO, mon;
+integer statusI,statusO, mon, log1, log2;
 reg	  start_checking;
 reg	  start_checking_a;
 reg [7:0] exp;
@@ -222,9 +226,13 @@ initial begin
 	t1_i			=	0;
 	temp_addr_a		=	0;
 	temp_addr_i		=	0;
+	end_session_i_i		=	'0;
+	end_session_a_i		=	'0;
 
   	in  = $fopen("init_out.txt","r");
   	mon = $fopen("monitor.txt","w");
+  	log1 = $fopen("initiator_send.txt","w");
+  	log2 = $fopen("acceptor_send.txt","w");
 end
 
 initial begin
@@ -262,7 +270,13 @@ forever begin
 	#7 connected_i_i = '0;
 	$display ("ACK received @ %0dns", $time);
 
-	#10000 $finish;
+	#10000
+	@ (posedge clk)
+	end_session_i_i = 1;
+//	@ (posedge clk)
+	@ (posedge clk)
+	end_session_i_i = 0;
+	#500 $finish;
 
 //	@error;
 //	->exit_sim;
@@ -360,10 +374,40 @@ always @ (posedge clk) begin
 
 	if (transfer_i2a == 1) begin
 		message_a_i	=	buffer_i[1+t1_i];
+		$fwrite(log1, "%c", message_a_i );
 		t1_i = t1_i + 1;
 	end
+
+	if (new_message_a_i) begin
+		$fdisplay(log1, "\n");
+	end
+
 end
 
+/*
+always @ (posedge clk) begin
+
+
+	end_session_i_i = 0;
+	#800 end_session_i_i = 1;
+
+	end_session_i_i = 0;
+
+end
+*/
+
+/*
+always @ (posedge clk) begin
+	if (transfer_a2i == 1) begin
+		message_i_i	=	buffer_a[1+t1_a];
+		$fwrite(log2, "%c", message_i_i );
+		t1_a = t1_a + 1;
+	end
+
+	if (new_message_i_i)
+		$fdisplay(log2, "\n");
+end
+*/
 // ------------------ acceptor -------------
 
 reg		start_a;
