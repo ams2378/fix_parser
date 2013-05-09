@@ -245,9 +245,6 @@ always @ (*) begin
 				next_state	=	state13;
 		  end
 
-
-
-	
 	state6 : begin
 				buffer_msgtype_signal	=	'0;
 				bufferval_signal	=	'0;		// edit

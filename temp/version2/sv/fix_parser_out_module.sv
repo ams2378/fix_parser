@@ -36,6 +36,10 @@ module fix_parser_out_module (
 reg				start_of_header_o;
 reg				end_of_body_o;
 
+reg				clear_tag;
+reg				clear_val;
+
+
 /* state variable */
 parameter 			state0 = 3'b000;
 parameter			state1 = 3'b001;
@@ -102,6 +106,10 @@ always @ (*) begin
 	case(state) 
 	
 		state0: begin 	
+
+						clear_tag   = '0;
+						clear_val   = '0;
+
 					load_tag  = '0;
 					shift_tag = '0;
 					load_val  = '0;
@@ -120,7 +128,7 @@ always @ (*) begin
 					v_wr_cs = '0;	
 					v_wr_en = '0;
 					t_wr_cs = '0;
-					t_wr_en = '0;	
+					t_wr_en = '0;
 			//		value = '0;
 					start_of_header = '0;
 					end_of_body = '0;
@@ -129,6 +137,7 @@ always @ (*) begin
 		end
 		state1: begin
 					load_tag  = '0;
+					clear_val   = '0;
 					shift_tag = '0;
 					load_val  = '0;
 					shift_val = '0;	
@@ -139,6 +148,9 @@ always @ (*) begin
 					shift_tag   =	'1;		
 					next_state = state2;
 				end else if (start_tag_i == 0 ) begin
+
+						clear_tag   = '1;
+
 					t_wr_cs = '1;	
 					t_wr_en = '1;
 					if (tag [7:0] == first_tag) begin
@@ -155,6 +167,7 @@ always @ (*) begin
 		state2: begin
 					load_tag  = '0;
 					shift_tag = '0;
+					clear_val   = '0;
 					load_val  = '0;
 					shift_val = '0;	
 			//		value = '0;
@@ -170,17 +183,27 @@ always @ (*) begin
 						start_of_header = '1;
 						start_message = '1;
 						next_state = state3;
+		
+						clear_tag   = '1;
+
 					end else if (tag [31:0] == last_tag) begin
 						end_of_body = 1;
 						next_state = state3;
+
+						clear_tag   = '1;
+
 					end else 
 						next_state = state3;
 				end
 		end
 		state3: begin
+
+						clear_tag   = '0;
+
 					load_tag  = '0;
 					shift_tag = '0;
 					load_val  = '0;
+					clear_val   = '0;
 					shift_val = '0;	
 					t_wr_cs = '0;	
 					t_wr_en = '0;
@@ -196,6 +219,7 @@ always @ (*) begin
 		end
 		state4:	begin
 					load_tag  = '0;
+					clear_val   = '0;
 					shift_tag = '0;
 					load_val  = '0;
 					shift_val = '0;	
@@ -207,6 +231,9 @@ always @ (*) begin
 					shift_val  = '1;
 					next_state = state5;
 				end else begin	
+
+					clear_val   = '1;
+
 					v_wr_cs = '1;	
 					v_wr_en = '1;			
 			 		if (end_of_body == 1) 		next_state = state0;
@@ -215,6 +242,7 @@ always @ (*) begin
 			end	
 		state5: begin
 					load_tag  = '0;
+					clear_val   = '0;
 					shift_tag = '0;
 					load_val  = '0;
 					shift_val = '0;	
@@ -226,6 +254,9 @@ always @ (*) begin
 					shift_val  = '1;
 					next_state = state4;
 				end else begin
+
+					clear_val   = '1;
+
 					v_wr_cs = '1;	
 					v_wr_en = '1;	
 			 		if (end_of_body == 1) 		next_state = state0;
@@ -243,6 +274,14 @@ always @(posedge clk) begin
 		tag	<=	'0;
 		value	<=	'0;
 	end //else begin
+
+
+	if (clear_tag == 1)
+		tag		<=	'0;
+
+
+	if (clear_val == 1)
+		value		<=	'0;
 
 	if (load_tag == 1) begin
 		tag[7:0]	<=	data_i;
