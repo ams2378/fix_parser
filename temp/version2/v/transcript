@@ -23,7 +23,7 @@
 # Top level modules:
 # 	fix_engine
 # Model Technology ModelSim ALTERA vlog 10.1b Compiler 2012.04 Apr 27 2012
-# -- Skipping module bench
+# -- Compiling module bench
 # 
 # Top level modules:
 # 	bench
@@ -46,10 +46,6 @@
 # Loading work.checksum
 # Loading work.ascii2int
 # Loading work.interface_controller_in
-# ** Error: (vish-4014) No objects found matching '/testbench/clk'.
-# Executing ONERROR command at macro ./waveformat.do line 3
-# ** Error: (vish-4014) No objects found matching '/testbench/lfsr_0/lfsr_out'.
-# Executing ONERROR command at macro ./waveformat.do line 4
 # 
 # 
 ################################################### 
@@ -69,4 +65,4 @@
 # Break in Module bench at bench.v line 247
 # Simulation Breakpoint: 1
 # Break in Module bench at bench.v line 247
-# MACRO ./runsim.do PAUSED at line 10
+# MACRO ./runsim.do PAUSED at line 11

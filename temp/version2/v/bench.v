@@ -133,7 +133,7 @@ always # 1 clk = ~clk;
 // dumping waveforms
 initial 
 begin
-  	$dumpfile ("dut.vcd");
+  	$dumpfile ("dut.do");
   	$dumpvars;
 end
 
@@ -281,7 +281,7 @@ always @ (posedge clk) begin
 if (start == 1 ) begin
 		if (temp_count <2  ) begin
 			temp_count	=	temp_count + 1;
-			start_checking = '0;
+			start_checking  = '0;
 		end else begin
 			start_checking = '1;
 			if (count_bytes >= 12 && count_bytes < 15 && message_o != 8'h01) begin
