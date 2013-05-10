@@ -64,7 +64,7 @@ always @(*) begin
 
 		state2	:	begin
 						start_count = '0;
-						threshold_recahed_o   = '1;
+						threshold_recahed_o   = '0;		//edit
 						next_state = state0;
 				end
 	endcase

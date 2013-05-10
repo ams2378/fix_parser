@@ -66,8 +66,12 @@
 
 //`define 		v_senderCompId			48'h746e65696c63
 //`define		s_v_senderCompId		6'b111111
-`define 		v_senderCompId			56'h31544e45494c43
-`define			s_v_senderCompId		7'b1111111
+
+`define 		v_senderCompId_i		56'h31544e45494c43
+`define			s_v_senderCompId_i		7'b1111111
+
+`define 		v_senderCompId_a		80'h484354414d524544524f
+`define			s_v_senderCompId_a		10'b1111111111
 
 `define 		v_bodyLength_i		 	24'h313233 	
 `define 		s_v_bodyLength_i	 	8'b00000111 	
@@ -130,11 +134,12 @@
 `define			v_logout		 	8'h35 
 
 `define			heartbeat_val		 	10'h3ff 
-`define			v_heartbeat_val		 	10'h3ff 
+`define			v_heartbeat_val		 	32'h33323031 
 
 // size of value for each types of message defied above
 `define			s_v_logon		 	1'b1 
 `define			s_v_heartbeat		 	1'b1 
+`define			s_v_heartbeat_val	 	4'b1111 
 `define			s_v_logout		 	1'b1 
 
 

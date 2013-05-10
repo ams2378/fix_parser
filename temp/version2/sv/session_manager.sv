@@ -413,6 +413,8 @@ always @ (posedge clk) begin
 //	sendLogon_o		<=	'0;	
 
 //	if (connected_i == 1 && getType(connected_host_i) == '1) begin
+
+
 	if (connected_i == 1 && data_out_2 [VALUE_WIDTH+SIZE] == '1) begin
 		sendLogon_o	<=	'1;
 		targetCompId_o	<=	getTargetCompId (connected_host_i);
@@ -432,10 +434,24 @@ always @ (posedge clk) begin
 	end
 
 
-	if (timeout_i == 1) begin				// timeout corresponding to particular session
+	if (timeout_i == 1 && data_out_2 [VALUE_WIDTH+SIZE] == '1) begin				// timeout corresponding to particular session
 		if (readSessionState (connected_host_i) == `logonSent  || 
 		    readSessionState (connected_host_i) == `logoutSent || 
 		    readSessionState (connected_host_i) == `sentheartbeat) begin
+			disconnect_o		<=	'1;
+			disconnect_host_num_o	<=	connected_host_i;
+			updateSessionState(connected_host_i, `disconnected);
+		end else begin
+			sendHeartbeat_o		<=	'1;
+			targetCompId_o		<=	getTargetCompId (connected_host_i);
+			s_v_targetCompId_o	<=	get_s_v_TargetCompId (connected_host_i);
+			updateSessionState(connected_host_i, `sentheartbeat);
+		end
+	end
+
+	if (timeout_i == 1 && data_out_2 [VALUE_WIDTH+SIZE] == '0 ) begin				// timeout corresponding to particular session
+		if ( readSessionState (connected_host_i) == `logoutSent || 
+		     readSessionState (connected_host_i) == `sentheartbeat) begin
 			disconnect_o		<=	'1;
 			disconnect_host_num_o	<=	connected_host_i;
 			updateSessionState(connected_host_i, `disconnected);
