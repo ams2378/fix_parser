@@ -168,10 +168,7 @@ always @(*) begin
 				tag_o		=	`t_beginString;
 				tag_valid_o	=	'1;
 				t_size_o	=	`s_t_beginString;	
-				v_size_o		= '0;
 				msg_creation_done_o 	= 	'0;
-				checksum_o		= '0;
-				start_chksm_o		= '0;
 				output_valid_o	=	'1;
 				next_state 	=	state1;
 			end else begin
@@ -182,9 +179,7 @@ always @(*) begin
 				output_valid_o		= 	'0;
 				msg_creation_done_o 	= 	'0;
 				t_size_o		=	'0;
-				checksum_o		= '0;
 				v_size_o		=	'0;
-				start_chksm_o		= '0;
 				next_state		=	state0;
 			end
 		end
