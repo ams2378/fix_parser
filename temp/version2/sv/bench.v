@@ -34,6 +34,9 @@
  -		 val: heartbeatvalue 
  -		 event: message_sent 
  -		  
+ - 5/9/13: added id_i_i and id_a_i for connection_address instead of only using 		  
+ -		 connection_.... 
+ -		  
  -		  
  -----------------------------------------------------------------------------
 */
@@ -273,6 +276,8 @@ forever begin
 	#7 connected_i_i = '0;
 	$display ("ACK received @ %0dns", $time);
 
+	id_i_i	=	2'b01;			
+
 	#50000
 	@ (posedge clk)
 	end_session_i_i = 1;
@@ -295,6 +300,9 @@ forever begin
 	@connected_a;
 	#7 connected_a_i = '0;
 	$display ("ACK received @ %0dns", $time);
+
+	
+	id_a_i	=	2'b01;
 
 //	#1000 $finish;	
 

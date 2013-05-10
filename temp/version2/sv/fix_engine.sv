@@ -97,7 +97,7 @@ hostaddress  hostaddresstable(
 		.clk(clk),
 		.we(w_we_2),
 		.q(w_q_2),
-		.addr(connected_host_addr_i),  		// replaced w_addr_2	changed from w_
+		.addr(w_connected_host_addr_i),  		// replaced w_addr_2	changed from w_
 		.data(w_data_2),
 		.host_size(w_host_size)
 	);
@@ -121,7 +121,7 @@ session_manager session_controller (
 	.new_message_i (w_new_message),				// from message processor
 	.validity_i(w_validity),				// from message processor
 	.timeout_i (w_threshold_reached),					// from counter
- 	.connected_host_i(connected_host_addr_i),		// *** - need to multiplex
+ 	.connected_host_i(w_connected_host_addr_i),		// *** - need to multiplex
 	.type_i (w_type),					// from message processor
 	.connected_i(connected_i),				// from connection toe
 	.end_session_i (end_session_i),			 		// now hwired to 0
