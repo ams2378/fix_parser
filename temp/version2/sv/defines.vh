@@ -34,6 +34,7 @@
 `define			logout 			  	4'b0100 
 `define			reset			  	4'b0101 
 `define			gapFill			  	4'b0110 
+`define			neworder			4'b0111 
 `define			business 		  	4'b0111 
 
 

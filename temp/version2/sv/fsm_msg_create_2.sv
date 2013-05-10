@@ -79,6 +79,11 @@ always @ (*) begin
 		all_sent_o	=	'0;
 		data_valid_o		= '0;
 		temp_var		=  0;
+		v_width			= '0;
+		v_width_t		= '0;
+		t_width			= '0;
+		t_width_t		= '0;
+		
 	end
 
 	case (state)
@@ -91,18 +96,22 @@ always @ (*) begin
 			all_sent_o	=	'0;
 		end else begin
 		if ( tag_valid_i == 1 && checksum_i == 0) begin
+			v_width			= '0;
+			v_width_t		= '0;
 			data_o		=	tag_i [temp_var*8 +: 8];
 			done_o		=	'0;
 			end_of_msg_o	=	'0;
 			start_chksm_o	=	'0;
 			all_sent_o	=	'0;
 			end_o		=	'0;
-			data_valid_o	=	'1;			
+			data_valid_o	=	'1;
 			t_width		=	t_size_i;
 			temp_var_t 	= 	temp_var + 1;
 			t_width_t 	= 	t_width >> 1;	
 			next_state 	=	state1;
 		end else if (tag_valid_i == 1 && checksum_i == 1) begin
+			v_width			= '0;
+			v_width_t		= '0;
 			data_o		=	tag_i [temp_var*8 +: 8];
 			end_of_msg_o	=	'0;
 			start_chksm_o	=	'0;
@@ -115,8 +124,12 @@ always @ (*) begin
 			t_width_t 	= 	t_width >> 1;	
 			next_state 	=	state6;
 		end else begin
+			v_width		= 	'0;
+			v_width_t	= 	'0;
 			next_state	=	state0;
 			data_o		=	'0;
+			t_width		= 	'0;
+			t_width_t	= 	'0;
 			done_o		=	'0;
 			end_of_msg_o	=	'0;
 			data_valid_o	=	'0;			
@@ -129,11 +142,15 @@ always @ (*) begin
 
 	state1: begin
 		if (fifo_full_i == 1) begin 
+			v_width			= '0;
+			v_width_t		= '0;
 			next_state	=	state1;
 			data_valid_o	=	'0;			
 			all_sent_o	=	'0;
 		end else begin
 		if (t_width_t == 0) begin
+			v_width			= '0;
+			v_width_t		= '0;
 			done_o		=	'1;			// edit 1 to 0
 			end_o		=	'0;
 			end_of_msg_o	=	'0;
@@ -144,6 +161,8 @@ always @ (*) begin
 			temp_var_t	=	0;
 			next_state 	=	state3;
 		end else begin
+			v_width			= '0;
+			v_width_t		= '0;
 			data_o		=	tag_i [temp_var_t*8 +: 8];
 			end_o		=	'0;
 			end_of_msg_o	=	'0;
@@ -167,6 +186,8 @@ always @ (*) begin
 			all_sent_o	=	'0;
 		end else begin
 		if (t_width == 0) begin
+			v_width			= '0;
+			v_width_t		= '0;
 			done_o		=	'1;
 			start_chksm_o	=	'0;
 			end_o		=	'0;
@@ -177,6 +198,8 @@ always @ (*) begin
 			temp_var_t	=	0;
 			next_state 	=	state3;
 		end else begin
+			v_width			= '0;
+			v_width_t		= '0;
 			data_o		=	tag_i [temp_var*8 +: 8];
 			done_o		=	'0;
 			end_o		=	'0;
@@ -193,6 +216,8 @@ always @ (*) begin
 		end
 
 	state3: begin
+			v_width			= '0;
+			v_width_t		= '0;
 		if (fifo_full_i == 1)begin 
 			next_state	=	state3;
 			data_valid_o	=	'0;				
@@ -282,6 +307,8 @@ always @ (*) begin
 		end
 
 	state6: begin
+			v_width			= '0;
+			v_width_t		= '0;
 		if (fifo_full_i == 1) begin 
 			next_state	=	state6;
 			data_valid_o	=	'0;			
@@ -313,6 +340,8 @@ always @ (*) begin
 		end
 
 	state7: begin
+			v_width			= '0;
+			v_width_t		= '0;
 		if (fifo_full_i == 1)begin 
 			next_state	=	state7;
 			data_valid_o	=	'0;			
@@ -345,6 +374,8 @@ always @ (*) begin
 
 	// checksum first byte
 	state8: begin
+			v_width			= '0;
+			v_width_t		= '0;
 		if (fifo_full_i == 1)begin 
 			next_state	=	state8;
 			data_valid_o	=	'0;			
@@ -364,6 +395,8 @@ always @ (*) begin
 
 	// checksum second byte
 	state9: begin
+			v_width			= '0;
+			v_width_t		= '0;
 		if (fifo_full_i == 1) begin 
 			next_state	=	state9;
 			data_valid_o	=	'0;			
@@ -383,6 +416,8 @@ always @ (*) begin
 
 	// checksum third byte
 	state10: begin
+			v_width			= '0;
+			v_width_t		= '0;
 		if (fifo_full_i == 1) begin 
 			next_state	=	state10;
 			data_valid_o	=	'0;			
@@ -401,6 +436,8 @@ always @ (*) begin
 		end
 
 	state11: begin
+			v_width			= '0;
+			v_width_t		= '0;
 		if (fifo_full_i == 1) begin 
 			next_state	=	state11;
 			data_valid_o	=	'0;			
