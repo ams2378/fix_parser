@@ -3,11 +3,13 @@ SRC= ascii2int.sv binary_to_bcd.sv hostaddress.sv ram.sv received_msg_processor.
 BENCH= bench.v  
 #BENCH= dut.v
 DUMP= testbench.exe
+DIFF= check.sh
 
 test:
 	make clean
 	make src2
-	make gtkwave 
+	make check
+#	make gtkwave 
 
 all: 
 	make src1
@@ -29,6 +31,9 @@ gtkwave:
 wave:
 	vcs -vpd2vcd vcdplus.vpd dut.vcd
 	gtkwave dut.vcd &
+
+check:
+	./$(DIFF)
 
 clean:
 	rm -rf csrc *.exe.daidir *.exe *.log *.inf .leda_work *.key *.vpd *.vcd DVEfiles simv*
