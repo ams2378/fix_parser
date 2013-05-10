@@ -33,4 +33,6 @@ wave:
 clean:
 	rm -rf csrc *.exe.daidir *.exe *.log *.inf .leda_work *.key *.vpd *.vcd DVEfiles simv*
 	rm -rf testbench*
+	rm -rf acceptor_send.txt
+	rm -rf initiator_send.txt
 	
