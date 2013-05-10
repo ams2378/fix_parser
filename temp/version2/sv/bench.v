@@ -235,7 +235,7 @@ initial begin
 	end_session_i_i		=	'0;
 	end_session_a_i		=	'0;
 
-  	in  = $fopen("init_out.txt","r");
+ // 	in  = $fopen("init_out.txt","r");
   	mon = $fopen("monitor.txt","w");
   	log1 = $fopen("initiator_send.txt","w");
   	log2 = $fopen("acceptor_send.txt","w");

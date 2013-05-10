@@ -33,7 +33,6 @@ module fsm_msg_create_2 # (parameter VALUE_WIDTH = `VALUE_DATA_WIDTH, T_SIZE = 5
 
 //reg				end_o;
 
-
 // state encoding
 parameter 			state0  = 12'b000000000001;
 parameter 			state1  = 12'b000000000010;
@@ -428,7 +427,7 @@ always @ (negedge clk) begin
 end
 */
 
-reg			msg_last_byte_o;
+//reg			msg_last_byte_o;				//edit syn
 parameter		sstate0 = 2'b00;
 parameter		sstate1 = 2'b01;
 parameter		sstate2 = 2'b10;

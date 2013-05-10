@@ -212,7 +212,7 @@ always @ (posedge clk) begin
 		disconnect_host_num_o	<=	'0;
 		sendLogon_o		<=	'0;
 		end_session_o		<=	'0;	
-		new_message_valid	<=	'0;
+	//	new_message_valid	<=	'0;					// edit syn
 	end
 	
 	ignore_o		<=	'0;	

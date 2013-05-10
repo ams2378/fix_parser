@@ -1,0 +1,15 @@
+-- begin_signature
+-- hostaddress
+-- end_signature
+WIDTH=6;
+DEPTH=4;
+
+ADDRESS_RADIX=UNS;
+DATA_RADIX=BIN;
+
+CONTENT BEGIN
+	3 :	001010;
+	2 :	001010;
+	1 :	000101;
+	0 :	001010;
+END;

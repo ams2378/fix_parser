@@ -26,7 +26,7 @@ module fix_parser_out_module (
 	/* final tag and value- to be pushed in FIFO*/
 	output[31:0]			tag_o,
 	output[255:0]			value_o,
-	output	 			end_detected_o,
+	output reg	 			end_detected_o,
 
 	output				start_message_o
 //	output				start_of_header_o
@@ -35,6 +35,10 @@ module fix_parser_out_module (
 // bellow 1 moved from port list
 reg				start_of_header_o;
 reg				end_of_body_o;
+
+reg				clear_tag;
+reg				clear_val;
+
 
 /* state variable */
 parameter 			state0 = 3'b000;
@@ -65,6 +69,7 @@ reg				v_wr_cs;
 reg				v_wr_en; 
 		   
 reg[31:0]			tag = '0;
+//reg[31:0]			tag;				// edit syn
 reg[255:0]			value = '0;
 reg				end_of_body;
 reg				start_of_header;
@@ -80,7 +85,7 @@ reg				load_tag;
 reg				load_val;
 reg				shift_tag;
 reg				shift_val;
-reg				end_detected_o;
+//reg				end_detected_o;			// edit syn
  
 always @(posedge clk) begin
 	if (rst)		state <= state0;
@@ -101,6 +106,10 @@ always @ (*) begin
 	case(state) 
 	
 		state0: begin 	
+
+						clear_tag   = '0;
+						clear_val   = '0;
+
 					load_tag  = '0;
 					shift_tag = '0;
 					load_val  = '0;
@@ -119,8 +128,8 @@ always @ (*) begin
 					v_wr_cs = '0;	
 					v_wr_en = '0;
 					t_wr_cs = '0;
-					t_wr_en = '0;	
-					value = '0;
+					t_wr_en = '0;
+			//		value = '0;
 					start_of_header = '0;
 					end_of_body = '0;
 					next_state = state0;
@@ -128,16 +137,20 @@ always @ (*) begin
 		end
 		state1: begin
 					load_tag  = '0;
+					clear_val   = '0;
 					shift_tag = '0;
 					load_val  = '0;
 					shift_val = '0;	
-					value = '0;
+		//			value = '0;
 					v_wr_cs = '0;	
 					v_wr_en = '0;	
 				if (start_tag_i == 1) begin
 					shift_tag   =	'1;		
 					next_state = state2;
 				end else if (start_tag_i == 0 ) begin
+
+						clear_tag   = '1;
+
 					t_wr_cs = '1;	
 					t_wr_en = '1;
 					if (tag [7:0] == first_tag) begin
@@ -154,9 +167,10 @@ always @ (*) begin
 		state2: begin
 					load_tag  = '0;
 					shift_tag = '0;
+					clear_val   = '0;
 					load_val  = '0;
 					shift_val = '0;	
-					value = '0;
+			//		value = '0;
 					v_wr_cs = '0;	
 					v_wr_en = '0;	
 				if (start_tag_i == 1) begin
@@ -169,17 +183,27 @@ always @ (*) begin
 						start_of_header = '1;
 						start_message = '1;
 						next_state = state3;
+		
+						clear_tag   = '1;
+
 					end else if (tag [31:0] == last_tag) begin
 						end_of_body = 1;
 						next_state = state3;
+
+						clear_tag   = '1;
+
 					end else 
 						next_state = state3;
 				end
 		end
 		state3: begin
+
+						clear_tag   = '0;
+
 					load_tag  = '0;
 					shift_tag = '0;
 					load_val  = '0;
+					clear_val   = '0;
 					shift_val = '0;	
 					t_wr_cs = '0;	
 					t_wr_en = '0;
@@ -195,10 +219,11 @@ always @ (*) begin
 		end
 		state4:	begin
 					load_tag  = '0;
+					clear_val   = '0;
 					shift_tag = '0;
 					load_val  = '0;
 					shift_val = '0;	
-					tag = '0;
+		//			tag = '0;			// edit syn
 					t_wr_cs = '0;	
 					t_wr_en = '0;
 					start_message = '0;	
@@ -206,6 +231,9 @@ always @ (*) begin
 					shift_val  = '1;
 					next_state = state5;
 				end else begin	
+
+					clear_val   = '1;
+
 					v_wr_cs = '1;	
 					v_wr_en = '1;			
 			 		if (end_of_body == 1) 		next_state = state0;
@@ -214,10 +242,11 @@ always @ (*) begin
 			end	
 		state5: begin
 					load_tag  = '0;
+					clear_val   = '0;
 					shift_tag = '0;
 					load_val  = '0;
 					shift_val = '0;	
-					tag = '0;
+			//		tag = '0;
 					t_wr_cs = '0;	
 					t_wr_en = '0;
 				start_message = '0;	
@@ -225,6 +254,9 @@ always @ (*) begin
 					shift_val  = '1;
 					next_state = state4;
 				end else begin
+
+					clear_val   = '1;
+
 					v_wr_cs = '1;	
 					v_wr_en = '1;	
 			 		if (end_of_body == 1) 		next_state = state0;
@@ -241,25 +273,35 @@ always @(posedge clk) begin
 	if (rst) begin
 		tag	<=	'0;
 		value	<=	'0;
-	end
+	end //else begin
 
-	if (load_tag) begin
+
+	if (clear_tag == 1)
+		tag		<=	'0;
+
+
+	if (clear_val == 1)
+		value		<=	'0;
+
+	if (load_tag == 1) begin
 		tag[7:0]	<=	data_i;
 	end
 
-	if (shift_tag) begin
+	if (shift_tag == 1) begin
 		tag		<=	tag << 8;
 		tag[7:0]	<=	data_i;
 	end
 
-	if (load_val) begin
+	if (load_val == 1) begin
 		value[7:0]	<=	data_i;
 	end
 
-	if (shift_val) begin
+	if (shift_val ==1) begin
 		value		<=	value << 8;
 		value[7:0]	<=	data_i;
 	end
+	
+	//end
 end
 
 always @ (posedge clk) begin

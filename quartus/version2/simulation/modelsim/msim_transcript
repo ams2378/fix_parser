@@ -1,0 +1,75 @@
+# do fix_engine_run_msim_rtl_verilog.do 
+# if {[file exists rtl_work]} {
+# 	vdel -lib rtl_work -all
+# }
+# vlib rtl_work
+# vmap work rtl_work
+# Copying /opt/altera/12.1/modelsim_ae/linuxaloem/../modelsim.ini to modelsim.ini
+# Modifying modelsim.ini
+# ** Warning: Copied /opt/altera/12.1/modelsim_ae/linuxaloem/../modelsim.ini to modelsim.ini.
+#          Updated modelsim.ini.
+# 
+# vlog -sv -work work +incdir+/home/adil/fix_engine/fix_parser/quartus/version2/bin2bcd {/home/adil/fix_engine/fix_parser/quartus/version2/bin2bcd/binary_to_bcd.sv}
+# Model Technology ModelSim ALTERA vlog 10.1b Compiler 2012.04 Apr 27 2012
+# -- Compiling module binary_to_bcd
+# 
+# Top level modules:
+# 	binary_to_bcd
+# vlog -sv -work work +incdir+/home/adil/fix_engine/fix_parser/quartus/version2 {/home/adil/fix_engine/fix_parser/quartus/version2/ram.sv}
+# Model Technology ModelSim ALTERA vlog 10.1b Compiler 2012.04 Apr 27 2012
+# -- Compiling module ram
+# 
+# Top level modules:
+# 	ram
+# vlog -sv -work work +incdir+/home/adil/fix_engine/fix_parser/quartus/version2 {/home/adil/fix_engine/fix_parser/quartus/version2/fix_parser_out_module.sv}
+# Model Technology ModelSim ALTERA vlog 10.1b Compiler 2012.04 Apr 27 2012
+# -- Compiling module fix_parser_out_module
+# 
+# Top level modules:
+# 	fix_parser_out_module
+# vlog -sv -work work +incdir+/home/adil/fix_engine/fix_parser/quartus/version2 {/home/adil/fix_engine/fix_parser/quartus/version2/fix_parser.sv}
+# Model Technology ModelSim ALTERA vlog 10.1b Compiler 2012.04 Apr 27 2012
+# -- Compiling module fix_parser
+# 
+# Top level modules:
+# 	fix_parser
+# vlog -sv -work work +incdir+/home/adil/fix_engine/fix_parser/quartus/version2 {/home/adil/fix_engine/fix_parser/quartus/version2/create_checksum.sv}
+# Model Technology ModelSim ALTERA vlog 10.1b Compiler 2012.04 Apr 27 2012
+# -- Compiling module create_checksum
+# 
+# Top level modules:
+# 	create_checksum
+# vlog -sv -work work +incdir+/home/adil/fix_engine/fix_parser/quartus/version2 {/home/adil/fix_engine/fix_parser/quartus/version2/ascii2int.sv}
+# Model Technology ModelSim ALTERA vlog 10.1b Compiler 2012.04 Apr 27 2012
+# -- Compiling module ascii2int
+# 
+# Top level modules:
+# 	ascii2int
+# vlog -sv -work work +incdir+/home/adil/fix_engine/fix_parser/quartus/version2 {/home/adil/fix_engine/fix_parser/quartus/version2/session_manager.sv}
+# Model Technology ModelSim ALTERA vlog 10.1b Compiler 2012.04 Apr 27 2012
+# -- Compiling module session_manager
+# 
+# Top level modules:
+# 	session_manager
+# vlog -sv -work work +incdir+/home/adil/fix_engine/fix_parser/quartus/version2 {/home/adil/fix_engine/fix_parser/quartus/version2/sequence_generator.sv}
+# Model Technology ModelSim ALTERA vlog 10.1b Compiler 2012.04 Apr 27 2012
+# -- Compiling module sequence_generator
+# 
+# Top level modules:
+# 	sequence_generator
+# vlog -sv -work work +incdir+/home/adil/fix_engine/fix_parser/quartus/version2 {/home/adil/fix_engine/fix_parser/quartus/version2/received_msg_processor.sv}
+# Model Technology ModelSim ALTERA vlog 10.1b Compiler 2012.04 Apr 27 2012
+# -- Compiling module received_msg_processor
+# 
+# Top level modules:
+# 	received_msg_processor
+# vlog -sv -work work +incdir+/home/adil/fix_engine/fix_parser/quartus/version2 {/home/adil/fix_engine/fix_parser/quartus/version2/interface_controller_in.sv}
+# Model Technology ModelSim ALTERA vlog 10.1b Compiler 2012.04 Apr 27 2012
+# -- Compiling module interface_controller_in
+# ** Error: /home/adil/fix_engine/fix_parser/quartus/version2/interface_controller_in.sv(3): (vlog-2163) Macro `HOST_ADDR_WIDTH is undefined.
+# ** Error: /home/adil/fix_engine/fix_parser/quartus/version2/interface_controller_in.sv(3): near ")": syntax error, unexpected ')'
+# ** Error: /opt/altera/12.1/modelsim_ae/linuxaloem/vlog failed.
+# Error in macro ./fix_engine_run_msim_rtl_verilog.do line 17
+# /opt/altera/12.1/modelsim_ae/linuxaloem/vlog failed.
+#     while executing
+# "vlog -sv -work work +incdir+/home/adil/fix_engine/fix_parser/quartus/version2 {/home/adil/fix_engine/fix_parser/quartus/version2/interface_controller_..."
