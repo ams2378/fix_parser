@@ -114,6 +114,8 @@ always @ (*) begin
 		new_message_o	=	'0;
 		error_type_o	=	'0;
 		type_o		=	'0;
+		end_processing		=	'0;
+		buffer_msgSeqN_signal  = 	'0;		// edit	
 	end 
 
 	case (state)
@@ -122,7 +124,9 @@ always @ (*) begin
 	state0	: begin
 				new_message_o	=	'0;
 				error_type_o	=	'0;
+				type_o		=	'0;
 				end_processing		=	'0;
+				buffer_msgSeqN_signal  = 	'0;		// edit	
 			if ({start_of_message_i, tag_valid_i} == 2'b11 ) begin
 				if (tag_i == `c_t_beginString) begin
 					new_message_o	=	'0;
@@ -142,6 +146,9 @@ always @ (*) begin
 	state1	: begin
 				error_type_o	=	'0;
 				new_message_o	=	'0;
+				type_o		=	'0;
+				end_processing		=	'0;
+				buffer_msgSeqN_signal  = 	'0;		// edit	
 			if (val_valid_i == 1 ) begin
 				if (val_i[23:0] > `supportedVersion) begin
 					new_message_o	=	'1;
@@ -158,6 +165,9 @@ always @ (*) begin
 	state2	: begin
 				error_type_o	=	'0;
 				new_message_o	=	'0;
+				type_o		=	'0;
+				end_processing		=	'0;
+				buffer_msgSeqN_signal  = 	'0;		// edit	
 			if (tag_valid_i == 1 ) begin
 				if (tag_i != `c_t_bodylength) begin
 					new_message_o	=	'1;
@@ -174,6 +184,9 @@ always @ (*) begin
 	state3	: begin
 				error_type_o	=	'0;
 				new_message_o	=	'0;
+				type_o		=	'0;
+				buffer_msgSeqN_signal  = 	'0;		// edit	
+				end_processing		=	'0;
 			if (val_valid_i == 1 ) begin
 				temp_bodylength = 	val_i;	
 				next_state	=	state4;	
@@ -186,6 +199,8 @@ always @ (*) begin
 				buffer_msgSeqN_signal  = 	'0;		// edit	
 				error_type_o	=	'0;
 				new_message_o	=	'0;
+				type_o		=	'0;
+				end_processing		=	'0;
 			if (tag_valid_i == 1 ) begin
 				if (tag_i != `c_t_msgType) begin
 					next_state	=	state0;
@@ -201,8 +216,11 @@ always @ (*) begin
 	state5	: begin
 				error_type_o	=	'0;
 				new_message_o	=	'0;
+				type_o		=	'0;
+				buffer_msgSeqN_signal  = 	'0;		// edit	
+				end_processing		=	'0;
 			if (val_valid_i == 1 ) begin
-				if (checkvalidity(val_i) == '1) begin			// need to define it
+				if (checkvalidity(val_i) == '1) begin	// need to define it
 			//		buffer_msgType		=	val_i;
 					buffer_msgtype_signal	=	'1;
 					next_state		=	state12;
@@ -219,8 +237,11 @@ always @ (*) begin
 	// expected tag msgseqnum
 	state12	: begin
 				buffer_msgtype_signal	=	'0;
+				buffer_msgSeqN_signal  = 	'0;		// edit	
 				error_type_o	=	'0;
 				new_message_o	=	'0;
+				type_o		=	'0;
+				end_processing		=	'0;
 			if (tag_valid_i == 1 ) begin
 				if (tag_i != `c_t_msgSeqNum) begin
 					next_state	=	state0;
@@ -237,6 +258,8 @@ always @ (*) begin
 	state13	: begin
 				error_type_o	=	'0;
 				new_message_o	=	'0;
+				type_o		=	'0;
+				end_processing		=	'0;
 			if (val_valid_i == 1 ) begin
 		//		buffer_msgSeqN  = 	val_i;	
 				buffer_msgSeqN_signal  = 	'1;		// edit	
@@ -250,6 +273,9 @@ always @ (*) begin
 				bufferval_signal	=	'0;		// edit
 				error_type_o	=	'0;
 				new_message_o	=	'0;	
+				type_o		=	'0;
+				end_processing		=	'0;
+				buffer_msgSeqN_signal  = 	'0;		// edit	
 			if (tag_valid_i == 1 && end_of_message_i == 0) begin
 		//		buffer_t	=	tag_i;
 				buffer_t_signal	=	'1;			// edit
@@ -263,6 +289,9 @@ always @ (*) begin
 				buffer_t_signal	=	'0;			// edit
 				error_type_o	=	'0;
 				new_message_o	=	'0;
+				type_o		=	'0;
+				end_processing		=	'0;
+				buffer_msgSeqN_signal  = 	'0;		// edit	
 			if (val_valid_i == 1) begin
 	//			bufferval (buffer_t, val_i);
 				bufferval_signal	=	'1;		// edit
@@ -271,14 +300,35 @@ always @ (*) begin
 				next_state	=	state7;
 		 end
 	state8:  begin
-			bufferval_signal	=	'0;		// edit
-			next_state	=	state9;
+				error_type_o	=	'0;
+				end_processing		=	'0;
+				buffer_msgSeqN_signal  = 	'0;		// edit	
+				new_message_o	=	'0;
+				type_o		=	'0;
+				bufferval_signal=	'0;		// edit
+				next_state	=	state9;
 		 end
-	state9:		next_state	=	state10;
-	state10:	next_state	=	state11;
+	state9:	 begin
+				error_type_o	=	'0;
+				new_message_o	=	'0;
+				end_processing		=	'0;
+				buffer_msgSeqN_signal  = 	'0;		// edit	
+				type_o		=	'0;
+				next_state	=	state10;
+		 end
+	state10: begin
+				error_type_o	=	'0;
+				new_message_o	=	'0;
+				end_processing		=	'0;
+				buffer_msgSeqN_signal  = 	'0;		// edit	
+				type_o		=	'0;
+				next_state	=	state11;
+		 end
 	state11: begin
 				error_type_o	=	'0;
 				new_message_o	=	'0;
+				type_o		=	'0;
+				buffer_msgSeqN_signal  = 	'0;		// edit	
 			end_processing		=	'1;
 			checksum_valid		=	(checksum_validity_i == '1) ? '1 : '0;
 			if (done == '1) begin

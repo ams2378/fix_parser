@@ -324,9 +324,9 @@ always @(*) begin
 				tag_o		=	'0;
 				output_valid_o	=	'1;
 				tag_valid_o	=	'0;
-				val_o		=	v_msgSeqNum_i;
-				val_valid_o	=	'0;			// changed to 0			
-				v_size_o	=	s_v_msgSeqNum_i;		
+				val_o		=	v_bodyLength_i;		// changed from msgtype
+				val_valid_o	=	'1;			// changed to 1			
+				v_size_o	=	s_v_bodyLength_i;	// changed from msgtype	
 				next_state 	=	state6;
 		end
 		end
