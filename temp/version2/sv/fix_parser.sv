@@ -52,8 +52,10 @@ always @ (*) begin
 
 	case(state) 
 		
-		2'b00: begin 	tag_s = '0;
+		2'b00: begin
+			 	tag_s = '0;
 				value_s = '0;
+				data	=  '0;
 				if (new_message_i == 1) begin
 					next_state = tag;
 				end else begin
@@ -61,6 +63,9 @@ always @ (*) begin
 				end
 		end
 		2'b01: begin
+			 	tag_s = '0;
+				value_s = '0;
+				data	=  '0;
 				if (data_i != sep_c) begin
 					data = data_i;
 					tag_s = '1;
@@ -76,7 +81,11 @@ always @ (*) begin
 					next_state = value1;
 				end
 		end
-		2'b10: begin	
+		2'b10: begin
+	
+			 	tag_s = '0;
+				value_s = '0;
+				data	=  '0;
 				if (data_i != soh_c) begin
 					data = data_i;
 					tag_s = '0;
@@ -88,7 +97,11 @@ always @ (*) begin
 					next_state = tag;
 				end	
 		end
-		2'b11: begin	
+		2'b11: begin
+	
+			 	tag_s = '0;
+				value_s = '0;
+				data	=  '0;
 				if (data_i != soh_c) begin
 					data = data_i;
 					tag_s = '0;
@@ -100,6 +113,12 @@ always @ (*) begin
 					next_state = initial_s;
 				end	
 		end
+		default: begin
+			 	tag_s = '0;
+				value_s = '0;
+				data	=  '0;
+				next_state  = 2'b00;
+			 end
 	endcase
 end
 

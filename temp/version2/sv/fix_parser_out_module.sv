@@ -100,16 +100,20 @@ always @ (*) begin
 		t_wr_cs = '0; 
 		t_wr_en = '0;
 		v_wr_cs = '0; 
-		v_wr_en = '0;	
+		v_wr_en = '0;
+		clear_tag = '0;
+		clear_val = '0;
+		start_message = '0;	
 	end
 	
 	case(state) 
 	
 		state0: begin 	
-
-						clear_tag   = '0;
-						clear_val   = '0;
-
+					start_of_header = '0;
+					clear_tag   = '0;
+					clear_val   = '0;
+					start_message = '0;
+					end_of_body = '0;
 					load_tag  = '0;
 					shift_tag = '0;
 					load_val  = '0;
@@ -136,7 +140,14 @@ always @ (*) begin
 				end
 		end
 		state1: begin
+					v_wr_cs = '0;	
+					v_wr_en = '0;
+					t_wr_cs = '0;
+					t_wr_en = '0;
+		//			start_message = '0;
+					end_of_body = '0;
 					load_tag  = '0;
+					start_of_header = '0;
 					clear_tag   = '0;
 					clear_val   = '0;
 					shift_tag = '0;
@@ -166,14 +177,20 @@ always @ (*) begin
 				end
 		end
 		state2: begin
+					v_wr_cs = '0;	
+					v_wr_en = '0;
+					t_wr_cs = '0;
+					t_wr_en = '0;
+					clear_tag   = '1;
+					end_of_body = '0;
+					start_of_header = '0;
 					load_tag  = '0;
 					shift_tag = '0;
+	//				start_message = '0;
 					clear_val   = '0;
 					load_val  = '0;
 					shift_val = '0;	
 			//		value = '0;
-					v_wr_cs = '0;	
-					v_wr_en = '0;	
 				if (start_tag_i == 1) begin
 					shift_tag   =  '1;
 					next_state = state1;
@@ -197,20 +214,21 @@ always @ (*) begin
 				end
 		end
 		state3: begin
-
-						clear_tag   = '0;
+					v_wr_cs = '0;	
+					v_wr_en = '0;
+					t_wr_cs = '0;
+					t_wr_en = '0;
+					end_of_body = '0;
+					clear_tag   = '0;
+					start_of_header = '0;
 
 					load_tag  = '0;
 					shift_tag = '0;
 					load_val  = '0;
 					clear_val   = '0;
 					shift_val = '0;	
-					t_wr_cs = '0;	
-					t_wr_en = '0;
-					v_wr_cs = '0;	
-					v_wr_en = '0;
-				start_message = '0;
-				end_of_body = '0;	
+					start_message = '0;
+					end_of_body = '0;	
 				if (start_value_i == 1) begin
 					load_val =  '1;
 					next_state = state4;
@@ -218,13 +236,18 @@ always @ (*) begin
 					next_state = state3;
 		end
 		state4:	begin
+					end_of_body = '0;
+					clear_tag   = '0;
+					start_of_header = '0;
 					load_tag  = '0;
 					clear_val   = '0;
 					shift_tag = '0;
 					load_val  = '0;
 					shift_val = '0;	
 		//			tag = '0;			// edit syn
-					t_wr_cs = '0;	
+					v_wr_cs = '0;	
+					v_wr_en = '0;
+					t_wr_cs = '0;
 					t_wr_en = '0;
 					start_message = '0;	
 				if (start_value_i == 1) begin
@@ -241,15 +264,20 @@ always @ (*) begin
 				end
 			end	
 		state5: begin
+					end_of_body = '0;
+					start_of_header = '0;
 					load_tag  = '0;
 					clear_val   = '0;
 					shift_tag = '0;
+					clear_tag   = '0;
 					load_val  = '0;
 					shift_val = '0;	
 			//		tag = '0;
-					t_wr_cs = '0;	
+					v_wr_cs = '0;	
+					v_wr_en = '0;
+					t_wr_cs = '0;
 					t_wr_en = '0;
-				start_message = '0;	
+					start_message = '0;	
 				if (start_value_i == 1) begin
 					shift_val  = '1;
 					next_state = state4;
@@ -262,8 +290,20 @@ always @ (*) begin
 			 		if (end_of_body == 1) 		next_state = state0;
 					else 				next_state = state0;
 				end
+			end
+		default:  begin
+				end_of_body = '0;
+				start_of_header = '0;
+				t_wr_cs = '0; 
+				t_wr_en = '0;
+				v_wr_cs = '0; 
+				v_wr_en = '0;
+				clear_tag = '0;
+				clear_val = '0;
+				start_message = '0;	
+				next_state	=	state0;
+			  end
 
-		end
 	endcase
 end
 

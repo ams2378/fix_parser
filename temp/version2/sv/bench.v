@@ -302,7 +302,7 @@ forever begin
 	$display ("ACK received @ %0dns", $time);
 
 	
-	id_a_i	=	2'b01;
+	id_a_i	=	2'b00;
 
 //	#1000 $finish;	
 

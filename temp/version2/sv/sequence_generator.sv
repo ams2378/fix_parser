@@ -84,9 +84,9 @@ always @(*) begin
 		width_seq_o	=	4'b1000;
 	else if ( mem[sending_to_host_addr_i] < 32'd1000000000)
 		width_seq_o	=	4'b1001;
-//	else if ( mem[sending_to_host_addr_i] < 32'd10000000000)		
-//		width_seq_o	=	4'b1010;
-	
+	else
+		width_seq_o	=	4'b0000;
+		
 end
 
 binary_to_bcd # (.BITS_IN_PP(32), .BCD_DIGITS_OUT_PP(10), .BIT_COUNT_WIDTH_PP(5) ) converted 

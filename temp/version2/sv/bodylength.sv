@@ -60,6 +60,7 @@ always @ (*) begin
 					 `l_t_sendTime  + `l_v_sendTime +
 					 `l_t_targetCompId + l_v_targetCompId + 8'd10;
 				end
+		default:	length = '0;
 		endcase
 	end
 

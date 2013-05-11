@@ -292,6 +292,7 @@ always @ (*) begin
 				new_message_o	=	'0;
 				type_o		=	'0;
 				checksum_valid		=	'0;
+				buffer_msgSeqN_signal  = 	'0;		// edit	
 				buffer_msgtype_signal	=	'0;
 				buffer_t_signal		=	'0;			// edit
 				end_processing		=	'0;
