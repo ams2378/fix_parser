@@ -433,8 +433,8 @@ always @ (posedge clk) begin
 		temp_var_v	<=	'0;
 	end
 
-	t_end		<=	'0;
-	v_end		<=	'0;
+//	t_end		<=	'0;
+//	v_end		<=	'0;
 
 
 	if (incr_temp_var_t == 1) begin
