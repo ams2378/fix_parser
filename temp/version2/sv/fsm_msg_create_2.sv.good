@@ -85,6 +85,7 @@ always @ (*) begin
 		all_sent_o		= '0;
 		data_valid_o		= '0;
 		end_of_msg_o		= '0;
+		msg_last_byte_o		= '0;
 		incr_temp_var_t		= '0;
 		incr_temp_var_v		= '0;
 	end
@@ -93,18 +94,18 @@ always @ (*) begin
 
 	// sending tag- starts from very first tag
 	state0: begin
-		done_o 			= '0;
-		data_o			= '0;
-		end_o			= '0;
-		all_sent_o		= '0;
-		data_valid_o		= '0;
-		end_of_msg_o		= '0;
-		incr_temp_var_t		= '0;
-		incr_temp_var_v		= '0;
-		l_t_width		= '0;
-		l_v_width		= '0;
-		s_t_width		= '0;
-		s_v_width		= '0;	
+			incr_temp_var_t	=	'0;
+			incr_temp_var_v	=	'0;
+			data_o		=	'0;
+			l_t_width	=	'0;
+			l_v_width	=	'0;
+			s_t_width	=	'0;
+			s_v_width	=	'0;
+			done_o		=	'0;
+			end_of_msg_o	=	'0;
+			data_valid_o	=	'0;			
+			all_sent_o	=	'0;
+			end_o		=	'0;	
 		if (fifo_full_i == 1) begin 
 			next_state	=	state0;
 			data_valid_o	=	'0;			
@@ -139,18 +140,13 @@ always @ (*) begin
 		end
 
 	state1: begin
-		done_o 			= '0;
-		data_o			= '0;
-		end_o			= '0;
-		all_sent_o		= '0;
-		data_valid_o		= '0;
-		end_of_msg_o		= '0;
-		incr_temp_var_t		= '0;
-		incr_temp_var_v		= '0;	
-		l_t_width		= '0;
-		l_v_width		= '0;
-		s_t_width		= '0;
-		s_v_width		= '0;	
+			incr_temp_var_t	=	'0;
+			incr_temp_var_v	=	'0;
+			l_t_width	=	'0;
+			incr_temp_var_t	=	'0;
+			l_v_width	=	'0;
+			s_t_width	=	'1;
+			s_v_width	=	'0;
 		if (fifo_full_i == 1) begin 
 			next_state	=	state1;
 			data_valid_o	=	'0;			
@@ -180,18 +176,12 @@ always @ (*) begin
 		end
 
 	state3: begin
-		done_o 			= '0;
-		data_o			= '0;
-		end_o			= '0;
-		all_sent_o		= '0;
-		data_valid_o		= '0;
-		end_of_msg_o		= '0;
-		incr_temp_var_t		= '0;
-		incr_temp_var_v		= '0;	
-		l_t_width		= '0;
-		l_v_width		= '0;
-		s_t_width		= '0;
-		s_v_width		= '0;	
+			incr_temp_var_t	=	'0;
+			incr_temp_var_v	=	'0;
+			l_v_width	=	'0;
+			s_v_width	=	'0;
+			v_width		= 	'0;
+			v_width_t	= 	'0;
 		if (fifo_full_i == 1)begin 
 			next_state	=	state3;
 			data_valid_o	=	'0;				
@@ -216,20 +206,12 @@ always @ (*) begin
 		end
 
 	state4: begin
-
-		done_o 			= '0;
-		data_o			= '0;
-		end_o			= '0;
-		all_sent_o		= '0;
-		data_valid_o		= '0;
-		end_of_msg_o		= '0;
-		incr_temp_var_t		= '0;
-		incr_temp_var_v		= '0;	
-		l_t_width		= '0;
-		l_v_width		= '0;
-		s_t_width		= '0;
-		s_v_width		= '0;	
-
+			incr_temp_var_t	=	'0;
+			incr_temp_var_v	=	'0;
+			l_t_width	=	'0;
+			l_v_width	=	'0;
+			s_t_width	=	'0;
+			s_v_width	=	'0;
 		if (fifo_full_i == 1)begin 
 			next_state	=	state4;
 			data_valid_o	=	'0;			
@@ -258,18 +240,13 @@ always @ (*) begin
 		end
 
 	state6: begin
-		done_o 			= '0;
-		data_o			= '0;
-		end_o			= '0;
-		all_sent_o		= '0;
-		data_valid_o		= '0;
-		end_of_msg_o		= '0;
-		incr_temp_var_t		= '0;
-		incr_temp_var_v		= '0;	
-		l_t_width		= '0;
-		l_v_width		= '0;
-		s_t_width		= '0;
-		s_v_width		= '0;	
+			incr_temp_var_t	=	'0;
+			incr_temp_var_v	=	'0;
+			l_t_width	=	'0;
+			incr_temp_var_t	=	'0;
+			l_v_width	=	'0;
+			s_t_width	=	'1;
+			s_v_width	=	'0;
 		if (fifo_full_i == 1) begin 
 			next_state	=	state1;
 			data_valid_o	=	'0;			
@@ -300,18 +277,12 @@ always @ (*) begin
 
 	// checksum first byte
 	state8: begin
-		done_o 			= '0;
-		data_o			= '0;
-		end_o			= '0;
-		all_sent_o		= '0;
-		data_valid_o		= '0;
-		end_of_msg_o		= '0;
-		incr_temp_var_t		= '0;
-		incr_temp_var_v		= '0;	
-		l_t_width		= '0;
-		l_v_width		= '0;
-		s_t_width		= '0;
-		s_v_width		= '0;	
+			incr_temp_var_t	=	'0;
+			incr_temp_var_v	=	'0;
+			l_t_width	=	'0;
+			l_v_width	=	'0;
+			s_t_width	=	'0;
+			s_v_width	=	'0;
 		if (fifo_full_i == 1)begin 
 			next_state	=	state8;
 			data_valid_o	=	'0;			
@@ -330,18 +301,12 @@ always @ (*) begin
 
 	// checksum second byte
 	state9: begin
-		done_o 			= '0;
-		data_o			= '0;
-		end_o			= '0;
-		all_sent_o		= '0;
-		data_valid_o		= '0;
-		end_of_msg_o		= '0;
-		incr_temp_var_t		= '0;
-		incr_temp_var_v		= '0;
-		l_t_width		= '0;
-		l_v_width		= '0;
-		s_t_width		= '0;
-		s_v_width		= '0;	
+			incr_temp_var_t	=	'0;
+			incr_temp_var_v	=	'0;
+			l_t_width	=	'0;
+			l_v_width	=	'0;
+			s_t_width	=	'0;
+			s_v_width	=	'0;
 		if (fifo_full_i == 1) begin 
 			next_state	=	state9;
 			data_valid_o	=	'0;			
@@ -360,18 +325,12 @@ always @ (*) begin
 
 	// checksum third byte
 	state10: begin
-		done_o 			= '0;
-		data_o			= '0;
-		end_o			= '0;
-		all_sent_o		= '0;
-		data_valid_o		= '0;
-		end_of_msg_o		= '0;
-		incr_temp_var_t		= '0;
-		incr_temp_var_v		= '0;
-		l_t_width		= '0;
-		l_v_width		= '0;
-		s_t_width		= '0;
-		s_v_width		= '0;	
+			incr_temp_var_t	=	'0;
+			incr_temp_var_v	=	'0;
+			l_t_width	=	'0;
+			l_v_width	=	'0;
+			s_t_width	=	'0;
+			s_v_width	=	'0;
 		if (fifo_full_i == 1) begin 
 			next_state	=	state10;
 			data_valid_o	=	'0;			
@@ -389,18 +348,12 @@ always @ (*) begin
 		end
 
 	state11: begin
-		done_o 			= '0;
-		data_o			= '0;
-		end_o			= '0;
-		all_sent_o		= '0;
-		data_valid_o		= '0;
-		end_of_msg_o		= '0;
-		incr_temp_var_t		= '0;
-		incr_temp_var_v		= '0;
-		l_t_width		= '0;
-		l_v_width		= '0;
-		s_t_width		= '0;
-		s_v_width		= '0;	
+			incr_temp_var_t	=	'0;
+			incr_temp_var_v	=	'0;
+			l_t_width	=	'0;
+			l_v_width	=	'0;
+			s_t_width	=	'0;
+			s_v_width	=	'0;
 		if (fifo_full_i == 1) begin 
 			next_state	=	state11;
 			data_valid_o	=	'0;			
