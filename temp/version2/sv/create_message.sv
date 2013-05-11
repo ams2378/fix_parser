@@ -63,7 +63,7 @@ reg			output_valid_o;
 
 // internal variables
 
-parameter 			state0  = 5'b00000;
+parameter 			state0  = 6'b000000;
 parameter 			state1  = 6'b000001;
 parameter 			state2  = 6'b000010;
 parameter 			state3  = 6'b000011;
@@ -159,6 +159,16 @@ always @(*) begin
 	
 		// tag beginstring
 	state0: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state0;
 		else begin
@@ -192,6 +202,16 @@ always @(*) begin
 
 		// value beginstring
 	state1: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state1;
 		else begin
@@ -212,6 +232,16 @@ always @(*) begin
 		end
 
 	state20: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state20;
 		else begin
@@ -228,6 +258,16 @@ always @(*) begin
 
 		// tag bodylength
 	state2: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state2;
 		else begin
@@ -240,14 +280,24 @@ always @(*) begin
 				t_size_o	=	`s_t_bodyLength;
 				next_state 	=	state21;
 			end else begin
-		//		val_valid_o	=	'1;			
-		//		val_o		=	v_beginString;
+				val_valid_o	=	'1;			
+				val_o		=	`v_beginString;
 				next_state	=	state2;
 			end
 		end
 		end
 
 	state21: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state21;
 		else begin
@@ -263,6 +313,16 @@ always @(*) begin
 
 		// value bodylength
 	state3: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state3;
 		else begin
@@ -282,6 +342,16 @@ always @(*) begin
 		end
 
 	state40: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state40;
 		else begin
@@ -301,6 +371,16 @@ always @(*) begin
 		end
 
 	state22: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state22;
 		else begin
@@ -316,6 +396,16 @@ always @(*) begin
 
 	// tag message type
 	state24: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state24;
 		else if (done_i == 1) begin						// from here to
@@ -339,6 +429,16 @@ always @(*) begin
 
 		// tag msgType
 	state6: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state6;
 		else begin
@@ -357,6 +457,16 @@ always @(*) begin
 		end
 
 	state25: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state25;
 		else begin
@@ -373,6 +483,16 @@ always @(*) begin
 
 		// value msgType
 	state7: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state7;
 		else begin
@@ -385,6 +505,14 @@ always @(*) begin
 			v_size_o	=	s_v_msgType(message_type_i);
 			next_state 	=	state26;
 		end else begin
+				val_o		=	'0;
+				output_valid_o	=	'1;
+				val_valid_o	=	'0;
+				tag_o		=	`t_msgType;
+				tag_valid_o	=	'1;
+				t_size_o	=	`s_t_msgType;
+				next_state 	=	state7;
+
 			next_state	=	state7;
 		end
 		end
@@ -392,6 +520,16 @@ always @(*) begin
 
 
 	state26: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state26;
 		else begin
@@ -407,6 +545,16 @@ always @(*) begin
 
 		// tag msgSeqNumber
 	state4: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state4;
 		else begin
@@ -425,6 +573,16 @@ always @(*) begin
 		end
 
 	state23: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state23;
 		else begin
@@ -440,12 +598,24 @@ always @(*) begin
 
 		// value msgSeqNumber
 	state5: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state5;
 		else begin
 			if (done_i == 1 ) begin
 				next_state	=	state39;
 				output_valid_o	=	'1;
+				tag_o		=	`t_msgSeqNum;
+				t_size_o	=	`s_t_msgSeqNum;
 			//	tag_o		=	'0;
 				tag_valid_o	=	'0;
 			//	val_o		=	v_msgSeqNum_i;
@@ -453,12 +623,30 @@ always @(*) begin
 			//	v_size_o	=	s_v_msgSeqNum_i;
 			//	next_state 	=	state24;
 			end else begin
+				val_o		=	'0;
+				val_valid_o	=	'0;
+				output_valid_o	=	'1;
+				tag_o		=	`t_msgSeqNum;
+				tag_valid_o	=	'1;
+				t_size_o	=	`s_t_msgSeqNum;
+
+
 				next_state	=	state5;
 			end
 		end
 		end
 
 	state39: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state39;
 		else begin
@@ -470,6 +658,10 @@ always @(*) begin
 				v_size_o	=	s_v_msgSeqNum_i;
 				next_state 	=	state8;			
 			end else begin
+				output_valid_o	=	'1;
+				tag_o		=	`t_msgSeqNum;
+				t_size_o	=	`s_t_msgSeqNum;
+				tag_valid_o	=	'0;
 				output_valid_o	=	'0;
 				next_state	=	state39;		
 			end		
@@ -480,6 +672,16 @@ always @(*) begin
 
 		// tag senderCompId
 	state8: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state8;
 		else begin
@@ -492,12 +694,27 @@ always @(*) begin
 				t_size_o	=	`s_t_senderCompId;
 				next_state 	=	state27;
 			end else begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				val_o		=	v_msgSeqNum_i;
+				val_valid_o	=	'1;
+				v_size_o	=	s_v_msgSeqNum_i;
 				next_state	=	state8;
 			end
 		end
 		end
 
 	state27: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state27;
 		else begin
@@ -513,6 +730,16 @@ always @(*) begin
 
 		// value senderComptId
 	state9: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state9;
 		else begin
@@ -524,13 +751,31 @@ always @(*) begin
 				val_valid_o	=	'0;
 				v_size_o	=	s_v_senderCompId_i;
 				next_state 	=	state28;
-			end else begin
+			end else begin 
+
+				val_o		=	'0;
+				output_valid_o	=	'1;
+				val_valid_o	=	'0;
+				tag_o		=	`t_senderCompId;
+				tag_valid_o	=	'1;
+				t_size_o	=	`s_t_senderCompId;
+
 				next_state	=	state9;
 			end
 		end
 		end
 
 	state28: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state28;
 		else begin
@@ -546,6 +791,16 @@ always @(*) begin
 
 		// tag sendTime
 	state10: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state10;
 		else begin
@@ -558,12 +813,30 @@ always @(*) begin
 				t_size_o	=	`s_t_sendTime;
 				next_state 	=	state29;
 			end else begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				output_valid_o	=	'1;
+				val_o		=	v_senderCompId_i;
+				val_valid_o	=	'1;			
+				v_size_o	=	s_v_senderCompId_i;	
+
+
 				next_state	=	state10;
 			end
 		end
 
 		end
 	state29: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state29;
 		else begin
@@ -579,6 +852,16 @@ always @(*) begin
 		end
 		// value sendTime
 	state11: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state11;
 		else begin
@@ -591,12 +874,28 @@ always @(*) begin
 				v_size_o	=	`s_v_sendTime;
 				next_state 	=	state30;
 			end else begin
+				val_o		=	'0;
+				val_valid_o	=	'0;
+				output_valid_o	=	'1;
+				tag_o		=	`t_sendTime;
+				tag_valid_o	=	'1;
+				t_size_o	=	`s_t_sendTime;
 				next_state	=	state11;
 			end
 		end
 		end
 
 	state30: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state30;
 		else begin
@@ -612,6 +911,16 @@ always @(*) begin
 
 		// tag targetCompId
 	state12: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state12;
 		else begin
@@ -624,12 +933,28 @@ always @(*) begin
 				t_size_o	=	`s_t_targetCompId;
 				next_state 	=	state31;
 			end else begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				output_valid_o	=	'1;
+				val_o		=	v_sendTime_i;
+				val_valid_o	=	'1;			
+				v_size_o	=	`s_v_sendTime;	
 				next_state	=	state12;
 			end
 		end
 		end
 
 	state31: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state31;
 		else begin
@@ -645,6 +970,16 @@ always @(*) begin
 
 		// value targetCompId
 	state13: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state13;
 		else begin
@@ -657,12 +992,27 @@ always @(*) begin
 				v_size_o	=	s_v_targetCompId_i;
 				next_state 	=	state32;
 			end else begin
+				val_valid_o	=	'0;
+				output_valid_o	=	'1;
+				tag_o		=	`t_targetCompId;
+				tag_valid_o	=	'1;
+				t_size_o	=	`s_t_targetCompId;
 				next_state	=	state13;
 			end
 		end
 		end
 
 	state32: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state32;
 		else begin
@@ -679,6 +1029,16 @@ always @(*) begin
 
 		// tag encryptMethod
 	state14: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state14;
 		else begin
@@ -687,7 +1047,7 @@ always @(*) begin
 				val_valid_o	=	'0;
 				tag_o		=	`t_checksum;
 				output_valid_o	=	'1;
-				checksum_o	=	'1;
+				checksum_o	=	'0;			// from 1
 				tag_valid_o	=	'0;
 				t_size_o	=	`s_t_checksum;	
 				next_state 	=	state34;
@@ -699,13 +1059,29 @@ always @(*) begin
 				tag_valid_o	=	'0;
 				t_size_o	=	`s_t_encryptMethod;
 				next_state 	=	state33;
-			end else begin
+			end else begin 
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				output_valid_o	=	'1;
+				val_o		=	v_targetCompId_i;
+				val_valid_o	=	'1;			
+				v_size_o	=	s_v_targetCompId_i;		
 				next_state	=	state14;
 			end
 		end
 		end
 
 	state33: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state33;
 		else begin
@@ -720,6 +1096,16 @@ always @(*) begin
 		end
 
 	state34: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state34;
 		else begin
@@ -727,6 +1113,7 @@ always @(*) begin
 				val_valid_o	=	'0;
 				tag_o		=	`t_checksum;
 				output_valid_o	=	'1;
+				checksum_o	= 	'1;		// from 0
 				tag_valid_o	=	'1;
 				t_size_o	=	`s_t_checksum;
 				next_state 	=	state19;
@@ -735,6 +1122,16 @@ always @(*) begin
 
 		// value encryptMethod
 	state15: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state15;
 		else begin
@@ -747,12 +1144,29 @@ always @(*) begin
 				v_size_o	=	`s_v_encryptMethod_i;
 				next_state 	=	state35;
 			end else begin
+				val_o		=	'0;
+				output_valid_o	=	'1;
+				val_valid_o	=	'0;
+				tag_o		=	`t_encryptMethod;
+				tag_valid_o	=	'1;
+				t_size_o	=	`s_t_encryptMethod;
+
 				next_state	=	state15;
 			end
 		end
 		end
 
 	state35: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state35;
 		else begin
@@ -768,6 +1182,16 @@ always @(*) begin
 		end
 		// tag heartBeatInt
 	state16: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state16;
 		else begin
@@ -786,6 +1210,16 @@ always @(*) begin
 		end
 
 	state36: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state36;
 		else begin
@@ -802,6 +1236,16 @@ always @(*) begin
 
 		// value heartBeatInt
 	state17: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state17;
 		else begin
@@ -814,6 +1258,12 @@ always @(*) begin
 				v_size_o	=	s_v_heartBeatInt_i;
 				next_state 	=	state37;
 			end else begin
+				val_o		=	'0;
+				val_valid_o	=	'0;
+				tag_o		=	`t_heartBeatInt;
+				tag_valid_o	=	'1;
+				output_valid_o	=	'1;
+				t_size_o	=	`s_t_heartBeatInt;
 				next_state	=	state17;
 			end
 		end
@@ -821,6 +1271,16 @@ always @(*) begin
 
 
 	state37: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state37;
 		else begin
@@ -837,6 +1297,16 @@ always @(*) begin
 
 		// tag checksum
 	state18: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state18;
 		else begin
@@ -844,23 +1314,41 @@ always @(*) begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
 				tag_o		=	`t_checksum;
-				checksum_o	=	'1;
+				checksum_o	=	'0;			//changed to 0
 				output_valid_o	=	'1;
 				tag_valid_o	=	'0;
 				t_size_o	=	`s_t_checksum;	
 				next_state 	=	state38;
 			end else begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				val_o		=	v_heartBeatInt_i;
+				val_valid_o	=	'1;			
+				output_valid_o	=	'1;
+				v_size_o	=	s_v_heartBeatInt_i;	
 				next_state	=	state18;
 			end
 		end
 		end
 
 	state38: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state38;
 		else begin
 				val_o		=	'0;
 				output_valid_o	=	'1;
+				start_chksm_o	= 	'0;
+				checksum_o	= 	'1;
 				val_valid_o	=	'0;
 				tag_o		=	`t_checksum;
 				tag_valid_o	=	'1;
@@ -872,6 +1360,17 @@ always @(*) begin
 		// end of message creation
 	state19:
 		begin
+				val_o		=	'0;
+				output_valid_o	=	'1;
+				start_chksm_o	= 	'0;
+				checksum_o	= 	'1;
+				val_valid_o	=	'0;
+				tag_o		=	`t_checksum;
+				tag_valid_o	=	'1;
+				t_size_o	=	`s_t_checksum;
+				v_size_o		= '0;
+				msg_creation_done_o	=	'0;
+
 		if (fifo_full_i == 1) 
 			next_state	=	state19;
 		else begin

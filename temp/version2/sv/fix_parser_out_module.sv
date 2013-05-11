@@ -26,7 +26,7 @@ module fix_parser_out_module (
 	/* final tag and value- to be pushed in FIFO*/
 	output[31:0]			tag_o,
 	output[255:0]			value_o,
-	output reg	 			end_detected_o,
+	output reg	 		end_detected_o,
 
 	output				start_message_o
 //	output				start_of_header_o
@@ -137,6 +137,7 @@ always @ (*) begin
 		end
 		state1: begin
 					load_tag  = '0;
+					clear_tag   = '0;
 					clear_val   = '0;
 					shift_tag = '0;
 					load_val  = '0;
@@ -189,7 +190,6 @@ always @ (*) begin
 					end else if (tag [31:0] == last_tag) begin
 						end_of_body = 1;
 						next_state = state3;
-
 						clear_tag   = '1;
 
 					end else 

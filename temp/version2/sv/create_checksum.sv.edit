@@ -55,7 +55,15 @@ always @(*) begin
 
 	case(state) 
 		
-		state0: begin 
+		state0: begin
+					temp  = '0;
+					temp2 = '0;
+					temp3 = '0;
+					q_10 = '0;  
+					q_100 = '0;  
+					r_100 = '0;  
+					r_10 = '0; 
+					checksum_o = '0; 
 				if (start_i == 1 && data_valid_i == 1) begin
 					temp = 8'd117;	// head + data_i; 
 					next_state = state1;
@@ -64,6 +72,14 @@ always @(*) begin
 				end
 		end
 		state1: begin
+					temp  = 8'd117;
+					temp2 = '0;
+					temp3 = '0;
+					q_10 = '0;  
+					q_100 = '0;  
+					r_100 = '0;  
+					r_10 = '0; 
+					checksum_o = '0; 
 				if (data_valid_i == 0) begin
 					next_state  =  state1;
 				end else begin 
@@ -99,7 +115,6 @@ always @(*) begin
 				if (data_valid_i == 0) begin
 					next_state  =  state3;
 				end else begin				
-		//		temp = temp - 8'd97;	
 					if (temp3 >= 9'd256) begin	
 						temp3 = temp3 - 9'd256;
 					end
@@ -123,10 +138,22 @@ always @(*) begin
 		end
 
 		state4: begin
+				temp  = '0;
+				temp2 = '0;
+				temp3 = '0;
+				q_100 = '0;  
+				r_100 = '0;  
+				r_10 = '0; 
 				checksum_o	=	8'h30 + q_10;
 				next_state	=	state5;
 			end
 		state5: begin
+				temp  = '0;
+				temp2 = '0;
+				temp3 = '0;
+				q_10 = '0;  
+				q_100 = '0;  
+				r_100 = '0;  
 				checksum_o	=	8'h30 + r_10;
 				next_state	=	state0;
 			end
@@ -144,4 +171,3 @@ always @(*) begin
 end
 
 endmodule
-
