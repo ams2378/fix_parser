@@ -1051,6 +1051,15 @@ always @(*) begin
 				tag_valid_o	=	'0;
 				t_size_o	=	`s_t_checksum;	
 				next_state 	=	state34;
+			else if (done_i == 1 && (message_type_i == `neworder)) begin
+				val_o		=	'0;
+				val_valid_o	=	'0;
+				tag_o		=	`t_clorid;
+				output_valid_o	=	'1;
+				checksum_o	=	'0;			// from 1
+				tag_valid_o	=	'0;
+				t_size_o	=	`s_t_clorid;	
+				next_state 	=	state41;		// jump to state 41 for neworder
 			end else if (done_i == 1) begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
@@ -1383,6 +1392,457 @@ always @(*) begin
 				next_state	=	state19;
 		end
 		end
+
+
+
+
+
+// ******************************************************************************************
+// *********************** N E W O R D E R S E N*********************************************
+// ******************************************************************************************
+// ******************************************************************************************
+
+// -------- for new order entry -------- starts here ---------
+// ----------------------------------------------------------------------------------
+
+		// tag clorid 
+	state41: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
+		if (fifo_full_i == 1) 
+			next_state	=	state41;
+		else begin
+				val_o		=	'0;
+				val_valid_o	=	'0;
+				tag_o		=	`t_clorid_i;
+				output_valid_o	=	'1;
+				checksum_o	=	'0;			// from 1
+				tag_valid_o	=	'0;
+				t_size_o	=	`s_t_clorid_i;
+				next_state	=	state42;	
+		end
+		end
+
+		// value clorid
+	state42: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
+		if (fifo_full_i == 1) 
+			next_state	=	state42;
+		else begin
+			if (done_i == 1 ) begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				output_valid_o	=	'1;
+				val_o		=	`v_clorid_i;
+				val_valid_o	=	'0;
+				v_size_o	=	`s_v_clorid_i;
+				next_state 	=	state43;
+			end else begin
+				val_o		=	'0;
+				output_valid_o	=	'1;
+				val_valid_o	=	'0;
+				tag_o		=	`t_clorid_i;
+				tag_valid_o	=	'1;
+				t_size_o	=	`s_t_clorid_i;
+				next_state	=	state42;
+			end
+		end
+		end
+
+	state42: begin
+		tag_o 			= '0;	
+		tag_valid_o 		= '0;
+		val_o 			= '0;
+		val_valid_o 		= '0;
+		t_size_o		= '0;
+		v_size_o		= '0;
+		checksum_o		= '0;
+		start_chksm_o		= '0;
+		msg_creation_done_o	= '0;
+		output_valid_o		= '0;
+		if (fifo_full_i == 1) 
+			next_state	=	state35;
+		else begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				output_valid_o	=	'1;
+				val_o		=	`v_clorid_i;
+				val_valid_o	=	'1;			
+				v_size_o	=	`s_v_clorid_i;		
+				next_state 	=	state43;
+		end
+
+		// tag account
+	state43: begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				output_valid_o	=	'1;
+				val_o		=	`v_clorid_i;
+				val_valid_o	=	'1;			
+				v_size_o	=	`s_v_clorid_i;
+				t_size_o		= '0;
+				checksum_o		= '0;
+				start_chksm_o		= '0;
+				msg_creation_done_o	= '0;
+		if (fifo_full_i == 1) 
+			next_state	=	state43;
+		else begin
+			if (done_i == 1 ) begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				output_valid_o	=	'1;
+				val_o		=	t_account;
+				val_valid_o	=	'0;
+				v_size_o	=	s_t_account;
+				next_state 	=	state44;
+			end else begin
+				next_state	=	state43;
+			end
+		end
+		end
+
+	state43: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state43;
+		else begin
+				val_o		=	'0;
+				val_valid_o	=	'0;
+				tag_o		=	`t_account;
+				tag_valid_o	=	'1;
+				output_valid_o	=	'1;
+				t_size_o	=	`s_t_account;
+				next_state 	=	state44;
+		end
+		end
+
+
+		// value heartBeatInt
+	state44: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state17;
+		else begin
+			if (done_i == 1 ) begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				val_o		=	v_heartBeatInt_i;
+				val_valid_o	=	'0;
+				output_valid_o	=	'1;
+				v_size_o	=	s_v_heartBeatInt_i;
+				next_state 	=	state37;
+			end else begin
+				next_state	=	state17;
+			end
+		end
+		end
+
+
+	state37: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state37;
+		else begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				val_o		=	v_heartBeatInt_i;
+				val_valid_o	=	'1;			
+				output_valid_o	=	'1;
+				v_size_o	=	s_v_heartBeatInt_i;		
+				next_state 	=	state18;
+		end
+		end
+
+
+
+
+// ----------------------------------------------------------------------------------
+
+		// tag handinst 
+	state45: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state45;
+		else begin
+			if (done_i == 1 ) begin
+				val_o		=	'0;
+				val_valid_o	=	'0;
+				output_valid_o	=	'1;
+				tag_o		=	`t_handinst;
+				tag_valid_o	=	'0;
+				t_size_o	=	`s_t_handinst;
+				next_state 	=	state46;
+			end else begin
+				next_state	=	state45;
+			end
+		end
+		end
+
+	state46: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state46;
+		else begin
+				val_o		=	'0;
+				val_valid_o	=	'0;
+				output_valid_o	=	'1;
+				tag_o		=	`t_handinst;
+				tag_valid_o	=	'1;
+				t_size_o	=	`s_t_handinst;
+				next_state 	=	state47;
+		end
+		end
+
+		// value handinst
+	state47: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state47;
+		else begin
+			if (done_i == 1 ) begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				output_valid_o	=	'1;
+				val_o		=	v_handinst_i;
+				val_valid_o	=	'0;
+				v_size_o	=	s_v_handinst_i;
+				next_state 	=	state48;
+			end else begin
+				next_state	=	state47;
+			end
+		end
+		end
+
+	state48: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state48;
+		else begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				output_valid_o	=	'1;
+				val_o		=	v_handinst_i;
+				val_valid_o	=	'1;			
+				v_size_o	=	s_v_handinst_i;		
+				next_state 	=	state49;
+		end
+		end
+// ----------------------------------------------------------------------------------
+
+
+		// tag side 
+	state49: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state49;
+		else begin
+			if (done_i == 1 ) begin
+				val_o		=	'0;
+				val_valid_o	=	'0;
+				output_valid_o	=	'1;
+				tag_o		=	`t_side;
+				tag_valid_o	=	'0;
+				t_size_o	=	`s_t_side;
+				next_state 	=	state50;
+			end else begin
+				next_state	=	state49;
+			end
+		end
+		end
+
+	state50: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state50;
+		else begin
+				val_o		=	'0;
+				val_valid_o	=	'0;
+				output_valid_o	=	'1;
+				tag_o		=	`t_side;
+				tag_valid_o	=	'1;
+				t_size_o	=	`s_t_side;
+				next_state 	=	state51;
+		end
+		end
+
+		// value side 
+	state51: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state51;
+		else begin
+			if (done_i == 1 ) begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				output_valid_o	=	'1;
+				val_o		=	v_side_i;
+				val_valid_o	=	'0;
+				v_size_o	=	s_v_side_i;
+				next_state 	=	state52;
+			end else begin
+				next_state	=	state51;
+			end
+		end
+		end
+
+	state52: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state52;
+		else begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				output_valid_o	=	'1;
+				val_o		=	v_side_i;
+				val_valid_o	=	'1;			
+				v_size_o	=	s_v_side_i;		
+				next_state 	=	state53;
+		end
+		end
+// ----------------------------------------------------------------------------------
+
+		// tag transacttime 
+	state53: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state53;
+		else begin
+			if (done_i == 1 ) begin
+				val_o		=	'0;
+				val_valid_o	=	'0;
+				output_valid_o	=	'1;
+				tag_o		=	`t_transacttime;
+				tag_valid_o	=	'0;
+				t_size_o	=	`s_t_transacttime;
+				next_state 	=	state54;
+			end else begin
+				next_state	=	state53;
+			end
+		end
+		end
+
+	state54: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state54;
+		else begin
+				val_o		=	'0;
+				val_valid_o	=	'0;
+				output_valid_o	=	'1;
+				tag_o		=	`t_transacttime;
+				tag_valid_o	=	'1;
+				t_size_o	=	`s_t_transacttime;
+				next_state 	=	state55;
+		end
+		end
+
+		// value transacttime 
+	state55: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state55;
+		else begin
+			if (done_i == 1 ) begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				output_valid_o	=	'1;
+				val_o		=	v_transacttime_i;
+				val_valid_o	=	'0;
+				v_size_o	=	s_v_transacttime_i;
+				next_state 	=	state56;
+			end else begin
+				next_state	=	state55;
+			end
+		end
+		end
+
+	state56: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state56;
+		else begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				output_valid_o	=	'1;
+				val_o		=	v_transacttime_i;
+				val_valid_o	=	'1;			
+				v_size_o	=	s_v_transacttime_i;		
+				next_state 	=	state57;
+		end
+		end
+// ----------------------------------------------------------------------------------
+
+
+		// tag ordtype 
+	state57: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state57;
+		else begin
+			if (done_i == 1 ) begin
+				val_o		=	'0;
+				val_valid_o	=	'0;
+				output_valid_o	=	'1;
+				tag_o		=	`t_ordtype;
+				tag_valid_o	=	'0;
+				t_size_o	=	`s_t_ordtype;
+				next_state 	=	state58;
+			end else begin
+				next_state	=	state57;
+			end
+		end
+		end
+
+	state58: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state58;
+		else begin
+				val_o		=	'0;
+				val_valid_o	=	'0;
+				output_valid_o	=	'1;
+				tag_o		=	`t_ordtype;
+				tag_valid_o	=	'1;
+				t_size_o	=	`s_t_ordtype;
+				next_state 	=	state59;
+		end
+		end
+
+		// value ordtype 
+	state59: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state59;
+		else begin
+			if (done_i == 1 ) begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				output_valid_o	=	'1;
+				val_o		=	v_ordtype_i;
+				val_valid_o	=	'0;
+				v_size_o	=	s_v_ordtype_i;
+				next_state 	=	state60;
+			end else begin
+				next_state	=	state59;
+			end
+		end
+		end
+
+	state60: begin
+		if (fifo_full_i == 1) 
+			next_state	=	state60;
+		else begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				output_valid_o	=	'1;
+				val_o		=	v_ordtype_i;
+				val_valid_o	=	'1;			
+				v_size_o	=	s_v_ordtype_i;		
+				next_state 	=	state34;
+		end
+		end
+// ----------------------------------------------------------------------------------
+// -------- for new order entry -------- ends here ---------
+
 	endcase
 
 end
