@@ -1191,12 +1191,12 @@ always @(*) begin
 		end
 		// tag heartBeatInt
 	state16: begin
-		tag_o 			= '0;	
-		tag_valid_o 		= '0;
-		val_o 			= '0;
-		val_valid_o 		= '0;
+		tag_o		=	'0;
+		tag_valid_o	=	'0;
+		val_o		=	`v_encryptMethod_i;
+		val_valid_o	=	'1;			
+		v_size_o	=	`s_v_encryptMethod_i;		
 		t_size_o		= '0;
-		v_size_o		= '0;
 		checksum_o		= '0;
 		start_chksm_o		= '0;
 		msg_creation_done_o	= '0;
@@ -1513,14 +1513,33 @@ always @(*) begin
 				v_size_o	=	s_t_account;
 				next_state 	=	state44;
 			end else begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				output_valid_o	=	'1;
+				val_o		=	`v_clorid_i;
+				val_valid_o	=	'1;			
+				v_size_o	=	`s_v_clorid_i;	
 				next_state	=	state43;
 			end
 		end
 		end
 
-	state43: begin
+
+// ----------------------------------------------------------------------------------
+
+	state44: begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				output_valid_o	=	'1;
+				val_o		=	t_account;
+				val_valid_o	=	'0;
+				v_size_o	=	s_t_account;
+				t_size_o		= '0;
+				checksum_o		= '0;
+				start_chksm_o		= '0;
+				msg_creation_done_o	= '0;
 		if (fifo_full_i == 1) 
-			next_state	=	state43;
+			next_state	=	state44;
 		else begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
@@ -1528,62 +1547,33 @@ always @(*) begin
 				tag_valid_o	=	'1;
 				output_valid_o	=	'1;
 				t_size_o	=	`s_t_account;
-				next_state 	=	state44;
+				next_state 	=	state45;
 		end
 		end
 
 
-		// value heartBeatInt
-	state44: begin
+		// value account 
+	state45: begin
+				val_o			=	'0;
+				val_valid_o		=	'0;
+				tag_o			=	`t_account;
+				tag_valid_o		=	'1;
+				output_valid_o		=	'1;
+				t_size_o		=	`s_t_account;
+				v_size_o		=	'0;	
+				checksum_o		= 	'0;
+				start_chksm_o		= 	'0;
+				msg_creation_done_o	= 	'0;
 		if (fifo_full_i == 1) 
 			next_state	=	state17;
 		else begin
 			if (done_i == 1 ) begin
 				tag_o		=	'0;
 				tag_valid_o	=	'0;
-				val_o		=	v_heartBeatInt_i;
+				val_o		=	v_account;
 				val_valid_o	=	'0;
 				output_valid_o	=	'1;
-				v_size_o	=	s_v_heartBeatInt_i;
-				next_state 	=	state37;
-			end else begin
-				next_state	=	state17;
-			end
-		end
-		end
-
-
-	state37: begin
-		if (fifo_full_i == 1) 
-			next_state	=	state37;
-		else begin
-				tag_o		=	'0;
-				tag_valid_o	=	'0;
-				val_o		=	v_heartBeatInt_i;
-				val_valid_o	=	'1;			
-				output_valid_o	=	'1;
-				v_size_o	=	s_v_heartBeatInt_i;		
-				next_state 	=	state18;
-		end
-		end
-
-
-
-
-// ----------------------------------------------------------------------------------
-
-		// tag handinst 
-	state45: begin
-		if (fifo_full_i == 1) 
-			next_state	=	state45;
-		else begin
-			if (done_i == 1 ) begin
-				val_o		=	'0;
-				val_valid_o	=	'0;
-				output_valid_o	=	'1;
-				tag_o		=	`t_handinst;
-				tag_valid_o	=	'0;
-				t_size_o	=	`s_t_handinst;
+				v_size_o	=	v_t_account;
 				next_state 	=	state46;
 			end else begin
 				next_state	=	state45;
@@ -1591,126 +1581,266 @@ always @(*) begin
 		end
 		end
 
+
 	state46: begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				val_o		=	v_account;
+				val_valid_o	=	'0;
+				output_valid_o	=	'1;
+				v_size_o	=	v_t_account;
+				t_size_o	=	'0;
+				checksum_o		= 	'0;
+				start_chksm_o		= 	'0;
+				msg_creation_done_o	= 	'0;
 		if (fifo_full_i == 1) 
 			next_state	=	state46;
 		else begin
-				val_o		=	'0;
-				val_valid_o	=	'0;
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				val_o		=	v_account;
+				val_valid_o	=	'1;			
 				output_valid_o	=	'1;
-				tag_o		=	`t_handinst;
-				tag_valid_o	=	'1;
-				t_size_o	=	`s_t_handinst;
+				v_size_o	=	s_v_account;		
 				next_state 	=	state47;
 		end
 		end
 
-		// value handinst
+
 	state47: begin
+		tag_o			=	'0;
+		tag_valid_o		=	'0;
+		val_o			=	v_account;
+		val_valid_o		=	'1;			
+		v_size_o		=	s_v_account;				t_size_o		= '0;
+		t_size_o		= 	'0;
+		checksum_o		= 	'0;
+		start_chksm_o		= 	'0;
+		msg_creation_done_o	= 	'0;
+		output_valid_o		= 	'0;
 		if (fifo_full_i == 1) 
 			next_state	=	state47;
 		else begin
 			if (done_i == 1 ) begin
-				tag_o		=	'0;
-				tag_valid_o	=	'0;
-				output_valid_o	=	'1;
-				val_o		=	v_handinst_i;
+				val_o		=	'0;
 				val_valid_o	=	'0;
-				v_size_o	=	s_v_handinst_i;
+				output_valid_o	=	'1;
+				tag_o		=	`t_handinst;
+				tag_valid_o	=	'0;
+				t_size_o	=	`s_t_handinst;
 				next_state 	=	state48;
 			end else begin
 				next_state	=	state47;
 			end
 		end
+
+
+// ----------------------------------------------------------------------------------
+
+	state47: begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				output_valid_o	=	'1;
+				val_o		=	t_handinst;
+				val_valid_o	=	'0;
+				v_size_o	=	s_t_handinst;
+				t_size_o		= '0;
+				checksum_o		= '0;
+				start_chksm_o		= '0;
+				msg_creation_done_o	= '0;
+		if (fifo_full_i == 1) 
+			next_state	=	state47;
+		else begin
+				val_o		=	'0;
+				val_valid_o	=	'0;
+				tag_o		=	`t_handinst;
+				tag_valid_o	=	'1;
+				output_valid_o	=	'1;
+				t_size_o	=	`s_t_handinst;
+				next_state 	=	state48;
+		end
 		end
 
+
+		// value account 
 	state48: begin
+				val_o			=	'0;
+				val_valid_o		=	'0;
+				tag_o			=	`t_handinst;
+				tag_valid_o		=	'1;
+				t_size_o		=	`s_t_handinst;
+				v_size_o		=	'0;	
+				checksum_o		= 	'0;
+				start_chksm_o		= 	'0;
+				output_valid_o		=	'1;
+				msg_creation_done_o	= 	'0;
 		if (fifo_full_i == 1) 
 			next_state	=	state48;
 		else begin
+			if (done_i == 1 ) begin
 				tag_o		=	'0;
 				tag_valid_o	=	'0;
+				val_o		=	v_handinst;
+				val_valid_o	=	'0;
 				output_valid_o	=	'1;
-				val_o		=	v_handinst_i;
-				val_valid_o	=	'1;			
-				v_size_o	=	s_v_handinst_i;		
+				v_size_o	=	s_v_handinst;
 				next_state 	=	state49;
+			end else begin
+				next_state	=	state48;
+			end
 		end
 		end
-// ----------------------------------------------------------------------------------
 
 
-		// tag side 
 	state49: begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				val_o		=	v_handinst;
+				val_valid_o	=	'0;
+				output_valid_o	=	'1;
+				v_size_o	=	s_v_handinst;
+				t_size_o	=	'0;
+				checksum_o		= 	'0;
+				start_chksm_o		= 	'0;
+				msg_creation_done_o	= 	'0;
 		if (fifo_full_i == 1) 
 			next_state	=	state49;
 		else begin
-			if (done_i == 1 ) begin
-				val_o		=	'0;
-				val_valid_o	=	'0;
-				output_valid_o	=	'1;
-				tag_o		=	`t_side;
+				tag_o		=	'0;
 				tag_valid_o	=	'0;
-				t_size_o	=	`s_t_side;
+				val_o		=	v_handinst;
+				val_valid_o	=	'1;			
+				output_valid_o	=	'1;
+				v_size_o	=	s_v_handinst;		
 				next_state 	=	state50;
-			end else begin
-				next_state	=	state49;
-			end
 		end
 		end
 
+
 	state50: begin
+				tag_o			=	'0;
+				tag_valid_o		=	'0;
+				val_o			=	v_handinst;
+				val_valid_o		=	'1;			
+				output_valid_o		=	'1;
+				v_size_o		=	s_v_handinst;	
+				t_size_o		= 	'0;
+				checksum_o		= 	'0;
+				start_chksm_o		= 	'0;
+				msg_creation_done_o	= 	'0;
 		if (fifo_full_i == 1) 
 			next_state	=	state50;
 		else begin
+			if (done_i == 1 ) begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
 				output_valid_o	=	'1;
 				tag_o		=	`t_side;
-				tag_valid_o	=	'1;
+				tag_valid_o	=	'0;
 				t_size_o	=	`s_t_side;
 				next_state 	=	state51;
+			end else begin
+				next_state	=	state50;
+			end
+		end
+
+
+
+// ----------------------------------------------------------------------------------
+
+	state51: begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				output_valid_o	=	'1;
+				val_o		=	t_side;
+				val_valid_o	=	'0;
+				v_size_o	=	s_t_side;
+				t_size_o		= '0;
+				checksum_o		= '0;
+				start_chksm_o		= '0;
+				msg_creation_done_o	= '0;
+		if (fifo_full_i == 1) 
+			next_state	=	state51;
+		else begin
+				val_o		=	'0;
+				val_valid_o	=	'0;
+				tag_o		=	`t_side;
+				tag_valid_o	=	'1;
+				output_valid_o	=	'1;
+				t_size_o	=	`s_t_side;
+				next_state 	=	state52;
 		end
 		end
 
-		// value side 
-	state51: begin
+
+		// value account 
+	state52: begin
+				val_o			=	'0;
+				val_valid_o		=	'0;
+				tag_o			=	`t_side;
+				tag_valid_o		=	'1;
+				t_size_o		=	`s_t_side;
+				v_size_o		=	'0;	
+				checksum_o		= 	'0;
+				start_chksm_o		= 	'0;
+				output_valid_o		=	'1;
+				msg_creation_done_o	= 	'0;
 		if (fifo_full_i == 1) 
-			next_state	=	state51;
+			next_state	=	state48;
 		else begin
 			if (done_i == 1 ) begin
 				tag_o		=	'0;
 				tag_valid_o	=	'0;
-				output_valid_o	=	'1;
-				val_o		=	v_side_i;
+				val_o		=	v_side;
 				val_valid_o	=	'0;
-				v_size_o	=	s_v_side_i;
-				next_state 	=	state52;
+				output_valid_o	=	'1;
+				v_size_o	=	s_v_side;
+				next_state 	=	state53;
 			end else begin
-				next_state	=	state51;
+				next_state	=	state52;
 			end
 		end
 		end
 
-	state52: begin
+
+	state53: begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				val_o		=	v_side;
+				val_valid_o	=	'0;
+				output_valid_o	=	'1;
+				v_size_o	=	s_v_side;
+				t_size_o	=	'0;
+				checksum_o		= 	'0;
+				start_chksm_o		= 	'0;
+				msg_creation_done_o	= 	'0;
 		if (fifo_full_i == 1) 
-			next_state	=	state52;
+			next_state	=	state53;
 		else begin
 				tag_o		=	'0;
 				tag_valid_o	=	'0;
-				output_valid_o	=	'1;
-				val_o		=	v_side_i;
+				val_o		=	v_side;
 				val_valid_o	=	'1;			
-				v_size_o	=	s_v_side_i;		
-				next_state 	=	state53;
+				output_valid_o	=	'1;
+				v_size_o	=	s_v_side;		
+				next_state 	=	state54;
 		end
 		end
-// ----------------------------------------------------------------------------------
 
-		// tag transacttime 
-	state53: begin
+
+	state54: begin
+				tag_o			=	'0;
+				tag_valid_o		=	'0;
+				val_o			=	v_side;
+				val_valid_o		=	'1;			
+				output_valid_o		=	'1;
+				v_size_o		=	s_v_side;	
+				t_size_o		= 	'0;
+				checksum_o		= 	'0;
+				start_chksm_o		= 	'0;
+				msg_creation_done_o	= 	'0;
 		if (fifo_full_i == 1) 
-			next_state	=	state53;
+			next_state	=	state54;
 		else begin
 			if (done_i == 1 ) begin
 				val_o		=	'0;
@@ -1721,64 +1851,106 @@ always @(*) begin
 				t_size_o	=	`s_t_transacttime;
 				next_state 	=	state54;
 			end else begin
-				next_state	=	state53;
+				next_state	=	state55;
 			end
 		end
-		end
 
-	state54: begin
+// --------------------------------------------------------------------------------
+
+
+	state55: begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				output_valid_o	=	'1;
+				val_o		=	t_transacttime;
+				val_valid_o	=	'0;
+				v_size_o	=	s_t_transacttime;
+				t_size_o		= '0;
+				checksum_o		= '0;
+				start_chksm_o		= '0;
+				msg_creation_done_o	= '0;
 		if (fifo_full_i == 1) 
-			next_state	=	state54;
+			next_state	=	state55;
 		else begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
-				output_valid_o	=	'1;
 				tag_o		=	`t_transacttime;
 				tag_valid_o	=	'1;
+				output_valid_o	=	'1;
 				t_size_o	=	`s_t_transacttime;
-				next_state 	=	state55;
+				next_state 	=	state56;
 		end
 		end
 
-		// value transacttime 
-	state55: begin
+
+		// value account 
+	state56: begin
+				val_o			=	'0;
+				val_valid_o		=	'0;
+				tag_o			=	`t_transacttime;
+				tag_valid_o		=	'1;
+				t_size_o		=	`s_t_transacttime;
+				v_size_o		=	'0;	
+				checksum_o		= 	'0;
+				start_chksm_o		= 	'0;
+				output_valid_o		=	'1;
+				msg_creation_done_o	= 	'0;
 		if (fifo_full_i == 1) 
-			next_state	=	state55;
+			next_state	=	state56;
 		else begin
 			if (done_i == 1 ) begin
 				tag_o		=	'0;
 				tag_valid_o	=	'0;
-				output_valid_o	=	'1;
-				val_o		=	v_transacttime_i;
+				val_o		=	v_transacttime;
 				val_valid_o	=	'0;
-				v_size_o	=	s_v_transacttime_i;
-				next_state 	=	state56;
+				output_valid_o	=	'1;
+				v_size_o	=	s_v_transacttime;
+				next_state 	=	state57;
 			end else begin
-				next_state	=	state55;
+				next_state	=	state56;
 			end
 		end
 		end
 
-	state56: begin
+
+	state57: begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				val_o		=	v_transacttime;
+				val_valid_o	=	'0;
+				output_valid_o	=	'1;
+				v_size_o	=	s_v_transacttime;
+				t_size_o	=	'0;
+				checksum_o		= 	'0;
+				start_chksm_o		= 	'0;
+				msg_creation_done_o	= 	'0;
 		if (fifo_full_i == 1) 
-			next_state	=	state56;
+			next_state	=	state57;
 		else begin
 				tag_o		=	'0;
 				tag_valid_o	=	'0;
-				output_valid_o	=	'1;
-				val_o		=	v_transacttime_i;
+				val_o		=	v_transacttime;
 				val_valid_o	=	'1;			
-				v_size_o	=	s_v_transacttime_i;		
-				next_state 	=	state57;
+				output_valid_o	=	'1;
+				v_size_o	=	s_v_transacttime;		
+				next_state 	=	state58;
 		end
 		end
-// ----------------------------------------------------------------------------------
 
 
-		// tag ordtype 
-	state57: begin
+	state58: begin
+				tag_o			=	'0;
+				tag_valid_o		=	'0;
+				val_o			=	v_transacttime;
+				val_valid_o		=	'1;			
+				output_valid_o		=	'1;
+				v_size_o		=	s_v_transacttime;	
+				t_size_o		= 	'0;
+				checksum_o		= 	'0;
+				start_chksm_o		= 	'0;
+				msg_creation_done_o	= 	'0;
 		if (fifo_full_i == 1) 
-			next_state	=	state57;
+			next_state	=	state58;
 		else begin
 			if (done_i == 1 ) begin
 				val_o		=	'0;
@@ -1787,39 +1959,61 @@ always @(*) begin
 				tag_o		=	`t_ordtype;
 				tag_valid_o	=	'0;
 				t_size_o	=	`s_t_ordtype;
-				next_state 	=	state58;
+				next_state 	=	state59;
 			end else begin
-				next_state	=	state57;
+				next_state	=	state58;
 			end
 		end
-		end
+
+// ------------------------------------------------------------------- 
 
 	state58: begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				output_valid_o	=	'1;
+				val_o		=	t_ordtype;
+				val_valid_o	=	'0;
+				v_size_o	=	s_t_ordtype;
+				t_size_o		= '0;
+				checksum_o		= '0;
+				start_chksm_o		= '0;
+				msg_creation_done_o	= '0;
 		if (fifo_full_i == 1) 
 			next_state	=	state58;
 		else begin
 				val_o		=	'0;
 				val_valid_o	=	'0;
-				output_valid_o	=	'1;
 				tag_o		=	`t_ordtype;
 				tag_valid_o	=	'1;
+				output_valid_o	=	'1;
 				t_size_o	=	`s_t_ordtype;
 				next_state 	=	state59;
 		end
 		end
 
-		// value ordtype 
+
+		// value account 
 	state59: begin
+				val_o			=	'0;
+				val_valid_o		=	'0;
+				tag_o			=	`t_ordtype;
+				tag_valid_o		=	'1;
+				t_size_o		=	`s_t_ordtype;
+				v_size_o		=	'0;	
+				checksum_o		= 	'0;
+				start_chksm_o		= 	'0;
+				output_valid_o		=	'1;
+				msg_creation_done_o	= 	'0;
 		if (fifo_full_i == 1) 
 			next_state	=	state59;
 		else begin
 			if (done_i == 1 ) begin
 				tag_o		=	'0;
 				tag_valid_o	=	'0;
-				output_valid_o	=	'1;
-				val_o		=	v_ordtype_i;
+				val_o		=	v_ordtype;
 				val_valid_o	=	'0;
-				v_size_o	=	s_v_ordtype_i;
+				output_valid_o	=	'1;
+				v_size_o	=	s_v_ordtype;
 				next_state 	=	state60;
 			end else begin
 				next_state	=	state59;
@@ -1827,21 +2021,61 @@ always @(*) begin
 		end
 		end
 
+
 	state60: begin
+				tag_o		=	'0;
+				tag_valid_o	=	'0;
+				val_o		=	v_ordtype;
+				val_valid_o	=	'0;
+				output_valid_o	=	'1;
+				v_size_o	=	s_v_ordtype;
+				t_size_o	=	'0;
+				checksum_o		= 	'0;
+				start_chksm_o		= 	'0;
+				msg_creation_done_o	= 	'0;
 		if (fifo_full_i == 1) 
 			next_state	=	state60;
 		else begin
 				tag_o		=	'0;
 				tag_valid_o	=	'0;
-				output_valid_o	=	'1;
-				val_o		=	v_ordtype_i;
+				val_o		=	v_ordtype;
 				val_valid_o	=	'1;			
-				v_size_o	=	s_v_ordtype_i;		
+				output_valid_o	=	'1;
+				v_size_o	=	s_v_ordtype;		
+				next_state 	=	state61;
+		end
+		end
+
+
+	state61: begin
+				tag_o			=	'0;
+				tag_valid_o		=	'0;
+				val_o			=	v_ordtype;
+				val_valid_o		=	'1;			
+				output_valid_o		=	'1;
+				v_size_o		=	s_v_ordtype;	
+				t_size_o		= 	'0;
+				checksum_o		= 	'0;
+				start_chksm_o		= 	'0;
+				msg_creation_done_o	= 	'0;
+		if (fifo_full_i == 1) 
+			next_state	=	state61;
+		else begin
+			if (done_i == 1 ) begin
+				val_o		=	'0;
+				val_valid_o	=	'0;
+				output_valid_o	=	'1;
+				tag_o		=	`t_checksum;
+				tag_valid_o	=	'0;
+				t_size_o	=	`s_t_checksum;
 				next_state 	=	state34;
+			end else begin
+				next_state	=	state61;
+			end
 		end
-		end
-// ----------------------------------------------------------------------------------
-// -------- for new order entry -------- ends here ---------
+
+
+
 
 	endcase
 
