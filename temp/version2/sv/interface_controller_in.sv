@@ -67,6 +67,7 @@ always @ (*) begin
 	case(state)
 		state0:	begin
 				data_o	=	'0;
+				data_t_1 	= '0;
 				if (full_i == 1 ) begin
 					data_t_1 	= '0;
 					data_t_2 	= '0;
@@ -95,6 +96,7 @@ always @ (*) begin
 				end
 			end
 		state1:	begin
+				data_t_1 	= '0;
 				data_o	=	'0;
 				if (full_i == 1 ) begin
 					data_t_1 	= '0;
@@ -111,6 +113,7 @@ always @ (*) begin
 				end
 			end
 		state2:	begin
+				data_t_1 	= '0;
 				data_o	=	'0;
 				if (full_i == 1 ) begin
 					data_t_1 	= '0;
@@ -133,6 +136,7 @@ always @ (*) begin
 				end
 			end
 		state3:	begin
+				data_t_1 	= '0;
 				data_o	=	'0;
 				if (full_i == 1 ) begin
 					data_t_1 	= '0;
@@ -157,6 +161,7 @@ always @ (*) begin
 				end
 			end
 		state4:	begin
+				data_t_1 	= '0;
 				data_o	=	'0;
 				if (full_i == 1 ) begin
 					data_t_1 	= '0;
@@ -173,6 +178,7 @@ always @ (*) begin
 				end
 			end
 		state5:	begin
+				data_t_1 	= '0;
 				data_o	=	'0;
 				if (full_i == 1 ) begin
 					data_t_1 	= '0;
@@ -188,6 +194,7 @@ always @ (*) begin
 				end
 			end
 		state6:	begin
+				data_t_1 	= '0;
 				data_o	=	'0;
 				if (full_i == 1 ) begin
 					data_t_1 	= '0;
@@ -204,6 +211,7 @@ always @ (*) begin
 				end
 			end
 		state7:	begin
+				data_t_1 	= '0;
 				data_o	=	'0;
 				if (full_i == 1 ) begin
 					data_t_1 	= '0;

@@ -69,6 +69,7 @@ always @(*) begin
 	case(state) 
 		
 		state0: begin
+				checksum_o 	= '0;
 				calc_r_100	=	'0;
 				calc_r_10	=	'0;
 				calc_q_10	=	'0;
@@ -82,6 +83,7 @@ always @(*) begin
 				end
 		end
 		state1: begin
+				checksum_o 	= '0;
 				calc_r_100	=	'0;
 				calc_r_10	=	'0;
 				calc_q_10	=	'0;
@@ -102,6 +104,7 @@ always @(*) begin
 		end
 
 		state3: begin
+				checksum_o 	= '0;
 				calc_r_100	=	'0;
 				calc_r_10	=	'0;
 				calc_q_10	=	'0;

@@ -144,7 +144,7 @@ always @ (*) begin
 					v_wr_en = '0;
 					t_wr_cs = '0;
 					t_wr_en = '0;
-		//			start_message = '0;
+					start_message = '0;
 					end_of_body = '0;
 					load_tag  = '0;
 					start_of_header = '0;
@@ -186,7 +186,7 @@ always @ (*) begin
 					start_of_header = '0;
 					load_tag  = '0;
 					shift_tag = '0;
-	//				start_message = '0;
+					start_message = '0;
 					clear_val   = '0;
 					load_val  = '0;
 					shift_val = '0;	
