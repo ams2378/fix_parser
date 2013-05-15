@@ -77,8 +77,8 @@ always @ (posedge clk) begin
 	if (read_request == 1) begin
 		addr_1		<=	read_index;
 		read_index	<=	read_index + 1;
-	end 
-//		read_index	<=	'0;
+	end else
+		read_index	<=	'0;
 end
 
 // the Avalon slave port for a master like Nios II to start the session and read the result

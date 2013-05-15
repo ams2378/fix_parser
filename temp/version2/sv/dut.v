@@ -87,13 +87,16 @@ slave_read	=	'1;
 
 slave_read	=	'0;
 
-#1
 
 if (slave_readdata == 8'h01) begin
-	slave_address	=	RDATA;
+repeat (100) begin
+@ (posedge clk);
 	slave_read	=	'1;
+	slave_address	=	RDATA;
+@(posedge clk);
+	slave_read	=	'0;
 end
-
+end
 #1 
 	slave_read	=	'0;
 

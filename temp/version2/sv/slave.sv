@@ -117,24 +117,15 @@ module slave (
 	
 	assign session_initiate = connect_initiate;  
 
-	always @ (posedge clk or posedge reset)
+	always @ (*)
 	begin
-		if (reset)
-		begin
-			read_result <= 0;
-		end
-		else
-		begin
 			if (slave_read == 1 && slave_address == RDATA)
 			begin
-				index <= index + 1;
-			end
-
-			if (index == final_index)
-				index <= '0;
+				read_request  =  '1;	
+			end else
+				read_request  =  '0;
 
 			read_result 	=	data_out_2;
-		end
 	end
 	
 //	always @ (posedge clk) begin
