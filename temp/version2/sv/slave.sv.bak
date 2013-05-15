@@ -46,15 +46,15 @@ module slave (
 
 	reg [7:0]	control_readdata_temp_d1;
 	reg [7:0]	control_readdata_temp;
-	//reg		read_request;
+	reg		read_request;
 	reg [7:0]	index;
 
 	// for internal logic
 	reg [31:0] status_register;
 
-	//reg [7:0]	index;
+	reg [7:0]	index;
 	reg [7:0]	read_result;
-	//reg [31:0]	session_initiate;
+	reg [31:0]	session_initiate;
 	reg [31:0]	connect_initiate;	
 
 // *** fix *************************************************************************************************** 
@@ -127,22 +127,22 @@ module slave (
 		begin
 			if (slave_read == 1 && slave_address == RDATA)
 			begin
-				index <= index + 1;
+				read_request <= '1;
 			end
 
 			if (index == final_index)
-				index <= '0;
+				read_request <= '0;
 
 			read_result 	=	data_out_2;
 		end
 	end
 	
-//	always @ (posedge clk) begin
-//		if (read_request == 1)
-//			index	<=	index + 1;
-//		else	
-//			index	<=	'0;
-//	end
+	always @ (posedge clk) begin
+		if (read_request == 1)
+			index	<=	index + 1;
+		else	
+			index	<=	'0;
+	end
 
 //	always @ (*) begin
 //			addr_1	    	=	index;
