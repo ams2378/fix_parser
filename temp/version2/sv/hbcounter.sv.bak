@@ -27,8 +27,6 @@ reg[HB_RANGE-1 :0] 	count_0 = '0;
 
 reg[27:0]		count_20s = '0;
 
-parameter		twenty	=	28'hbebc200;
-
 always @ (posedge clk) begin
 	if(rst)		state  <= state0;
 	else		state  <= next_state;
@@ -73,26 +71,24 @@ always @(*) begin
 	endcase
 end
 
-// counting currently hardcoded to 20s
+
+
 always @ (posedge clk) begin
 
-	if(rst)	begin
-		count_0		<= 0;
-		count_20s	<= 0;
-	end	
-
-
+	if(rst)		count_0	<= 0;
+	
 	timeout	<=	'0;
 
 	if (start_count == 1) begin
-		count_20s	<=	count_20s + 1;
-		if (count_20s ==  twenty) begin
-			timeout 	<= '1;	
-			count_20s	<=  0;
+		count_0		<=	count_0 + 1;
+		if (count_0 == heartbeat_val_i) begin
+			timeout <= '1;	
+			count_0	<=  0;
 		end
 	end else
-		count_20s		<=	'0;
+		count_0		<=	'0;
 end
+
 
 endmodule		
 

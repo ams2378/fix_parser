@@ -73,12 +73,6 @@ always @ (posedge clk) begin
 		index		<=	'0;
 	end 
 
-/*
-	if (read_request == 1) begin
-		addr_1		<=	read_index;
-		read_index	<=	read_index + 1;
-	end 
-*/
 	if (slave_read == 1 && slave_address == 3'b001) begin
 		addr_1		<=	read_index;
 		count_t		<=	count_t + 1;
