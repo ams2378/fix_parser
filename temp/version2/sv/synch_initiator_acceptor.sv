@@ -23,8 +23,8 @@ parameter		state2 = 3'b010;
 parameter		state3 = 3'b011;
 parameter		state4 = 3'b100;
 
-reg[1:0]		state;
-reg[1:0]		next_state;
+reg[2:0]		state;
+reg[2:0]		next_state;
 
 always @ (posedge clk) begin
 	if(rst)		state  <= state0;

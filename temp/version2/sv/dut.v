@@ -109,6 +109,22 @@ slave_writedata	=	8'hdd;
 #1 
 slave_write	=	'0;
 
+#1001
+slave_address	=	CONN;
+slave_write	=	'1;
+slave_writedata	=	8'hdd;	
+
+#1 
+slave_write	=	'0;
+
+#2001
+slave_address	=	CONN;
+slave_write	=	'1;
+slave_writedata	=	8'hdd;	
+
+#1 
+slave_write	=	'0;
+
 #10000 $finish;
 
 end
