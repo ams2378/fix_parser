@@ -38,8 +38,7 @@ reg [7:0]	message_a_o;
 reg		end_i_o;
 reg		end_a_o;
 reg[7:0]	count_t = '0;
-reg		end_a_o;
-reg		fifo_write_a_o;
+//reg		fifo_write_a_o;
 
 ram # (.ADDR_WIDTH(8), .DATA_WIDTH(8)) states (
 		.clk	(clk),
@@ -55,14 +54,14 @@ reg [7:0]	status;
 reg 		read_request;
 reg [7:0]	read_index   =  '0;
 
-reg		end_a_o;
+//reg		end_a_o;
 reg		status_syn;
 reg		all_sent;
 reg		new_message_i_i;
 reg		new_message_a_i;
 reg		send_data_to_acceptor;
 reg		send_data_to_initiator;
-reg		all_sent;
+//reg		all_sent;
 
 always @ (posedge clk) begin
 	if (fifo_write_i_o == 1) begin
@@ -98,6 +97,32 @@ always @ (posedge clk) begin
 		read_index	<=	'0;
 		all_sent	<=	'1;
 	end
+	
+	
+		connect		<=	'0;
+		connected	<=	'0;
+
+	if (status == 8'hbb) begin
+		connect		<=	'1;
+	end if (status == 8'hcc) begin
+		connected	<=	'1;
+	end 
+
+	if (status == 8'hdd) begin
+		status_syn <= '1;
+	end else
+		status_syn <= '0;
+
+	if (send_data_to_acceptor == 1 || send_data_to_initiator == 1) begin
+		addr_1	<= read_index;
+		if (read_index != final_index)
+			read_index <= read_index + 1;
+		else
+			read_index <= '0;
+	end
+	
+	
+	
 end
 
 // the Avalon slave port for a master like Nios II to start the session and read the result
@@ -121,31 +146,6 @@ slave the_slave (
 
 reg		connect;
 reg		connected;
-
-always @ (posedge clk) begin
-
-		connect		<=	'0;
-		connected	<=	'0;
-
-	if (status == 8'hbb) begin
-		connect		<=	'1;
-	end if (status == 8'hcc) begin
-		connected	<=	'1;
-	end 
-
-	if (status == 8'hdd) begin
-		status_syn <= '1;
-	end else
-		status_syn <= '0;
-
-	if (send_data_to_acceptor == 1 || send_data_to_initiator == 1) begin
-		addr_1	<= read_index;
-		if (read_index != final_index)
-			read_index <= read_index + 1;
-		else
-			read_index <= '0;
-	end
-end
 
 synch_initiator_acceptor sync_acceptor_initiator_data (
 

@@ -98,6 +98,9 @@ module slave (
 			begin
 				status_register <= 32'h1;  // done
 			end 
+			
+			if (connect_initiate = 8'hdd)
+				status_register	<=	'0;
 		end
 	end
 
