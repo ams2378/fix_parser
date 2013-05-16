@@ -136,7 +136,7 @@ always @ (*) begin
 				buffer_msgtype_signal	=	'0;
 				bufferval_signal	=	'0;		// edit
 			if ({start_of_message_i, tag_valid_i} == 2'b11 ) begin
-				if (tag_i == `c_t_beginString) begin
+				if (tag_i[7:0] == `c_t_beginString) begin
 					new_message_o	=	'0;
 					error_type_o	=	'0;
 					next_state	=	state1;

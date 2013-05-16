@@ -12,8 +12,6 @@ module hbcounter # (parameter HB_RANGE = `HB_RANGE)(
 		output reg		threshold_recahed_o
 		);
 
-
-
 parameter		state0 = 2'b00;
 parameter		state1 = 2'b01;
 parameter		state2 = 2'b10;
@@ -27,7 +25,8 @@ reg[HB_RANGE-1 :0] 	count_0 = '0;
 
 reg[27:0]		count_20s = '0;
 
-parameter		twenty	=	28'hbebc200;
+//parameter		twenty	=	28'hbebc200;
+parameter		twenty	=	28'h00000ff;
 
 always @ (posedge clk) begin
 	if(rst)		state  <= state0;

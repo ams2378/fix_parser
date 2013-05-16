@@ -89,7 +89,7 @@ slave_read	=	'0;
 
 
 if (slave_readdata == 8'h01) begin
-repeat (100) begin
+repeat (198) begin
 @ (posedge clk);
 	slave_read	=	'1;
 	slave_address	=	RDATA;
@@ -100,13 +100,16 @@ end
 #1 
 	slave_read	=	'0;
 
-#1	repeat (100) begin
-		slave_address	=	RDATA;
-		slave_read	=	'1;
-	end
+#1 
 
+slave_address	=	CONN;
+slave_write	=	'1;
+slave_writedata	=	8'hdd;	
 
-#500 $finish;
+#1 
+slave_write	=	'0;
+
+#10000 $finish;
 
 end
 
