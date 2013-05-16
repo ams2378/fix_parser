@@ -53,6 +53,7 @@ reg [7:0]	final_index;
 reg [7:0]	status;
 reg 		read_request;
 reg [7:0]	read_index   =  '0;
+reg [7:0]	read_index_s   =  '0;
 
 //reg		end_a_o;
 reg		status_syn;
@@ -61,15 +62,15 @@ reg		new_message_i_i;
 reg		new_message_a_i;
 reg		send_data_to_acceptor;
 reg		send_data_to_initiator;
-<<<<<<< HEAD
 reg		all_sent;
 reg		connect;
 reg		connected;
-=======
-//reg		all_sent;
->>>>>>> d7a6a1117a04a1523c6a789f290d116226f01a0e
+reg		pad_3b;
 
 always @ (posedge clk) begin
+
+	we_1	<=	'0;
+
 	if (fifo_write_i_o == 1) begin
 		addr_1  	<=	index;
 		index		<=	index  +  1;
@@ -80,13 +81,20 @@ always @ (posedge clk) begin
 		addr_1  	<=	index;
 		we_1		<=	'1;
 		data_in_1	<=	message_a_o;
-	end else
-		we_1		<=	'0;
+	end 
 
 	if (end_i_o == 1 || end_a_o == 1) begin
-		final_index	<=	index;
+		final_index	<=	index + 1;		
 		index		<=	'0;
+		pad_3b		<=	'1;
 	end 
+
+	if (pad_3b == 1) begin
+		addr_1  	<=	final_index+1;
+		we_1		<=	'1;
+		data_in_1	<=	8'h3b;
+		pad_3b		<=	'0;
+	end
 
 	if (slave_read == 1 && slave_address == 3'b001) begin
 		addr_1		<=	read_index;
@@ -103,12 +111,7 @@ always @ (posedge clk) begin
 		read_index	<=	'0;
 		all_sent	<=	'1;
 	end
-<<<<<<< HEAD
 
-=======
-	
-	
->>>>>>> d7a6a1117a04a1523c6a789f290d116226f01a0e
 		connect		<=	'0;
 		connected	<=	'0;
 
@@ -130,13 +133,6 @@ always @ (posedge clk) begin
 		else
 			read_index <= '0;
 	end
-<<<<<<< HEAD
-
-=======
-	
-	
-	
->>>>>>> d7a6a1117a04a1523c6a789f290d116226f01a0e
 end
 
 // the Avalon slave port for a master like Nios II to start the session and read the result
@@ -158,37 +154,6 @@ slave the_slave (
 	.session_initiate (status)
 );
 
-
-<<<<<<< HEAD
-
-/*
-always @ (posedge clk) begin
-
-		connect		<=	'0;
-		connected	<=	'0;
-
-	if (status == 8'hbb) begin
-		connect		<=	'1;
-	end if (status == 8'hcc) begin
-		connected	<=	'1;
-	end 
-
-	if (status == 8'hdd) begin
-		status_syn <= '1;
-	end else
-		status_syn <= '0;
-
-	if (send_data_to_acceptor == 1 || send_data_to_initiator == 1) begin
-		addr_1	<= read_index;
-		if (read_index != final_index)
-			read_index <= read_index + 1;
-		else
-			read_index <= '0;
-	end
-end
-*/
-=======
->>>>>>> d7a6a1117a04a1523c6a789f290d116226f01a0e
 synch_initiator_acceptor sync_acceptor_initiator_data (
 
  		.clk (clk),		

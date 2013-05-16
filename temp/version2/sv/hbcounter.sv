@@ -25,8 +25,8 @@ reg[HB_RANGE-1 :0] 	count_0 = '0;
 
 reg[27:0]		count_20s = '0;
 
-parameter		twenty	=	28'hbebc200;
-//parameter		twenty	=	28'h00000ff;
+//parameter		twenty	=	28'hbebc200;
+parameter		twenty	=	28'h0000fff;
 
 always @ (posedge clk) begin
 	if(rst)		state  <= state0;

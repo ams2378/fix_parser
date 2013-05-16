@@ -46,7 +46,6 @@ initial begin
 	clk	=	'0;
 end
 
-
 initial begin
 
 $vcdpluson;
@@ -89,7 +88,7 @@ slave_read	=	'0;
 
 
 if (slave_readdata == 8'h01) begin
-repeat (198) begin
+repeat (199) begin
 @ (posedge clk);
 	slave_read	=	'1;
 	slave_address	=	RDATA;
@@ -118,6 +117,14 @@ slave_writedata	=	8'hdd;
 slave_write	=	'0;
 
 #2001
+slave_address	=	CONN;
+slave_write	=	'1;
+slave_writedata	=	8'hdd;	
+
+#1 
+slave_write	=	'0;
+
+#6001
 slave_address	=	CONN;
 slave_write	=	'1;
 slave_writedata	=	8'hdd;	
