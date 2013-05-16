@@ -63,6 +63,8 @@ reg		new_message_a_i;
 reg		send_data_to_acceptor;
 reg		send_data_to_initiator;
 reg		all_sent;
+reg		connect;
+reg		connected;
 
 always @ (posedge clk) begin
 	if (fifo_write_i_o == 1) begin
@@ -98,6 +100,29 @@ always @ (posedge clk) begin
 		read_index	<=	'0;
 		all_sent	<=	'1;
 	end
+
+		connect		<=	'0;
+		connected	<=	'0;
+
+	if (status == 8'hbb) begin
+		connect		<=	'1;
+	end if (status == 8'hcc) begin
+		connected	<=	'1;
+	end 
+
+	if (status == 8'hdd) begin
+		status_syn <= '1;
+	end else
+		status_syn <= '0;
+
+	if (send_data_to_acceptor == 1 || send_data_to_initiator == 1) begin
+		addr_1	<= read_index;
+		if (read_index != final_index)
+			read_index <= read_index + 1;
+		else
+			read_index <= '0;
+	end
+
 end
 
 // the Avalon slave port for a master like Nios II to start the session and read the result
@@ -119,9 +144,9 @@ slave the_slave (
 	.session_initiate (status)
 );
 
-reg		connect;
-reg		connected;
 
+
+/*
 always @ (posedge clk) begin
 
 		connect		<=	'0;
@@ -146,7 +171,7 @@ always @ (posedge clk) begin
 			read_index <= '0;
 	end
 end
-
+*/
 synch_initiator_acceptor sync_acceptor_initiator_data (
 
  		.clk (clk),		
