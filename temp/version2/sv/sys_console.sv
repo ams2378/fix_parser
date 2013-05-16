@@ -25,20 +25,20 @@ input 				slave_write;
 input [7:0] 		slave_writedata;
 //input [3:0] slave_byteenable;
 
-reg		we_1;
-reg [7:0]	data_in_1;
-reg [7:0]	data_out_2;
-wire [7:0]	data_out_3;
-reg [7:0]	addr_1;
+reg				we_1;
+reg [7:0]		data_in_1;
+reg [7:0]		data_out_2;
+wire [7:0]		data_out_3;
+reg [7:0]		addr_1;
 
-reg		fifo_write_i_o;
-reg		fifo_write_a_o;
-reg [7:0]	message_i_o;
-reg [7:0]	message_a_o;
-reg		end_i_o;
-reg		end_a_o;
-reg[7:0]	count_t = '0;
-//reg		fifo_write_a_o;
+reg				fifo_write_i_o;
+reg				fifo_write_a_o;
+reg [7:0]		message_i_o;
+reg [7:0]		message_a_o;
+reg				end_i_o;
+reg				end_a_o;
+reg[7:0]			count_t = '0;
+
 
 ram # (.ADDR_WIDTH(8), .DATA_WIDTH(8)) states (
 		.clk	(clk),
@@ -51,9 +51,8 @@ ram # (.ADDR_WIDTH(8), .DATA_WIDTH(8)) states (
 reg [7:0]	index	=	'0;
 reg [7:0]	final_index;
 reg [7:0]	status;
-reg 		read_request;
+reg 			read_request;
 reg [7:0]	read_index   =  '0;
-reg [7:0]	read_index_s   =  '0;
 
 //reg		end_a_o;
 reg		status_syn;
@@ -62,10 +61,9 @@ reg		new_message_i_i;
 reg		new_message_a_i;
 reg		send_data_to_acceptor;
 reg		send_data_to_initiator;
-reg		all_sent;
+//reg		all_sent;
 reg		connect;
 reg		connected;
-reg		pad_3b;
 
 always @ (posedge clk) begin
 
@@ -84,18 +82,10 @@ always @ (posedge clk) begin
 	end 
 
 	if (end_i_o == 1 || end_a_o == 1) begin
-		final_index	<=	index + 1;		
+		final_index	<=	index ;		
 		index		<=	'0;
-		pad_3b		<=	'1;
 	end 
-
-	if (pad_3b == 1) begin
-		addr_1  	<=	final_index+1;
-		we_1		<=	'1;
-		data_in_1	<=	8'h3b;
-		pad_3b		<=	'0;
-	end
-
+	
 	if (slave_read == 1 && slave_address == 3'b001) begin
 		addr_1		<=	read_index;
 		count_t		<=	count_t + 1;
