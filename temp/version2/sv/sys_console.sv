@@ -18,10 +18,10 @@ input reset;
 
 // slave port, fixed read latency of 1 cycle so no waitrequest needed since it's always available
 input [2:0] 		slave_address;
-input 			slave_read;
-wire [7:0] 		slave_readdata;
+input 				slave_read;
+wire [7:0] 			slave_readdata;
 output [7:0] 		slave_readdata;
-input 			slave_write;
+input 				slave_write;
 input [7:0] 		slave_writedata;
 //input [3:0] slave_byteenable;
 
@@ -36,7 +36,7 @@ reg [7:0]	message_i_o;
 reg [7:0]	message_a_o;
 reg		end_i_o;
 reg		end_a_o;
-
+reg[7:0]	count_t = '0;
 
 
 
@@ -73,13 +73,26 @@ always @ (posedge clk) begin
 		index		<=	'0;
 	end 
 
-
+/*
 	if (read_request == 1) begin
 		addr_1		<=	read_index;
 		read_index	<=	read_index + 1;
 	end 
-//		read_index	<=	'0;
+*/
+	if (slave_read == 1 && slave_address == 3'b001) begin
+		addr_1		<=	read_index;
+		count_t		<=	count_t + 1;
+	end
+	
+	if (count_t == 8'h2) begin
+		read_index	<=	read_index + 1;
+		count_t  <= '0;
+	end
+	
+	if (read_index == final_index)
+		read_index	<=	'0;
 end
+
 
 // the Avalon slave port for a master like Nios II to start the session and read the result
 slave the_slave (
