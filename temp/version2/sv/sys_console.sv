@@ -37,6 +37,7 @@ reg [7:0]		message_i_o;
 reg [7:0]		message_a_o;
 reg				end_i_o;
 reg				end_a_o;
+reg				end_session;
 reg[7:0]			count_t = '0;
 
 
@@ -104,12 +105,15 @@ always @ (posedge clk) begin
 
 		connect		<=	'0;
 		connected	<=	'0;
+		end_session <= '0;
 
 	if (status == 8'hbb) begin
 		connect		<=	'1;
 	end if (status == 8'hcc) begin
 		connected	<=	'1;
-	end 
+	end if (status == 8'hee) begin
+		end_session <= 1;
+	end
 
 	if (status == 8'hdd) begin
 		status_syn <= '1;
@@ -168,7 +172,7 @@ end_to_end_system endtoend (
 	  .connect_i (connect),					
 	  .connect_to_host_i (2'b01),			
 
-	  .end_session_i_i ('0),
+	  .end_session_i_i (end_session),
 
 	  .connected_i_i (connected),				
 	  .connected_host_addr_i_i (2'b01),		

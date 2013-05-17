@@ -3,13 +3,13 @@
 
 module hbcounter # (parameter HB_RANGE = `HB_RANGE)(
 
-		input			clk,		
-		input			rst,
-		input			start_counter_i,
+		input							clk,		
+		input							rst,
+		input							start_counter_i,
 		input[HB_RANGE-1 :0] 	heartbeat_val_i,
-		input			received_new_msg_i,	
+		input							received_new_msg_i,	
 	
-		output reg		threshold_recahed_o
+		output reg					threshold_recahed_o
 		);
 
 parameter		state0 = 2'b00;
@@ -25,7 +25,7 @@ reg[HB_RANGE-1 :0] 	count_0 = '0;
 
 reg[27:0]		count_20s = '0;
 
-parameter		twenty	=	28'hbebc200;
+parameter		twenty	=	28'hfffffff;
 //parameter		twenty	=	28'h0000fff;
 
 always @ (posedge clk) begin
